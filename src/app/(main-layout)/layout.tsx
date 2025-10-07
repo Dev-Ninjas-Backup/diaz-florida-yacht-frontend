@@ -1,8 +1,11 @@
+import Navbar from "@/components/shared/main/Navbar/Navbar"
 import { ReactNode } from "react"
 
 const MainLayout = ({children}:{children:ReactNode}) => {
-  return (
-    <div>{children}</div>
+  return (<>
+   <Navbar />
+   <div>{children}</div></>
+   
   )
 }
 
