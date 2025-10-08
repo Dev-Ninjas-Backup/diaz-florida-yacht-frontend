@@ -11,6 +11,9 @@ import sportfishImg from "@/assets/popular-categories/sportfish.png";
 import luxuryYachtsImg from "@/assets/popular-categories/luxury-yachts.png";
 import catamaransImg from "@/assets/popular-categories/catamarans.png";
 import cruisersImg from "@/assets/popular-categories/cruisers.png";
+import whyImg1 from "@/assets/local-marketplace/img1.jpg";
+import whyImg2 from "@/assets/local-marketplace/img2.png";
+import whyImg3 from "@/assets/local-marketplace/img3.png";
 
 export const demodata = [
   {
@@ -242,3 +245,17 @@ export const democategoriesdata = [
     image: cruisersImg,
   },
 ];
+
+export const whyUsData = {
+  label: 'Why us?',
+  heading: "Florida's #1 Local Yacht Marketplace",
+  description:
+    "FloridaYachtTrader.com makes it easy for buyers and sellers to connect in one trusted place. From center consoles to luxury yachts, we're the go-to marketplace built for Florida boaters. With powerful search tools, premium listings, and local expertise, finding your dream yacht has never been simpler.",
+  stats: [
+    { value: '24+ Years', label: 'Yachting Excellence' },
+    { value: '2000+', label: 'Boats Sold Per Year' },
+    { value: '1000+', label: 'Listings viewed monthly' },
+  ],
+  cta: 'List Your Boat For Sale',
+  images: [whyImg1, whyImg2, whyImg3],
+};
