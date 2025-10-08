@@ -20,3 +20,10 @@ export interface YachtProduct {
   images: (string | StaticImageData)[];
   image: string | StaticImageData;
 }
+
+
+export interface CategoryImg {
+  id: number;
+  name: string;
+  image: string | StaticImageData;
+}

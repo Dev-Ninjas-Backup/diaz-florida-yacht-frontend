@@ -188,7 +188,7 @@ const SearchComponent = () => {
                         </button>
                     </div>
                     
-                    <button className="px-8 py-2 md:py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl font-medium transition-colors flex items-center justify-center gap-2 whitespace-nowrap shadow-md">
+                    <button className="px-8 py-2 md:py-3 bg-secondary hover:bg-blue-700 text-white rounded-2xl font-medium transition-colors flex items-center justify-center gap-2 whitespace-nowrap shadow-md">
                         <IoSearch className="md:text-lg" />
                         Find My Boat
                     </button>
