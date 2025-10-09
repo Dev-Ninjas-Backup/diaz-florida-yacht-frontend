@@ -6,7 +6,7 @@ import Marquee from "react-fast-marquee";
 
 const FeaturedBrands = () => {
   return (
-    <div>
+    <div className="py-20">
       <CustomContainer>
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-center">
           Our Featured Yacht Brands
@@ -20,7 +20,12 @@ const FeaturedBrands = () => {
               {brandImages.map((brand) => (
                 <div key={brand.id} className="mx-4 sm:mx-6 md:mx-8">
                   <div className="relative w-24 sm:w-28 md:w-36 lg:w-40 h-10 sm:h-12 md:h-16">
-                    <Image src={brand.image} alt={`Brand ${brand.id}`} fill className="object-contain" />
+                    <Image
+                      src={brand.image}
+                      alt={`Brand ${brand.id}`}
+                      fill
+                      className="object-contain"
+                    />
                   </div>
                 </div>
               ))}
@@ -32,7 +37,12 @@ const FeaturedBrands = () => {
               {brandImages.map((brand) => (
                 <div key={brand.id} className="mx-4 sm:mx-6 md:mx-8">
                   <div className="relative w-24 sm:w-28 md:w-36 lg:w-40 h-10 sm:h-12 md:h-16">
-                    <Image src={brand.image} alt={`Brand ${brand.id}`} fill className="object-contain" />
+                    <Image
+                      src={brand.image}
+                      alt={`Brand ${brand.id}`}
+                      fill
+                      className="object-contain"
+                    />
                   </div>
                 </div>
               ))}
