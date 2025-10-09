@@ -5,6 +5,20 @@ import exampleimg4 from "@/assets/yacht-images/image4.jpg";
 import exampleimg5 from "@/assets/yacht-images/image5.jpg";
 
 
+import brand1Img from "@/assets/brands/brand1.png"
+import brand2Img from "@/assets/brands/brand2.png"
+import brand3Img from "@/assets/brands/brand3.png"
+import brand4Img from "@/assets/brands/brand4.png"
+import brand5Img from "@/assets/brands/brand5.png"
+import brand6Img from "@/assets/brands/brand6.png"
+import brand7Img from "@/assets/brands/brand7.png"
+import brand8Img from "@/assets/brands/brand8.png"
+import brand9Img from "@/assets/brands/brand9.png"
+import brand10Img from "@/assets/brands/brand10.png"
+import brand11Img from "@/assets/brands/brand11.png"
+import brand12Img from "@/assets/brands/brand12.png"
+
+
 
 import centerConsoleImg from "@/assets/popular-categories/center-console.png";
 import sportfishImg from "@/assets/popular-categories/sportfish.png";
@@ -259,3 +273,251 @@ export const whyUsData = {
   cta: 'List Your Boat For Sale',
   images: [whyImg1, whyImg2, whyImg3],
 };
+
+export const demoBlogData = [
+  {
+    "id": 1,
+    "title": "The Future of Boating: Smarter Tech – That's Already Here",
+    "slug": "future-of-boating-smarter-tech",
+    "category": "Technology",
+    "readTime": "5 min read",
+    "publishDate": "2025-09-10",
+    "author": "Marine Tech Editor",
+    "excerpt": "Smarter Boating: The Future is Already Here. What if your boat could anticipate your needs before you even step aboard?",
+    "featuredImage": {
+      "url": exampleimg1,
+      "alt": "Modern boat cockpit with advanced digital displays and navigation systems",
+      "caption": "Advanced smart technology integration in modern boat cockpits"
+    },
+    "tags": ["smart technology", "boat automation", "marine electronics", "future trends"],
+    "featured": true,
+    "views": 1250
+  },
+  {
+    "id": 2,
+    "title": "2019 Formula 430 SSC – Ultimate Performance & Luxury",
+    "slug": "2019-formula-430-ssc-review",
+    "category": "Boat Reviews",
+    "readTime": "5 min read",
+    "publishDate": "2025-09-10",
+    "author": "Performance Boat Reviewer",
+    "excerpt": "Experience unmatched power and luxury with this 2019 Formula 430 SSC. A comprehensive review of one of the finest performance cruisers on the market.",
+    "featuredImage": {
+      "url": exampleimg2,
+      "alt": "2019 Formula 430 SSC luxury performance boat on water with lighthouse in background",
+      "caption": "The stunning Formula 430 SSC combining speed and luxury"
+    },
+    "specifications": {
+      "model": "Formula 430 SSC",
+      "year": 2019,
+      "length": "43 feet",
+      "type": "Performance Cruiser"
+    },
+    "tags": ["Formula boats", "performance cruiser", "luxury yachts", "boat review"],
+    "featured": true,
+    "views": 2100
+  },
+  {
+    "id": 3,
+    "title": "2018 Sunseeker Predator 74 – Immaculate Condition, Fully U...",
+    "slug": "2018-sunseeker-predator-74-review",
+    "category": "Boat Reviews",
+    "readTime": "5 min read",
+    "publishDate": "2025-08-27",
+    "author": "Yacht Specialist",
+    "excerpt": "This 2018 Sunseeker Predator 74 is a perfect 10/10 – combining breathtaking performance with luxury accommodations and pristine condition.",
+    "featuredImage": {
+      "url": exampleimg3,
+      "alt": "2018 Sunseeker Predator 74 yacht cruising on open water",
+      "caption": "Sunseeker Predator 74 - Performance yacht perfection"
+    },
+    "specifications": {
+      "model": "Sunseeker Predator 74",
+      "year": 2018,
+      "length": "74 feet",
+      "condition": "Immaculate - 10/10",
+      "type": "Performance Yacht"
+    },
+    "tags": ["Sunseeker", "performance yacht", "luxury yacht", "predator series"],
+    "featured": true,
+    "views": 1875
+  },
+  {
+    "id": 4,
+    "title": "Market Trends and Sales Projections",
+    "slug": "boating-market-trends-2025",
+    "category": "Market Analysis",
+    "readTime": "5 min read",
+    "publishDate": "2025-08-18",
+    "author": "Marine Industry Analyst",
+    "excerpt": "As we progress through 2025, the recreational boating industry is experiencing significant shifts in consumer preferences and market dynamics.",
+    "featuredImage": {
+      "url": exampleimg4,
+      "alt": "Modern luxury yacht docked at marina with waterfront properties",
+      "caption": "Luxury yacht market showing strong growth in 2025"
+    },
+    "tags": ["market trends", "sales projections", "industry analysis", "2025 outlook"],
+    "featured": false,
+    "views": 980
+  },
+  {
+    "id": 5,
+    "title": "Smart Navigation Systems: A Buyer's Guide",
+    "slug": "smart-navigation-systems-guide",
+    "category": "Technology",
+    "readTime": "7 min read",
+    "publishDate": "2025-09-05",
+    "author": "Marine Tech Editor",
+    "excerpt": "From touchscreen chartplotters to AI-assisted autopilots, discover the latest in marine navigation technology.",
+    "featuredImage": {
+      "url": exampleimg5,
+      "alt": "Multiple navigation displays showing charts and radar",
+      "caption": "Modern integrated navigation systems"
+    },
+    "tags": ["navigation", "GPS", "chartplotters", "marine electronics"],
+    "featured": false,
+    "views": 1420
+  },
+  {
+    "id": 6,
+    "title": "Luxury Performance Cruisers: 2025 Comparison",
+    "slug": "luxury-performance-cruisers-2025",
+    "category": "Comparisons",
+    "readTime": "10 min read",
+    "publishDate": "2025-08-30",
+    "author": "Performance Boat Reviewer",
+    "excerpt": "A comprehensive comparison of the top luxury performance cruisers available in 2025, including Formula, Sunseeker, and Azimut.",
+    "featuredImage": {
+      "url": exampleimg5,
+      "alt": "Three luxury performance cruisers side by side",
+      "caption": "Head-to-head: Leading performance cruisers of 2025"
+    },
+    "tags": ["comparison", "performance cruisers", "luxury boats", "buying guide"],
+    "featured": true,
+    "views": 3200
+  },
+  {
+    "id": 7,
+    "title": "Marina Infrastructure: The Future of Docking",
+    "slug": "marina-infrastructure-future",
+    "category": "Industry News",
+    "readTime": "6 min read",
+    "publishDate": "2025-08-15",
+    "author": "Industry Reporter",
+    "excerpt": "How modern marinas are adapting to accommodate larger vessels and implementing smart docking solutions.",
+    "featuredImage": {
+      "url": exampleimg1,
+      "alt": "State-of-the-art marina with large yachts",
+      "caption": "Next-generation marina facilities"
+    },
+    "tags": ["marinas", "infrastructure", "docking", "industry trends"],
+    "featured": false,
+    "views": 750
+  },
+  {
+    "id": 8,
+    "title": "Sunseeker Predator Series: Legacy of Performance",
+    "slug": "sunseeker-predator-series-legacy",
+    "category": "Brand Spotlight",
+    "readTime": "8 min read",
+    "publishDate": "2025-08-20",
+    "author": "Yacht Specialist",
+    "excerpt": "Exploring the history and evolution of Sunseeker's iconic Predator series from its inception to today's cutting-edge models.",
+    "featuredImage": {
+      "url": exampleimg2,
+      "alt": "Evolution of Sunseeker Predator models",
+      "caption": "Decades of performance excellence"
+    },
+    "tags": ["Sunseeker", "brand history", "predator series", "yacht heritage"],
+    "featured": false,
+    "views": 1650
+  },
+  {
+    "id": 9,
+    "title": "Boat Maintenance Tech: Apps and Automation",
+    "slug": "boat-maintenance-tech-apps",
+    "category": "Technology",
+    "readTime": "5 min read",
+    "publishDate": "2025-09-08",
+    "author": "Marine Tech Editor",
+    "excerpt": "Revolutionary apps and automated systems that make boat maintenance easier than ever, from engine monitoring to hull cleaning schedules.",
+    "featuredImage": {
+      "url": exampleimg1,
+      "alt": "Smartphone showing boat maintenance app interface",
+      "caption": "Smart maintenance tracking at your fingertips"
+    },
+    "tags": ["maintenance", "apps", "automation", "boat care"],
+    "featured": false,
+    "views": 1100
+  },
+  {
+    "id": 10,
+    "title": "Investment Opportunities in Recreational Boating",
+    "slug": "boating-investment-opportunities-2025",
+    "category": "Market Analysis",
+    "readTime": "9 min read",
+    "publishDate": "2025-08-25",
+    "author": "Marine Industry Analyst",
+    "excerpt": "Analyzing the recreational boating market as an investment opportunity, including charter operations, fractional ownership, and market growth projections.",
+    "featuredImage": {
+      "url": exampleimg4,
+      "alt": "Luxury yacht fleet at sunset",
+      "caption": "The growing charter and ownership markets"
+    },
+    "tags": ["investment", "charter", "market analysis", "business opportunities"],
+    "featured": false,
+    "views": 2450
+  }
+]
+
+
+export const brandImages = [
+  {
+    id: 1,
+    image: brand1Img
+  },
+  {
+    id: 2,
+    image: brand2Img
+  },
+  {
+    id: 3,
+    image: brand3Img
+  },
+  {
+    id: 4,
+    image: brand4Img
+  },
+  {
+    id: 5,
+    image: brand5Img
+  },
+  {
+    id: 6,
+    image: brand6Img
+  },
+  {
+    id: 7,
+    image: brand7Img
+  },
+  {
+    id: 8,
+    image: brand8Img
+  },
+  {
+    id: 9,
+    image: brand9Img
+  },
+  {
+    id: 10,
+    image: brand10Img
+  },
+  {
+    id: 11,
+    image: brand11Img
+  },
+  {
+    id: 12,
+    image: brand12Img
+  }
+];

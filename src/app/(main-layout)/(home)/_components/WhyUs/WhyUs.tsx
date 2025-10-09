@@ -1,12 +1,14 @@
 import React from "react";
 import Image from "next/image";
 import { whyUsData } from "@/assets/demo-datas/demodata";
+import CustomContainer from "@/components/Product/CustomContainer";
 
 const WhyUs = () => {
   return (
-    <section className="py-16 md:py-20 ">
+   <CustomContainer>
+     <section className="py-16 md:py-20 ">
       <div className="container mx-auto px-4">
-        <div className="flex flex-col-reverse lg:flex-row items-center gap-5 lg:gap-16">
+        <div className="flex flex-col-reverse lg:flex-row items-center gap-5 md:gap-20 lg:gap-16">
           <div className="space-y-6 w-full lg:w-1/2">
             <div className="text-sm font-medium text-gray-600">
               {whyUsData.label}
@@ -34,9 +36,9 @@ const WhyUs = () => {
             </div>
           </div>
 
-          <div className="relative flex items-center justify-center h-[250px] md:h-[500px] lg:h-[450px] w-full lg:w-1/2">
+          <div className="relative flex items-center justify-center h-[250px] sm:h-[320px] md:h-[350px] lg:h-[400px] xl:h-[450px] w-full lg:w-1/2">
             {/* Left Image - Woman on yacht */}
-            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[45%] md:w-[40%] lg:w-[38%] aspect-[4/5] z-10">
+            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[45%] md:w-[40%] lg:w-[38%] aspect-[4.7/5] lg:aspect-[4/5] z-10">
               <div className="relative w-full h-full rounded-3xl overflow-hidden shadow-xl">
                 <Image
                   src={whyUsData.images[0]}
@@ -48,7 +50,7 @@ const WhyUs = () => {
             </div>
 
     
-            <div className="absolute left-1/2 top-0 -translate-x-1/2 w-[55%] md:w-[50%] lg:w-[48%] aspect-[3/4] z-30">
+            <div className="absolute left-1/2 lg:top-0 -translate-x-1/2 w-[55%] md:w-[50%] lg:w-[48%] aspect-[4.8/5] lg:aspect-[3/4] z-30">
               <div className="relative w-full h-full rounded-3xl overflow-hidden shadow-2xl bg-teal-900">
                 <Image
                   src={whyUsData.images[2]}
@@ -60,7 +62,7 @@ const WhyUs = () => {
             </div>
 
             {/* Right Image - Yacht interior */}
-            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[45%] md:w-[40%] lg:w-[38%] aspect-[4/5] z-50">
+            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[45%] md:w-[40%] lg:w-[38%] aspect-[4.7/5] lg:aspect-[4/5] z-50">
               <div className="relative w-full h-full rounded-3xl overflow-hidden shadow-xl">
                 <Image
                   src={whyUsData.images[1]}
@@ -74,6 +76,7 @@ const WhyUs = () => {
         </div>
       </div>
     </section>
+   </CustomContainer>
   );
 };
 
