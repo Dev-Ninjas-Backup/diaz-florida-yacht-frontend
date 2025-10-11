@@ -173,7 +173,7 @@ const SearchComponent = () => {
                 </div>
 
                 {/* AI Search Row */}
-                <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center md:border-t border-gray-200 pt-4">
+                <div className="flex flex-col sm:flex-row md:gap-3 items-stretch sm:items-center md:border-t border-gray-200 md:pt-4">
                     <div className="flex-1 relative bg-gray-100 rounded-2xl px-2 py-3">
                         <input 
                             type="text"
@@ -188,7 +188,7 @@ const SearchComponent = () => {
                         </button>
                     </div>
                     
-                    <button className="px-8 py-2 md:py-3 bg-secondary hover:bg-blue-700 text-white rounded-2xl font-medium transition-colors flex items-center justify-center gap-2 whitespace-nowrap shadow-md">
+                    <button className="px-8 py-2 md:py-3 bg-secondary hover:bg-blue-700 text-white rounded-2xl font-medium transition-colors hidden items-center justify-center gap-2 whitespace-nowrap shadow-md md:flex">
                         <IoSearch className="md:text-lg" />
                         Find My Boat
                     </button>

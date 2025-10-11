@@ -6,8 +6,8 @@ import SubscriptionCard from "@/components/SubscriptionPlan/SubscriptionCard";
 
 const SubscriptionPlan = () => {
   return (
-    <div className="min-h-screen">
-      <div className="h-full md:h-[1850px] border-b-2 border-red-300 relative bg-[#00384D]">
+    <div className="min-h-screen px-5">
+      <div className="h-full md:h-[1850px]  relative bg-[#00384D] rounded-2xl">
         <div className="md:h-[1215px] relative">
           <Image
             src={subsImg}
