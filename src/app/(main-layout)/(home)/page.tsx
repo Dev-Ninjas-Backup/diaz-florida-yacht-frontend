@@ -5,6 +5,7 @@ import PopularCategories from './_components/PopularCategories/PopularCategories
 import WhyUs from './_components/WhyUs/WhyUs'
 import FeaturedBrands from './_components/FeaturedBrands/FeaturedBrands'
 import DockSideBlog from './_components/DockSideBlog/DockSideBlog'
+import SubscriptionPlan from './_components/SubscriptionPlan/SubscriptionPlan'
 
 const HomePage = () => {
   return (
@@ -14,6 +15,7 @@ const HomePage = () => {
       <PopularCategories />
       <WhyUs />
       <FeaturedBrands />
+      <SubscriptionPlan />
       <DockSideBlog />
     </div>
   )

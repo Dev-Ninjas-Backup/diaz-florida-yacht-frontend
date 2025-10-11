@@ -23,7 +23,7 @@ const PremiumDeals = () => {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
         {demodata.slice(0, 4).map((item) => (
-          <ProductCard key={item.name} product={item} />
+          <ProductCard isPremium={true} key={item.name} product={item} />
         ))}
       </div>
     </div>

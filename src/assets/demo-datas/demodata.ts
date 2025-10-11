@@ -3,6 +3,7 @@ import exampleimg2 from "@/assets/yacht-images/image2.jpg";
 import exampleimg3 from "@/assets/yacht-images/image3.jpg";
 import exampleimg4 from "@/assets/yacht-images/image4.jpg";
 import exampleimg5 from "@/assets/yacht-images/image5.jpg";
+import { SubscriptionPlan } from "@/types/subscription-types-demo";
 
 
 import brand1Img from "@/assets/brands/brand1.png"
@@ -521,3 +522,65 @@ export const brandImages = [
     image: brand12Img
   }
 ];
+
+
+export const subscriptionPlans: SubscriptionPlan[] = [
+    {
+      "id": 1,
+      "name": "Gold Package",
+      "price": 9.99,
+      "currency": "USD",
+      "billingCycle": "month",
+      "featured": false,
+      "features": [
+        "List in minutes!",
+        "Fast, affordable, effective",
+        "Entry-Level Package Maximum Exposure",
+        "No social media drama - just real buyers",
+        "5 Pics and 500 word description!",
+        "First month FREE with promo code",
+        "No overpay to sell your boat"
+      ],
+      "buttonText": "Get Started Now",
+      "buttonStyle": "dark"
+    },
+    {
+      "id": 2,
+      "name": "Platinum Package",
+      "price": 15.99,
+      "currency": "USD",
+      "billingCycle": "month",
+      "featured": true,
+      "featuredLabel": "BEST VALUE!",
+      "features": [
+        "List in minutes!",
+        "Fast, affordable, effective",
+        "More space, more visuals, more opportunity",
+        "No social media drama - just real buyers",
+        "10 Pics and 1000 word description!",
+        "2 months FREE with promo code",
+        "No overpay to sell your boat"
+      ],
+      "buttonText": "Get Started Now",
+      "buttonStyle": "primary"
+    },
+    {
+      "id": 3,
+      "name": "Diamond Elite Brokerage",
+      "price": 29.99,
+      "currency": "USD",
+      "billingCycle": "month",
+      "featured": false,
+      "features": [
+        "Brokers & Pro Sales Agencies",
+        "Fast, affordable, effective",
+        "Multiple listings included under one package",
+        "Showcase your watercraft, boats, and yachts like a pro",
+        "75 Pics and 5000 word description!",
+        "2 months FREE with promo code",
+        "No overpay to sell your boat"
+      ],
+      "buttonText": "Get Started Now",
+      "buttonStyle": "dark"
+    }
+  ]

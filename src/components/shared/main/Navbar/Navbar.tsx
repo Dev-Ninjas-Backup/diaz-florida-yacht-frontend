@@ -13,7 +13,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 w-screen bg-black/10 backdrop-blur-xs p-2 md:p-3 text-white z-50">
+    <nav className="fixed top-0 left-0 w-screen bg-black/20 backdrop-blur-xs p-2 md:p-3 text-white z-50">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex-shrink-0">
           <Image
@@ -48,7 +48,7 @@ const Navbar = () => {
             Contact
           </Link>
           <Link
-            href="/login"
+            href="/search-listing"
             className="px-3 hover:text-gray-300 transition-colors flex items-center gap-2"
           >
             <IoSearch /> <span className="hidden xl:inline">Search</span>
