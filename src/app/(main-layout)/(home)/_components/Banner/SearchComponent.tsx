@@ -174,13 +174,13 @@ const SearchComponent = () => {
 
                 {/* AI Search Row */}
                 <div className="flex flex-col sm:flex-row md:gap-3 items-stretch sm:items-center md:border-t border-gray-200 md:pt-4">
-                    <div className="flex-1 relative bg-gray-100 rounded-2xl px-2 py-3">
+                    <div className="flex-1 relative bg-gray-100 rounded-2xl px-2 py-2 md:py-3">
                         <input 
                             type="text"
                             value={aiPrompt}
                             onChange={(e) => setAiPrompt(e.target.value)}
                             placeholder="Example: find me a Viking for sale from 2005 to 2008"
-                            className="w-full px-3 focus:outline-none bg-transparent text-gray-700 placeholder:text-gray-400"
+                            className="w-full md:px-3 focus:outline-none bg-transparent text-gray-700 placeholder:text-gray-400"
                         />
                         <button className="absolute top-1/2 mx-3 transform -translate-y-1/2 right-0 px-2 md:px-3 py-1 md:py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg font-medium transition-colors flex items-center justify-center gap-2 whitespace-nowrap">
                             <TbSparkles className="text-sm md:text-lg" />

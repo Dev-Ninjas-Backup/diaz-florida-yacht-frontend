@@ -584,3 +584,44 @@ export const subscriptionPlans: SubscriptionPlan[] = [
       "buttonStyle": "dark"
     }
   ]
+
+  export const demoSpecifications = 
+    {
+  "Brand Make": "Viking",
+  "Model": "80 Enclosed Skybridge",
+  "Built Year": "2018",
+  "Length": "80 ft",
+  "Number of Engine": "02",
+  "Class": "Flybridge",
+  "Material": "Fiberglass",
+  "Number of Cabin": "02",
+  "Number of Heads": "05",
+  "Beam Size": "21 ft 4 In",
+  "Fuel Type": "Diesel",
+  "Max Draft": "5 ft 7 In",
+  "Name": "ON THE EDGE",
+  "Location": "Montauk, NY",
+  "Condition": "Used",
+  "Price": "$6,250,000"
+}
+
+
+export const demoDescription = `Note: ONLY 1600 HOURS WITH EXTENDED WARRANTY UNTIL MAY 2025 OR 2700 HOURS
+
+"On The Edge" is a highly custom Viking 80' Enclosed Skybridge and is truly one of a kind! Some of her customizations are noted below, but will not compare to getting aboard and appreciating this build for yourself.
+
+- Additional 450 gallons of fuel for a total of 3,682 
+- Furuno Omni Sonar- Seakeeper 35 2021
+- Skybridge with custom hardtop, helm has ( 2 ) release chairs
+- Day head located as you walk in on the starboard side
+- Custom rod room
+- Custom stairs to enclosed flybridge
+- Starboard aft stateroom, custom ( 4 ) bunks
+- Port stateroom VIP with electrically operated split berths accommodations
+- Raised panel doors on galley cabinets
+- Skybridge flooring is level, has custom sink and microwave cabinet
+- Pocket door on starboard head in companionway
+- Master stateroom berth levels electronically
+- Amazing AME Electronics package 
+- ( 2 ) of everything separated with own batteries and charging system
+- Custom storage throughout boat`

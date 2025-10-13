@@ -8,7 +8,7 @@ import FilterListing from "./_components/FilterListing";
 import AllListing from "./_components/AllListing";
 import bannerDown from "@/assets/yacht-images/subscription.png";
 
-const Page = () => {
+const SearchListingPage = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   return (
@@ -91,4 +91,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default SearchListingPage;
