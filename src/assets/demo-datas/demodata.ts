@@ -625,3 +625,62 @@ export const demoDescription = `Note: ONLY 1600 HOURS WITH EXTENDED WARRANTY UNT
 - Amazing AME Electronics package 
 - ( 2 ) of everything separated with own batteries and charging system
 - Custom storage throughout boat`
+
+export const demoBlogDetailsData = {
+  id: 1,
+  title: "Smarter Boating: The Future Is Already Here",
+  readTime: "8 min read",
+  publishDate: "October 1, 2025",
+  sections: [
+    {
+      type: "paragraph",
+      content: "What if your boat could park itself, predict the weather, and even send you a text when it&apos;s time for maintenance? It might sound futuristic, but thanks to autonomous docking systems powered by GPS, sensors, and AI, your boat can literally guide itself to the dock—even in tough conditions. Checking the classic weather app is &apos;no longer enough&apos; when you&apos;re on the water. That&apos;s why today&apos;s smart marine systems offer hyperlocal forecasts directly at the helm. Advanced weather models give early warnings on storms, wind shifts, and wave conditions—helping you decide whether to power through or stay tied up and live to fish another day."
+    },
+    {
+      type: "heading",
+      content: "Docking Without the Drama"
+    },
+    {
+      type: "paragraph",
+      content: "We&apos;ve all been there. Docking can be the most stressful part of the day. Crosswinds, currents, tight slips—it&apos;s enough to make even seasoned boaters sweat. Now, thanks to autonomous docking systems powered by GPS, sensors, and AI, your boat can literally guide itself to the dock. With smooth, precise, and stress-free maneuvers—even in tough conditions."
+    },
+    {
+      type: "image",
+      heading: "Smarter Weather Predictions",
+      content: "Checking the classic weather app is &apos;no longer enough&apos; when you&apos;re on the water. That&apos;s why today&apos;s smart marine systems offer hyperlocal forecasts directly at the helm. Advanced weather models give early warnings on storms, wind shifts, and wave conditions—helping you decide whether to power through or stay tied up and live to fish another day onboard meteorologist.",
+      caption: "Advanced marine technology display"
+    },
+    {
+      type: "heading",
+      content: "Maintenance That Finds You"
+    },
+    {
+      type: "paragraph",
+      content: "No one likes surprises when it comes to boat care. Luckily, boats are getting better at looking out for themselves. Intelligent sensors now track everything from engine hours and battery voltage to bilge pump status and navigation lights. When something needs attention, your system can ping your phone with a notification. Think of it less like a chore list and more like getting a friendly nudge: &quot;Hey, time for an oil change,&quot; or &quot;Your battery&apos;s running low.&quot; You&apos;re not just reacting anymore—you&apos;re protecting your investment and giving yourself peace of mind."
+    },
+    {
+      type: "heading",
+      content: "Tech That Elevates the Experience"
+    },
+    {
+      type: "paragraph",
+      content: "Smart boating isn&apos;t just about comfort. From one central app (or even a voice command), you can control underwater lights, playlists, and cabin climate. Imagine cueing up the perfect soundtrack and setting the mood lighting before you even drop anchor. Want to control your boat from your phone? Done. Need remote monitoring while it&apos;s docked? You got it. Technology is no longer just for tech enthusiasts—it&apos;s for anyone who wants to spend more time enjoying the water and less time worrying about the details."
+    },
+    {
+      type: "heading",
+      content: "The Bottom Line"
+    },
+    {
+      type: "paragraph",
+      content: "The future of boating isn&apos;t years away—it&apos;s already here. Whether it&apos;s docking without the drama, staying ahead of bad weather, or making sure your boat is ready when you are, today&apos;s technology is all about making boating safer, easier, and a whole lot more fun than ever."
+    },
+    {
+      type: "paragraph",
+      content: "And the best part? It&apos;s making boating safer, easier, and more fun than ever."
+    },
+    {
+      type: "paragraph",
+      content: "So next time you step aboard, ask yourself: is your boat as smart as you are?"
+    }
+  ]
+}

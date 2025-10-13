@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import { FaArrowLeft } from 'react-icons/fa';
 import ItemDetailsComponents from './_components/ItemDetailsComponents';
-import CustomContainer from '@/components/Product/CustomContainer';
+import CustomContainer from '@/components/CustomComponents/CustomContainer';
 import SendMessage from './_components/SendMessage';
 
 const SearchListingDetailsPage = () => {

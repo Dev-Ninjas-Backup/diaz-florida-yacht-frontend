@@ -1,6 +1,6 @@
 import { demoBlogData } from "@/assets/demo-datas/demodata";
 import BlogCard from "@/components/Blog/BlogCard";
-import CustomContainer from "@/components/Product/CustomContainer";
+import CustomContainer from "@/components/CustomComponents/CustomContainer";
 import React from "react";
 
 const DockSideBlog = () => {

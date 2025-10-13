@@ -36,7 +36,7 @@ const Navbar = () => {
             Boats
           </Link>
           <Link
-            href="/services"
+            href="/blogs"
             className="px-3 hover:text-gray-300 transition-colors"
           >
             Blogs
@@ -96,7 +96,7 @@ const Navbar = () => {
               Boats
             </Link>
             <Link
-              href="/services"
+              href="/blogs"
               className="px-3 py-2 hover:bg-white/10 rounded-md transition-colors"
               onClick={() => setIsOpen(false)}
             >

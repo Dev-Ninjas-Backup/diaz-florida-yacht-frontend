@@ -9,7 +9,7 @@ interface BlogCardProps {
 
 const BlogCard: React.FC<BlogCardProps> = ({ blog }) => {
   return (
-    <div className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 flex flex-col">
+    <Link href={`/blogs/${blog.slug}`} className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 flex flex-col">
       <div className="relative w-full aspect-[4/2.7] overflow-hidden">
         <Image
           src={blog.featuredImage.url}
@@ -47,7 +47,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ blog }) => {
           Read More
         </Link>
       </div>
-    </div>
+    </Link>
   );
 };
 

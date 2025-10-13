@@ -1,5 +1,5 @@
 import React from 'react';
-import CustomContainer from '../Product/CustomContainer';
+import CustomContainer from './CustomContainer';
 
 const GradientBannerCustom = ({children}: {children: React.ReactNode}) => {
     return (

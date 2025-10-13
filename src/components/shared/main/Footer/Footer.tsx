@@ -4,7 +4,7 @@ import Link from 'next/link';
 import memeberOfImage from "@/assets/yacht-images/memberof.png";
 import logo from "@/assets/florida-yacht-logo.png";
 import { FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn } from 'react-icons/fa';
-import CustomContainer from '@/components/Product/CustomContainer';
+import CustomContainer from '@/components/CustomComponents/CustomContainer';
 
 const Footer = () => {
     return (

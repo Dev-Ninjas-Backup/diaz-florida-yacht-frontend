@@ -1,7 +1,7 @@
 import React from "react";
 import { BsStars } from "react-icons/bs";
 import SearchComponent from "./SearchComponent";
-import CustomContainer from "@/components/Product/CustomContainer";
+import CustomContainer from "@/components/CustomComponents/CustomContainer";
 
 const Banner = () => {
   return (
@@ -21,7 +21,7 @@ const Banner = () => {
       <div className="relative z-10 px-3 md:px-0">
         <CustomContainer>
           <div className="flex flex-col items-start justify-between  gap-5 h-full space-y-5">
-            <div className="text-white space-y-3 md:space-y-[20%] pt-[20%] md:pt-[5%]">
+            <div className="text-white space-y-3 md:space-y-[17%] pt-[20%] md:pt-[5%]">
               <h1 className="text-2xl md:text-6xl lg:text-[115px] font-bold text-left uppercase tracking-[1px] md:tracking-[5px]">
                 Florida yacht trader
               </h1>

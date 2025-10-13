@@ -1,5 +1,5 @@
 import { democategoriesdata } from '@/assets/demo-datas/demodata';
-import CustomContainer from '@/components/Product/CustomContainer';
+import CustomContainer from '@/components/CustomComponents/CustomContainer';
 import React from 'react';
 import CategoryCard from './CategoryCard';
 
