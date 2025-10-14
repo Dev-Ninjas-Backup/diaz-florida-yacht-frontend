@@ -16,7 +16,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isPremium }) => {
   };
 
   return (
-    <Link href={`/search-listing/${product?.id}`} className="relative bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 group">
+    <Link href={`/search-listing/${2}`} className="relative bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 group">
       {/* Image Section with Bookmark */}
       <div className="relative w-full aspect-[4/2.6] overflow-hidden">
         <Image
