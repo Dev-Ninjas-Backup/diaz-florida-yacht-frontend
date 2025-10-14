@@ -13,7 +13,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 w-screen bg-black/10 backdrop-blur-xs p-2 md:p-3 text-white z-50">
+    <nav className="fixed top-2 md:top-3 inset-x-2 md:inset-x-5 bg-black/30 backdrop-blur-xs rounded-2xl px-3 py-2 md:p-3 text-white z-50">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex-shrink-0">
           <Image
@@ -21,7 +21,7 @@ const Navbar = () => {
             alt="Florida Yacht Logo"
             width={80}
             height={80}
-            className="w-14 h-14 sm:w-20 sm:h-20 lg:w-20 lg:h-20"
+            className="w-10 h-10 sm:w-20 sm:h-20 lg:w-20 lg:h-20"
           />
         </div>
 
@@ -36,7 +36,7 @@ const Navbar = () => {
             Boats
           </Link>
           <Link
-            href="/services"
+            href="/blogs"
             className="px-3 hover:text-gray-300 transition-colors"
           >
             Blogs
@@ -48,7 +48,7 @@ const Navbar = () => {
             Contact
           </Link>
           <Link
-            href="/login"
+            href="/search-listing"
             className="px-3 hover:text-gray-300 transition-colors flex items-center gap-2"
           >
             <IoSearch /> <span className="hidden xl:inline">Search</span>
@@ -96,7 +96,7 @@ const Navbar = () => {
               Boats
             </Link>
             <Link
-              href="/services"
+              href="/blogs"
               className="px-3 py-2 hover:bg-white/10 rounded-md transition-colors"
               onClick={() => setIsOpen(false)}
             >

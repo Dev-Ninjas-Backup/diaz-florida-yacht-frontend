@@ -1,5 +1,5 @@
 import { demodata } from "@/assets/demo-datas/demodata";
-import CustomContainer from "@/components/Product/CustomContainer";
+import CustomContainer from "@/components/CustomComponents/CustomContainer";
 import ProductCard from "@/components/Product/ProductCard";
 import React from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
@@ -23,7 +23,7 @@ const PremiumDeals = () => {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
         {demodata.slice(0, 4).map((item) => (
-          <ProductCard key={item.name} product={item} />
+          <ProductCard isPremium={true} key={item.name} product={item} />
         ))}
       </div>
     </div>
