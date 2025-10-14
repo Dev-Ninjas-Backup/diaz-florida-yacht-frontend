@@ -22,8 +22,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isPremium }) => {
         <Image
           src={product.image}
           alt={product.name}
-          fill
-          className="object-cover group-hover:scale-105 transition-transform duration-300"
+          height={500}
+          width={900}
+          className="object-cover h-full w-full group-hover:scale-105 transition-transform duration-300"
         />
         {isPremium && (
           <button className="absolute -top-1 right-4" aria-label="Bookmark">

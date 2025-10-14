@@ -23,8 +23,9 @@ const FeaturedBrands = () => {
                     <Image
                       src={brand.image}
                       alt={`Brand ${brand.id}`}
-                      fill
-                      className="object-contain"
+                      height={400}
+                      width={800}
+                      className="object-cover h-full w-full"
                     />
                   </div>
                 </div>
@@ -40,8 +41,9 @@ const FeaturedBrands = () => {
                     <Image
                       src={brand.image}
                       alt={`Brand ${brand.id}`}
-                      fill
-                      className="object-contain"
+                      height={400}
+                      width={800}
+                      className="object-cover h-full w-full"
                     />
                   </div>
                 </div>

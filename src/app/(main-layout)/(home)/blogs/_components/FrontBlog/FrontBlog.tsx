@@ -37,12 +37,9 @@ const FrontBlog = ({ generalBlog }: { generalBlog: string | StaticImageData }) =
           navigating the pre-owned...
         </p>
 
-        <a
-          href="#"
-          className="text-primary hover:text-[#0052CC] font-medium text-base inline-block transition-colors"
-        >
+        <span className="text-primary hover:text-[#0052CC] font-medium text-base inline-block transition-colors">
           Read More
-        </a>
+        </span>
       </div>
     </Link>
   );
