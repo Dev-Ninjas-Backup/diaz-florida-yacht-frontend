@@ -27,7 +27,7 @@ export default function RootLayout({
       <body
         className={`${inter.className} max-w-screen overflow-x-hidden antialiased font-inter`}
       >
-           <Toaster />
+        <Toaster />
         {children}
       </body>
     </html>

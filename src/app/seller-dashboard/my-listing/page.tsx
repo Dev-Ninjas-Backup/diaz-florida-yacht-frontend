@@ -1,5 +1,5 @@
 const MyListingPage = () => {
-  return <div>MyListingPage</div>;
+  return <div></div>;
 };
 
 export default MyListingPage;
