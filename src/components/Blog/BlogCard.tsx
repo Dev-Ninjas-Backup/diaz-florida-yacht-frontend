@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,13 +11,14 @@ interface BlogCardProps {
 
 const BlogCard: React.FC<BlogCardProps> = ({ blog }) => {
   return (
-    <Link href={`/blogs/${blog.slug}`} className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 flex flex-col">
+    <div className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 flex flex-col">
       <div className="relative w-full aspect-[4/2.7] overflow-hidden">
         <Image
           src={blog.featuredImage.url}
           alt={blog.featuredImage.alt}
-          fill
-          className="object-cover hover:scale-105 transition-transform duration-300"
+          height={500}
+          width={900}
+          className="object-cover h-full w-full hover:scale-105 transition-transform duration-300"
         />
       </div>
 
@@ -40,14 +43,13 @@ const BlogCard: React.FC<BlogCardProps> = ({ blog }) => {
           {blog.excerpt}
         </p>
 
-        <Link
-          href={`/blog/${blog.slug}`}
-          className="text-primary font-semibold hover:text-cyan-600 transition-colors inline-flex items-center gap-1"
+        <Link href={`/blogs/${blog.slug}`}
+          className="text-primary font-semibold hover:text-cyan-600 transition-colors inline-flex items-center gap-1 bg-transparent border-0 p-0 text-left"
         >
           Read More
         </Link>
       </div>
-    </Link>
+    </div>
   );
 };
 

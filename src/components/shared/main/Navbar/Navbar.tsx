@@ -30,7 +30,7 @@ const Navbar = () => {
             Home
           </Link>
           <Link
-            href="/about"
+            href="/search-listing"
             className="px-3 hover:text-gray-300 transition-colors"
           >
             Boats

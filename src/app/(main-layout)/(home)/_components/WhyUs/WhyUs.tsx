@@ -43,8 +43,9 @@ const WhyUs = () => {
                   <Image
                     src={whyUsData.images[0]}
                     alt="Yacht lifestyle"
-                    fill
-                    className="object-cover"
+                    height={500}
+                    width={900}
+                    className="object-cover h-full w-full"
                   />
                 </div>
               </div>
@@ -54,8 +55,9 @@ const WhyUs = () => {
                   <Image
                     src={whyUsData.images[2]}
                     alt="Yacht aerial view"
-                    fill
-                    className="object-cover"
+                    height={500}
+                    width={900}
+                    className="object-cover h-full w-full"
                   />
                 </div>
               </div>
@@ -66,8 +68,9 @@ const WhyUs = () => {
                   <Image
                     src={whyUsData.images[1]}
                     alt="Yacht interior"
-                    fill
-                    className="object-cover"
+                    height={500}
+                    width={900}
+                    className="object-cover h-full w-full"
                   />
                 </div>
               </div>
