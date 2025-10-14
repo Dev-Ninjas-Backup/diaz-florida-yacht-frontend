@@ -5,7 +5,7 @@ import icon1 from '@/assets/seller-dashboard/states/icon1.svg';
 import icon2 from '@/assets/seller-dashboard/states/icon2.svg';
 import icon3 from '@/assets/seller-dashboard/states/icon3.svg';
 
-const ProfileStates = () => {
+const ProfileStates = () => {  
   return (
     <div className="">
       <CustomContainer>
