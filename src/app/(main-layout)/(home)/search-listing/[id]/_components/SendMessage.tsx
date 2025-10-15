@@ -1,8 +1,7 @@
 "use client";
 import React, { useState } from 'react';
-import { IoPersonOutline } from 'react-icons/io5';
+import { IoPersonOutline, IoSparklesSharp } from 'react-icons/io5';
 import { MdLocationOn } from 'react-icons/md';
-import { TbSparkles } from 'react-icons/tb';
 import { toast } from 'sonner';
 
 const SendMessage = () => {
@@ -60,14 +59,14 @@ const SendMessage = () => {
     };
 
     return (
-        <div className="w-full bg-gray-50 rounded-2xl p-6 md:p-8 shadow-sm border border-gray-200 my-5">
+        <div className="md:fixed max-w-lg z-20 w-full bg-gray-50 rounded-2xl p-6 md:p-8 shadow-sm border border-gray-200 my-4">
             {/* Header */}
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
+            <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-4">
                 Contact Owner
             </h2>
 
             {/* Owner Info */}
-            <div className="mb-6 space-y-2">
+            <div className="mb-3 space-y-2">
                 <div className="flex items-center gap-2 text-gray-700">
                     <IoPersonOutline size={20} className="text-gray-600" />
                     <span className="font-medium">Name:</span>
@@ -81,7 +80,7 @@ const SendMessage = () => {
             </div>
 
             {/* Contact Form */}
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-3">
                 {/* Name Input */}
                 <input
                     type="text"
@@ -122,7 +121,7 @@ const SendMessage = () => {
                     onChange={handleInputChange}
                     placeholder="Write message..."
                     rows={4}
-                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
+                    className="w-full px-4 py-2 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
                     required
                 />
 
@@ -130,7 +129,7 @@ const SendMessage = () => {
                 <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-[#0066FF] hover:bg-[#0052CC] text-white font-semibold py-4 px-6 rounded-xl transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-base md:text-lg"
+                    className="w-full bg-secondary hover:bg-[#0052CC] text-white font-semibold py-3 px-6 rounded-xl transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm md:text-base"
                 >
                     {isSubmitting ? 'Sending...' : 'Send Message'}
                 </button>
@@ -142,7 +141,7 @@ const SendMessage = () => {
                 onClick={handleAskAI}
                 className="w-full mt-4 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-3 px-6 rounded-xl transition-colors duration-200 flex items-center justify-center gap-2 text-base"
             >
-                <TbSparkles size={20} />
+                <IoSparklesSharp size={20} />
                 Ask AI
             </button>
         </div>

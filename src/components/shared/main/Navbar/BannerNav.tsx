@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import logo from "@/assets/florida-yacht-logo.png";
 import Link from "next/link";
 import { IoSearch } from "react-icons/io5";
@@ -9,25 +9,11 @@ import { IoIosArrowDown } from "react-icons/io";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
 
-const Navbar = () => {
+const BannerNav = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const handleChangeBackgroundOnScroll = () => {
-    if (window.scrollY > 0) {
-      setScrolled(true);
-    } else {
-      setScrolled(false);
-    }
-  };
-  useEffect(() => {
-    window.addEventListener("scroll", handleChangeBackgroundOnScroll);
-  }, []);
+
   return (
-    <nav
-      className={`fixed top-2 md:top-3 inset-x-2 md:inset-x-5  rounded-2xl px-3 py-2 text-white z-50 h-20 md:h-24 ${
-        scrolled ? "bg-black/30 backdrop-blur-xs" : "bg-transparent"
-      }`}
-    >
+    <nav className="inset-x-2 md:inset-x-5  rounded-2xl px-3 py-2 text-white z-50 h-20 md:h-24">
       <div className="container mx-auto flex justify-between items-center pt-2.5">
         <div className="flex-shrink-0">
           <Link href={"/"}>
@@ -126,7 +112,7 @@ const Navbar = () => {
               Contact
             </Link>
             <Link
-              href="/search-listing"
+              href="/login"
               className="px-3 py-2 hover:bg-white/10 rounded-md transition-colors flex items-center gap-2"
               onClick={() => setIsOpen(false)}
             >
@@ -153,4 +139,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default BannerNav;

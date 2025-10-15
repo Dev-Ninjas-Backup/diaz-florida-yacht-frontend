@@ -12,7 +12,7 @@ const SearchListingDetailsPage = () => {
     return (
         <div>
             <GradientBannerCustom>
-                <div className='text-white flex flex-col md:flex-row items-start justify-between gap-3 w-full pt-10 md:pt-20'>
+                <div className='text-white flex flex-col md:flex-row items-start justify-between gap-3 w-full pt-10 md:pt-12'>
                     <div className='flex flex-row items-center justify-start gap-3 font-semibold text-sm md:text-xl lg:text-2xl'>
                         <FaArrowLeft className='cursor-pointer' onClick={() => navigate.back()} />
                         <h1>2018 Viking 80 Enclosed Skybridge</h1>
