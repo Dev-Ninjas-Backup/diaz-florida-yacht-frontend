@@ -14,11 +14,11 @@ const SearchListingPage = () => {
   return (
     <div>
      <CustomBanner banner={banner}>
-        <div className="text-center">
+        <div className="text-center ">
           <h1 className="text-white text-xl md:text-4xl lg:text-6xl uppercase font-bold md:tracking-[5px]">
             search FROM LISTING
           </h1>
-          <div className="bg-white p-1 md:p-3 rounded-2xl max-w-7xl w-full flex items-center gap-2 md:gap-5 mt-2">
+          <div className="bg-white p-1 md:p-3 rounded-2xl  w-full flex items-center gap-2 md:gap-5 mt-5">
             <input
               type="text"
               placeholder="Search..."
