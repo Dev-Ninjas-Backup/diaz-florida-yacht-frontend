@@ -38,7 +38,7 @@ const ProfileHeader = () => {
     //  className=" sticky top-50 sm:top-60 z-10"
     <div>
       <CustomContainer>
-        <div className="mt-8 flex items-center gap-5 flex-nowrap overflow-x-auto p-4 space-x-2 md:space-x-4">
+        <div className="mt-8 flex items-center gap-5 flex-nowrap overflow-x-auto py-4 space-x-2 md:space-x-4">
           {navItems.map(({ label, href, icon: Icon }) => {
             const isActive = pathname === href;
 
@@ -57,9 +57,9 @@ const ProfileHeader = () => {
               </Link>
             );
           })}
-          <span className="flex-shrink-0 flex items-center justify-center px-4 py-2 space-x-2 text-sm md:text-lg font-medium rounded-lg transition-colors duration-200 bg-[#F4F4F4] text-red-500 hover:bg-gray-200 gap-1.5">
+          <button className="flex-shrink-0 flex items-center justify-center px-4 py-2 space-x-2 text-sm md:text-lg font-medium rounded-lg transition-colors duration-200 bg-[#F4F4F4] text-red-500 hover:bg-gray-200 gap-1.5 cursor-pointer">
             <LogOut size={18} /> Logout
-          </span>
+          </button>
         </div>
       </CustomContainer>
     </div>
