@@ -34,7 +34,7 @@ export const step2Schema = z.object({
       z.object({
         title: z.string().optional(),
         description: z.string().optional(),
-      }),
+      })
     )
     .optional(),
   embedUrl: z.string().optional(),
