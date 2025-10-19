@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @next/next/no-img-element */
 "use client";
-/* eslint-disable react-hooks/exhaustive-deps */
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,8 +13,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Plus, Upload, X } from "lucide-react";
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 
 const Step2Form = () => {
@@ -39,6 +39,8 @@ const Step2Form = () => {
   );
 
   const buildYear = watch("buildYear");
+  const make = watch("make");
+  const model = watch("model");
   const classValue = watch("class");
   const material = watch("material");
   const fuelType = watch("fuelType");
@@ -46,67 +48,106 @@ const Step2Form = () => {
   const condition = watch("condition");
   const stateValue = watch("state");
   const mediaGallery = watch("mediaGallery") || [];
-  const coverPhoto = watch("coverPhoto");
 
-  useEffect(() => {
-    if (coverPhoto && !coverPhotoPreview) {
-      setCoverPhotoPreview(coverPhoto);
-    }
-  }, [coverPhoto, coverPhotoPreview]);
+  // useEffect(() => {
+  //   if (coverPhoto && !coverPhotoPreview) {
+  //     setCoverPhotoPreview(coverPhoto);
+  //   }
+  // }, [coverPhoto, coverPhotoPreview]);
 
-  useEffect(() => {
-    if (mediaGallery.length > 0 && mediaGalleryPreviews.length === 0) {
-      setMediaGalleryPreviews(mediaGallery);
-    }
-  }, [mediaGallery, mediaGalleryPreviews.length]);
+  // useEffect(() => {
+  //   if (mediaGallery.length > 0 && mediaGalleryPreviews.length === 0) {
+  //     setMediaGalleryPreviews(mediaGallery);
+  //   }
+  // }, [mediaGallery, mediaGalleryPreviews.length]);
+
+  // const handleCoverPhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = e.target.files?.[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       const result = reader.result as string;
+  //       setCoverPhotoPreview(result);
+  //       setValue("coverPhoto", result);
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
+
+  // const handleMediaGalleryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const files = e.target.files;
+  //   if (files) {
+  //     const newPreviews = [...mediaGalleryPreviews];
+  //     const newGallery = [...mediaGallery];
+
+  //     Array.from(files).forEach((file) => {
+  //       const reader = new FileReader();
+  //       reader.onloadend = () => {
+  //         const result = reader.result as string;
+  //         newPreviews.push(result);
+  //         newGallery.push(result);
+  //         setMediaGalleryPreviews(newPreviews);
+  //         setValue("mediaGallery", newGallery);
+  //       };
+  //       reader.readAsDataURL(file);
+  //     });
+  //   }
+  // };
+
+  // const removeMediaImage = (index: number) => {
+  //   const newPreviews = mediaGalleryPreviews.filter((_, i) => i !== index);
+  //   const newGallery = mediaGallery.filter(
+  //     (_: string, i: number) => i !== index
+  //   );
+  //   setMediaGalleryPreviews(newPreviews);
+  //   setValue("mediaGallery", newGallery);
+  // };
+
+  // const removeCoverPhoto = () => {
+  //   setCoverPhotoPreview(null);
+  //   setValue("coverPhoto", "");
+  // };
 
   const handleCoverPhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const result = reader.result as string;
-        setCoverPhotoPreview(result);
-        setValue("coverPhoto", result);
-      };
-      reader.readAsDataURL(file);
+      setCoverPhotoPreview(URL.createObjectURL(file)); // preview
+      setValue("coverPhoto", file); // store File object
     }
   };
 
   const handleMediaGalleryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-    if (files) {
-      const newPreviews = [...mediaGalleryPreviews];
-      const newGallery = [...mediaGallery];
+    if (!files) return;
 
-      Array.from(files).forEach((file) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          const result = reader.result as string;
-          newPreviews.push(result);
-          newGallery.push(result);
-          setMediaGalleryPreviews(newPreviews);
-          setValue("mediaGallery", newGallery);
-        };
-        reader.readAsDataURL(file);
-      });
+    if (mediaGallery.length + files.length > 25) {
+      alert("You can only upload up to 25 images.");
+      return;
     }
-  };
 
-  const removeMediaImage = (index: number) => {
-    const newPreviews = mediaGalleryPreviews.filter((_, i) => i !== index);
-    const newGallery = mediaGallery.filter(
-      (_: string, i: number) => i !== index
-    );
+    const newPreviews = [...mediaGalleryPreviews];
+    const newGallery = [...mediaGallery];
+
+    Array.from(files).forEach((file) => {
+      newPreviews.push(URL.createObjectURL(file));
+      newGallery.push(file);
+    });
+
     setMediaGalleryPreviews(newPreviews);
     setValue("mediaGallery", newGallery);
   };
 
   const removeCoverPhoto = () => {
     setCoverPhotoPreview(null);
-    setValue("coverPhoto", "");
+    setValue("coverPhoto", undefined);
   };
 
+  const removeMediaImage = (index: number) => {
+    const newPreviews = mediaGalleryPreviews.filter((_, i) => i !== index);
+    const newGallery = mediaGallery.filter((_: any, i: number) => i !== index);
+    setMediaGalleryPreviews(newPreviews);
+    setValue("mediaGallery", newGallery);
+  };
   const handleSelectChange = (fieldName: string, value: string) => {
     setValue(fieldName, value);
     clearErrors(fieldName);
@@ -116,8 +157,9 @@ const Step2Form = () => {
       {/* Specifications */}
       <div>
         <h3 className="text-lg font-semibold mb-4">Specifications</h3>
-
-        <div className="grid grid-cols-3 gap-4">
+        {/* Build -- Make -- Model  */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* Build  */}
           <div>
             <Label htmlFor="buildYear">Build Year *</Label>
             <Select
@@ -125,7 +167,7 @@ const Step2Form = () => {
               onValueChange={(value) => handleSelectChange("buildYear", value)}
             >
               <SelectTrigger
-                className={errors.buildYear ? "border-red-500" : ""}
+                className={`w-full bg-white rounded-[12px] border-none shadow-none`}
               >
                 <SelectValue placeholder="Select" />
               </SelectTrigger>
@@ -141,28 +183,50 @@ const Step2Form = () => {
               </p>
             )}
           </div>
+          {/* Make  */}
           <div>
             <Label htmlFor="make">Make *</Label>
-            <Input
-              id="make"
-              placeholder="Type here"
-              {...register("make")}
-              className={errors.make ? "border-red-500" : ""}
-            />
+            <Select
+              value={make || ""}
+              onValueChange={(value) => handleSelectChange("make", value)}
+            >
+              <SelectTrigger
+                className={`w-full bg-white rounded-[12px] border-none shadow-none ${
+                  errors.make ? "border-red-500" : ""
+                }`}
+              >
+                <SelectValue placeholder="Select" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="2023">a</SelectItem>
+                <SelectItem value="2022">b</SelectItem>
+                <SelectItem value="2021">c</SelectItem>
+              </SelectContent>
+            </Select>
             {errors.make && (
               <p className="text-red-500 text-sm mt-1">
                 {errors.make.message as string}
               </p>
             )}
           </div>
+          {/* Model  */}
           <div>
             <Label htmlFor="model">Model *</Label>
-            <Input
-              id="model"
-              placeholder="Type here"
-              {...register("model")}
-              className={errors.model ? "border-red-500" : ""}
-            />
+            <Select
+              value={model || ""}
+              onValueChange={(value) => handleSelectChange("model", value)}
+            >
+              <SelectTrigger
+                className={`w-full bg-white rounded-[12px] border-none shadow-none`}
+              >
+                <SelectValue placeholder="Select" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="2023">a</SelectItem>
+                <SelectItem value="2022">b</SelectItem>
+                <SelectItem value="2021">c</SelectItem>
+              </SelectContent>
+            </Select>
             {errors.model && (
               <p className="text-red-500 text-sm mt-1">
                 {errors.model.message as string}
@@ -170,15 +234,16 @@ const Step2Form = () => {
             )}
           </div>
         </div>
-
-        <div className="grid grid-cols-3 gap-4 mt-4">
+        {/* Length -- Beam -- Max Draft  */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5">
+          {/* Length  */}
           <div>
-            <Label htmlFor="length">Length (Ft/In) *</Label>
+            <Label htmlFor="length">Length (Ft) *</Label>
             <Input
               id="length"
               placeholder="Type here"
               {...register("length")}
-              className={errors.length ? "border-red-500" : ""}
+              className={`w-full bg-white rounded-[12px] border-none shadow-none`}
             />
             {errors.length && (
               <p className="text-red-500 text-sm mt-1">
@@ -186,13 +251,14 @@ const Step2Form = () => {
               </p>
             )}
           </div>
+          {/* Beam Size  */}
           <div>
-            <Label htmlFor="beam">Beam Size(Ft/In) *</Label>
+            <Label htmlFor="beam">Beam Size(Ft) *</Label>
             <Input
               id="beam"
               placeholder="Type here"
               {...register("beam")}
-              className={errors.beam ? "border-red-500" : ""}
+              className={`w-full bg-white rounded-[12px] border-none shadow-none`}
             />
             {errors.beam && (
               <p className="text-red-500 text-sm mt-1">
@@ -200,13 +266,14 @@ const Step2Form = () => {
               </p>
             )}
           </div>
+          {/* max Draft  */}
           <div>
-            <Label htmlFor="maxDraft">Max Draft(Ft/In) *</Label>
+            <Label htmlFor="maxDraft">Max Draft(Ft) *</Label>
             <Input
               id="maxDraft"
               placeholder="Type here"
               {...register("maxDraft")}
-              className={errors.maxDraft ? "border-red-500" : ""}
+              className={`w-full bg-white rounded-[12px] border-none shadow-none`}
             />
             {errors.maxDraft && (
               <p className="text-red-500 text-sm mt-1">
@@ -216,14 +283,18 @@ const Step2Form = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-4 mt-4">
+        {/* Class -- Material -- Fuel type  */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5">
+          {/* Class  */}
           <div>
             <Label htmlFor="class">Class *</Label>
             <Select
               value={classValue || ""}
               onValueChange={(value) => handleSelectChange("class", value)}
             >
-              <SelectTrigger className={errors.class ? "border-red-500" : ""}>
+              <SelectTrigger
+                className={`w-full bg-white rounded-[12px] border-none shadow-none`}
+              >
                 <SelectValue placeholder="Select" />
               </SelectTrigger>
               <SelectContent>
@@ -237,6 +308,7 @@ const Step2Form = () => {
               </p>
             )}
           </div>
+          {/* Material  */}
           <div>
             <Label htmlFor="material">Material *</Label>
             <Select
@@ -244,7 +316,7 @@ const Step2Form = () => {
               onValueChange={(value) => handleSelectChange("material", value)}
             >
               <SelectTrigger
-                className={errors.material ? "border-red-500" : ""}
+                className={`w-full bg-white rounded-[12px] border-none shadow-none`}
               >
                 <SelectValue placeholder="Select" />
               </SelectTrigger>
@@ -259,6 +331,7 @@ const Step2Form = () => {
               </p>
             )}
           </div>
+          {/* Fuel Type  */}
           <div>
             <Label htmlFor="fuelType">Fuel Type *</Label>
             <Select
@@ -266,7 +339,7 @@ const Step2Form = () => {
               onValueChange={(value) => handleSelectChange("fuelType", value)}
             >
               <SelectTrigger
-                className={errors.fuelType ? "border-red-500" : ""}
+                className={`w-full bg-white rounded-[12px] border-none shadow-none`}
               >
                 <SelectValue placeholder="Select" />
               </SelectTrigger>
@@ -283,14 +356,16 @@ const Step2Form = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-4 mt-4">
+        {/* Engine -- Cabin -- Head  */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5">
+          {/* Engine  */}
           <div>
             <Label htmlFor="numEngines">Number of Engines *</Label>
             <Input
               id="numEngines"
               placeholder="Type here"
               {...register("numEngines")}
-              className={errors.numEngines ? "border-red-500" : ""}
+              className={`w-full bg-white rounded-[12px] border-none shadow-none`}
             />
             {errors.numEngines && (
               <p className="text-red-500 text-sm mt-1">
@@ -298,13 +373,15 @@ const Step2Form = () => {
               </p>
             )}
           </div>
+
+          {/* Cabin  */}
           <div>
             <Label htmlFor="numCabins">Number of Cabins *</Label>
             <Input
               id="numCabins"
               placeholder="Type here"
               {...register("numCabins")}
-              className={errors.numCabins ? "border-red-500" : ""}
+              className={`w-full bg-white rounded-[12px] border-none shadow-none`}
             />
             {errors.numCabins && (
               <p className="text-red-500 text-sm mt-1">
@@ -312,13 +389,15 @@ const Step2Form = () => {
               </p>
             )}
           </div>
+
+          {/* Head  */}
           <div>
             <Label htmlFor="numHeads">Number of Heads *</Label>
             <Input
               id="numHeads"
               placeholder="Type here"
               {...register("numHeads")}
-              className={errors.numHeads ? "border-red-500" : ""}
+              className={`w-full bg-white rounded-[12px] border-none shadow-none`}
             />
             {errors.numHeads && (
               <p className="text-red-500 text-sm mt-1">
@@ -330,7 +409,7 @@ const Step2Form = () => {
       </div>
 
       {/* Engine 1 */}
-      <div>
+      <div className="mt-10">
         <h3 className="text-lg font-semibold mb-4">Engine 1</h3>
         <div className="grid grid-cols-2 gap-4">
           <div>
@@ -339,7 +418,7 @@ const Step2Form = () => {
               id="hours"
               placeholder="Type here"
               {...register("hours")}
-              className={errors.hours ? "border-red-500" : ""}
+              className={`w-full bg-white rounded-[12px] border-none shadow-none`}
             />
             {errors.hours && (
               <p className="text-red-500 text-sm mt-1">
@@ -353,7 +432,7 @@ const Step2Form = () => {
               id="make2"
               placeholder="Type here"
               {...register("make2")}
-              className={errors.make2 ? "border-red-500" : ""}
+              className={`w-full bg-white rounded-[12px] border-none shadow-none`}
             />
             {errors.make2 && (
               <p className="text-red-500 text-sm mt-1">
@@ -363,14 +442,14 @@ const Step2Form = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 mt-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
           <div>
             <Label htmlFor="model2">Model *</Label>
             <Input
               id="model2"
               placeholder="Type here"
               {...register("model2")}
-              className={errors.model2 ? "border-red-500" : ""}
+              className={`w-full bg-white rounded-[12px] border-none shadow-none`}
             />
             {errors.model2 && (
               <p className="text-red-500 text-sm mt-1">
@@ -384,7 +463,7 @@ const Step2Form = () => {
               id="totalPower"
               placeholder="Type here"
               {...register("totalPower")}
-              className={errors.totalPower ? "border-red-500" : ""}
+              className={`w-full bg-white rounded-[12px] border-none shadow-none`}
             />
             {errors.totalPower && (
               <p className="text-red-500 text-sm mt-1">
@@ -394,36 +473,63 @@ const Step2Form = () => {
           </div>
         </div>
 
-        <div className="mt-4">
-          <Label htmlFor="propellerType">Propeller Type *</Label>
-          <Select
-            value={propellerType || ""}
-            onValueChange={(value) =>
-              handleSelectChange("propellerType", value)
-            }
-          >
-            <SelectTrigger
-              className={errors.propellerType ? "border-red-500" : ""}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+          <div className="mt-4">
+            <Label htmlFor="propellerType">Fuel Type *</Label>
+            <Select
+              value={propellerType || ""}
+              onValueChange={(value) =>
+                handleSelectChange("propellerType", value)
+              }
             >
-              <SelectValue placeholder="Select" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="fixed">Fixed</SelectItem>
-              <SelectItem value="variable">Variable</SelectItem>
-            </SelectContent>
-          </Select>
-          {errors.propellerType && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors.propellerType.message as string}
-            </p>
-          )}
+              <SelectTrigger
+                className={`w-full bg-white rounded-[12px] border-none shadow-none`}
+              >
+                <SelectValue placeholder="Select" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="fixed">Fixed</SelectItem>
+                <SelectItem value="variable">Variable</SelectItem>
+              </SelectContent>
+            </Select>
+            {errors.propellerType && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.propellerType.message as string}
+              </p>
+            )}
+          </div>
+          <div className="mt-4">
+            <Label htmlFor="propellerType">Propeller Type *</Label>
+            <Select
+              value={propellerType || ""}
+              onValueChange={(value) =>
+                handleSelectChange("propellerType", value)
+              }
+            >
+              <SelectTrigger
+                className={`w-full bg-white rounded-[12px] border-none shadow-none`}
+              >
+                <SelectValue placeholder="Select" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="fixed">Fixed</SelectItem>
+                <SelectItem value="variable">Variable</SelectItem>
+              </SelectContent>
+            </Select>
+            {errors.propellerType && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.propellerType.message as string}
+              </p>
+            )}
+          </div>
         </div>
       </div>
 
       {/* Basic Information */}
-      <div>
+      <div className="mt-10">
         <h3 className="text-lg font-semibold mb-4">Basic Information</h3>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* condition  */}
           <div>
             <Label htmlFor="condition">Condition *</Label>
             <Select
@@ -431,7 +537,7 @@ const Step2Form = () => {
               onValueChange={(value) => handleSelectChange("condition", value)}
             >
               <SelectTrigger
-                className={errors.condition ? "border-red-500" : ""}
+                className={`w-full bg-white rounded-[12px] border-none shadow-none`}
               >
                 <SelectValue placeholder="Select" />
               </SelectTrigger>
@@ -447,13 +553,14 @@ const Step2Form = () => {
               </p>
             )}
           </div>
+          {/* price  */}
           <div>
             <Label htmlFor="price">Price *</Label>
             <Input
               id="price"
               placeholder="Type here"
               {...register("price")}
-              className={errors.price ? "border-red-500" : ""}
+              className={`w-full bg-white rounded-[12px] border-none shadow-none`}
             />
             {errors.price && (
               <p className="text-red-500 text-sm mt-1">
@@ -463,14 +570,15 @@ const Step2Form = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-4 mt-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+          {/* city  */}
           <div>
             <Label htmlFor="city2">City *</Label>
             <Input
               id="city2"
               placeholder="Type here"
               {...register("city")}
-              className={errors.city ? "border-red-500" : ""}
+              className={`w-full bg-white rounded-[12px] border-none shadow-none`}
             />
             {errors.city && (
               <p className="text-red-500 text-sm mt-1">
@@ -478,13 +586,16 @@ const Step2Form = () => {
               </p>
             )}
           </div>
+          {/* state  */}
           <div>
             <Label htmlFor="state2">State *</Label>
             <Select
               value={stateValue || ""}
               onValueChange={(value) => handleSelectChange("state", value)}
             >
-              <SelectTrigger className={errors.state ? "border-red-500" : ""}>
+              <SelectTrigger
+                className={`w-full bg-white rounded-[12px] border-none shadow-none`}
+              >
                 <SelectValue placeholder="Select" />
               </SelectTrigger>
               <SelectContent>
@@ -498,13 +609,14 @@ const Step2Form = () => {
               </p>
             )}
           </div>
+          {/* zip  */}
           <div>
             <Label htmlFor="zip2">Zip *</Label>
             <Input
               id="zip2"
               placeholder="Type here"
               {...register("zip")}
-              className={errors.zip ? "border-red-500" : ""}
+              className={`w-full bg-white rounded-[12px] border-none shadow-none`}
             />
             {errors.zip && (
               <p className="text-red-500 text-sm mt-1">
@@ -514,13 +626,14 @@ const Step2Form = () => {
           </div>
         </div>
 
+        {/* Name  */}
         <div className="mt-4">
           <Label htmlFor="name">Name *</Label>
           <Input
             id="name"
             placeholder="Type here"
             {...register("name")}
-            className={errors.name ? "border-red-500" : ""}
+            className={`w-full bg-white rounded-[12px] border-none shadow-none`}
           />
           {errors.name && (
             <p className="text-red-500 text-sm mt-1">
@@ -529,13 +642,14 @@ const Step2Form = () => {
           )}
         </div>
 
+        {/* Description  */}
         <div className="mt-4">
           <Label htmlFor="description">Description *</Label>
           <Textarea
             id="description"
             placeholder="Write description..."
             {...register("description")}
-            className={errors.description ? "border-red-500" : ""}
+            className={`w-full bg-white rounded-[12px] border-none shadow-none h-32`}
           />
           {errors.description && (
             <p className="text-red-500 text-sm mt-1">
@@ -545,7 +659,8 @@ const Step2Form = () => {
         </div>
       </div>
 
-      <div className="border-l-4 border-blue-500 pl-4 py-4 bg-blue-50">
+      {/* More Details  */}
+      <div className="mt-8">
         <h3 className="text-lg font-semibold mb-4">More Details (Optional)</h3>
 
         {fields.length === 0 ? (
@@ -555,7 +670,7 @@ const Step2Form = () => {
               <Input
                 placeholder="Enter Title"
                 disabled
-                className="bg-gray-100"
+                className={`w-full bg-white rounded-[12px] border-none shadow-none`}
               />
             </div>
             <div>
@@ -563,7 +678,7 @@ const Step2Form = () => {
               <Textarea
                 placeholder="Write description..."
                 disabled
-                className="bg-gray-100"
+                className={`w-full bg-white rounded-[12px] border-none shadow-none`}
               />
             </div>
           </div>
@@ -574,6 +689,7 @@ const Step2Form = () => {
                 <Label>Title</Label>
                 <Input
                   placeholder="Enter Title"
+                  className={`w-full bg-white rounded-[12px] border-none shadow-none`}
                   {...register(`moreDetails.${index}.title`)}
                 />
               </div>
@@ -581,6 +697,7 @@ const Step2Form = () => {
                 <Label>Description</Label>
                 <Textarea
                   placeholder="Write description..."
+                  className={`w-full bg-white rounded-[12px] border-none shadow-none h-32`}
                   {...register(`moreDetails.${index}.description`)}
                 />
               </div>
@@ -589,7 +706,7 @@ const Step2Form = () => {
                 variant="ghost"
                 size="sm"
                 onClick={() => remove(index)}
-                className="text-red-500 hover:text-red-700"
+                className="text-red-500 hover:text-red-700 hover:bg-slate-50 cursor-pointer"
               >
                 <X className="w-4 h-4 mr-2" />
                 Remove
@@ -608,7 +725,8 @@ const Step2Form = () => {
         </Button>
       </div>
 
-      <div>
+      {/* Media And Gallery  */}
+      <div className="mt-10">
         <h3 className="text-lg font-semibold mb-2">Media & Gallery</h3>
         <p className="text-sm text-gray-600 mb-4">
           Your package allows 25 images.
@@ -619,20 +737,20 @@ const Step2Form = () => {
           <Input
             id="embedUrl"
             placeholder="https://youtube.com/embed/..."
+            className={`w-full bg-white rounded-[12px] border-none shadow-none`}
             {...register("embedUrl")}
           />
         </div>
       </div>
 
       <div>
-        <h3 className="text-lg font-semibold mb-4">Upload Cover Photo</h3>
+        <h3 className="text-lg font-semibold mb-2">Upload Cover Photo</h3>
         <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center bg-gray-50 relative">
           {coverPhotoPreview ? (
             <div className="relative">
-              <Image
+              <img
                 src={coverPhotoPreview || "/placeholder.svg"}
                 alt="Cover preview"
-                width={100}
                 className="w-full h-48 object-cover rounded-lg"
               />
               <button
@@ -660,14 +778,13 @@ const Step2Form = () => {
         </div>
       </div>
 
-      <div>
-        <h3 className="text-lg font-semibold mb-4">Upload Media Gallery</h3>
+      <div className="mt-5">
+        <h3 className="text-lg font-semibold mb-2">Upload Media Gallery</h3>
         <div className="grid grid-cols-3 gap-4">
           {mediaGalleryPreviews.map((preview, index) => (
             <div key={index} className="relative group">
-              <Image
+              <img
                 src={preview || "/placeholder.svg"}
-                width={150}
                 alt={`Gallery ${index}`}
                 className="w-full h-32 object-cover rounded-lg"
               />

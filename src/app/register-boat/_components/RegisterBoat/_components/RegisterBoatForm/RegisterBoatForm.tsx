@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/button";
 
 import boatPreview from "@/assets/register-boat/boatPreview.svg";
 import { ArrowRight } from "lucide-react";
+import { PaymentModal } from "../PaymentModal/PaymentModal";
 
 const steps = [
   { id: 1, label: "Select Package", key: "selectPackage" },
@@ -39,17 +40,48 @@ const RegisterBoatForm = () => {
     ...step3Schema.shape,
   });
 
-  const form = useForm({
+  const form = useForm<z.infer<typeof combineSchema>>({
     resolver: zodResolver(combineSchema),
     mode: "onChange",
     defaultValues: {
+      buildYear: "",
+      make: "",
+      model: "",
+      length: "",
+      beam: "",
+      maxDraft: "",
+      class: "",
+      material: "",
+      fuelType: "",
+      numEngines: "",
+      numCabins: "",
+      numHeads: "",
+      hours: "",
+      make2: "",
+      model2: "",
+      totalPower: "",
+      propellerType: "",
+      condition: "",
+      price: "",
+      country: "",
+      email: "",
+      city: "",
+      state: "",
+      zip: "",
+      name: "",
+      description: "",
       moreDetails: [],
-      mediaGallery: [],
-      coverPhoto: "",
+      embedUrl: "",
+      coverPhoto: undefined, // <-- File
+      mediaGallery: [] as File[], // <-- Array of File
+      username: "",
+      password: "",
+      confirmPassword: "",
     },
   });
 
-  const { handleSubmit, watch, getValues, trigger } = form;
+  const { watch, getValues, trigger } = form;
+  const selectedPackage = watch("selectedPackage");
 
   const handleNext = async () => {
     let isValid = false;
@@ -88,6 +120,7 @@ const RegisterBoatForm = () => {
         "lastName",
         "contactNumber",
         "country",
+        "email",
         "city",
         "state",
         "zip",
@@ -129,10 +162,12 @@ const RegisterBoatForm = () => {
               );
             });
           } else if (key === "mediaGallery") {
-            value.forEach((image: string, index: number) => {
-              formData.append(`${key}[${index}]`, image);
+            (value as File[]).forEach((file, index: number) => {
+              formData.append(`${key}[${index}]`, file); // Append File directly
             });
           }
+        } else if (key === "coverPhoto" && value instanceof File) {
+          formData.append(key, value); // Append File directly
         } else {
           formData.append(key, String(value));
         }
@@ -153,7 +188,7 @@ const RegisterBoatForm = () => {
     // Log FormData entries for better visibility
     console.log("FormData entries:");
     for (const [key, value] of formData.entries()) {
-      console.log(`  ${key}: ${value}`);
+      console.log(`  ${key}:`, value);
     }
 
     return formData;
@@ -161,20 +196,20 @@ const RegisterBoatForm = () => {
 
   const handlePaymentSuccess = () => {
     setCompletedSteps([...completedSteps, 3]);
-    alert("Listing posted successfully!");
   };
 
   return (
     <div>
       <CustomContainer>
         <div className="rounded-lg bg-[#F4F4F4] p-3 sm:p-5 md:p-8">
-          {/* Heading  */}
+          {/* Heading */}
           <div className="flex items-center gap-3 flex-wrap justify-between">
             <h1 className="text-lg sm:text-3xl font-semibold">
               Listing Progress
             </h1>
             <span className="font-medium">Step {currentStep}</span>
           </div>
+
           {/* Progress Steps */}
           <div className="flex items-center gap-4 mt-6">
             {steps.map((step) => (
@@ -182,20 +217,18 @@ const RegisterBoatForm = () => {
                 key={step.id}
                 className="flex flex-col items-center md:items-start flex-1"
               >
-                {/* {idx < steps.length - 1 && ( */}
                 <div
                   className={`h-2  rounded-full w-full ${
                     completedSteps.includes(step.id)
-                      ? "bg-blue-600"
+                      ? "bg-primary"
                       : "bg-gray-200"
                   }`}
                   style={{ minWidth: "60px" }}
                 />
-                {/* )}   */}
                 <h1
                   className={`text-base lg:text-lg text-[#6C6F6F] mt-2 text-left hidden md:block ${
                     currentStep === step.id || completedSteps.includes(step.id)
-                      ? "text-blue-600 font-semibold"
+                      ? "text-gray-600"
                       : "text-gray-600"
                   }`}
                 >
@@ -217,7 +250,7 @@ const RegisterBoatForm = () => {
           </div>
 
           {/* Main Content */}
-          <div className="grid grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-6">
             {/* Form */}
             <div
               className={`${currentStep === 1 ? "col-span-3" : "col-span-2"}`}
@@ -235,12 +268,13 @@ const RegisterBoatForm = () => {
                     variant="outline"
                     onClick={handleBack}
                     disabled={currentStep === 1}
+                    className="cursor-pointer"
                   >
                     Back
                   </Button>
                   <Button
                     onClick={handleNext}
-                    className="bg-blue-600 hover:bg-blue-700"
+                    className="bg-blue-600 hover:bg-blue-700 cursor-pointer"
                   >
                     <span>Next </span>
                     <ArrowRight />
@@ -250,8 +284,12 @@ const RegisterBoatForm = () => {
             </div>
 
             {/* Preview */}
-            <div className={`${currentStep === 1 ? "hidden" : "block"}`}>
-              <div className="p-4 sticky top-4">
+            <div
+              className={`${
+                currentStep === 1 ? "hidden" : "block"
+              } w-full mx-auto`}
+            >
+              <div className="p-4 sticky top-60 bg-white rounded-xl mt-8">
                 <h3 className="font-semibold mb-4">Preview</h3>
                 <div className="bg-gray-200 rounded-lg overflow-hidden">
                   <Image
@@ -282,6 +320,15 @@ const RegisterBoatForm = () => {
           </div>
         </div>
       </CustomContainer>
+
+      {/* Payment Modal */}
+      <PaymentModal
+        isOpen={showPaymentModal}
+        onClose={() => setShowPaymentModal(false)}
+        selectedPackage={selectedPackage}
+        onPaymentSuccess={handlePaymentSuccess}
+        onSubmitPayment={handlePaymentSubmit}
+      />
     </div>
   );
 };
