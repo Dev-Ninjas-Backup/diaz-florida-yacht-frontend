@@ -526,7 +526,7 @@ export const brandImages = [
 
 export const subscriptionPlans: SubscriptionPlan[] = [
     {
-      "id": 1,
+      "id": "1",
       "name": "Gold Package",
       "price": 9.99,
       "currency": "USD",
@@ -545,7 +545,7 @@ export const subscriptionPlans: SubscriptionPlan[] = [
       "buttonStyle": "dark"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Platinum Package",
       "price": 15.99,
       "currency": "USD",
@@ -565,7 +565,7 @@ export const subscriptionPlans: SubscriptionPlan[] = [
       "buttonStyle": "primary"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Diamond Elite Brokerage",
       "price": 29.99,
       "currency": "USD",
