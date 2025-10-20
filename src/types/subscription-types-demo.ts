@@ -1,5 +1,5 @@
 export interface SubscriptionPlan {
-  id: number;
+  id: number | string;
   name: string;
   price: number;
   currency: string;
