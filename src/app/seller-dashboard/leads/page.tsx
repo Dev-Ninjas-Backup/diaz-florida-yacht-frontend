@@ -1,4 +1,4 @@
-import LeadTable from "./_components/LeadTable/LeadTable";
+import LeadTable from './_components/LeadTable/LeadTable';
 
 const LeadsPage = () => {
   return (

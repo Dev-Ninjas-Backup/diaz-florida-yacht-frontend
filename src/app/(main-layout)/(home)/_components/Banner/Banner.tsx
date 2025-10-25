@@ -1,7 +1,7 @@
-import React from "react";
-import { BsStars } from "react-icons/bs";
-import SearchComponent from "./SearchComponent";
-import CustomContainer from "@/components/CustomComponents/CustomContainer";
+import React from 'react';
+import { BsStars } from 'react-icons/bs';
+import SearchComponent from './SearchComponent';
+import CustomContainer from '@/components/CustomComponents/CustomContainer';
 
 const Banner = () => {
   return (

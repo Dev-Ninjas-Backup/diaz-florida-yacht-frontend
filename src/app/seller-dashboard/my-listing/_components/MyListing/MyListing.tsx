@@ -1,18 +1,18 @@
-"use client";
-import { Eye, Plus, Search, SquarePen, Trash2 } from "lucide-react";
+'use client';
+import { Eye, Plus, Search, SquarePen, Trash2 } from 'lucide-react';
 import CustomTable, {
   Column,
-} from "@/components/shared/dashboard/CustomTable/CustomTable";
-import Image from "next/image";
+} from '@/components/shared/dashboard/CustomTable/CustomTable';
+import Image from 'next/image';
 // import { useState } from "react";
-import { IListing, myListingsData } from "../../data/myListing";
+import { IListing, myListingsData } from '../../data/myListing';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 
 const MyListing = () => {
   //Pagination states
@@ -21,12 +21,12 @@ const MyListing = () => {
   //Table Config
   const listingColumns: Column<IListing>[] = [
     {
-      header: "Listing ID",
-      accessor: "Listing ID",
+      header: 'Listing ID',
+      accessor: 'Listing ID',
     },
     // File Name Column
     {
-      header: "Name",
+      header: 'Name',
       cell: (row) => (
         <div className="flex items-center">
           <div className="flex-shrink-0 w-24 h-12 ">
@@ -43,22 +43,22 @@ const MyListing = () => {
       ),
     },
     {
-      header: "Price",
-      accessor: "Price",
+      header: 'Price',
+      accessor: 'Price',
     },
     // Type Column
     {
-      header: "Publish Date",
-      cell: (row) => <p>{row?.["Publish Date"]}</p>,
+      header: 'Publish Date',
+      cell: (row) => <p>{row?.['Publish Date']}</p>,
     },
     {
-      header: "Status",
+      header: 'Status',
       cell: (row) => (
         <span
           className={` ${
-            row?.Status === "Active"
-              ? "bg-[#E3FBFD] text-[#00A3AC] rounded-full px-4 py-1.5"
-              : "bg-[#F4F4F4] text-gray-500 rounded-full px-4 py-1.5"
+            row?.Status === 'Active'
+              ? 'bg-[#E3FBFD] text-[#00A3AC] rounded-full px-4 py-1.5'
+              : 'bg-[#F4F4F4] text-gray-500 rounded-full px-4 py-1.5'
           }`}
         >
           {row?.Status}
@@ -66,7 +66,7 @@ const MyListing = () => {
       ),
     },
     {
-      header: "Action",
+      header: 'Action',
       cell: () => (
         <div className="flex items-center space-x-2">
           <button className="text-gray-400 hover:text-primary focus:outline-none focus:text-primary cursor-pointer bg-[#F4F4F4] p-1 rounded-full border border-gray-200">
@@ -94,7 +94,7 @@ const MyListing = () => {
                 <SelectValue placeholder="Select" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem defaultValue={"all"} value="all">
+                <SelectItem defaultValue={'all'} value="all">
                   All
                 </SelectItem>
                 <SelectItem value="active">Active</SelectItem>

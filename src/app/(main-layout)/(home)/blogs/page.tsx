@@ -1,13 +1,13 @@
-import CustomBanner from "@/components/CustomComponents/CustomBanner";
-import React from "react";
-import banner from "@/assets/blogs/banner.jpg";
-import CustomContainer from "@/components/CustomComponents/CustomContainer";
-import generalBlog from "@/assets/blogs/generalblog.jpg";
-import FrontBlog from "./_components/FrontBlog/FrontBlog";
-import { demoBlogData } from "@/assets/demo-datas/demodata";
-import BlogCard from "@/components/Blog/BlogCard";
-import AdComponent from "@/components/CustomComponents/AdComponent";
-import SmallAdComponent from "@/components/CustomComponents/SmallAdComponent";
+import CustomBanner from '@/components/CustomComponents/CustomBanner';
+import React from 'react';
+import banner from '@/assets/blogs/banner.jpg';
+import CustomContainer from '@/components/CustomComponents/CustomContainer';
+import generalBlog from '@/assets/blogs/generalblog.jpg';
+import FrontBlog from './_components/FrontBlog/FrontBlog';
+import { demoBlogData } from '@/assets/demo-datas/demodata';
+import BlogCard from '@/components/Blog/BlogCard';
+import AdComponent from '@/components/CustomComponents/AdComponent';
+import SmallAdComponent from '@/components/CustomComponents/SmallAdComponent';
 
 const BlogPage = () => {
   return (
