@@ -112,6 +112,30 @@
   --sidebar-ring: oklch(0.552 0.016 285.938);
 }
 
+@theme{
+
+    /*======> Fonts <=======*/
+  --font-inter: var(--font-inter);
+  /*======> Custom Breakpoint <=======*/
+  --breakpoint-*: initial;
+  --breakpoint-xsm: 360px;
+  --breakpoint-xs: 476px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-bs: 900px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1550px;
+
+  /*======> Custom Colors <=======*/
+  --color-primary: #00A3AC;
+  --color-secondary:#006EF0;
+  --color-primary-txt:#000000;
+  --color-secondary-txt:#4A4D4D;
+  --color-accent: #00CDD8;
+
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
