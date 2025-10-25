@@ -1,20 +1,31 @@
-# Use Node.js 24-slim image
-FROM node:24-slim
-
-# Set working directory
+# ----------- Stage 1: Dependencies ----------- 
+FROM node:24-slim AS deps
 WORKDIR /app
 
-# Install dependencies
-COPY package.json .
+# Copy package files and install dependencies
+COPY package.json package-lock.json* ./
+RUN npm ci
 
-# Install dependencies
-RUN npm install
+# ----------- Stage 2: Builder -----------
+FROM node:24-slim AS builder
+WORKDIR /app
 
-# Copy source code
+# Copy dependencies from previous stage
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Build the app
+# Build the Next.js app
 RUN npm run build
+
+# ----------- Stage 3: Production Runner -----------
+FROM node:24-slim AS runner
+WORKDIR /app
+
+# Copy only necessary files for runtime
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/node_modules ./node_modules
 
 # Expose port
 EXPOSE 3000
