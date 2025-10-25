@@ -2,7 +2,6 @@
 import { demoDescription } from "@/assets/demo-datas/demodata";
 import React, { useState } from "react";
 import { MdArrowForwardIos } from "react-icons/md";
-import { text } from "stream/consumers";
 
 const faq = [
   {

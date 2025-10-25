@@ -1,0 +1,41 @@
+services:
+  floridayt:
+    platform: linux/amd64
+    image: softvence/diaz_floridayt:latest
+    container_name: floridayt
+    environment:
+      - NEXT_PUBLIC_BASE_URL=https://development.floridayachttrader.com
+      - NEXT_PUBLIC_BASE_API=https://api.floridayachttrader.com/api
+    ports:
+      - "3000:3000"
+    restart: always
+    command: >
+      sh -c "
+        echo '🏁 Building the app...';
+        npm run build;
+        echo '🚀 Starting app...';
+        npm run start
+      "
+
+  caddy:
+    image: caddy
+    container_name: caddy
+    restart: always
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - floridayt
+    healthcheck:
+      test: ['CMD-SHELL', 'caddy validate --config /etc/caddy/Caddyfile']
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  caddy_data:
+  caddy_config:
