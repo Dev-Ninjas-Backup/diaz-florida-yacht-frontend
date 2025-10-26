@@ -16,6 +16,12 @@ services:
         echo '🚀 Starting app on 0.0.0.0...';
         HOST=0.0.0.0 PORT=3000 npm run start
       "
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3000 || exit 1"]
+      interval: 10s
+      retries: 10
+      timeout: 5s
+      start_period: 10s
 
   caddy:
     image: caddy
@@ -29,7 +35,8 @@ services:
       - caddy_data:/data
       - caddy_config:/config
     depends_on:
-      - floridayt
+      floridayt:
+        condition: service_healthy
     healthcheck:
       test: ['CMD-SHELL', 'caddy validate --config /etc/caddy/Caddyfile']
       interval: 30s
