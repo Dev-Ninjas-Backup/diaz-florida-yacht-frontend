@@ -7,4 +7,5 @@ development.floridayachttrader.com {
   }
 
   encode gzip
+  tls internal
 }
