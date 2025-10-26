@@ -1,19 +1,19 @@
-"use client";
-import React, { useState } from "react";
-import banner from "@/assets/search-listing-image/banner.jpg";
-import { IoSearchSharp } from "react-icons/io5";
-import CustomContainer from "@/components/CustomComponents/CustomContainer";
-import FilterListing from "./_components/FilterListing";
-import AllListing from "./_components/AllListing";
-import CustomBanner from "@/components/CustomComponents/CustomBanner";
-import AdComponent from "@/components/CustomComponents/AdComponent";
+'use client';
+import React, { useState } from 'react';
+import banner from '@/assets/search-listing-image/banner.jpg';
+import { IoSearchSharp } from 'react-icons/io5';
+import CustomContainer from '@/components/CustomComponents/CustomContainer';
+import FilterListing from './_components/FilterListing';
+import AllListing from './_components/AllListing';
+import CustomBanner from '@/components/CustomComponents/CustomBanner';
+import AdComponent from '@/components/CustomComponents/AdComponent';
 
 const SearchListingPage = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   return (
     <div>
-     <CustomBanner banner={banner}>
+      <CustomBanner banner={banner}>
         <div className="text-center">
           <h1 className="text-white text-xl md:text-4xl lg:text-6xl uppercase font-bold md:tracking-[5px]">
             search FROM LISTING
@@ -29,7 +29,7 @@ const SearchListingPage = () => {
             </button>
           </div>
         </div>
-     </CustomBanner>
+      </CustomBanner>
 
       <CustomContainer>
         <div className="md:hidden my-4">
@@ -72,7 +72,7 @@ const SearchListingPage = () => {
         )}
       </CustomContainer>
 
-     <AdComponent />
+      <AdComponent />
     </div>
   );
 };

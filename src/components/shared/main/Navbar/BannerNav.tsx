@@ -1,13 +1,13 @@
-"use client";
-import Image from "next/image";
-import React, { useState } from "react";
-import logo from "@/assets/florida-yacht-logo.png";
-import Link from "next/link";
-import { IoSearch } from "react-icons/io5";
-import { MdMyLocation } from "react-icons/md";
-import { IoIosArrowDown } from "react-icons/io";
-import { GiHamburgerMenu } from "react-icons/gi";
-import { IoClose } from "react-icons/io5";
+'use client';
+import Image from 'next/image';
+import React, { useState } from 'react';
+import logo from '@/assets/florida-yacht-logo.png';
+import Link from 'next/link';
+import { IoSearch } from 'react-icons/io5';
+import { MdMyLocation } from 'react-icons/md';
+import { IoIosArrowDown } from 'react-icons/io';
+import { GiHamburgerMenu } from 'react-icons/gi';
+import { IoClose } from 'react-icons/io5';
 
 const BannerNav = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,7 +16,7 @@ const BannerNav = () => {
     <nav className="inset-x-2 md:inset-x-5  rounded-2xl px-3 py-2 text-white z-50 h-20 md:h-24">
       <div className="container mx-auto flex justify-between items-center pt-2.5">
         <div className="flex-shrink-0">
-          <Link href={"/"}>
+          <Link href={'/'}>
             <Image
               src={logo}
               alt="Florida Yacht Logo"
@@ -64,7 +64,7 @@ const BannerNav = () => {
             <IoIosArrowDown className="text-white" />
           </div>
           <Link
-            href={"/login"}
+            href={'/login'}
             className="hover:text-gray-300 transition-colors"
           >
             My Account
@@ -125,7 +125,7 @@ const BannerNav = () => {
                 <IoIosArrowDown className="text-white" />
               </div>
               <Link
-                href={"/login"}
+                href={'/login'}
                 className="px-3 py-2 hover:bg-white/10 rounded-md transition-colors block"
                 onClick={() => setIsOpen(false)}
               >

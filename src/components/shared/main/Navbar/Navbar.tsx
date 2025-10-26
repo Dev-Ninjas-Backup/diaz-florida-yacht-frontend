@@ -1,13 +1,13 @@
-"use client";
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
-import logo from "@/assets/florida-yacht-logo.png";
-import Link from "next/link";
-import { IoSearch } from "react-icons/io5";
-import { MdMyLocation } from "react-icons/md";
-import { IoIosArrowDown } from "react-icons/io";
-import { GiHamburgerMenu } from "react-icons/gi";
-import { IoClose } from "react-icons/io5";
+'use client';
+import Image from 'next/image';
+import React, { useEffect, useState } from 'react';
+import logo from '@/assets/florida-yacht-logo.png';
+import Link from 'next/link';
+import { IoSearch } from 'react-icons/io5';
+import { MdMyLocation } from 'react-icons/md';
+import { IoIosArrowDown } from 'react-icons/io';
+import { GiHamburgerMenu } from 'react-icons/gi';
+import { IoClose } from 'react-icons/io5';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,17 +20,17 @@ const Navbar = () => {
     }
   };
   useEffect(() => {
-    window.addEventListener("scroll", handleChangeBackgroundOnScroll);
+    window.addEventListener('scroll', handleChangeBackgroundOnScroll);
   }, []);
   return (
     <nav
       className={`fixed top-2 md:top-3 inset-x-2 md:inset-x-5  rounded-2xl px-3 py-2 text-white z-50 h-20 md:h-24 ${
-        scrolled ? "bg-black/30 backdrop-blur-xs" : "bg-transparent"
+        scrolled ? 'bg-black/30 backdrop-blur-xs' : 'bg-transparent'
       }`}
     >
       <div className="container mx-auto flex justify-between items-center pt-2.5">
         <div className="flex-shrink-0">
-          <Link href={"/"}>
+          <Link href={'/'}>
             <Image
               src={logo}
               alt="Florida Yacht Logo"
@@ -78,7 +78,7 @@ const Navbar = () => {
             <IoIosArrowDown className="text-white" />
           </div>
           <Link
-            href={"/login"}
+            href={'/login'}
             className="hover:text-gray-300 transition-colors"
           >
             My Account
@@ -139,7 +139,7 @@ const Navbar = () => {
                 <IoIosArrowDown className="text-white" />
               </div>
               <Link
-                href={"/login"}
+                href={'/login'}
                 className="px-3 py-2 hover:bg-white/10 rounded-md transition-colors block"
                 onClick={() => setIsOpen(false)}
               >

@@ -1,39 +1,39 @@
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import React from "react";
-import { useFormContext } from "react-hook-form";
+} from '@/components/ui/select';
+import React from 'react';
+import { useFormContext } from 'react-hook-form';
 
 const cities = [
-  "Los Angeles",
-  "San Francisco",
-  "New York City",
-  "Houston",
-  "Dallas",
-  "Miami",
-  "Chicago",
-  "Seattle",
-  "Atlanta",
-  "Phoenix",
+  'Los Angeles',
+  'San Francisco',
+  'New York City',
+  'Houston',
+  'Dallas',
+  'Miami',
+  'Chicago',
+  'Seattle',
+  'Atlanta',
+  'Phoenix',
 ];
 
 const states = [
-  "California",
-  "New York",
-  "Texas",
-  "Florida",
-  "Illinois",
-  "Washington",
-  "Ohio",
-  "Georgia",
-  "Pennsylvania",
-  "Arizona",
+  'California',
+  'New York',
+  'Texas',
+  'Florida',
+  'Illinois',
+  'Washington',
+  'Ohio',
+  'Georgia',
+  'Pennsylvania',
+  'Arizona',
 ];
 
 const Step3Form = () => {
@@ -45,9 +45,9 @@ const Step3Form = () => {
     clearErrors,
   } = useFormContext();
 
-  const country = watch("country");
-  const state = watch("state");
-  const city = watch("city");
+  const country = watch('country');
+  const state = watch('state');
+  const city = watch('city');
   const handleSelectChange = (fieldName: string, value: string) => {
     setValue(fieldName, value);
     clearErrors(fieldName);
@@ -63,7 +63,7 @@ const Step3Form = () => {
             <Input
               id="firstName"
               placeholder="Type here"
-              {...register("firstName")}
+              {...register('firstName')}
               className={`w-full bg-white rounded-[12px] border-none shadow-none`}
             />
             {errors.firstName && (
@@ -77,7 +77,7 @@ const Step3Form = () => {
             <Input
               id="lastName"
               placeholder="Type here"
-              {...register("lastName")}
+              {...register('lastName')}
               className={`w-full bg-white rounded-[12px] border-none shadow-none`}
             />
             {errors.lastName && (
@@ -94,7 +94,7 @@ const Step3Form = () => {
             <Input
               id="contactNumber"
               placeholder="Type here"
-              {...register("contactNumber")}
+              {...register('contactNumber')}
               className={`w-full bg-white rounded-[12px] border-none shadow-none`}
             />
             {errors.contactNumber && (
@@ -108,7 +108,7 @@ const Step3Form = () => {
             <Input
               id="email"
               placeholder="Type here"
-              {...register("email")}
+              {...register('email')}
               className={`w-full bg-white rounded-[12px] border-none shadow-none`}
             />
             {errors.email && (
@@ -121,8 +121,8 @@ const Step3Form = () => {
         <div className="mt-5">
           <Label htmlFor="country">Country *</Label>
           <Select
-            value={country || ""}
-            onValueChange={(value) => handleSelectChange("country", value)}
+            value={country || ''}
+            onValueChange={(value) => handleSelectChange('country', value)}
           >
             <SelectTrigger
               className={`w-full bg-white rounded-[12px] border-none shadow-none`}
@@ -147,8 +147,8 @@ const Step3Form = () => {
           <div>
             <Label htmlFor="city">City *</Label>
             <Select
-              value={city || ""}
-              onValueChange={(value) => handleSelectChange("city", value)}
+              value={city || ''}
+              onValueChange={(value) => handleSelectChange('city', value)}
             >
               <SelectTrigger className="w-full bg-white rounded-[12px] border-none shadow-none">
                 <SelectValue placeholder="Select" />
@@ -172,8 +172,8 @@ const Step3Form = () => {
           <div>
             <Label htmlFor="state">State *</Label>
             <Select
-              value={state || ""}
-              onValueChange={(value) => handleSelectChange("state", value)}
+              value={state || ''}
+              onValueChange={(value) => handleSelectChange('state', value)}
             >
               <SelectTrigger className="w-full bg-white rounded-[12px] border-none shadow-none">
                 <SelectValue placeholder="Select" />
@@ -197,7 +197,7 @@ const Step3Form = () => {
             <Input
               id="zip"
               placeholder="Type here"
-              {...register("zip")}
+              {...register('zip')}
               className={`w-full bg-white rounded-[12px] border-none shadow-none`}
             />
             {errors.zip && (
@@ -219,7 +219,7 @@ const Step3Form = () => {
           <Input
             id="username"
             placeholder="Type here"
-            {...register("username")}
+            {...register('username')}
             className={`w-full bg-white rounded-[12px] border-none shadow-none`}
           />
           {errors.username && (
@@ -235,7 +235,7 @@ const Step3Form = () => {
             id="password"
             type="password"
             placeholder="Type here"
-            {...register("password")}
+            {...register('password')}
             className={`w-full bg-white rounded-[12px] border-none shadow-none`}
           />
           {errors.password && (
@@ -251,7 +251,7 @@ const Step3Form = () => {
             id="confirmPassword"
             type="password"
             placeholder="Type here"
-            {...register("confirmPassword")}
+            {...register('confirmPassword')}
             className={`w-full bg-white rounded-[12px] border-none shadow-none`}
           />
           {errors.confirmPassword && (

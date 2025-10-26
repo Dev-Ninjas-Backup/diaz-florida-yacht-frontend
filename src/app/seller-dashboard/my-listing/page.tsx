@@ -1,4 +1,4 @@
-import MyListing from "./_components/MyListing/MyListing";
+import MyListing from './_components/MyListing/MyListing';
 
 const MyListingPage = () => {
   return (

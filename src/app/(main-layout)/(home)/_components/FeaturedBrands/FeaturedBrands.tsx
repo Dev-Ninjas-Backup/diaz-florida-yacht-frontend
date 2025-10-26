@@ -1,8 +1,8 @@
-import { brandImages } from "@/assets/demo-datas/demodata";
-import CustomContainer from "@/components/CustomComponents/CustomContainer";
-import Image from "next/image";
-import React from "react";
-import Marquee from "react-fast-marquee";
+import { brandImages } from '@/assets/demo-datas/demodata';
+import CustomContainer from '@/components/CustomComponents/CustomContainer';
+import Image from 'next/image';
+import React from 'react';
+import Marquee from 'react-fast-marquee';
 
 const FeaturedBrands = () => {
   return (

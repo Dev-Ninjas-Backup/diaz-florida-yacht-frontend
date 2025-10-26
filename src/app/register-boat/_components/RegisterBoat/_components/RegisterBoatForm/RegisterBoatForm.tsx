@@ -1,31 +1,31 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
+'use client';
 
 import {
   step1Schema,
   step2Schema,
   step3Schema,
-} from "@/app/register-boat/schema/registerBoatSchema";
-import CustomContainer from "@/components/CustomComponents/CustomContainer";
-import { zodResolver } from "@hookform/resolvers/zod";
-import Image from "next/image";
-import { useState } from "react";
-import { FormProvider, useForm } from "react-hook-form";
-import z from "zod";
-import Step1Form from "../Step1Form/Step1Form";
-import Step2Form from "../Step2Form/Step2Form";
-import Step3Form from "../Step3Form/Step3Form";
-import { Button } from "@/components/ui/button";
+} from '@/app/register-boat/schema/registerBoatSchema';
+import CustomContainer from '@/components/CustomComponents/CustomContainer';
+import { zodResolver } from '@hookform/resolvers/zod';
+import Image from 'next/image';
+import { useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import z from 'zod';
+import Step1Form from '../Step1Form/Step1Form';
+import Step2Form from '../Step2Form/Step2Form';
+import Step3Form from '../Step3Form/Step3Form';
+import { Button } from '@/components/ui/button';
 
-import boatPreview from "@/assets/register-boat/boatPreview.svg";
-import { ArrowRight } from "lucide-react";
-import { PaymentModal } from "../PaymentModal/PaymentModal";
+import boatPreview from '@/assets/register-boat/boatPreview.svg';
+import { ArrowRight } from 'lucide-react';
+import { PaymentModal } from '../PaymentModal/PaymentModal';
 
 const steps = [
-  { id: 1, label: "Select Package", key: "selectPackage" },
-  { id: 2, label: "Boat Information", key: "boatInfo" },
-  { id: 3, label: "Seller Information", key: "sellerInfo" },
-  { id: 4, label: "Pay & Post", key: "payPost" },
+  { id: 1, label: 'Select Package', key: 'selectPackage' },
+  { id: 2, label: 'Boat Information', key: 'boatInfo' },
+  { id: 3, label: 'Seller Information', key: 'sellerInfo' },
+  { id: 4, label: 'Pay & Post', key: 'payPost' },
 ];
 
 const RegisterBoatForm = () => {
@@ -42,91 +42,91 @@ const RegisterBoatForm = () => {
 
   const form = useForm<z.infer<typeof combineSchema>>({
     resolver: zodResolver(combineSchema),
-    mode: "onChange",
+    mode: 'onChange',
     defaultValues: {
-      buildYear: "",
-      make: "",
-      model: "",
-      length: "",
-      beam: "",
-      maxDraft: "",
-      class: "",
-      material: "",
-      fuelType: "",
-      numEngines: "",
-      numCabins: "",
-      numHeads: "",
-      hours: "",
-      make2: "",
-      model2: "",
-      totalPower: "",
-      propellerType: "",
-      condition: "",
-      price: "",
-      country: "",
-      email: "",
-      city: "",
-      state: "",
-      zip: "",
-      name: "",
-      description: "",
+      buildYear: '',
+      make: '',
+      model: '',
+      length: '',
+      beam: '',
+      maxDraft: '',
+      class: '',
+      material: '',
+      fuelType: '',
+      numEngines: '',
+      numCabins: '',
+      numHeads: '',
+      hours: '',
+      make2: '',
+      model2: '',
+      totalPower: '',
+      propellerType: '',
+      condition: '',
+      price: '',
+      country: '',
+      email: '',
+      city: '',
+      state: '',
+      zip: '',
+      name: '',
+      description: '',
       moreDetails: [],
-      embedUrl: "",
+      embedUrl: '',
       coverPhoto: undefined, // <-- File
       mediaGallery: [] as File[], // <-- Array of File
-      username: "",
-      password: "",
-      confirmPassword: "",
+      username: '',
+      password: '',
+      confirmPassword: '',
     },
   });
 
   const { watch, getValues, trigger } = form;
-  const selectedPackage = watch("selectedPackage");
+  const selectedPackage = watch('selectedPackage');
 
   const handleNext = async () => {
     let isValid = false;
     if (currentStep === 1) {
-      isValid = await trigger(["selectedPackage"]);
+      isValid = await trigger(['selectedPackage']);
     } else if (currentStep === 2) {
       isValid = await trigger([
-        "buildYear",
-        "make",
-        "model",
-        "length",
-        "beam",
-        "maxDraft",
-        "class",
-        "material",
-        "fuelType",
-        "numEngines",
-        "numCabins",
-        "numHeads",
-        "hours",
-        "make2",
-        "model2",
-        "totalPower",
-        "propellerType",
-        "condition",
-        "price",
-        "city",
-        "state",
-        "zip",
-        "name",
-        "description",
+        'buildYear',
+        'make',
+        'model',
+        'length',
+        'beam',
+        'maxDraft',
+        'class',
+        'material',
+        'fuelType',
+        'numEngines',
+        'numCabins',
+        'numHeads',
+        'hours',
+        'make2',
+        'model2',
+        'totalPower',
+        'propellerType',
+        'condition',
+        'price',
+        'city',
+        'state',
+        'zip',
+        'name',
+        'description',
       ]);
     } else if (currentStep === 3) {
       isValid = await trigger([
-        "firstName",
-        "lastName",
-        "contactNumber",
-        "country",
-        "email",
-        "city",
-        "state",
-        "zip",
-        "username",
-        "password",
-        "confirmPassword",
+        'firstName',
+        'lastName',
+        'contactNumber',
+        'country',
+        'email',
+        'city',
+        'state',
+        'zip',
+        'username',
+        'password',
+        'confirmPassword',
       ]);
       if (isValid) {
         setShowPaymentModal(true);
@@ -153,20 +153,20 @@ const RegisterBoatForm = () => {
       if (value !== null && value !== undefined) {
         // Handle arrays (moreDetails, mediaGallery)
         if (Array.isArray(value)) {
-          if (key === "moreDetails") {
+          if (key === 'moreDetails') {
             value.forEach((item: any, index: number) => {
-              formData.append(`${key}[${index}][title]`, item.title || "");
+              formData.append(`${key}[${index}][title]`, item.title || '');
               formData.append(
                 `${key}[${index}][description]`,
-                item.description || ""
+                item.description || '',
               );
             });
-          } else if (key === "mediaGallery") {
+          } else if (key === 'mediaGallery') {
             (value as File[]).forEach((file, index: number) => {
               formData.append(`${key}[${index}]`, file); // Append File directly
             });
           }
-        } else if (key === "coverPhoto" && value instanceof File) {
+        } else if (key === 'coverPhoto' && value instanceof File) {
           formData.append(key, value); // Append File directly
         } else {
           formData.append(key, String(value));
@@ -183,10 +183,10 @@ const RegisterBoatForm = () => {
       }
     });
 
-    console.log("Complete Form Submission (FormData):", formData);
+    console.log('Complete Form Submission (FormData):', formData);
 
     // Log FormData entries for better visibility
-    console.log("FormData entries:");
+    console.log('FormData entries:');
     for (const [key, value] of formData.entries()) {
       console.log(`  ${key}:`, value);
     }
@@ -220,16 +220,16 @@ const RegisterBoatForm = () => {
                 <div
                   className={`h-2  rounded-full w-full ${
                     completedSteps.includes(step.id)
-                      ? "bg-primary"
-                      : "bg-gray-200"
+                      ? 'bg-primary'
+                      : 'bg-gray-200'
                   }`}
-                  style={{ minWidth: "60px" }}
+                  style={{ minWidth: '60px' }}
                 />
                 <h1
                   className={`text-base lg:text-lg text-[#6C6F6F] mt-2 text-left hidden md:block ${
                     currentStep === step.id || completedSteps.includes(step.id)
-                      ? "text-gray-600"
-                      : "text-gray-600"
+                      ? 'text-gray-600'
+                      : 'text-gray-600'
                   }`}
                 >
                   {step.label}
@@ -237,13 +237,13 @@ const RegisterBoatForm = () => {
                 <div
                   className={`w-8 h-8 mt-2 rounded-full flex items-center justify-center font-semibold text-sm md:hidden ${
                     completedSteps.includes(step.id)
-                      ? "bg-blue-600 text-white"
+                      ? 'bg-blue-600 text-white'
                       : currentStep === step.id
-                      ? "bg-blue-600 text-white"
-                      : "bg-gray-200 text-gray-600"
+                        ? 'bg-blue-600 text-white'
+                        : 'bg-gray-200 text-gray-600'
                   }`}
                 >
-                  {completedSteps.includes(step.id) ? "✓" : step.id}
+                  {completedSteps.includes(step.id) ? '✓' : step.id}
                 </div>
               </div>
             ))}
@@ -253,7 +253,7 @@ const RegisterBoatForm = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-6">
             {/* Form */}
             <div
-              className={`${currentStep === 1 ? "col-span-3" : "col-span-2"}`}
+              className={`${currentStep === 1 ? 'col-span-3' : 'col-span-2'}`}
             >
               <div>
                 <FormProvider {...form}>
@@ -286,7 +286,7 @@ const RegisterBoatForm = () => {
             {/* Preview */}
             <div
               className={`${
-                currentStep === 1 ? "hidden" : "block"
+                currentStep === 1 ? 'hidden' : 'block'
               } w-full mx-auto`}
             >
               <div className="p-4 sticky top-60 bg-white rounded-xl mt-8">

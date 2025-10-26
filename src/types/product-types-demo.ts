@@ -21,7 +21,6 @@ export interface YachtProduct {
   image: string | StaticImageData;
 }
 
-
 export interface CategoryImg {
   id: number;
   name: string;

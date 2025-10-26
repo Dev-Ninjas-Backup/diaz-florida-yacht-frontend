@@ -1,9 +1,9 @@
-"use client";
-import GradientBannerCustom from "@/components/CustomComponents/GradientBannerCustom";
-import { useRouter } from "next/navigation";
-import React from "react";
-import { IoArrowBack } from "react-icons/io5";
-import RegisterBoatForm from "./_components/RegisterBoatForm/RegisterBoatForm";
+'use client';
+import GradientBannerCustom from '@/components/CustomComponents/GradientBannerCustom';
+import { useRouter } from 'next/navigation';
+import React from 'react';
+import { IoArrowBack } from 'react-icons/io5';
+import RegisterBoatForm from './_components/RegisterBoatForm/RegisterBoatForm';
 
 const RegisterBoat = () => {
   const router = useRouter();
