@@ -4,8 +4,11 @@ FROM node:24-slim
 # Set working directory
 WORKDIR /app
 
-# Install dependencies
-COPY package.json .
+# Install system dependencies
+RUN apt update && apt install -y curl
+
+# Copy package.json and package-lock.json
+COPY package*.json .
 
 # Install dependencies
 RUN npm install
