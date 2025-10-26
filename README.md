@@ -1,7 +1,7 @@
 # Diaz Florida Yacht Frontend
 
 ```
-ssh -i "server.pem" ubuntu@ec2-13-60-18-105.eu-north-1.compute.amazonaws.com
+ssh -i "server.pem" ubuntu@ec2-56-228-42-86.eu-north-1.compute.amazonaws.com
 ```
 
 ```
