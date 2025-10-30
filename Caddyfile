@@ -8,3 +8,14 @@ development.floridayachttrader.com {
 
   encode gzip
 }
+
+admin.floridayachttrader.com {
+  reverse_proxy floridayt_admin:4173
+
+  header {
+    Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+    Access-Control-Allow-Headers "*"
+  }
+
+  encode gzip
+}
