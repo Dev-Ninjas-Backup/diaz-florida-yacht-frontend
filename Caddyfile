@@ -1,19 +1,20 @@
+# Frontend app
 development.floridayachttrader.com {
-  reverse_proxy floridayt:3000
-
-  header {
-    Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
-    Access-Control-Allow-Headers "*"
-  }
-
-  encode gzip
+    reverse_proxy floridayt:3000
+    header {
+        Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+        Access-Control-Allow-Headers "*"
+    }
+    encode gzip
 }
 
+# Admin static files
 admin.floridayachttrader.com {
-    root * /var/www/dist
+    root * /var/www/html/dist
     try_files {path} /index.html
     file_server
     header {
         Cache-Control "public, max-age=31536000, immutable"
     }
+    encode gzip
 }
