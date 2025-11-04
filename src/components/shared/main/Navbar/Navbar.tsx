@@ -126,7 +126,7 @@ const Navbar = () => {
               Contact
             </Link>
             <Link
-              href="/login"
+              href="/search-listing"
               className="px-3 py-2 hover:bg-white/10 rounded-md transition-colors flex items-center gap-2"
               onClick={() => setIsOpen(false)}
             >
