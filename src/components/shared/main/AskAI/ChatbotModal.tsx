@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { IoSparklesSharp } from "react-icons/io5";
-import { ChevronLeft, Maximize2, Mic } from "lucide-react";
-import Image from "next/image";
-import type { ChatbotResult, ChatbotModalProps } from "@/types/chatbot-types";
+import React, { useState } from 'react';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { IoSparklesSharp } from 'react-icons/io5';
+import { ChevronLeft, Maximize2, Mic } from 'lucide-react';
+import Image from 'next/image';
+import type { ChatbotResult, ChatbotModalProps } from '@/types/chatbot-types';
 
 const ChatbotModal: React.FC<ChatbotModalProps> = ({ isOpen, onClose }) => {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
   const [results, setResults] = useState<ChatbotResult[]>([]);
   const [isSearching, setIsSearching] = useState(false);
 
@@ -20,13 +20,13 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ isOpen, onClose }) => {
     }
 
     setIsSearching(true);
-    
+
     try {
       // API call to chatbot search endpoint
       const response = await fetch('/api/chatbot/search', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query: searchQuery })
+        body: JSON.stringify({ query: searchQuery }),
       });
 
       if (!response.ok) {
@@ -45,7 +45,7 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ isOpen, onClose }) => {
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       handleSearch(query);
     }
   };
@@ -79,7 +79,7 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ isOpen, onClose }) => {
           {/* User Query Display */}
           <div className="px-4 py-4 bg-gray-100">
             <p className="text-sm text-gray-700">
-              {query || "Ask me anything about yachts..."}
+              {query || 'Ask me anything about yachts...'}
             </p>
           </div>
 
@@ -97,8 +97,8 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ isOpen, onClose }) => {
           {results.length > 0 && (
             <div className="px-4 pb-4">
               <p className="text-sm text-gray-700 mb-4">
-                Here are some results of available, along with their model, year,
-                and approximate price:
+                Here are some results of available, along with their model,
+                year, and approximate price:
               </p>
 
               <div className="space-y-3">
@@ -117,7 +117,7 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ isOpen, onClose }) => {
                           className="w-full h-full object-cover"
                           onError={(e) => {
                             const target = e.target as HTMLImageElement;
-                            target.src = "/placeholder.svg";
+                            target.src = '/placeholder.svg';
                           }}
                         />
                       )}
@@ -126,7 +126,9 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ isOpen, onClose }) => {
                       <h3 className="font-medium text-gray-900 text-sm leading-tight mb-1">
                         {result.title}
                       </h3>
-                      <p className="text-sm text-gray-600">Price: {result.price}</p>
+                      <p className="text-sm text-gray-600">
+                        Price: {result.price}
+                      </p>
                     </div>
                   </div>
                 ))}
@@ -145,7 +147,9 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ isOpen, onClose }) => {
           {/* Empty State */}
           {!isSearching && results.length === 0 && query && (
             <div className="px-4 py-8 text-center">
-              <p className="text-sm text-gray-500">No results found. Try a different query.</p>
+              <p className="text-sm text-gray-500">
+                No results found. Try a different query.
+              </p>
             </div>
           )}
         </div>
