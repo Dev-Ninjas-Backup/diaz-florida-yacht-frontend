@@ -13,7 +13,7 @@ const SearchListingPage = () => {
 
   return (
     <div>
-     <CustomBanner banner={banner}>
+      <CustomBanner banner={banner}>
         <div className="text-center ">
           <h1 className="text-white text-xl md:text-4xl lg:text-6xl uppercase font-bold md:tracking-[5px]">
             search FROM LISTING
