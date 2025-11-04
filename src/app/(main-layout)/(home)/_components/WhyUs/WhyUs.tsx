@@ -1,7 +1,7 @@
-import React from "react";
-import Image from "next/image";
-import { whyUsData } from "@/assets/demo-datas/demodata";
-import CustomContainer from "@/components/CustomComponents/CustomContainer";
+import React from 'react';
+import Image from 'next/image';
+import { whyUsData } from '@/assets/demo-datas/demodata';
+import CustomContainer from '@/components/CustomComponents/CustomContainer';
 
 const WhyUs = () => {
   return (

@@ -1,4 +1,4 @@
-import RegisterBoat from "./_components/RegisterBoat/RegisterBoat";
+import RegisterBoat from './_components/RegisterBoat/RegisterBoat';
 
 const RegisterBoatPage = () => {
   return (

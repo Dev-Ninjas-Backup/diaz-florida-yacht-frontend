@@ -43,9 +43,9 @@ const CustomTable = <T extends object>({ columns, data }: ITableProps<T>) => {
                 >
                   {column.cell
                     ? column.cell(row)
-                    : "accessor" in column && column.accessor
-                    ? String(row[column.accessor] ?? "")
-                    : null}
+                    : 'accessor' in column && column.accessor
+                      ? String(row[column.accessor] ?? '')
+                      : null}
                 </td>
               ))}
             </tr>

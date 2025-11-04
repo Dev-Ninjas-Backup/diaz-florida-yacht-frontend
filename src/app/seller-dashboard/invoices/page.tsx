@@ -1,4 +1,4 @@
-import InvoiceTable from "./_components/InvoiceTable/InvoiceTable";
+import InvoiceTable from './_components/InvoiceTable/InvoiceTable';
 
 const InvoicesPage = () => {
   return (

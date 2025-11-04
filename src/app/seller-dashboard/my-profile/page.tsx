@@ -1,26 +1,26 @@
-"use client";
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Camera, X, Eye, EyeOff } from "lucide-react";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+'use client';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Camera, X, Eye, EyeOff } from 'lucide-react';
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 // ✅ Zod schema updated (profession removed)
 const formSchema = z
   .object({
-    firstName: z.string().min(1, { message: "First Name is required" }),
-    lastName: z.string().min(1, { message: "Last Name is required" }),
-    email: z.string().email({ message: "Invalid email address" }),
+    firstName: z.string().min(1, { message: 'First Name is required' }),
+    lastName: z.string().min(1, { message: 'Last Name is required' }),
+    email: z.string().email({ message: 'Invalid email address' }),
     phone: z.string().optional(),
-    country: z.string().min(1, { message: "Country is required" }),
-    city: z.string().min(1, { message: "City is required" }),
-    state: z.string().min(1, { message: "State is required" }),
+    country: z.string().min(1, { message: 'Country is required' }),
+    city: z.string().min(1, { message: 'City is required' }),
+    state: z.string().min(1, { message: 'State is required' }),
     zipCode: z
       .string()
-      .min(5, { message: "ZIP Code must be at least 5 digits" })
+      .min(5, { message: 'ZIP Code must be at least 5 digits' })
       .max(10),
     subCategories: z.array(z.string().min(1)).optional(),
     portfolio: z.array(z.any()).optional(),
@@ -37,9 +37,9 @@ const formSchema = z
       return true;
     },
     {
-      message: "Passwords do not match",
-      path: ["confirmPassword"],
-    }
+      message: 'Passwords do not match',
+      path: ['confirmPassword'],
+    },
   );
 
 export type FormSchema = z.infer<typeof formSchema>;
@@ -56,13 +56,13 @@ const MyProfilePage = () => {
   } = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      subCategories: [""],
+      subCategories: [''],
       portfolio: [],
     },
   });
 
   const onSubmit = (data: FormSchema) => {
-    console.log("Form Data:", data);
+    console.log('Form Data:', data);
   };
 
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,7 +70,7 @@ const MyProfilePage = () => {
     if (file) {
       const preview = URL.createObjectURL(file);
       setAvatarPreview(preview);
-      setValue("avatar", file);
+      setValue('avatar', file);
     }
   };
 
@@ -110,7 +110,7 @@ const MyProfilePage = () => {
               type="file"
               accept="image/*"
               className="hidden"
-              {...register("avatar")}
+              {...register('avatar')}
               onChange={handleAvatarChange}
             />
             <div>
@@ -126,7 +126,7 @@ const MyProfilePage = () => {
                     type="button"
                     onClick={() => {
                       setAvatarPreview(null);
-                      setValue("avatar", null);
+                      setValue('avatar', null);
                     }}
                     className="text-red-500 w-6 h-6 p-1 bg-red-50 rounded-full border border-red-500 font-medium cursor-pointer text-sm flex items-center justify-center"
                   >
@@ -148,7 +148,7 @@ const MyProfilePage = () => {
               <input
                 type="text"
                 placeholder="Sarah"
-                {...register("firstName")}
+                {...register('firstName')}
                 className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-cyan-500"
               />
               {errors.firstName && (
@@ -165,7 +165,7 @@ const MyProfilePage = () => {
               <input
                 type="text"
                 placeholder="Johnson"
-                {...register("lastName")}
+                {...register('lastName')}
                 className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-cyan-500"
               />
               {errors.lastName && (
@@ -182,7 +182,7 @@ const MyProfilePage = () => {
               <input
                 type="text"
                 placeholder="+1 (555) 123-4567"
-                {...register("phone")}
+                {...register('phone')}
                 className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-cyan-500"
               />
             </div>
@@ -194,7 +194,7 @@ const MyProfilePage = () => {
               <input
                 type="email"
                 placeholder="sarah.johnson@gmail.com"
-                {...register("email")}
+                {...register('email')}
                 className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-cyan-500"
               />
               {errors.email && (
@@ -213,7 +213,7 @@ const MyProfilePage = () => {
               <input
                 type="text"
                 placeholder="Country"
-                {...register("country")}
+                {...register('country')}
                 className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-cyan-500"
               />
               {errors.country && (
@@ -230,7 +230,7 @@ const MyProfilePage = () => {
               <input
                 type="text"
                 placeholder="City"
-                {...register("city")}
+                {...register('city')}
                 className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-cyan-500"
               />
               {errors.city && (
@@ -245,7 +245,7 @@ const MyProfilePage = () => {
                 State *
               </label>
               <select
-                {...register("state")}
+                {...register('state')}
                 className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-cyan-500 bg-white"
               >
                 <option value="">State</option>
@@ -267,7 +267,7 @@ const MyProfilePage = () => {
               <input
                 type="text"
                 placeholder="12345"
-                {...register("zipCode")}
+                {...register('zipCode')}
                 className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-cyan-500"
               />
               {errors.zipCode && (
@@ -286,9 +286,9 @@ const MyProfilePage = () => {
           </h2>
 
           {[
-            { label: "Enter Old Password", name: "oldPassword" as const },
-            { label: "Enter New Password", name: "newPassword" as const },
-            { label: "Confirm New Password", name: "confirmPassword" as const },
+            { label: 'Enter Old Password', name: 'oldPassword' as const },
+            { label: 'Enter New Password', name: 'newPassword' as const },
+            { label: 'Confirm New Password', name: 'confirmPassword' as const },
           ].map((field) => (
             <div key={field.name} className="mt-4 first:mt-0">
               <label className="text-sm md:text-base font-medium text-black block mb-1">
@@ -297,8 +297,8 @@ const MyProfilePage = () => {
               <div className="relative">
                 <Input
                   className="pr-10 bg-[#F4F4F4] py-6"
-                  type={showPassword ? "text" : "password"}
-                  placeholder={"**********"}
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder={'**********'}
                   {...register(field.name)}
                 />
                 <span

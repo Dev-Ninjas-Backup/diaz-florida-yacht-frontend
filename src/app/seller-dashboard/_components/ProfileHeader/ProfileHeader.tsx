@@ -1,34 +1,34 @@
-"use client";
+'use client';
 
-import React from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import React from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import {
   BriefcaseBusiness,
   CreditCard,
   LayoutDashboard,
   LogOut,
   UserRoundPen,
-} from "lucide-react";
-import CustomContainer from "@/components/CustomComponents/CustomContainer";
+} from 'lucide-react';
+import CustomContainer from '@/components/CustomComponents/CustomContainer';
 
 const navItems = [
   {
-    label: "My Listing",
-    href: "/seller-dashboard/my-listing",
+    label: 'My Listing',
+    href: '/seller-dashboard/my-listing',
     icon: LayoutDashboard,
   },
   {
-    label: "Leads",
-    href: "/seller-dashboard/leads",
+    label: 'Leads',
+    href: '/seller-dashboard/leads',
     icon: BriefcaseBusiness,
   },
   {
-    label: "My Profile",
-    href: "/seller-dashboard/my-profile",
+    label: 'My Profile',
+    href: '/seller-dashboard/my-profile',
     icon: UserRoundPen,
   },
-  { label: "Invoices", href: "/seller-dashboard/invoices", icon: CreditCard },
+  { label: 'Invoices', href: '/seller-dashboard/invoices', icon: CreditCard },
 ];
 
 const ProfileHeader = () => {
@@ -48,8 +48,8 @@ const ProfileHeader = () => {
                 href={href}
                 className={`flex-shrink-0 flex items-center justify-center px-4 py-2 space-x-2 text-sm md:text-lg font-medium rounded-lg transition-colors duration-200 ${
                   isActive
-                    ? "bg-primary text-white shadow-md"
-                    : "bg-[#F4F4F4] text-black hover:bg-gray-200"
+                    ? 'bg-primary text-white shadow-md'
+                    : 'bg-[#F4F4F4] text-black hover:bg-gray-200'
                 }`}
               >
                 <Icon size={18} />
