@@ -91,7 +91,7 @@ const SearchComponent = () => {
       </button>
 
       {openDropdown === name && (
-        <div className="absolute top-full left-0 mt-1 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-100 max-h-60 overflow-y-auto">
+        <div className="absolute bottom-full left-0 mt-1 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-100 max-h-60 overflow-y-auto">
           {options.map((option) => (
             <button
               key={option}
