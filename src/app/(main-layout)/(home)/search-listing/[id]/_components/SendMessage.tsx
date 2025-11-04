@@ -1,8 +1,7 @@
 'use client';
 import React, { useState } from 'react';
-import { IoPersonOutline } from 'react-icons/io5';
+import { IoPersonOutline, IoSparklesSharp } from 'react-icons/io5';
 import { MdLocationOn } from 'react-icons/md';
-import { TbSparkles } from 'react-icons/tb';
 import { toast } from 'sonner';
 
 const SendMessage = () => {
@@ -74,7 +73,7 @@ const SendMessage = () => {
       </h2>
 
       {/* Owner Info */}
-      <div className="mb-6 space-y-2">
+      <div className="mb-6 space-y-3">
         <div className="flex items-center gap-2 text-gray-700">
           <IoPersonOutline size={20} className="text-gray-600" />
           <span className="font-medium">Name:</span>
@@ -149,7 +148,7 @@ const SendMessage = () => {
         onClick={handleAskAI}
         className="w-full mt-4 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-3 px-6 rounded-xl transition-colors duration-200 flex items-center justify-center gap-2 text-base"
       >
-        <TbSparkles size={20} />
+        <IoSparklesSharp size={20} />
         Ask AI
       </button>
     </div>
