@@ -1,20 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @next/next/no-img-element */
-"use client";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+'use client';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { Plus, Upload, X } from "lucide-react";
-import React, { useState } from "react";
-import { useFieldArray, useFormContext } from "react-hook-form";
+} from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+import { Plus, Upload, X } from 'lucide-react';
+import React, { useState } from 'react';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 
 const Step2Form = () => {
   const {
@@ -28,26 +27,26 @@ const Step2Form = () => {
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "moreDetails",
+    name: 'moreDetails',
   });
 
   const [coverPhotoPreview, setCoverPhotoPreview] = useState<string | null>(
-    null
+    null,
   );
   const [mediaGalleryPreviews, setMediaGalleryPreviews] = useState<string[]>(
-    []
+    [],
   );
 
-  const buildYear = watch("buildYear");
-  const make = watch("make");
-  const model = watch("model");
-  const classValue = watch("class");
-  const material = watch("material");
-  const fuelType = watch("fuelType");
-  const propellerType = watch("propellerType");
-  const condition = watch("condition");
-  const stateValue = watch("state");
-  const mediaGallery = watch("mediaGallery") || [];
+  const buildYear = watch('buildYear');
+  const make = watch('make');
+  const model = watch('model');
+  const classValue = watch('class');
+  const material = watch('material');
+  const fuelType = watch('fuelType');
+  const propellerType = watch('propellerType');
+  const condition = watch('condition');
+  const stateValue = watch('state');
+  const mediaGallery = watch('mediaGallery') || [];
 
   // useEffect(() => {
   //   if (coverPhoto && !coverPhotoPreview) {
@@ -112,7 +111,7 @@ const Step2Form = () => {
     const file = e.target.files?.[0];
     if (file) {
       setCoverPhotoPreview(URL.createObjectURL(file)); // preview
-      setValue("coverPhoto", file); // store File object
+      setValue('coverPhoto', file); // store File object
     }
   };
 
@@ -121,7 +120,7 @@ const Step2Form = () => {
     if (!files) return;
 
     if (mediaGallery.length + files.length > 25) {
-      alert("You can only upload up to 25 images.");
+      alert('You can only upload up to 25 images.');
       return;
     }
 
@@ -134,19 +133,19 @@ const Step2Form = () => {
     });
 
     setMediaGalleryPreviews(newPreviews);
-    setValue("mediaGallery", newGallery);
+    setValue('mediaGallery', newGallery);
   };
 
   const removeCoverPhoto = () => {
     setCoverPhotoPreview(null);
-    setValue("coverPhoto", undefined);
+    setValue('coverPhoto', undefined);
   };
 
   const removeMediaImage = (index: number) => {
     const newPreviews = mediaGalleryPreviews.filter((_, i) => i !== index);
     const newGallery = mediaGallery.filter((_: any, i: number) => i !== index);
     setMediaGalleryPreviews(newPreviews);
-    setValue("mediaGallery", newGallery);
+    setValue('mediaGallery', newGallery);
   };
   const handleSelectChange = (fieldName: string, value: string) => {
     setValue(fieldName, value);
@@ -163,8 +162,8 @@ const Step2Form = () => {
           <div>
             <Label htmlFor="buildYear">Build Year *</Label>
             <Select
-              value={buildYear || ""}
-              onValueChange={(value) => handleSelectChange("buildYear", value)}
+              value={buildYear || ''}
+              onValueChange={(value) => handleSelectChange('buildYear', value)}
             >
               <SelectTrigger
                 className={`w-full bg-white rounded-[12px] border-none shadow-none`}
@@ -187,12 +186,12 @@ const Step2Form = () => {
           <div>
             <Label htmlFor="make">Make *</Label>
             <Select
-              value={make || ""}
-              onValueChange={(value) => handleSelectChange("make", value)}
+              value={make || ''}
+              onValueChange={(value) => handleSelectChange('make', value)}
             >
               <SelectTrigger
                 className={`w-full bg-white rounded-[12px] border-none shadow-none ${
-                  errors.make ? "border-red-500" : ""
+                  errors.make ? 'border-red-500' : ''
                 }`}
               >
                 <SelectValue placeholder="Select" />
@@ -213,8 +212,8 @@ const Step2Form = () => {
           <div>
             <Label htmlFor="model">Model *</Label>
             <Select
-              value={model || ""}
-              onValueChange={(value) => handleSelectChange("model", value)}
+              value={model || ''}
+              onValueChange={(value) => handleSelectChange('model', value)}
             >
               <SelectTrigger
                 className={`w-full bg-white rounded-[12px] border-none shadow-none`}
@@ -242,7 +241,7 @@ const Step2Form = () => {
             <Input
               id="length"
               placeholder="Type here"
-              {...register("length")}
+              {...register('length')}
               className={`w-full bg-white rounded-[12px] border-none shadow-none`}
             />
             {errors.length && (
@@ -257,7 +256,7 @@ const Step2Form = () => {
             <Input
               id="beam"
               placeholder="Type here"
-              {...register("beam")}
+              {...register('beam')}
               className={`w-full bg-white rounded-[12px] border-none shadow-none`}
             />
             {errors.beam && (
@@ -272,7 +271,7 @@ const Step2Form = () => {
             <Input
               id="maxDraft"
               placeholder="Type here"
-              {...register("maxDraft")}
+              {...register('maxDraft')}
               className={`w-full bg-white rounded-[12px] border-none shadow-none`}
             />
             {errors.maxDraft && (
@@ -289,8 +288,8 @@ const Step2Form = () => {
           <div>
             <Label htmlFor="class">Class *</Label>
             <Select
-              value={classValue || ""}
-              onValueChange={(value) => handleSelectChange("class", value)}
+              value={classValue || ''}
+              onValueChange={(value) => handleSelectChange('class', value)}
             >
               <SelectTrigger
                 className={`w-full bg-white rounded-[12px] border-none shadow-none`}
@@ -312,8 +311,8 @@ const Step2Form = () => {
           <div>
             <Label htmlFor="material">Material *</Label>
             <Select
-              value={material || ""}
-              onValueChange={(value) => handleSelectChange("material", value)}
+              value={material || ''}
+              onValueChange={(value) => handleSelectChange('material', value)}
             >
               <SelectTrigger
                 className={`w-full bg-white rounded-[12px] border-none shadow-none`}
@@ -335,8 +334,8 @@ const Step2Form = () => {
           <div>
             <Label htmlFor="fuelType">Fuel Type *</Label>
             <Select
-              value={fuelType || ""}
-              onValueChange={(value) => handleSelectChange("fuelType", value)}
+              value={fuelType || ''}
+              onValueChange={(value) => handleSelectChange('fuelType', value)}
             >
               <SelectTrigger
                 className={`w-full bg-white rounded-[12px] border-none shadow-none`}
@@ -364,7 +363,7 @@ const Step2Form = () => {
             <Input
               id="numEngines"
               placeholder="Type here"
-              {...register("numEngines")}
+              {...register('numEngines')}
               className={`w-full bg-white rounded-[12px] border-none shadow-none`}
             />
             {errors.numEngines && (
@@ -380,7 +379,7 @@ const Step2Form = () => {
             <Input
               id="numCabins"
               placeholder="Type here"
-              {...register("numCabins")}
+              {...register('numCabins')}
               className={`w-full bg-white rounded-[12px] border-none shadow-none`}
             />
             {errors.numCabins && (
@@ -396,7 +395,7 @@ const Step2Form = () => {
             <Input
               id="numHeads"
               placeholder="Type here"
-              {...register("numHeads")}
+              {...register('numHeads')}
               className={`w-full bg-white rounded-[12px] border-none shadow-none`}
             />
             {errors.numHeads && (
@@ -417,7 +416,7 @@ const Step2Form = () => {
             <Input
               id="hours"
               placeholder="Type here"
-              {...register("hours")}
+              {...register('hours')}
               className={`w-full bg-white rounded-[12px] border-none shadow-none`}
             />
             {errors.hours && (
@@ -431,7 +430,7 @@ const Step2Form = () => {
             <Input
               id="make2"
               placeholder="Type here"
-              {...register("make2")}
+              {...register('make2')}
               className={`w-full bg-white rounded-[12px] border-none shadow-none`}
             />
             {errors.make2 && (
@@ -448,7 +447,7 @@ const Step2Form = () => {
             <Input
               id="model2"
               placeholder="Type here"
-              {...register("model2")}
+              {...register('model2')}
               className={`w-full bg-white rounded-[12px] border-none shadow-none`}
             />
             {errors.model2 && (
@@ -462,7 +461,7 @@ const Step2Form = () => {
             <Input
               id="totalPower"
               placeholder="Type here"
-              {...register("totalPower")}
+              {...register('totalPower')}
               className={`w-full bg-white rounded-[12px] border-none shadow-none`}
             />
             {errors.totalPower && (
@@ -477,9 +476,9 @@ const Step2Form = () => {
           <div className="mt-4">
             <Label htmlFor="propellerType">Fuel Type *</Label>
             <Select
-              value={propellerType || ""}
+              value={propellerType || ''}
               onValueChange={(value) =>
-                handleSelectChange("propellerType", value)
+                handleSelectChange('propellerType', value)
               }
             >
               <SelectTrigger
@@ -501,9 +500,9 @@ const Step2Form = () => {
           <div className="mt-4">
             <Label htmlFor="propellerType">Propeller Type *</Label>
             <Select
-              value={propellerType || ""}
+              value={propellerType || ''}
               onValueChange={(value) =>
-                handleSelectChange("propellerType", value)
+                handleSelectChange('propellerType', value)
               }
             >
               <SelectTrigger
@@ -533,8 +532,8 @@ const Step2Form = () => {
           <div>
             <Label htmlFor="condition">Condition *</Label>
             <Select
-              value={condition || ""}
-              onValueChange={(value) => handleSelectChange("condition", value)}
+              value={condition || ''}
+              onValueChange={(value) => handleSelectChange('condition', value)}
             >
               <SelectTrigger
                 className={`w-full bg-white rounded-[12px] border-none shadow-none`}
@@ -559,7 +558,7 @@ const Step2Form = () => {
             <Input
               id="price"
               placeholder="Type here"
-              {...register("price")}
+              {...register('price')}
               className={`w-full bg-white rounded-[12px] border-none shadow-none`}
             />
             {errors.price && (
@@ -577,7 +576,7 @@ const Step2Form = () => {
             <Input
               id="city2"
               placeholder="Type here"
-              {...register("city")}
+              {...register('city')}
               className={`w-full bg-white rounded-[12px] border-none shadow-none`}
             />
             {errors.city && (
@@ -590,8 +589,8 @@ const Step2Form = () => {
           <div>
             <Label htmlFor="state2">State *</Label>
             <Select
-              value={stateValue || ""}
-              onValueChange={(value) => handleSelectChange("state", value)}
+              value={stateValue || ''}
+              onValueChange={(value) => handleSelectChange('state', value)}
             >
               <SelectTrigger
                 className={`w-full bg-white rounded-[12px] border-none shadow-none`}
@@ -615,7 +614,7 @@ const Step2Form = () => {
             <Input
               id="zip2"
               placeholder="Type here"
-              {...register("zip")}
+              {...register('zip')}
               className={`w-full bg-white rounded-[12px] border-none shadow-none`}
             />
             {errors.zip && (
@@ -632,7 +631,7 @@ const Step2Form = () => {
           <Input
             id="name"
             placeholder="Type here"
-            {...register("name")}
+            {...register('name')}
             className={`w-full bg-white rounded-[12px] border-none shadow-none`}
           />
           {errors.name && (
@@ -648,7 +647,7 @@ const Step2Form = () => {
           <Textarea
             id="description"
             placeholder="Write description..."
-            {...register("description")}
+            {...register('description')}
             className={`w-full bg-white rounded-[12px] border-none shadow-none h-32`}
           />
           {errors.description && (
@@ -717,7 +716,7 @@ const Step2Form = () => {
 
         <Button
           type="button"
-          onClick={() => append({ title: "", description: "" })}
+          onClick={() => append({ title: '', description: '' })}
           className="bg-blue-500 hover:bg-blue-600 text-white mt-4"
         >
           <Plus className="w-4 h-4 mr-2" />
@@ -738,7 +737,7 @@ const Step2Form = () => {
             id="embedUrl"
             placeholder="https://youtube.com/embed/..."
             className={`w-full bg-white rounded-[12px] border-none shadow-none`}
-            {...register("embedUrl")}
+            {...register('embedUrl')}
           />
         </div>
       </div>
@@ -749,7 +748,7 @@ const Step2Form = () => {
           {coverPhotoPreview ? (
             <div className="relative">
               <img
-                src={coverPhotoPreview || "/placeholder.svg"}
+                src={coverPhotoPreview || '/placeholder.svg'}
                 alt="Cover preview"
                 className="w-full h-48 object-cover rounded-lg"
               />
@@ -784,7 +783,7 @@ const Step2Form = () => {
           {mediaGalleryPreviews.map((preview, index) => (
             <div key={index} className="relative group">
               <img
-                src={preview || "/placeholder.svg"}
+                src={preview || '/placeholder.svg'}
                 alt={`Gallery ${index}`}
                 className="w-full h-32 object-cover rounded-lg"
               />

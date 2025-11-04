@@ -1,30 +1,30 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import stripe from "@/assets/seller-dashboard/payment/Stripe.svg";
-import visa from "@/assets/seller-dashboard/payment/visa.svg";
-import pay from "@/assets/seller-dashboard/payment/pay.svg";
-import gpay from "@/assets/seller-dashboard/payment/GooglePay.svg";
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import stripe from '@/assets/seller-dashboard/payment/Stripe.svg';
+import visa from '@/assets/seller-dashboard/payment/visa.svg';
+import pay from '@/assets/seller-dashboard/payment/pay.svg';
+import gpay from '@/assets/seller-dashboard/payment/GooglePay.svg';
 
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import {
   PaymentFormData,
   paymentSchema,
-} from "@/app/register-boat/schema/registerBoatSchema";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
+} from '@/app/register-boat/schema/registerBoatSchema';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 interface PaymentModalProps {
   isOpen: boolean;
@@ -35,9 +35,9 @@ interface PaymentModalProps {
 }
 
 const packageDetails: Record<string, { name: string; price: string }> = {
-  gold: { name: "Gold Package", price: "$9.99" },
-  platinum: { name: "Platinum Package", price: "$15.99" },
-  diamond: { name: "Diamond Elite Brokerage", price: "$29.99" },
+  gold: { name: 'Gold Package', price: '$9.99' },
+  platinum: { name: 'Platinum Package', price: '$15.99' },
+  diamond: { name: 'Diamond Elite Brokerage', price: '$29.99' },
 };
 
 export function PaymentModal({
@@ -47,7 +47,7 @@ export function PaymentModal({
   onPaymentSuccess,
   onSubmitPayment,
 }: PaymentModalProps) {
-  const [paymentMethod, setPaymentMethod] = useState("stripe");
+  const [paymentMethod, setPaymentMethod] = useState('stripe');
   const router = useRouter();
   const {
     register,
@@ -75,7 +75,7 @@ export function PaymentModal({
     // Simulate payment processing
     setTimeout(() => {
       //   toast("Payment successful!");
-      router.push("/seller-dashboard/my-listing");
+      router.push('/seller-dashboard/my-listing');
       reset();
       onPaymentSuccess();
       onClose();
@@ -160,8 +160,8 @@ export function PaymentModal({
             <Input
               id="cardholderName"
               placeholder="Enter name on card"
-              {...register("cardholderName")}
-              className={errors.cardholderName ? "border-red-500" : ""}
+              {...register('cardholderName')}
+              className={errors.cardholderName ? 'border-red-500' : ''}
             />
             {errors.cardholderName && (
               <p className="text-red-500 text-sm mt-1">
@@ -175,8 +175,8 @@ export function PaymentModal({
             <Input
               id="cardNumber"
               placeholder="1234 5678 9012 3456"
-              {...register("cardNumber")}
-              className={errors.cardNumber ? "border-red-500" : ""}
+              {...register('cardNumber')}
+              className={errors.cardNumber ? 'border-red-500' : ''}
             />
             {errors.cardNumber && (
               <p className="text-red-500 text-sm mt-1">
@@ -191,8 +191,8 @@ export function PaymentModal({
               <Input
                 id="expiryDate"
                 placeholder="MM/YY"
-                {...register("expiryDate")}
-                className={errors.expiryDate ? "border-red-500" : ""}
+                {...register('expiryDate')}
+                className={errors.expiryDate ? 'border-red-500' : ''}
               />
               {errors.expiryDate && (
                 <p className="text-red-500 text-sm mt-1">
@@ -205,8 +205,8 @@ export function PaymentModal({
               <Input
                 id="cvc"
                 placeholder="123"
-                {...register("cvc")}
-                className={errors.cvc ? "border-red-500" : ""}
+                {...register('cvc')}
+                className={errors.cvc ? 'border-red-500' : ''}
               />
               {errors.cvc && (
                 <p className="text-red-500 text-sm mt-1">

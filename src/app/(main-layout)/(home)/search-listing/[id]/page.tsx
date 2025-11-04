@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import GradientBannerCustom from '@/components/CustomComponents/GradientBannerCustom';
 import { useRouter } from 'next/navigation';
 import React from 'react';
@@ -34,7 +34,7 @@ const SearchListingDetailsPage = () => {
             </div>
            </CustomContainer>
         </div>
-    );
+  );
 };
 
 export default SearchListingDetailsPage;

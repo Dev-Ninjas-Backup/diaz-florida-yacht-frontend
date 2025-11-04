@@ -1,17 +1,17 @@
-"use client";
-import { ArrowDownToLine, ChevronDown, Printer, Search } from "lucide-react";
+'use client';
+import { ArrowDownToLine, ChevronDown, Printer, Search } from 'lucide-react';
 import CustomTable, {
   Column,
-} from "@/components/shared/dashboard/CustomTable/CustomTable";
+} from '@/components/shared/dashboard/CustomTable/CustomTable';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { inoviceData, InvoiceRecord } from "../../data/invoiceData";
-import Image from "next/image";
+} from '@/components/ui/select';
+import { inoviceData, InvoiceRecord } from '../../data/invoiceData';
+import Image from 'next/image';
 
 const InvoiceTable = () => {
   //Pagination states
@@ -20,12 +20,12 @@ const InvoiceTable = () => {
   //Table Config
   const invoiceColumns: Column<InvoiceRecord>[] = [
     {
-      header: "Invoice ID",
-      accessor: "invoice_id",
+      header: 'Invoice ID',
+      accessor: 'invoice_id',
     },
     // File Name Column
     {
-      header: "Charged For",
+      header: 'Charged For',
       cell: (row) => (
         <div className="flex items-center">
           <div className="flex-shrink-0 w-24 h-12 ">
@@ -42,22 +42,22 @@ const InvoiceTable = () => {
       ),
     },
     {
-      header: "Charge",
-      accessor: "charge",
+      header: 'Charge',
+      accessor: 'charge',
     },
     // Type Column
     {
-      header: "Date",
-      accessor: "date",
+      header: 'Date',
+      accessor: 'date',
     },
     {
-      header: "Status",
+      header: 'Status',
       cell: (row) => (
         <span
           className={` ${
-            row?.status === "Complete"
-              ? "bg-[#E5FFE3] text-[#007152] rounded-full px-4 py-1.5"
-              : "bg-[#FFDDDD] text-[#AA3500] rounded-full px-4 py-1.5"
+            row?.status === 'Complete'
+              ? 'bg-[#E5FFE3] text-[#007152] rounded-full px-4 py-1.5'
+              : 'bg-[#FFDDDD] text-[#AA3500] rounded-full px-4 py-1.5'
           }`}
         >
           {row?.status}
@@ -65,7 +65,7 @@ const InvoiceTable = () => {
       ),
     },
     {
-      header: "Action",
+      header: 'Action',
       cell: () => (
         <div className="flex items-center space-x-2">
           <button className="text-[#0064AE] hover:text-primary focus:outline-none focus:text-primary cursor-pointer bg-[#E6F0F7] p-1 rounded-full border border-[#B0CFE6]">
@@ -90,7 +90,7 @@ const InvoiceTable = () => {
                 <SelectValue placeholder="Date" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem defaultValue={"all"} value="all">
+                <SelectItem defaultValue={'all'} value="all">
                   All
                 </SelectItem>
                 <SelectItem value="active">Export As</SelectItem>

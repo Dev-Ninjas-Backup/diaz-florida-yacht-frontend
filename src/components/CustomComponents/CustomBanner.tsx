@@ -1,6 +1,6 @@
-import Image, { StaticImageData } from "next/image";
-import React from "react";
-import CustomContainer from "./CustomContainer";
+import Image, { StaticImageData } from 'next/image';
+import React from 'react';
+import CustomContainer from './CustomContainer';
 
 interface CustomBannerProps {
   banner: string | StaticImageData;

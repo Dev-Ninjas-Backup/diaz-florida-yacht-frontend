@@ -1,8 +1,8 @@
-import { ReactNode } from "react";
-import ProfileStates from "./_components/ProfileStates/ProfileStates";
-import ProfileHeader from "./_components/ProfileHeader/ProfileHeader";
-import CustomContainer from "@/components/CustomComponents/CustomContainer";
-import GradientBannerCustom from "@/components/CustomComponents/GradientBannerCustom";
+import { ReactNode } from 'react';
+import ProfileStates from './_components/ProfileStates/ProfileStates';
+import ProfileHeader from './_components/ProfileHeader/ProfileHeader';
+import CustomContainer from '@/components/CustomComponents/CustomContainer';
+import GradientBannerCustom from '@/components/CustomComponents/GradientBannerCustom';
 
 const ProvidersLayout = ({ children }: { children: ReactNode }) => {
   return (

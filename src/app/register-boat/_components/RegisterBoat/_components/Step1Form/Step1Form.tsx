@@ -1,8 +1,8 @@
-import { subscriptionPlans } from "@/assets/demo-datas/demodata";
-import { Button } from "@/components/ui/button";
-import React from "react";
-import { useFormContext } from "react-hook-form";
-import { IoCheckmarkCircle } from "react-icons/io5";
+import { subscriptionPlans } from '@/assets/demo-datas/demodata';
+import { Button } from '@/components/ui/button';
+import React from 'react';
+import { useFormContext } from 'react-hook-form';
+import { IoCheckmarkCircle } from 'react-icons/io5';
 
 const Step1Form = () => {
   const {
@@ -10,7 +10,7 @@ const Step1Form = () => {
     setValue,
     formState: { errors },
   } = useFormContext();
-  const selectedPackage = watch("selectedPackage");
+  const selectedPackage = watch('selectedPackage');
   return (
     <div className="space-y-6 mt-10">
       <h3 className="text-lg font-semibold">Select a Package</h3>
@@ -21,10 +21,10 @@ const Step1Form = () => {
             key={plan.id}
             className={`relative pb-16 px-3 bg-white rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300 cursor-pointer ${
               selectedPackage === plan.id
-                ? "ring-2 ring-blue-500 bg-blue-50"
-                : "hover:shadow-lg"
+                ? 'ring-2 ring-blue-500 bg-blue-50'
+                : 'hover:shadow-lg'
             }`}
-            onClick={() => setValue("selectedPackage", plan.id)}
+            onClick={() => setValue('selectedPackage', plan.id)}
           >
             {/* Featured Badge */}
             {plan.featured && plan.featuredLabel && (
@@ -67,13 +67,13 @@ const Step1Form = () => {
               <div className="absolute bottom-5 left-0  w-full px-3">
                 <Button
                   type="button"
-                  variant={selectedPackage === plan.id ? "default" : "outline"}
+                  variant={selectedPackage === plan.id ? 'default' : 'outline'}
                   className={`w-full ${
-                    selectedPackage === plan.id && "bg-[#006EF0]"
+                    selectedPackage === plan.id && 'bg-[#006EF0]'
                   }`}
-                  onClick={() => setValue("selectedPackage", plan.id)}
+                  onClick={() => setValue('selectedPackage', plan.id)}
                 >
-                  {selectedPackage === plan.id ? "Selected" : "Select"}
+                  {selectedPackage === plan.id ? 'Selected' : 'Select'}
                 </Button>
               </div>
             </div>

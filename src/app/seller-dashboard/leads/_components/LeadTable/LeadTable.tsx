@@ -1,16 +1,16 @@
-"use client";
-import { ChevronDown, Eye, Mail, Phone, Search } from "lucide-react";
+'use client';
+import { ChevronDown, Eye, Mail, Phone, Search } from 'lucide-react';
 import CustomTable, {
   Column,
-} from "@/components/shared/dashboard/CustomTable/CustomTable";
+} from '@/components/shared/dashboard/CustomTable/CustomTable';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { leadData, TClientInquiry } from "../../data/leadData";
+} from '@/components/ui/select';
+import { leadData, TClientInquiry } from '../../data/leadData';
 
 const LeadTable = () => {
   //Pagination states
@@ -19,33 +19,33 @@ const LeadTable = () => {
   //Table Config
   const leadColumns: Column<TClientInquiry>[] = [
     {
-      header: "Listing ID",
-      accessor: "listing_id",
+      header: 'Listing ID',
+      accessor: 'listing_id',
     },
     // File Name Column
     {
-      header: "Client Name",
-      accessor: "client_name",
+      header: 'Client Name',
+      accessor: 'client_name',
     },
     {
-      header: "Email",
-      accessor: "email",
+      header: 'Email',
+      accessor: 'email',
     },
     // Type Column
     {
-      header: "Phone",
-      accessor: "phone",
+      header: 'Phone',
+      accessor: 'phone',
     },
     {
-      header: "Message",
-      accessor: "message",
+      header: 'Message',
+      accessor: 'message',
     },
     {
-      header: "Date",
-      accessor: "date",
+      header: 'Date',
+      accessor: 'date',
     },
     {
-      header: "Action",
+      header: 'Action',
       cell: () => (
         <div className="flex items-center space-x-2">
           <button className="text-gray-400 hover:text-primary focus:outline-none focus:text-primary cursor-pointer bg-[#F4F4F4] p-1 rounded-full border border-gray-200">
@@ -73,7 +73,7 @@ const LeadTable = () => {
                 <SelectValue placeholder="Date" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem defaultValue={"all"} value="all">
+                <SelectItem defaultValue={'all'} value="all">
                   All
                 </SelectItem>
                 <SelectItem value="active">Export As</SelectItem>

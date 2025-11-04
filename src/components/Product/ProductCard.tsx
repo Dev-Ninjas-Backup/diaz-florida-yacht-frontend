@@ -1,9 +1,9 @@
-import React from "react";
-import Image from "next/image";
-import { BsBookmarkFill } from "react-icons/bs";
-import { YachtProduct } from "@/types/product-types-demo";
-import { IoLocationOutline } from "react-icons/io5";
-import Link from "next/link";
+import React from 'react';
+import Image from 'next/image';
+import { BsBookmarkFill } from 'react-icons/bs';
+import { YachtProduct } from '@/types/product-types-demo';
+import { IoLocationOutline } from 'react-icons/io5';
+import Link from 'next/link';
 
 interface ProductCardProps {
   product: YachtProduct;
@@ -12,11 +12,14 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, isPremium }) => {
   const formatPrice = (price: number) => {
-    return `$${price.toLocaleString("en-US")}`;
+    return `$${price.toLocaleString('en-US')}`;
   };
 
   return (
-    <Link href={`/search-listing/${2}`} className="relative bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 group">
+    <Link
+      href={`/search-listing/${2}`}
+      className="relative bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 group"
+    >
       {/* Image Section with Bookmark */}
       <div className="relative w-full aspect-[4/2.6] overflow-hidden">
         <Image
