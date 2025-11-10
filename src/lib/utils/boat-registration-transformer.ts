@@ -35,24 +35,22 @@ function parseDimensions(formData: BoatRegistrationFormValues): BoatDimensions {
 
 /**
  * Parse engine information from form
+ * Note: Currently stores one engine configuration. In the future, this could be expanded
+ * to support multiple distinct engines if the form collects data for each engine separately.
  */
 function parseEngines(formData: BoatRegistrationFormValues): EngineInfo[] {
-  const numEngines = parseInt(formData.numEngines) || 1;
-  const engines: EngineInfo[] = [];
+  // Create a single engine entry with the provided specifications
+  // The number of engines is tracked separately in enginesNumber field
+  const engine: EngineInfo = {
+    hours: parseInt(formData.hours) || 0,
+    horsepower: parseInt(formData.totalPower) || 0,
+    make: formData.make2,
+    model: formData.model2,
+    fuelType: (formData.engineFuelType || formData.fuelType) as FuelType,
+    propellerType: formData.propellerType as PropellerType,
+  };
 
-  // Create engine entries based on number of engines
-  for (let i = 0; i < numEngines; i++) {
-    engines.push({
-      hours: parseInt(formData.hours) || 0,
-      horsepower: parseInt(formData.totalPower) || 0,
-      make: formData.make2,
-      model: formData.model2,
-      fuelType: (formData.engineFuelType || formData.fuelType) as FuelType,
-      propellerType: formData.propellerType as PropellerType,
-    });
-  }
-
-  return engines;
+  return [engine];
 }
 
 /**

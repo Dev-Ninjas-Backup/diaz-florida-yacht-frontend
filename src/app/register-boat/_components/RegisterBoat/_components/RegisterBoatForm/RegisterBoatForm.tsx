@@ -8,7 +8,6 @@ import {
   step3Schema,
 } from '@/lib/validations/boat-registration-validation';
 import { zodResolver } from '@hookform/resolvers/zod';
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import z from 'zod';
@@ -22,13 +21,18 @@ import {
   createBoatRegistrationFormData,
   logBoatRegistrationData,
 } from '@/lib/utils/boat-registration-transformer';
-import { getAllSubscription } from '@/services/main/subscription';
+import {
+  createSubscription,
+  getAllSubscription,
+} from '@/services/main/subscription';
 import type { BoatRegistrationFormValues } from '@/types/boat-registration-types';
 import {
   SubscriptionApiResponse,
   SubscriptionPlan,
 } from '@/types/subscription-types';
 import { ArrowRight } from 'lucide-react';
+import PreviewSection from '../../../Preview/PreviewSection';
+import SellerPreviewSection from '../../../Preview/SellerPreviewSection';
 import { PaymentModal } from '../PaymentModal/PaymentModal';
 
 const steps = [
@@ -141,6 +145,85 @@ const RegisterBoatForm = () => {
   const { watch, getValues, trigger } = form;
   const selectedPackage = watch('selectedPackage');
 
+  // Watch form fields for real-time preview
+  const watchedFields = watch([
+    'buildYear',
+    'make',
+    'model',
+    'name',
+    'price',
+    'condition',
+    'lengthFeet',
+    'lengthInches',
+    'city',
+    'state',
+    'coverPhoto',
+    'firstName',
+    'lastName',
+    'email',
+    'contactNumber',
+  ]);
+
+  const handleFormSubmit = async () => {
+    const allFormData = getValues() as BoatRegistrationFormValues;
+
+    // Log the structured data in console
+    console.log('\n========== BOAT REGISTRATION SUBMISSION ==========\n');
+    logBoatRegistrationData(allFormData);
+
+    // Create FormData for API submission
+    const formDataToSend = createBoatRegistrationFormData(allFormData);
+
+    const res = await createSubscription(formDataToSend);
+    console.log('Subscription creation response:', res);
+    // Log FormData entries
+    console.log('\n========== FORMDATA ENTRIES ==========');
+    console.log('planId:', formDataToSend.get('planId'));
+    console.log(
+      'boatInfo:',
+      JSON.parse(formDataToSend.get('boatInfo') as string),
+    );
+    console.log(
+      'sellerInfo:',
+      JSON.parse(formDataToSend.get('sellerInfo') as string),
+    );
+    console.log('covers:', formDataToSend.get('covers'));
+
+    const galleries = formDataToSend.getAll('galleries');
+    console.log('galleries:', galleries.length, 'files');
+    galleries.forEach((file, index) => {
+      if (file instanceof File) {
+        console.log(
+          `  Gallery ${index + 1}:`,
+          file.name,
+          `(${(file.size / 1024).toFixed(2)} KB)`,
+        );
+      }
+    });
+
+    // Log all FormData entries for debugging
+    console.log('\n========== ALL FORMDATA ENTRIES (RAW) ==========');
+    for (const [key, value] of formDataToSend.entries()) {
+      if (value instanceof File) {
+        console.log(
+          `${key}:`,
+          `[File] ${value.name} (${(value.size / 1024).toFixed(2)} KB)`,
+        );
+      } else {
+        console.log(`${key}:`, value);
+      }
+    }
+    console.log('\n==================================================\n');
+
+    // Mark form as completed
+    setCompletedSteps([...completedSteps, 3]);
+
+    // Here you can add API call to submit the form
+    // Example: await submitBoatRegistration(formDataToSend);
+
+    alert('Form submitted successfully! Check console for FormData details.');
+  };
+
   const handleNext = async () => {
     let isValid = false;
     if (currentStep === 1) {
@@ -191,7 +274,8 @@ const RegisterBoatForm = () => {
         'confirmPassword',
       ]);
       if (isValid) {
-        setShowPaymentModal(true);
+        // Submit the form directly without payment modal
+        handleFormSubmit();
         return;
       }
     }
@@ -320,30 +404,40 @@ const RegisterBoatForm = () => {
             >
               <div className="p-4 sticky top-60 bg-white rounded-xl mt-8">
                 <h3 className="font-semibold mb-4">Preview</h3>
-                <div className="bg-gray-200 rounded-lg overflow-hidden">
-                  <Image
-                    src={boatPreview}
-                    alt="Boat preview"
-                    width={400}
-                    className="w-full h-48 object-cover"
+
+                {/* Boat Preview for Step 2 */}
+                {currentStep === 2 && (
+                  <PreviewSection
+                    buildYear={watchedFields[0]}
+                    make={watchedFields[1]}
+                    model={watchedFields[2]}
+                    name={watchedFields[3]}
+                    price={watchedFields[4]}
+                    condition={watchedFields[5]}
+                    lengthFeet={watchedFields[6]}
+                    lengthInches={watchedFields[7]}
+                    city={watchedFields[8]}
+                    state={watchedFields[9]}
+                    coverPhoto={watchedFields[10]}
+                    boatPreviewFallback={boatPreview}
                   />
-                </div>
-                <div className="mt-4 space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="text-green-600 text-sm">● Verify</span>
-                  </div>
-                  <h4 className="font-semibold text-sm">
-                    2019 Viking 50 Enclosed Flybridge
-                  </h4>
-                  <div className="flex gap-4 text-xs text-gray-600">
-                    <span>Make: Viking</span>
-                    <span>Model: 50</span>
-                    <span>Year: 2019</span>
-                  </div>
-                  <p className="text-blue-600 font-semibold text-sm">
-                    Price: $1,195,000
-                  </p>
-                </div>
+                )}
+
+                {/* Seller Info Preview for Step 3 */}
+                {currentStep === 3 && (
+                  <SellerPreviewSection
+                    firstName={watchedFields[11]}
+                    lastName={watchedFields[12]}
+                    email={watchedFields[13]}
+                    contactNumber={watchedFields[14]}
+                    buildYear={watchedFields[0]}
+                    make={watchedFields[1]}
+                    model={watchedFields[2]}
+                    price={watchedFields[4]}
+                    city={watchedFields[8]}
+                    state={watchedFields[9]}
+                  />
+                )}
               </div>
             </div>
           </div>
