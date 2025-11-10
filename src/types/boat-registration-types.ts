@@ -4,14 +4,16 @@
  * Type definitions for boat registration API requests and responses
  */
 
-// Enums for boat properties
+// Enums for boat properties - Aligned with backend
 export enum BoatClass {
   SAILBOAT = 'SAILBOAT',
-  MOTOR_YACHT = 'MOTOR_YACHT',
-  CATAMARAN = 'CATAMARAN',
-  FISHING_BOAT = 'FISHING_BOAT',
+  MOTORBOAT = 'MOTORBOAT',
+  YACHT = 'YACHT',
+  FISHING = 'FISHING',
   PONTOON = 'PONTOON',
-  CABIN_CRUISER = 'CABIN_CRUISER',
+  SPEEDBOAT = 'SPEEDBOAT',
+  CATAMARAN = 'CATAMARAN',
+  OTHER = 'OTHER',
 }
 
 export enum Material {
@@ -19,7 +21,9 @@ export enum Material {
   ALUMINUM = 'ALUMINUM',
   WOOD = 'WOOD',
   STEEL = 'STEEL',
-  COMPOSITE = 'COMPOSITE',
+  CARBON_FIBER = 'CARBON_FIBER',
+  PLASTIC = 'PLASTIC',
+  OTHER = 'OTHER',
 }
 
 export enum FuelType {
@@ -27,18 +31,23 @@ export enum FuelType {
   DIESEL = 'DIESEL',
   ELECTRIC = 'ELECTRIC',
   HYBRID = 'HYBRID',
+  OTHER = 'OTHER',
 }
 
 export enum PropellerType {
   FIXED = 'FIXED',
   FOLDING = 'FOLDING',
   FEATHERING = 'FEATHERING',
+  SURFACE_PIERCING = 'SURFACE_PIERCING',
+  CONTROLLABLE_PITCH = 'CONTROLLABLE_PITCH',
+  OTHER = 'OTHER',
 }
 
 export enum Condition {
   NEW = 'NEW',
   USED = 'USED',
   REFURBISHED = 'REFURBISHED',
+  DAMAGED = 'DAMAGED',
 }
 
 // Boat dimensions structure

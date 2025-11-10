@@ -30,10 +30,7 @@ export const createSubscription = async (data): Promise<any> => {
       `${process.env.NEXT_PUBLIC_BASE_API}/boats/onboarding`,
       {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
+        body: data,
       },
     );
     const responseData = await res.json();

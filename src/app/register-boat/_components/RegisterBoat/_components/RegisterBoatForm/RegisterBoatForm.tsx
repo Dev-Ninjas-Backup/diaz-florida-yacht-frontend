@@ -175,6 +175,12 @@ const RegisterBoatForm = () => {
     const formDataToSend = createBoatRegistrationFormData(allFormData);
 
     const res = await createSubscription(formDataToSend);
+    if(res.data.paymentIntentClientSecret){
+        localStorage.setItem('paymentIntentClientSecret', res.data.paymentIntentClientSecret);
+        localStorage.setItem('paymentIntentId', res.data.paymentIntentId);
+        localStorage.setItem('userId', res.data.userId);
+      setShowPaymentModal(true);
+    }
     console.log('Subscription creation response:', res);
     // Log FormData entries
     console.log('\n========== FORMDATA ENTRIES ==========');

@@ -1,77 +1,96 @@
-  // Select options
-  export const classOptions = [
-    { value: 'cabin', label: 'Cabin' },
-    { value: 'open', label: 'Open' },
-  ];
+// Select options - Aligned with backend enums
+export const classOptions = [
+  { value: 'SAILBOAT', label: 'Sailboat' },
+  { value: 'MOTORBOAT', label: 'Motorboat' },
+  { value: 'YACHT', label: 'Yacht' },
+  { value: 'FISHING', label: 'Fishing' },
+  { value: 'PONTOON', label: 'Pontoon' },
+  { value: 'SPEEDBOAT', label: 'Speedboat' },
+  { value: 'CATAMARAN', label: 'Catamaran' },
+  { value: 'OTHER', label: 'Other' },
+];
 
-  export const materialOptions = [
-    { value: 'fiberglass', label: 'Fiberglass' },
-    { value: 'aluminum', label: 'Aluminum' },
-  ];
+export const materialOptions = [
+  { value: 'FIBERGLASS', label: 'Fiberglass' },
+  { value: 'ALUMINUM', label: 'Aluminum' },
+  { value: 'WOOD', label: 'Wood' },
+  { value: 'STEEL', label: 'Steel' },
+  { value: 'CARBON_FIBER', label: 'Carbon Fiber' },
+  { value: 'PLASTIC', label: 'Plastic' },
+  { value: 'OTHER', label: 'Other' },
+];
 
-  export const fuelTypeOptions = [
-    { value: 'gas', label: 'Gas' },
-    { value: 'diesel', label: 'Diesel' },
-  ];
+export const fuelTypeOptions = [
+  { value: 'GASOLINE', label: 'Gasoline' },
+  { value: 'DIESEL', label: 'Diesel' },
+  { value: 'ELECTRIC', label: 'Electric' },
+  { value: 'HYBRID', label: 'Hybrid' },
+  { value: 'OTHER', label: 'Other' },
+];
 
-  export const propellerTypeOptions = [
-    { value: 'fixed', label: 'Fixed' },
-    { value: 'variable', label: 'Variable' },
-  ];
+export const propellerTypeOptions = [
+  { value: 'FIXED', label: 'Fixed' },
+  { value: 'FOLDING', label: 'Folding' },
+  { value: 'FEATHERING', label: 'Feathering' },
+  { value: 'SURFACE_PIERCING', label: 'Surface Piercing' },
+  { value: 'CONTROLLABLE_PITCH', label: 'Controllable Pitch' },
+  { value: 'OTHER', label: 'Other' },
+];
 
-  export const conditionOptions = [
-    { value: 'excellent', label: 'Excellent' },
-    { value: 'good', label: 'Good' },
-    { value: 'fair', label: 'Fair' },
-  ];
+export const conditionOptions = [
+  { value: 'NEW', label: 'New' },
+  { value: 'USED', label: 'Used' },
+  { value: 'REFURBISHED', label: 'Refurbished' },
+  { value: 'DAMAGED', label: 'Damaged' },
+];
 
+export const buildYearOptions = [
+  { value: '2023', label: '2023' },
+  { value: '2022', label: '2022' },
+  { value: '2021', label: '2021' },
+];
 
-  export const buildYearOptions = [
-    { value: '2023', label: '2023' },
-    { value: '2022', label: '2022' },
-    { value: '2021', label: '2021' },
-  ];
+export const makeModelOptions = [
+  { value: 'a', label: 'Option A' },
+  { value: 'b', label: 'Option B' },
+  { value: 'c', label: 'Option C' },
+];
 
-  export const makeModelOptions = [
-    { value: 'a', label: 'Option A' },
-    { value: 'b', label: 'Option B' },
-    { value: 'c', label: 'Option C' },
-  ];
+const cities = [
+  'Los Angeles',
+  'San Francisco',
+  'New York City',
+  'Houston',
+  'Dallas',
+  'Miami',
+  'Chicago',
+  'Seattle',
+  'Atlanta',
+  'Phoenix',
+];
 
+const states = [
+  'California',
+  'New York',
+  'Texas',
+  'Florida',
+  'Illinois',
+  'Washington',
+  'Ohio',
+  'Georgia',
+  'Pennsylvania',
+  'Arizona',
+];
 
-  const cities = [
-    'Los Angeles',
-    'San Francisco',
-    'New York City',
-    'Houston',
-    'Dallas',
-    'Miami',
-    'Chicago',
-    'Seattle',
-    'Atlanta',
-    'Phoenix',
-  ];
-  
-  const states = [
-    'California',
-    'New York',
-    'Texas',
-    'Florida',
-    'Illinois',
-    'Washington',
-    'Ohio',
-    'Georgia',
-    'Pennsylvania',
-    'Arizona',
-  ];
-  
+// Select options
+export const countryOptions = [
+  { value: 'usa', label: 'United States' },
+  { value: 'canada', label: 'Canada' },
+  { value: 'uk', label: 'United Kingdom' },
+];
 
-    // Select options
- export const countryOptions = [
-    { value: 'usa', label: 'United States' },
-    { value: 'canada', label: 'Canada' },
-    { value: 'uk', label: 'United Kingdom' },
-  ];
-
-  export const cityOptions = cities.map((city) => ({ value: city, label: city }));
-  export const stateOptions = states.map((state) => ({ value: state, label: state }));
+export const cityOptions = cities.map((city) => ({ value: city, label: city }));
+export const stateOptions = states.map((state) => ({
+  value: state,
+  label: state,
+}));
