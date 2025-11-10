@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import './globals.css';
 import { Toaster } from 'sonner';
+import './globals.css';
 
 const inter = Inter({
   variable: '--font-inter',
@@ -26,6 +26,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${inter.className} max-w-screen overflow-x-hidden antialiased font-inter`}
+        suppressHydrationWarning
       >
         <Toaster />
         {children}
