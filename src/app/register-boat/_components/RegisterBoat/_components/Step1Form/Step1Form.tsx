@@ -1,22 +1,44 @@
-import { subscriptionPlans } from '@/assets/demo-datas/demodata';
 import { Button } from '@/components/ui/button';
+import { SubscriptionPlan } from '@/types/subscription-types';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 
-const Step1Form = () => {
+interface Step1FormProps {
+  subscriptionPlans: SubscriptionPlan[];
+  isLoading: boolean;
+}
+
+const Step1Form: React.FC<Step1FormProps> = ({
+  subscriptionPlans,
+  isLoading,
+}) => {
   const {
     watch,
     setValue,
     formState: { errors },
   } = useFormContext();
   const selectedPackage = watch('selectedPackage');
+
+  console.log('Subscription Plans in Step1Form:', subscriptionPlans.toReversed());
+
+  if (isLoading) {
+    return (
+      <div className="space-y-6 mt-10">
+        <h3 className="text-lg font-semibold">Select a Package</h3>
+        <div className="flex justify-center items-center py-20">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6 mt-10">
       <h3 className="text-lg font-semibold">Select a Package</h3>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {subscriptionPlans.map((plan) => (
+        {subscriptionPlans?.toReversed().map((plan) => (
           <div
             key={plan.id}
             className={`relative pb-16 px-3 bg-white rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300 cursor-pointer ${

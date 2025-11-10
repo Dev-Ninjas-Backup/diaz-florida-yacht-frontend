@@ -1,5 +1,6 @@
+import { SubscriptionPlan } from '@/types/subscription-types';
+import Link from 'next/link';
 import React from 'react';
-import { SubscriptionPlan } from '@/types/subscription-types-demo';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 
 interface SubscriptionCardProps {
@@ -49,17 +50,17 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ plan }) => {
           ))}
         </div>
 
-        <div className="absolute bottom-5 left-0  w-full px-3">
+        <div className="absolute bottom-5 left-0 right-0 w-full px-3">
           {/* CTA Button */}
-          <button
-            className={` py-3 px-4 w-full rounded-xl font-semibold text-base sm:text-lg transition-all duration-300 ${
+          <Link href={'/register-boat'}
+            className={`block text-center py-3 px-4 w-full rounded-xl font-semibold text-base sm:text-lg transition-all duration-300 ${
               plan.buttonStyle === 'primary'
-                ? 'bg-secondary text-white hover:bg-blue-700 shadow-md hover:shadow-lg'
-                : 'bg-gray-900 text-white hover:bg-gray-800 shadow-md hover:shadow-lg'
+          ? 'bg-secondary text-white hover:bg-blue-700 shadow-md hover:shadow-lg'
+          : 'bg-gray-900 text-white hover:bg-gray-800 shadow-md hover:shadow-lg'
             }`}
           >
             {plan.buttonText}
-          </button>
+          </Link>
         </div>
       </div>
     </div>

@@ -5,7 +5,9 @@ import React from 'react';
 import { IoArrowBack } from 'react-icons/io5';
 import RegisterBoatForm from './_components/RegisterBoatForm/RegisterBoatForm';
 
+
 const RegisterBoat = () => {
+
   const router = useRouter();
   return (
     <div className="my-2 md:my-3 mx-2 md:mx-5 rounded-2xl">
