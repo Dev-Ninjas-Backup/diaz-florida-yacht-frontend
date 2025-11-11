@@ -175,6 +175,7 @@ const RegisterBoatForm = () => {
     const formDataToSend = createBoatRegistrationFormData(allFormData);
 
     const res = await createSubscription(formDataToSend);
+    // Backend returns SetupIntent client secret for subscription setup
     if(res.data.paymentIntentClientSecret){
         localStorage.setItem('paymentIntentClientSecret', res.data.paymentIntentClientSecret);
         localStorage.setItem('paymentIntentId', res.data.paymentIntentId);

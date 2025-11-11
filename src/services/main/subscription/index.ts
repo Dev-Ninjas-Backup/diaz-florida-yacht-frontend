@@ -4,6 +4,7 @@
 // import { getValidToken } from '@/lib/verifyToken';
 // import { revalidateTag } from 'next/cache';
 
+
 export const getAllSubscription = async () => {
 //   const token = await getValidToken();
   try {
@@ -40,46 +41,17 @@ export const createSubscription = async (data): Promise<any> => {
   }
 };
 
-// export const createCategory = async (
-//   categoryData: Partial<ICategoryFormData>,
-// ): Promise<any> => {
-//   const token = await getValidToken();
-
-//   try {
-//     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/categories`, {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//         Authorization: `Bearer ${token}`,
-//       },
-//       body: JSON.stringify(categoryData),
-//     });
-
-//     revalidateTag('CATEGORY');
-//     const result = await res.json();
-
-//     return result;
-//   } catch (error: any) {
-//     return Error(error);
-//   }
-// };
-
-// export const deleteCategory = async (categoryId: string): Promise<any> => {
-//   const token = await getValidToken();
-
-//   try {
-//     const res = await fetch(
-//       `${process.env.NEXT_PUBLIC_BASE_API}/categories/${categoryId}`,
-//       {
-//         method: 'DELETE',
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//         },
-//       },
-//     );
-//     revalidateTag('CATEGORY');
-//     return res.json();
-//   } catch (error: any) {
-//     return Error(error);
-//   }
-// };
+export const confirmSubscriptionPayment = async (userId: string): Promise<any> => {
+  try{
+     const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/boats/subscription-confirmation/${userId}`,
+      {
+        method: 'GET',
+      },
+    );
+    const responseData = await res.json();
+    return responseData;
+  } catch (error: any) {
+    return Error(error.message);
+  }
+};
