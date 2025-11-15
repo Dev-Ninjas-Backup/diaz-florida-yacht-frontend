@@ -21,6 +21,7 @@ import {
   createBoatRegistrationFormData,
   logBoatRegistrationData,
 } from '@/lib/utils/boat-registration-transformer';
+import { steps } from '@/lib/utils/register-boats-select-options';
 import {
   createSubscription,
   getAllSubscription,
@@ -31,16 +32,10 @@ import {
   SubscriptionPlan,
 } from '@/types/subscription-types';
 import { ArrowRight } from 'lucide-react';
+import { toast } from 'sonner';
 import PreviewSection from '../../../Preview/PreviewSection';
 import SellerPreviewSection from '../../../Preview/SellerPreviewSection';
 import { PaymentModal } from '../PaymentModal/PaymentModal';
-
-const steps = [
-  { id: 1, label: 'Select Package', key: 'selectPackage' },
-  { id: 2, label: 'Boat Information', key: 'boatInfo' },
-  { id: 3, label: 'Seller Information', key: 'sellerInfo' },
-  { id: 4, label: 'Pay & Post', key: 'payPost' },
-];
 
 const RegisterBoatForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -166,16 +161,9 @@ const RegisterBoatForm = () => {
 
   const handleFormSubmit = async () => {
     const allFormData = getValues() as BoatRegistrationFormValues;
-
-    // Log the structured data in console
-    console.log('\n========== BOAT REGISTRATION SUBMISSION ==========\n');
-    logBoatRegistrationData(allFormData);
-
-    // Create FormData for API submission
     const formDataToSend = createBoatRegistrationFormData(allFormData);
-
     const res = await createSubscription(formDataToSend);
-    // Backend returns SetupIntent client secret for subscription setup
+    console.log('Subscription creation response:', res);
     if (res.data.paymentIntentClientSecret) {
       localStorage.setItem(
         'paymentIntentClientSecret',
@@ -184,54 +172,9 @@ const RegisterBoatForm = () => {
       localStorage.setItem('paymentIntentId', res.data.paymentIntentId);
       localStorage.setItem('userId', res.data.userId);
       setShowPaymentModal(true);
+      toast.success('Form submitted successfully! Proceed to payment.');
     }
-    console.log('Subscription creation response:', res);
-    // Log FormData entries
-    console.log('\n========== FORMDATA ENTRIES ==========');
-    console.log('planId:', formDataToSend.get('planId'));
-    console.log(
-      'boatInfo:',
-      JSON.parse(formDataToSend.get('boatInfo') as string),
-    );
-    console.log(
-      'sellerInfo:',
-      JSON.parse(formDataToSend.get('sellerInfo') as string),
-    );
-    console.log('covers:', formDataToSend.get('covers'));
-
-    const galleries = formDataToSend.getAll('galleries');
-    console.log('galleries:', galleries.length, 'files');
-    galleries.forEach((file, index) => {
-      if (file instanceof File) {
-        console.log(
-          `  Gallery ${index + 1}:`,
-          file.name,
-          `(${(file.size / 1024).toFixed(2)} KB)`,
-        );
-      }
-    });
-
-    // Log all FormData entries for debugging
-    console.log('\n========== ALL FORMDATA ENTRIES (RAW) ==========');
-    for (const [key, value] of formDataToSend.entries()) {
-      if (value instanceof File) {
-        console.log(
-          `${key}:`,
-          `[File] ${value.name} (${(value.size / 1024).toFixed(2)} KB)`,
-        );
-      } else {
-        console.log(`${key}:`, value);
-      }
-    }
-    console.log('\n==================================================\n');
-
-    // Mark form as completed
     setCompletedSteps([...completedSteps, 3]);
-
-    // Here you can add API call to submit the form
-    // Example: await submitBoatRegistration(formDataToSend);
-
-    alert('Form submitted successfully! Check console for FormData details.');
   };
 
   const handleNext = async () => {
@@ -459,6 +402,9 @@ const RegisterBoatForm = () => {
         isOpen={showPaymentModal}
         onClose={() => setShowPaymentModal(false)}
         selectedPackage={selectedPackage}
+        selectedPlanDetails={
+          subscriptionPlans.find((plan) => plan.id === selectedPackage) || null
+        }
         onPaymentSuccess={handlePaymentSuccess}
         onSubmitPayment={handlePaymentSubmit}
       />
