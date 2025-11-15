@@ -176,10 +176,13 @@ const RegisterBoatForm = () => {
 
     const res = await createSubscription(formDataToSend);
     // Backend returns SetupIntent client secret for subscription setup
-    if(res.data.paymentIntentClientSecret){
-        localStorage.setItem('paymentIntentClientSecret', res.data.paymentIntentClientSecret);
-        localStorage.setItem('paymentIntentId', res.data.paymentIntentId);
-        localStorage.setItem('userId', res.data.userId);
+    if (res.data.paymentIntentClientSecret) {
+      localStorage.setItem(
+        'paymentIntentClientSecret',
+        res.data.paymentIntentClientSecret,
+      );
+      localStorage.setItem('paymentIntentId', res.data.paymentIntentId);
+      localStorage.setItem('userId', res.data.userId);
       setShowPaymentModal(true);
     }
     console.log('Subscription creation response:', res);
