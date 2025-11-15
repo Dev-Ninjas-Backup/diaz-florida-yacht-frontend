@@ -1,3 +1,12 @@
+export const steps = [
+  { id: 1, label: 'Select Package', key: 'selectPackage' },
+  { id: 2, label: 'Boat Information', key: 'boatInfo' },
+  { id: 3, label: 'Seller Information', key: 'sellerInfo' },
+  { id: 4, label: 'Pay & Post', key: 'payPost' },
+];
+
+
+
 // Select options - Aligned with backend enums
 export const classOptions = [
   { value: 'SAILBOAT', label: 'Sailboat' },

@@ -28,7 +28,7 @@ export const createSubscription = async (data): Promise<any> => {
 
   try{
      const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/boats/onboarding`,
+      `${process.env.NEXT_PUBLIC_BASE_API}/boats/seller/onboarding`,
       {
         method: 'POST',
         body: data,
@@ -44,7 +44,7 @@ export const createSubscription = async (data): Promise<any> => {
 export const confirmSubscriptionPayment = async (userId: string): Promise<any> => {
   try{
      const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/boats/subscription-confirmation/${userId}`,
+      `${process.env.NEXT_PUBLIC_BASE_API}/boats/seller/subscription-confirmation/${userId}`,
       {
         method: 'GET',
       },
