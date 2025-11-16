@@ -78,9 +78,9 @@ const SearchComponent = () => {
     isLast?: boolean;
   }) => (
     <div
-      className={`${!isLast ? ' border-gray-200' : ''} p-4 hover:bg-gray-50 transition-colors relative`}
+      className={`${!isLast ? ' border-gray-200' : ''} p-2 md:p-4 hover:bg-gray-50 transition-colors relative`}
     >
-      <button onClick={() => toggleDropdown(name)} className="w-full text-left">
+      <button onClick={() => toggleDropdown(name)} className="w-full text-left text-sm md:text-base">
         <label className="block text-sm font-semibold text-gray-700 mb-2 cursor-pointer">
           {label}{' '}
           <IoIosArrowDown
@@ -91,7 +91,7 @@ const SearchComponent = () => {
       </button>
 
       {openDropdown === name && (
-        <div className="absolute bottom-full left-0 mt-1 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-100 max-h-60 overflow-y-auto">
+        <div className="absolute text-sm md:text-base bottom-full left-0 mt-1 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-100 max-h-60 overflow-y-auto">
           {options.map((option) => (
             <button
               key={option}
@@ -99,9 +99,9 @@ const SearchComponent = () => {
                 onChange(option.toString());
                 setOpenDropdown(null);
               }}
-              className={`w-full text-left px-4 py-2 hover:bg-blue-50 transition-colors ${
+              className={`w-full text-left text-sm md:text-base px-2 py-1 md:px-4 md:py-2 hover:bg-blue-50 transition-colors ${
                 value === option.toString()
-                  ? 'bg-blue-100 text-blue-700 font-medium'
+                  ? 'bg-blue-100 text-blue-700 font-medium '
                   : 'text-gray-700'
               }`}
             >
@@ -155,7 +155,7 @@ const SearchComponent = () => {
           />
 
           {/* Length */}
-          <div className=" border-gray-200 p-4 hover:bg-gray-50 transition-colors">
+          <div className=" border-gray-200 p-2 md:p-4 hover:bg-gray-50 transition-colors">
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Length (ft)
             </label>
@@ -163,21 +163,21 @@ const SearchComponent = () => {
               type="number"
               value={length}
               onChange={(e) => setLength(e.target.value)}
-              className="w-full text-gray-900 font-normal focus:outline-none bg-transparent"
+              className="w-full text-sm md:text-base text-gray-900 font-normal focus:outline-none bg-transparent"
               placeholder="60"
             />
           </div>
 
           {/* Max Price */}
-          <div className=" border-gray-200 p-4 hover:bg-gray-50 transition-colors">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+          <div className=" border-gray-200 p-2 md:p-4 hover:bg-gray-50 transition-colors">
+            <label className="block text-sm md:text-base font-medium text-gray-700 mb-2">
               Max Price ($)
             </label>
             <input
               type="text"
               value={maxPrice}
               onChange={(e) => setMaxPrice(e.target.value)}
-              className="w-full text-gray-900 font-normal focus:outline-none bg-transparent"
+              className="w-full text-sm md:text-base text-gray-900 font-normal focus:outline-none bg-transparent placeholder:text-sm md:placeholder:text-base"
               placeholder="$22,000"
             />
           </div>
@@ -210,9 +210,9 @@ const SearchComponent = () => {
               value={aiPrompt}
               onChange={(e) => setAiPrompt(e.target.value)}
               placeholder="Example: find me a Viking for sale from 2005 to 2008"
-              className="w-full md:px-3 focus:outline-none bg-transparent text-gray-700 placeholder:text-gray-400"
+              className="w-full md:px-3 focus:outline-none bg-transparent text-gray-700 placeholder:text-gray-400 placeholder:text-xs md:placeholder:text-base"
             />
-            <button className="absolute top-1/2 mx-3 transform -translate-y-1/2 right-0 px-2 md:px-3 py-1 md:py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg font-medium transition-colors flex items-center justify-center gap-2 whitespace-nowrap">
+            <button className="absolute top-1/2 mx-3 text-sm md:text-base transform -translate-y-1/2 right-0 px-2 md:px-3 py-1 md:py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg font-medium transition-colors flex items-center justify-center gap-2 whitespace-nowrap">
               <TbSparkles className="text-sm md:text-lg" />
               Ask AI
             </button>

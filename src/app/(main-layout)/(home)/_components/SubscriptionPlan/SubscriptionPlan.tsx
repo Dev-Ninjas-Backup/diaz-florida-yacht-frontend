@@ -26,7 +26,7 @@ const SubscriptionPlan = async () => {
   );
 
   return (
-    <div className="min-h-screen px-5">
+    <div className="min-h-screen px-2 md:px-5">
       <div className="h-full md:h-[1850px]  relative bg-[#00384D] rounded-2xl">
         <div className="md:h-[1215px] relative">
           <Image
@@ -36,11 +36,11 @@ const SubscriptionPlan = async () => {
             height={900}
             className="w-full"
           />
-          <div className="absolute bottom-[3%] md:bottom-0 px-[5%] md:px-[30%] flex flex-col items-center justify-center w-full text-center text-white space-y-3 md:space-y-10 ">
-            <h1 className="text-xl sm:text-4xl md:text-6xl font-bold">
+          <div className="absolute bottom-[1%] md:bottom-0 px-[4%] md:px-[30%] flex flex-col items-center justify-center w-full text-center text-white space-y-3 md:space-y-10 ">
+            <h1 className="text-sm sm:text-4xl md:text-6xl font-bold">
               Looking to Sell Your Boat? Pick your perfect plan.
             </h1>
-            <p className="text-sm md:text-xl">
+            <p className="text-xs md:text-xl">
               Reach thousands of qualified buyers in Florida’s most active yacht
               marketplace.
             </p>
