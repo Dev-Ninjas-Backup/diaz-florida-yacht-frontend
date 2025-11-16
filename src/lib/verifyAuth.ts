@@ -1,8 +1,3 @@
-/**
- * Server-side Authentication Verification
- * Utilities for verifying JWT tokens on the server
- */
-
 'use server';
 
 import { jwtDecode } from 'jwt-decode';
@@ -13,11 +8,6 @@ interface JWTPayload {
   [key: string]: unknown;
 }
 
-/**
- * Check if a JWT token is expired
- * @param token - JWT token string
- * @returns true if expired or invalid, false if valid
- */
 export const isTokenExpired = async (token: string): Promise<boolean> => {
   if (!token) return true;
 
@@ -43,11 +33,7 @@ export const isTokenExpired = async (token: string): Promise<boolean> => {
   }
 };
 
-/**
- * Get valid token from cookies
- * Returns token only if it exists and is not expired
- * @returns Valid token string or null
- */
+
 export const getValidToken = async (): Promise<string | null> => {
   try {
     const cookieStore = await cookies();
@@ -74,10 +60,7 @@ export const getValidToken = async (): Promise<string | null> => {
   }
 };
 
-/**
- * Check if user is authenticated (server-side)
- * @returns true if valid token exists, false otherwise
- */
+
 export const isAuthenticatedServer = async (): Promise<boolean> => {
   const token = await getValidToken();
   return !!token;

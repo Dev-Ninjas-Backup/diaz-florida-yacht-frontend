@@ -1,11 +1,4 @@
-/**
- * Client-side Authentication Utilities
- * Helper functions for managing authentication state on the client
- */
 
-/**
- * Get token from cookies (client-side)
- */
 export const getTokenFromCookies = (): string | null => {
   if (typeof window === 'undefined') return null;
 
@@ -26,9 +19,6 @@ export const getTokenFromCookies = (): string | null => {
   }
 };
 
-/**
- * Get user from cookies (client-side)
- */
 export const getUserFromCookies = (): unknown | null => {
   if (typeof window === 'undefined') return null;
 
@@ -50,10 +40,6 @@ export const getUserFromCookies = (): unknown | null => {
   }
 };
 
-/**
- * Check if user is authenticated (client-side)
- * Checks for isAuthenticated flag set by server
- */
 export const isAuthenticated = (): boolean => {
   if (typeof window === 'undefined') return false;
 
@@ -69,41 +55,30 @@ export const isAuthenticated = (): boolean => {
   }
 };
 
-/**
- * Clear authentication cookies (client-side)
- */
 export const clearAuthCookies = (): void => {
   if (typeof window === 'undefined') return;
 
   try {
-    // Set cookies to expire immediately
+
     document.cookie = 'user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     document.cookie =
       'isAuthenticated=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-    // Note: accessToken is httpOnly and can only be deleted server-side
   } catch (error) {
     console.error('Error clearing auth cookies:', error);
   }
 };
 
-/**
- * Check if token is expired (basic client-side check)
- */
 export const isTokenExpiredClient = (token: string): boolean => {
   if (!token) return true;
 
   try {
-    // Basic JWT structure check
     const parts = token.split('.');
     if (parts.length !== 3) return true;
-
-    // Decode payload
     const payload = JSON.parse(atob(parts[1]));
     const exp = payload.exp;
 
     if (!exp) return true;
 
-    // Check if expired (exp is in seconds, Date.now() is in milliseconds)
     return exp * 1000 < Date.now();
   } catch (error) {
     console.error('Error checking token expiration:', error);
