@@ -22,7 +22,7 @@ const SearchListingPage = () => {
             <input
               type="text"
               placeholder="Search..."
-              className="px-4 py-2 md:py-3 rounded-lg focus:outline-none w-full bg-gray-100"
+              className="px-4 py-2 md:py-3 placeholder:text-sm md:placeholder:text-base rounded-lg focus:outline-none w-full bg-gray-100"
             />
             <button className="bg-secondary text-sm md:text-base text-white px-2 md:px-4 py-2 md:py-3 rounded-lg hover:bg-secondary transition-colors flex items-center gap-2 min-w-max">
               <IoSearchSharp /> <span>Show My Boat</span>
@@ -32,7 +32,7 @@ const SearchListingPage = () => {
       </CustomBanner>
 
       <CustomContainer>
-        <div className="md:hidden my-4">
+        <div className="md:hidden my-4 flex justify-end">
           <button
             onClick={() => setIsDrawerOpen(true)}
             className="bg-cyan-500 text-white px-4 py-2 rounded-lg hover:bg-cyan-600 transition-colors"
@@ -57,11 +57,11 @@ const SearchListingPage = () => {
               onClick={() => setIsDrawerOpen(false)}
             ></div>
             <div className="absolute left-0 top-0 h-full w-80 bg-white p-4 overflow-y-auto">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-lg font-bold">Filters</h2>
+              <div className="flex justify-end items-center mb-4">
+                
                 <button
                   onClick={() => setIsDrawerOpen(false)}
-                  className="text-gray-500 hover:text-gray-700"
+                  className="text-gray-500 hover:text-gray-900 font-semibold"
                 >
                   ✕
                 </button>

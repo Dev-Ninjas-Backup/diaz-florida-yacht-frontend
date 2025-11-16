@@ -24,7 +24,7 @@ export const getAllSubscription = async () => {
   }
 };
 
-export const createSubscription = async (data): Promise<any> => {
+export const createSubscription = async (data : any): Promise<any> => {
 
   try{
      const res = await fetch(
