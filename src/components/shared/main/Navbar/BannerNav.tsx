@@ -4,14 +4,8 @@ import { useAuth } from '@/hooks/useAuth';
 import { useLocation } from '@/hooks/useLocation';
 import { clearAuthCookies } from '@/lib/auth-utils';
 import { logoutService } from '@/services/auth';
-import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { GiHamburgerMenu } from 'react-icons/gi';
-import { IoIosArrowDown } from 'react-icons/io';
-import { IoClose, IoSearch } from 'react-icons/io5';
-import { MdMyLocation } from 'react-icons/md';
 import NavItems from './NavItems';
 import NavItemsMobile from './NavItemsMobile';
 

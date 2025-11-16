@@ -90,7 +90,7 @@ const FilterListing = () => {
   };
 
   return (
-    <div className="bg-gray-50 rounded-lg shadow-sm border border-gray-200 p-4 sm:p-5 lg:p-6 h-full  top-4">
+    <div className="bg-gray-50 rounded-lg shadow-sm border border-gray-200 p-4 sm:p-5 lg:p-6 h-full top-4">
       {/* Header */}
       <div className="flex items-center justify-between mb-6 pb-4 border-b border-gray-200">
         <h2 className="text-lg sm:text-xl font-bold text-gray-900">
@@ -104,7 +104,7 @@ const FilterListing = () => {
         </button>
       </div>
 
-      <div className="space-y-5">
+      <div className="space-y-5 pb-10">
         {/* Boat Type */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-2">

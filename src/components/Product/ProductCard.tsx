@@ -37,7 +37,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isPremium }) => {
       </div>
 
       {/* Content Section */}
-      <div className="p-1 md:p-5 pb-2  md:pb-5">
+      <div className="p-2 md:p-5 pb-2  md:pb-5">
         {/* Location */}
         <div className="flex items-center gap-1 text-gray-400 mb-1 md:mb-3">
           <IoLocationOutline className="text-xs md:text-xl text-black" />
