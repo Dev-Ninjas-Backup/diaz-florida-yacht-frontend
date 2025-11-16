@@ -1,7 +1,3 @@
-/**
- * Protected Route Component
- * Client-side route protection for authenticated areas
- */
 
 'use client';
 
@@ -16,10 +12,6 @@ interface ProtectedRouteProps {
   loadingComponent?: React.ReactNode;
 }
 
-/**
- * HOC to protect routes requiring authentication
- * Redirects to login if user is not authenticated
- */
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children,
   redirectTo = '/login',
@@ -31,20 +23,14 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
 
   useEffect(() => {
     const checkAuth = () => {
-      // Check if token exists in cookies
       const hasToken = isAuthenticated();
 
       if (!hasToken) {
-        // No token found, redirect to login
         router.push(redirectTo);
         return;
       }
-
-      // Token exists, wait for user context to load
       if (!userContext?.isLoading) {
         setIsChecking(false);
-
-        // If user context has loaded but no user data, redirect
         if (!userContext?.user) {
           router.push(redirectTo);
         }
@@ -54,7 +40,6 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     checkAuth();
   }, [userContext?.isLoading, userContext?.user, router, redirectTo]);
 
-  // Show loading state while checking authentication
   if (isChecking || userContext?.isLoading) {
     if (loadingComponent) {
       return <>{loadingComponent}</>;
@@ -70,13 +55,9 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     );
   }
 
-  // Render protected content if authenticated
   return <>{children}</>;
 };
 
-/**
- * Default loading component for protected routes
- */
 export const DefaultLoadingComponent = () => (
   <div className="flex items-center justify-center min-h-screen bg-gray-50">
     <div className="text-center space-y-4">

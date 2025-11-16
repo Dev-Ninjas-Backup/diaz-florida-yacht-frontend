@@ -27,7 +27,7 @@ const SellerDashboardLayout = ({ children }: { children: ReactNode }) => {
             Welcome To Dashboard
           </h1>
         </GradientBannerCustom>
-        <div className="mt-20">
+        <div className="mt-10 md:mt-20">
           <ProfileStates />
           <ProfileHeader />
           <CustomContainer>{children}</CustomContainer>
