@@ -42,16 +42,7 @@ export interface AuthError {
   error?: string;
 }
 
-// ============================================================================
-// Login Service
-// ============================================================================
 
-/**
- * Authenticate user with email and password
- * Sets accessToken and user cookies on success
- * @param data - Login credentials
- * @returns Login response or error
- */
 export const loginService = async (
   data: LoginRequest,
 ): Promise<LoginResponse | AuthError> => {
@@ -130,15 +121,7 @@ export const loginService = async (
   }
 };
 
-// ============================================================================
-// Get User Profile
-// ============================================================================
 
-/**
- * Fetch the authenticated user's profile
- * Requires valid accessToken in cookies
- * @returns User profile data or error
- */
 export const getUserProfile = async (): Promise<
   { success: true; data: User } | AuthError
 > => {
