@@ -1,17 +1,19 @@
 'use client';
-import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
 import logo from '@/assets/florida-yacht-logo.png';
+import { useLocation } from '@/hooks/useLocation';
+import Image from 'next/image';
 import Link from 'next/link';
-import { IoSearch } from 'react-icons/io5';
-import { MdMyLocation } from 'react-icons/md';
-import { IoIosArrowDown } from 'react-icons/io';
+import { useEffect, useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
-import { IoClose } from 'react-icons/io5';
+import { IoIosArrowDown } from 'react-icons/io';
+import { IoClose, IoSearch } from 'react-icons/io5';
+import { MdMyLocation } from 'react-icons/md';
 
 const Navbar = () => {
+  const { location, loading, error, getLocation } = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
   const handleChangeBackgroundOnScroll = () => {
     if (window.scrollY > 0) {
       setScrolled(true);
@@ -19,9 +21,32 @@ const Navbar = () => {
       setScrolled(false);
     }
   };
+
+  // Auto-get location on component mount
+  useEffect(() => {
+    getLocation();
+  }, [getLocation]);
+
   useEffect(() => {
     window.addEventListener('scroll', handleChangeBackgroundOnScroll);
+    return () =>
+      window.removeEventListener('scroll', handleChangeBackgroundOnScroll);
   }, []);
+
+  // Format location display
+  const getLocationDisplay = () => {
+    if (loading) return 'Getting location...';
+    if (error) return 'Location unavailable';
+    if (location) return `${location.city}, ${location.state}`;
+    return 'Florida - USA'; // fallback
+  };
+
+  // Handle location click - refresh location
+  const handleLocationClick = () => {
+    if (!loading) {
+      getLocation();
+    }
+  };
   return (
     <nav
       className={`fixed top-2 md:top-3 inset-x-2 md:inset-x-5  rounded-2xl px-3 py-2 text-white z-50 h-20 md:h-24 ${
@@ -72,9 +97,15 @@ const Navbar = () => {
         </div>
 
         <div className="hidden lg:flex items-center gap-5">
-          <div className="flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-white/10 rounded-md transition-colors">
+          <div
+            className="flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-white/10 rounded-md transition-colors"
+            onClick={handleLocationClick}
+            title="Click to refresh location"
+          >
             <MdMyLocation className="text-white text-lg" />
-            <span className="text-white hidden md:inline">Florida - USA</span>
+            <span className="text-white hidden md:inline">
+              {getLocationDisplay()}
+            </span>
             <IoIosArrowDown className="text-white" />
           </div>
           <Link
@@ -133,9 +164,13 @@ const Navbar = () => {
               <IoSearch /> Search
             </Link>
             <div className="border-t border-white/20 pt-4">
-              <div className="flex items-center gap-2 px-3 py-2 mb-2">
+              <div
+                className="flex items-center gap-2 px-3 py-2 mb-2 cursor-pointer hover:bg-white/10 rounded-md transition-colors"
+                onClick={handleLocationClick}
+                title="Click to refresh location"
+              >
                 <MdMyLocation className="text-white text-lg" />
-                <span className="text-white">Florida - USA</span>
+                <span className="text-white">{getLocationDisplay()}</span>
                 <IoIosArrowDown className="text-white" />
               </div>
               <Link
