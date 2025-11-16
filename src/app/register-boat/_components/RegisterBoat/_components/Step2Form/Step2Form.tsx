@@ -11,7 +11,7 @@ import { FormSelect } from '../FormFields/FormSelect';
 import { FormTextarea } from '../FormFields/FormTextarea';
 import { CoverPhotoUpload } from '../MediaUpload/CoverPhotoUpload';
 import { GalleryUpload } from '../MediaUpload/GalleryUpload';
-import { buildYearOptions, classOptions, conditionOptions, fuelTypeOptions, makeModelOptions, materialOptions, propellerTypeOptions, stateOptions } from '@/lib/utils/register-boats-select-options';
+import { buildYearOptions, classOptions, conditionOptions, fuelTypeOptions,makeOptions, materialOptions, modelOptions, propellerTypeOptions, stateOptions } from '@/lib/utils/register-boats-select-options';
 
 const Step2Form = () => {
   const { register, control } = useFormContext();
@@ -41,14 +41,14 @@ const Step2Form = () => {
           <FormSelect
             name="make"
             label="Make"
-            options={makeModelOptions}
+            options={makeOptions}
             placeholder="Select"
             required
           />
           <FormSelect
             name="model"
             label="Model"
-            options={makeModelOptions}
+            options={modelOptions}
             placeholder="Select"
             required
           />

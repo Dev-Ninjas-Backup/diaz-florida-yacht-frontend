@@ -1,3 +1,4 @@
+import Providers from '@/providers/Providers';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { Toaster } from 'sonner';
@@ -28,8 +29,10 @@ export default function RootLayout({
         className={`${inter.className} max-w-screen overflow-x-hidden antialiased font-inter`}
         suppressHydrationWarning
       >
-        <Toaster />
-        {children}
+        <Providers token={null}>
+          <Toaster />
+          {children}
+        </Providers>
       </body>
     </html>
   );
