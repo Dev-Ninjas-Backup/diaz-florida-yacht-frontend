@@ -7,30 +7,30 @@ const WhyUs = () => {
   return (
     <CustomContainer>
       <section className="py-16 md:py-20 ">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-2 md:px-4">
           <div className="flex flex-col-reverse lg:flex-row items-center gap-5 md:gap-20 lg:gap-16">
             <div className="space-y-6 w-full lg:w-1/2">
               <div className="text-sm font-medium text-gray-600">
                 {whyUsData.label}
               </div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight">
+              <h2 className="text-xl sm:text-4xl lg:text-5xl font-bold leading-tight">
                 {whyUsData.heading}
               </h2>
-              <p className="text-gray-500 text-base md:text-xl leading-relaxed">
+              <p className="text-gray-500 text-sm md:text-xl leading-relaxed">
                 {whyUsData.description}
               </p>
 
               <div className="grid grid-cols-2 md:grid-cols-3 gap-6 pt-4">
                 {whyUsData.stats.map((s, idx) => (
                   <div className="space-y-1" key={idx}>
-                    <h3 className="text-xl font-semibold">{s.value}</h3>
+                    <h3 className="text-sm font-semibold">{s.value}</h3>
                     <p className="text-sm text-gray-600">{s.label}</p>
                   </div>
                 ))}
               </div>
 
               <div className="pt-2 md:pt-4">
-                <button className="bg-secondary hover:bg-blue-700 text-white font-medium px-8 py-3.5 rounded-lg transition-colors shadow-md">
+                <button className="bg-secondary hover:bg-blue-700 text-white font-medium px-4 md:px-8 py-2 md:py-3.5 rounded-lg transition-colors shadow-md">
                   {whyUsData.cta}
                 </button>
               </div>
