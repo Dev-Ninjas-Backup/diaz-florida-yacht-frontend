@@ -1,8 +1,3 @@
-/**
- * GalleryUpload Component
- * Reusable component for uploading multiple gallery images
- */
-
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import Image from 'next/image';
