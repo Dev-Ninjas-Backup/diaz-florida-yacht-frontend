@@ -57,9 +57,7 @@ const PreviewSection: React.FC<PreviewSectionProps> = ({
           </span>
         </div>
         <h4 className="font-semibold text-sm">
-          {buildYear || make || model || name
-            ? `${buildYear || ''} ${make || ''} ${model || ''} ${name || ''}`.trim()
-            : 'Input data to display'}
+          {name ? `${name || ''}`.trim() : 'Input data to display'}
         </h4>
         <div className="flex gap-4 text-xs text-gray-600">
           <span>Make: {make || <em className="text-gray-400">N/A</em>}</span>

@@ -1,28 +1,16 @@
 'use client';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Plus, X } from 'lucide-react';
-import { useFieldArray, useFormContext } from 'react-hook-form';
+import { buildYearOptions } from '@/lib/utils/register-boats-select-options';
 import { DimensionInput } from '../FormFields/DimensionInput';
+import { DynamicFormSelect } from '../FormFields/DynamicFormSelect';
 import { FormInput } from '../FormFields/FormInput';
 import { FormSelect } from '../FormFields/FormSelect';
 import { FormTextarea } from '../FormFields/FormTextarea';
-import { CoverPhotoUpload } from '../MediaUpload/CoverPhotoUpload';
-import { GalleryUpload } from '../MediaUpload/GalleryUpload';
-import { buildYearOptions, classOptions, conditionOptions, fuelTypeOptions,makeOptions, materialOptions, modelOptions, propellerTypeOptions, stateOptions } from '@/lib/utils/register-boats-select-options';
+import { CityField } from './CityField';
+import { MediaGallerySection } from './MediaGallerySection';
+import { MoreDetailsSection } from './MoreDetailsSection';
+import { StateField } from './StateField';
 
 const Step2Form = () => {
-  const { register, control } = useFormContext();
-
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: 'moreDetails',
-  });
-
-
-
   return (
     <div className="mt-10">
       {/* Specifications */}
@@ -38,18 +26,18 @@ const Step2Form = () => {
             placeholder="Select"
             required
           />
-          <FormSelect
+          <DynamicFormSelect
             name="make"
             label="Make"
-            options={makeOptions}
-            placeholder="Select"
+            type="MAKE"
+            placeholder="Select or type"
             required
           />
-          <FormSelect
+          <DynamicFormSelect
             name="model"
             label="Model"
-            options={modelOptions}
-            placeholder="Select"
+            type="MODEL"
+            placeholder="Select or type"
             required
           />
         </div>
@@ -63,25 +51,32 @@ const Step2Form = () => {
 
         {/* Class -- Material -- Fuel Type */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5">
-          <FormSelect
+          <DynamicFormSelect
             name="class"
             label="Class"
-            options={classOptions}
-            placeholder="Select"
+            type="CLASS"
+            placeholder="Select or type"
             required
           />
-          <FormSelect
+          <DynamicFormSelect
             name="material"
             label="Material"
-            options={materialOptions}
-            placeholder="Select"
+            type="MATERIAL"
+            placeholder="Select or type"
             required
           />
-          <FormSelect
+          <DynamicFormSelect
             name="fuelType"
             label="Fuel Type"
-            options={fuelTypeOptions}
-            placeholder="Select"
+            type="FUEL_TYPE"
+            placeholder="Select or type"
+            required
+          />
+          <DynamicFormSelect
+            name="propMaterial"
+            label="Propeller Material"
+            type="PROP_MATERIAL"
+            placeholder="Select or type"
             required
           />
         </div>
@@ -148,18 +143,18 @@ const Step2Form = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-          <FormSelect
+          <DynamicFormSelect
             name="engineFuelType"
-            label="Fuel Type"
-            options={fuelTypeOptions}
-            placeholder="Select"
+            label="Engine Type"
+            type="ENGINE_TYPE"
+            placeholder="Select or type"
             required
           />
-          <FormSelect
+          <DynamicFormSelect
             name="propellerType"
             label="Propeller Type"
-            options={propellerTypeOptions}
-            placeholder="Select"
+            type="PROP_TYPE"
+            placeholder="Select or type"
             required
           />
         </div>
@@ -169,11 +164,11 @@ const Step2Form = () => {
       <div className="mt-10">
         <h3 className="text-lg font-semibold mb-4">Basic Information</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <FormSelect
+          <DynamicFormSelect
             name="condition"
             label="Condition"
-            options={conditionOptions}
-            placeholder="Select"
+            type="CONDITION"
+            placeholder="Select or type"
             required
           />
           <FormInput
@@ -186,19 +181,12 @@ const Step2Form = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-          <FormInput
-            name="city"
-            label="City"
-            placeholder="Type here"
-            required
-          />
-          <FormSelect
-            name="state"
-            label="State"
-            options={stateOptions}
-            placeholder="Select"
-            required
-          />
+          {/* State - dynamic options with custom input fallback */}
+          <StateField />
+
+          {/* City - dynamic options based on selected state, with custom input fallback */}
+          <CityField />
+
           <FormInput name="zip" label="Zip" placeholder="Type here" required />
         </div>
 
@@ -223,102 +211,10 @@ const Step2Form = () => {
       </div>
 
       {/* More Details */}
-      <div className="mt-8">
-        <h3 className="text-lg font-semibold mb-4">More Details (Optional)</h3>
-
-        {fields.length === 0 ? (
-          <div className="space-y-4">
-            <div>
-              <Label>Title</Label>
-              <Input
-                placeholder="Enter Title"
-                disabled
-                className="w-full bg-white rounded-[12px] border-none shadow-none"
-              />
-            </div>
-            <div>
-              <Label>Description</Label>
-              <Textarea
-                placeholder="Write description..."
-                disabled
-                className="w-full bg-white rounded-[12px] border-none shadow-none"
-              />
-            </div>
-          </div>
-        ) : (
-          fields.map((field, index) => (
-            <div key={field.id} className="space-y-4 mb-4 pb-4 border-b">
-              <div>
-                <Label>Title</Label>
-                <Input
-                  placeholder="Enter Title"
-                  className="w-full bg-white rounded-[12px] border-none shadow-none"
-                  {...register(`moreDetails.${index}.title`)}
-                />
-              </div>
-              <div>
-                <Label>Description</Label>
-                <Textarea
-                  placeholder="Write description..."
-                  className="w-full bg-white rounded-[12px] border-none shadow-none h-32"
-                  {...register(`moreDetails.${index}.description`)}
-                />
-              </div>
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                onClick={() => remove(index)}
-                className="text-red-500 hover:text-red-700 hover:bg-slate-50 cursor-pointer"
-              >
-                <X className="w-4 h-4 mr-2" />
-                Remove
-              </Button>
-            </div>
-          ))
-        )}
-
-        <Button
-          type="button"
-          onClick={() => append({ title: '', description: '' })}
-          className="bg-blue-500 hover:bg-blue-600 text-white mt-4"
-        >
-          <Plus className="w-4 h-4 mr-2" />
-          Add Another Description
-        </Button>
-      </div>
+      <MoreDetailsSection />
 
       {/* Media & Gallery */}
-      <div className="mt-10">
-        <h3 className="text-lg font-semibold mb-2">Media & Gallery</h3>
-        <p className="text-sm text-gray-600 mb-4">
-          Your package allows 25 images.
-        </p>
-
-        <div className="mb-6">
-          <FormInput
-            name="embedUrl"
-            label="Enter Embed URL (YouTube or Vimeo)"
-            placeholder="https://youtube.com/embed/..."
-          />
-        </div>
-
-        <div className="mb-6">
-          <CoverPhotoUpload
-            name="coverPhoto"
-            label="Upload Cover Photo"
-            required
-          />
-        </div>
-
-        <div>
-          <GalleryUpload
-            name="mediaGallery"
-            label="Upload Media Gallery"
-            maxFiles={25}
-          />
-        </div>
-      </div>
+      <MediaGallerySection />
     </div>
   );
 };
