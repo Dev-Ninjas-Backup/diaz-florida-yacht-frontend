@@ -170,41 +170,39 @@ export const modelOptions = [
 export const getModelsByMake = (make: string) =>
   modelOptions.filter((m) => m.make === make);
 
-const cities = [
-  'Los Angeles',
-  'San Francisco',
-  'New York City',
-  'Houston',
-  'Dallas',
-  'Miami',
-  'Chicago',
-  'Seattle',
-  'Atlanta',
-  'Phoenix',
-];
+import { US_CITIES_BY_STATE, US_STATES } from '@/lib/data/us-states-cities';
 
-const states = [
-  'California',
-  'New York',
-  'Texas',
-  'Florida',
-  'Illinois',
-  'Washington',
-  'Ohio',
-  'Georgia',
-  'Pennsylvania',
-  'Arizona',
-];
+// Re-export for convenience
+export { US_STATES };
 
 // Select options
-export const countryOptions = [
-  { value: 'usa', label: 'United States' },
-  { value: 'canada', label: 'Canada' },
-  { value: 'uk', label: 'United Kingdom' },
-];
+export const countryOptions = [{ value: 'usa', label: 'United States' }];
 
-export const cityOptions = cities.map((city) => ({ value: city, label: city }));
-export const stateOptions = states.map((state) => ({
-  value: state,
-  label: state,
+// State options derived from the authoritative US_STATES list
+export const stateOptions = US_STATES.map((s) => ({
+  value: s.code,
+  label: s.name,
 }));
+
+/**
+ * Get cities for a given state code (e.g. 'CA') or state name (e.g. 'California').
+ * Returns the cities from the US_CITIES_BY_STATE map.
+ */
+export function getCitiesForState(stateIdentifier: string): { name: string }[] {
+  if (!stateIdentifier) return [];
+
+  // Try to find by code first
+  let cities = US_CITIES_BY_STATE[stateIdentifier.toUpperCase()];
+
+  // If not found, try to find by name
+  if (!cities) {
+    const state = US_STATES.find(
+      (s) => s.name.toLowerCase() === stateIdentifier.toLowerCase(),
+    );
+    if (state) {
+      cities = US_CITIES_BY_STATE[state.code];
+    }
+  }
+
+  return cities || [];
+}

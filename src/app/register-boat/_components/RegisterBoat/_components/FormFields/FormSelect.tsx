@@ -27,6 +27,9 @@ interface FormSelectProps {
   required?: boolean;
   disabled?: boolean;
   className?: string;
+  search?: string;
+  type?: string;
+  limit?: number;
 }
 
 export const FormSelect: React.FC<FormSelectProps> = ({
@@ -37,6 +40,9 @@ export const FormSelect: React.FC<FormSelectProps> = ({
   required = false,
   disabled = false,
   className = '',
+  search,
+  type,
+  limit,
 }) => {
   const {
     watch,

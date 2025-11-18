@@ -90,6 +90,7 @@ export interface BoatInfo {
   // Classification
   boatClass: BoatClass;
   material: Material;
+  propMaterial: string;
   condition: Condition;
 
   // Capacity
@@ -158,6 +159,7 @@ export interface BoatRegistrationFormValues {
   draftInches: string;
   class: string;
   material: string;
+  propMaterial: string;
   fuelType: string;
   numEngines: string;
   numCabins: string;
@@ -175,6 +177,7 @@ export interface BoatRegistrationFormValues {
   model2: string;
   totalPower: string;
   propellerType: string;
+
   engineFuelType: string;
 
   // Optional details

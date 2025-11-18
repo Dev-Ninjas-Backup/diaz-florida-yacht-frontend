@@ -83,6 +83,7 @@ export function transformToBoatInfo(
     boatDimensions: parseDimensions(formData),
     boatClass: formData.class as BoatClass,
     material: formData.material as Material,
+    propMaterial: formData.propMaterial,
     condition: formData.condition as Condition,
     cabinsNumber: parseInt(formData.numCabins),
     headsNumber: parseInt(formData.numHeads),
