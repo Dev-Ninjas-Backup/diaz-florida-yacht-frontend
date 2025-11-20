@@ -1,11 +1,7 @@
 'use client';
-import { Eye, Plus, Search, SquarePen, Trash2 } from 'lucide-react';
 import CustomTable, {
   Column,
 } from '@/components/shared/dashboard/CustomTable/CustomTable';
-import Image from 'next/image';
-// import { useState } from "react";
-import { IListing, myListingsData } from '../../data/myListing';
 import {
   Select,
   SelectContent,
@@ -13,55 +9,97 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { PaginationMetadata, usePagination } from '@/hooks/usePagination';
+import { getSellerBoats } from '@/services/seller';
+import { Eye, Plus, Search, SquarePen, Trash2 } from 'lucide-react';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { IListing } from '../../data/myListing';
 
 const MyListing = () => {
-  //Pagination states
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const pageSize = 4;
+  const [myListings, setMyListings] = useState<IListing[]>([]);
+  const [metadata, setMetadata] = useState<PaginationMetadata>({
+    page: 1,
+    limit: 10,
+    total: 0,
+    totalPage: 0,
+  });
+  const [search, setSearch] = useState('');
+  const [status, setStatus] = useState('all');
+  const [loading, setLoading] = useState(false);
+
+  const { page, limit, setPage, setLimit } = usePagination({
+    initialPage: 1,
+    initialLimit: 10,
+  });
+
+  useEffect(() => {
+    const getListings = async () => {
+      setLoading(true);
+      try {
+        const listingsFromApi = await getSellerBoats({
+          page,
+          limit,
+          search,
+          status: status === 'all' ? '' : status,
+        });
+        setMyListings(listingsFromApi.data || []);
+        setMetadata(listingsFromApi.metadata);
+        console.log('Listings from API:', listingsFromApi);
+      } catch (error) {
+        console.error('Failed to fetch listings:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getListings();
+  }, [page, limit, search, status]);
+
+  console.log('My Listings:', myListings);
   //Table Config
   const listingColumns: Column<IListing>[] = [
     {
       header: 'Listing ID',
-      accessor: 'Listing ID',
+      cell: (row) => <p>{row.listingId}</p>,
     },
     // File Name Column
     {
       header: 'Name',
       cell: (row) => (
-        <div className="flex items-center">
-          <div className="flex-shrink-0 w-24 h-12 ">
+        <div className="flex items-center gap-3">
+          <div className="flex-shrink-0 w-24 h-12 relative">
             <Image
-              className="w-24 h-12 "
-              width={60}
-              height={60}
-              src={row.image}
-              alt={row.Name}
+              className="w-24 h-12 object-cover rounded"
+              fill
+              src={row.coverImages?.[0]?.url || '/placeholder-boat.jpg'}
+              alt={row.name}
             />
           </div>
-          <h1>{row?.Name}</h1>
+          <h1 className="font-medium">{row.name}</h1>
         </div>
       ),
     },
     {
       header: 'Price',
-      accessor: 'Price',
+      cell: (row) => <p>${row.price.toLocaleString()}</p>,
     },
-    // Type Column
     {
       header: 'Publish Date',
-      cell: (row) => <p>{row?.['Publish Date']}</p>,
+      cell: (row) => (
+        <p>{new Date(row.createdAt).toLocaleDateString('en-US')}</p>
+      ),
     },
     {
       header: 'Status',
       cell: (row) => (
         <span
           className={` ${
-            row?.Status === 'Active'
+            row.status === 'ACTIVE'
               ? 'bg-[#E3FBFD] text-[#00A3AC] rounded-full px-4 py-1.5'
               : 'bg-[#F4F4F4] text-gray-500 rounded-full px-4 py-1.5'
           }`}
         >
-          {row?.Status}
+          {row.status}
         </span>
       ),
     },
@@ -89,15 +127,18 @@ const MyListing = () => {
         <div className="flex items-center flex-wrap gap-5">
           <div className="flex items-center gap-2">
             <span className="text-lg">Filter</span>
-            <Select>
+            <Select value={status} onValueChange={setStatus}>
               <SelectTrigger className="w-full sm:min-w-[150px] bg-[#F4F4F4] rounded-lg border-none py-5">
                 <SelectValue placeholder="Select" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem defaultValue={'all'} value="all">
-                  All
-                </SelectItem>
-                <SelectItem value="active">Active</SelectItem>
+                <SelectItem value="all">All</SelectItem>
+                <SelectItem value="ACTIVE">Active</SelectItem>
+                <SelectItem value="INACTIVE">Inactive</SelectItem>
+                <SelectItem value="PENDING">Pending</SelectItem>
+                <SelectItem value="SOLD">Sold</SelectItem>
+                <SelectItem value="DRAFT">Draft</SelectItem>
+                <SelectItem value="ONBOARDING_PENDING">Onboarding Pending</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -107,6 +148,8 @@ const MyListing = () => {
             </div>
             <input
               type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
               className="caret-black block w-full  p-2 pl-10 text-sm text-gray-900 focus:ring-purple-500 focus:border-purple-500   bg-[#F4F4F4] rounded-lg border-none py-3"
               placeholder="Search ..."
             />
@@ -117,13 +160,46 @@ const MyListing = () => {
           <Plus size={18} />
         </button>
       </header>
-      <CustomTable columns={listingColumns} data={myListingsData} />
-      {/* <CustomPagination
-        totalItems={blogData.length}
-        pageSize={pageSize}
-        currentPage={currentPage}
-        onPageChange={setCurrentPage}
-      /> */}
+
+      {loading ? (
+        <div className="bg-white p-8 text-center">
+          <p className="text-gray-500">Loading...</p>
+        </div>
+      ) : myListings.length > 0 ? (
+        <>
+          <CustomTable columns={listingColumns} data={myListings} />
+          <div className="bg-white p-4 rounded-b-lg flex items-center justify-between">
+            <p className="text-sm text-gray-600">
+              Showing {(page - 1) * limit + 1} to{' '}
+              {Math.min(page * limit, metadata.total)} of {metadata.total}{' '}
+              entries
+            </p>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setPage(page - 1)}
+                disabled={page === 1}
+                className="px-3 py-1 rounded border disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Previous
+              </button>
+              <span className="px-3 py-1">
+                Page {page} of {metadata.totalPage}
+              </span>
+              <button
+                onClick={() => setPage(page + 1)}
+                disabled={page >= metadata.totalPage}
+                className="px-3 py-1 rounded border disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        </>
+      ) : (
+        <div className="bg-white p-8 text-center">
+          <p className="text-gray-500">No listings found</p>
+        </div>
+      )}
     </div>
   );
 };

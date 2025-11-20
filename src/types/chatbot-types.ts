@@ -39,6 +39,9 @@ export interface ChatbotModalProps {
 
   /** Callback function to close the modal */
   onClose: () => void;
+
+  /** Optional: User ID for tracking conversations */
+  userId?: string;
 }
 
 /**
