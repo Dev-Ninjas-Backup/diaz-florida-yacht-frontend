@@ -1,12 +1,18 @@
 'use client';
 
-import { Dialog, DialogContent } from '@/components/ui/dialog';
-import { sendMessageToChatBot } from '@/services/chatBot';
-import type { ChatbotModalProps, ChatbotResult } from '@/types/chatbot-types';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
+import { chatHistory, sendMessageToChatBot } from '@/services/chatBot';
+import type { ChatbotModalProps } from '@/types/chatbot-types';
 import { ChevronLeft, Maximize2, Mic } from 'lucide-react';
-import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { IoSparklesSharp } from 'react-icons/io5';
+import AnimatedLoadingMessages from './AnimatedLoadingMessages';
+import { renderMessage } from './RenderMessage';
+
+interface ChatMessage {
+  role: 'user' | 'assistant';
+  content: string;
+}
 
 const ChatbotModal: React.FC<ChatbotModalProps> = ({
   isOpen,
@@ -14,46 +20,72 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({
   userId,
 }) => {
   const [query, setQuery] = useState('');
-  const [results, setResults] = useState<ChatbotResult[]>([]);
   const [isSearching, setIsSearching] = useState(false);
-  const [aiResponse, setAiResponse] = useState('');
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
+  const chatEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!userId) return;
+
+    console.log('User ID in ChatbotModal:', userId);
+
+    const fetchChatHistory = async () => {
+      try {
+        const chatHistoryData = await chatHistory(userId);
+        console.log('Chat History:', chatHistoryData);
+        if (Array.isArray(chatHistoryData)) {
+          setChatMessages(chatHistoryData);
+        }
+      } catch (error) {
+        console.error('Failed to fetch chat history:', error);
+      }
+    };
+
+    fetchChatHistory();
+  }, [userId]);
+
+  // Auto-scroll to bottom when new messages arrive
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [chatMessages, isSearching]);
+
+  // Function to render markdown-like content
 
   // Search function with API integration
   const handleSearch = async (searchQuery: string) => {
     if (!searchQuery.trim()) {
-      setResults([]);
-      setAiResponse('');
       return;
     }
 
     setIsSearching(true);
-    setAiResponse('');
 
     try {
       // API call to chatbot using the service
       const data = await sendMessageToChatBot({
         message: searchQuery,
-        userId: userId,
+        userId: userId || null,
       });
 
       console.log('Chatbot response:', data);
       console.log('User ID:', userId);
 
-      // Set the AI response text
-      if (data.messages) {
-        setAiResponse(data.messages);
+      // Fetch updated chat history after sending message
+      if (userId) {
+        try {
+          const chatHistoryData = await chatHistory(userId);
+          console.log('Updated Chat History:', chatHistoryData);
+          if (Array.isArray(chatHistoryData)) {
+            setChatMessages(chatHistoryData);
+          }
+        } catch (historyError) {
+          console.error('Failed to fetch updated chat history:', historyError);
+        }
       }
 
-      // Set results if available
-      if (data.results && Array.isArray(data.results)) {
-        setResults(data.results);
-      } else {
-        setResults([]);
-      }
+      // Clear the input query after sending
+      setQuery('');
     } catch (error) {
       console.error('Search error:', error);
-      setAiResponse('Sorry, I encountered an error. Please try again.');
-      setResults([]);
     } finally {
       setIsSearching(false);
     }
@@ -68,9 +100,10 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent
-        className="max-w-[90vw] sm:max-w-md md:max-w-lg h-[90vh] p-0 gap-0 overflow-hidden flex flex-col"
+        className="max-w-[90vw] sm:max-w-md md:max-w-2xl h-[90vh] p-0 gap-0 overflow-hidden flex flex-col"
         showCloseButton={false}
       >
+        <DialogTitle className="sr-only">AI Assistant Chat</DialogTitle>
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-3 border-b bg-white flex-shrink-0">
           <button
@@ -91,89 +124,45 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({
 
         {/* Content Area */}
         <div className="flex-1 overflow-y-auto bg-gray-50 min-h-0">
-          {/* User Query Display */}
-          {query && (
-            <div className="px-4 py-4 bg-gray-100">
-              <p className="text-sm text-gray-700 font-medium">You asked:</p>
-              <p className="text-sm text-gray-600 mt-1">{query}</p>
-            </div>
-          )}
-
-          {/* AI Response */}
-          {aiResponse && (
-            <div className="px-4 py-4">
-              <div className="flex items-center gap-2 mb-2">
-                <IoSparklesSharp className="text-[#004DAC] text-base" />
-                <span className="font-medium text-sm text-gray-700">
-                  AI Response
-                </span>
-              </div>
-              <div className="bg-white rounded-lg p-4 border border-gray-200">
-                <p className="text-sm text-gray-700 whitespace-pre-wrap">
-                  {aiResponse}
-                </p>
-              </div>
-            </div>
-          )}
-
-          {/* AI Search Badge */}
-          {results.length > 0 && (
-            <div className="px-4 py-3">
-              <div className="flex items-center gap-2 text-sm text-gray-600">
-                <IoSparklesSharp className="text-[#004DAC] text-base" />
-                <span className="font-medium">Recommended Yachts</span>
-              </div>
-            </div>
-          )}
-
-          {/* Results Section */}
-          {results.length > 0 && (
-            <div className="px-4 pb-4">
-              <div className="space-y-3">
-                {results.map((result) => (
-                  <div
-                    key={result.id}
-                    className="flex items-center gap-3 p-3 bg-white rounded-lg hover:bg-gray-50 transition-colors cursor-pointer border border-gray-200"
-                  >
-                    <div className="w-16 h-16 bg-gray-200 rounded-lg overflow-hidden flex-shrink-0">
-                      {result.image && (
-                        <Image
-                          src={result.image}
-                          alt={result.title}
-                          width={64}
-                          height={64}
-                          className="w-full h-full object-cover"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            target.src = '/placeholder.svg';
-                          }}
-                        />
-                      )}
+          {/* Chat History Display */}
+          {chatMessages.length > 0 && (
+            <div className="px-4 py-4 space-y-4">
+              {chatMessages.map((message, index) => (
+                <div key={index} className="space-y-2">
+                  {message.role === 'user' ? (
+                    // User Message
+                    <div className="flex justify-end">
+                      <div className="bg-[#004DAC] text-white rounded-lg px-4 py-3 max-w-[80%]">
+                        <p className="text-sm font-medium mb-1">You:</p>
+                        <p className="text-sm">{message.content}</p>
+                      </div>
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-medium text-gray-900 text-sm leading-tight mb-1">
-                        {result.title}
-                      </h3>
-                      <p className="text-sm text-gray-600">
-                        Price: {result.price}
-                      </p>
+                  ) : (
+                    // Assistant Message
+                    <div className="flex justify-start">
+                      <div className="bg-white rounded-lg p-4 border border-gray-200 max-w-[90%]">
+                        <div className="flex items-center gap-2 mb-2">
+                          <IoSparklesSharp className="text-[#004DAC] text-base" />
+                          <span className="font-medium text-sm text-gray-700">
+                            AI Assistant:
+                          </span>
+                        </div>
+                        <div className="text-sm text-gray-700">
+                          {renderMessage(message.content)}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  )}
+                </div>
+              ))}
             </div>
           )}
 
           {/* Loading State */}
-          {isSearching && (
-            <div className="px-4 py-8 text-center">
-              <div className="inline-block w-6 h-6 border-2 border-[#004DAC] border-t-transparent rounded-full animate-spin"></div>
-              <p className="mt-2 text-sm text-gray-600">Searching...</p>
-            </div>
-          )}
+          {isSearching && <AnimatedLoadingMessages />}
 
           {/* Empty State */}
-          {!isSearching && !aiResponse && !results.length && !query && (
+          {!isSearching && chatMessages.length === 0 && (
             <div className="px-4 py-8 text-center">
               <IoSparklesSharp className="text-[#004DAC] text-4xl mx-auto mb-3" />
               <p className="text-sm text-gray-500">
@@ -182,13 +171,8 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({
             </div>
           )}
 
-          {!isSearching && !aiResponse && results.length === 0 && query && (
-            <div className="px-4 py-8 text-center">
-              <p className="text-sm text-gray-500">
-                No results found. Try a different query.
-              </p>
-            </div>
-          )}
+          {/* Auto-scroll anchor */}
+          <div ref={chatEndRef} />
         </div>
 
         {/* Input Area */}
