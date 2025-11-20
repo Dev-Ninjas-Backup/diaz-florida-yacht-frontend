@@ -1,11 +1,38 @@
+'use client';
 import Image from 'next/image';
 import profilePhoto from '@/assets/seller-dashboard/profileAvatar.svg';
 import CustomContainer from '@/components/CustomComponents/CustomContainer';
 import icon1 from '@/assets/seller-dashboard/states/icon1.svg';
 import icon2 from '@/assets/seller-dashboard/states/icon2.svg';
 import icon3 from '@/assets/seller-dashboard/states/icon3.svg';
+import { getSellerStats } from '@/services/seller';
+import { useEffect, useState } from 'react';
 
-const ProfileStates = () => {
+interface SellerStats {
+  totalListing: number;
+  activeListing: number;
+  totalLeads: number;
+  name: string;
+  city: string;
+  state: string;
+  country: string;
+  zip: string;
+  avatarUrl: string;
+}
+
+const ProfileStates =  () => {
+  const [stats, setStats] = useState<SellerStats | null>(null);
+
+  useEffect(() => {
+    // Fetch seller stats on component mount
+    const getStats = async () => {
+      const getStatesFromApi = await getSellerStats();
+      setStats(getStatesFromApi.data);
+    };
+    getStats();
+  }, []);
+
+  console.log('Seller Stats:', stats);
   return (
     <div className="">
       <CustomContainer>
@@ -28,7 +55,7 @@ const ProfileStates = () => {
             <div className="flex-shrink-0">
               <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full overflow-hidden border-2 border-gray-200 shadow-md">
                 <Image
-                  src={profilePhoto}
+                  src={stats?.avatarUrl || profilePhoto}
                   alt="Esther Howard"
                   width={200}
                   height={200}
@@ -40,9 +67,9 @@ const ProfileStates = () => {
             {/* User Info */}
             <div className="flex-grow text-center sm:text-left">
               <h2 className="text-xl sm:text-2xl font-semibold text-gray-800">
-                Esther Howard
+                {stats ? stats.name : 'Not Available'}
               </h2>
-              <p className="text-gray-600">San Francisco, CA</p>
+              <p className="text-gray-600">{stats ? `${stats.city}, ${stats.state}` : 'Not Available'}</p>
             </div>
           </div>
 
@@ -57,7 +84,7 @@ const ProfileStates = () => {
                 className="w-7 md:w-11 h-7 md:h-11"
               />
               <span className="text-lg md:text-2xl mt-3 font-bold text-primary-txt">
-                12
+                {stats ? stats.totalListing : 'Not Available'}
               </span>
               <span className="text-xs md:text-base text-primary-txt">Boat Listed</span>
             </div>
@@ -70,7 +97,7 @@ const ProfileStates = () => {
                 className="w-7 md:w-11 h-7 md:h-11"
               />
               <span className="text-lg md:text-2xl mt-3 font-bold text-primary-txt">
-                03
+                {stats ? stats.activeListing : 'Not Available'}
               </span>
               <span className="text-xs md:text-base text-primary-txt">Active Listing</span>
             </div>
@@ -83,7 +110,7 @@ const ProfileStates = () => {
                 className="w-7 md:w-11 h-7 md:h-11"
               />
               <span className="text-lg md:text-2xl mt-3 font-bold text-primary-txt">
-                08
+                {stats ? stats.totalLeads : 'Not Available'}
               </span>
               <span className="text-xs md:text-base text-primary-txt">Lead Generated</span>
             </div>
