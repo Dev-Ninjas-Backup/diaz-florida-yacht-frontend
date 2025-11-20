@@ -1,6 +1,13 @@
-'use server';
+"use server";
 
 import { getValidToken } from '@/lib/verifyAuth';
+
+type SellerQuery = {
+  page?: number | string;
+  limit?: number | string;
+  search?: string;
+  status?: string;
+};
 
 export const getSellerStats = async () => {
   try {
@@ -21,12 +28,18 @@ export const getSellerStats = async () => {
     );
     const data = await res.json();
     return data;
-  } catch (error: any) {
-    return Error(error.message);
+  } catch (error: unknown) {
+    const msg = error instanceof Error ? error.message : String(error);
+    return Error(msg);
   }
 };
 
-export const getSellerBoats = async ({ page, limit, search, status }) => {
+export const getSellerBoats = async ({
+  page,
+  limit,
+  search,
+  status,
+}: SellerQuery) => {
   try {
     const token = await getValidToken();
 
@@ -44,12 +57,18 @@ export const getSellerBoats = async ({ page, limit, search, status }) => {
     );
     const data = await res.json();
     return data;
-  } catch (error: any) {
-    return Error(error.message);
+  } catch (error: unknown) {
+    const msg = error instanceof Error ? error.message : String(error);
+    return Error(msg);
   }
 };
 
-export const getSellerInvoices = async ({ page, limit, search, status }) => {
+export const getSellerInvoices = async ({
+  page,
+  limit,
+  search,
+  status,
+}: SellerQuery) => {
   try {
     const token = await getValidToken();
 
@@ -67,7 +86,8 @@ export const getSellerInvoices = async ({ page, limit, search, status }) => {
     );
     const data = await res.json();
     return data;
-  } catch (error: any) {
-    return Error(error.message);
+  } catch (error: unknown) {
+    const msg = error instanceof Error ? error.message : String(error);
+    return Error(msg);
   }
 };
