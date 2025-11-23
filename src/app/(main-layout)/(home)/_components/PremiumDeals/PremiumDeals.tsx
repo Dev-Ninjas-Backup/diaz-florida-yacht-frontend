@@ -7,13 +7,13 @@ import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 const PremiumDeals = () => {
   return (
     <CustomContainer>
-      <div className="my-20 space-y-10">
+      <div className="my-10 md:my-20 space-y-10">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
           <div className="text-left space-y-3 max-w-3xl">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold">
+            <h1 className="text-xl sm:text-4xl lg:text-5xl font-bold">
               Premium Deals Near Florida
             </h1>
-            <p className="text-base sm:text-lg text-secondary-txt">
+            <p className="text-sm sm:text-lg text-secondary-txt">
               Discover the best yachts available right now. These premium
               selections are hand-picked from trusted sellers across Florida.
             </p>
@@ -27,7 +27,7 @@ const PremiumDeals = () => {
             </button>
           </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-8">
           {demodata.slice(0, 4).map((item) => (
             <ProductCard isPremium={true} key={item.name} product={item} />
           ))}

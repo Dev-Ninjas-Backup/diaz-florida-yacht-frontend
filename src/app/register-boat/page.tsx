@@ -1,6 +1,6 @@
 import RegisterBoat from './_components/RegisterBoat/RegisterBoat';
 
-const RegisterBoatPage = () => {
+const RegisterBoatPage = async () => {
   return (
     <div>
       <RegisterBoat />

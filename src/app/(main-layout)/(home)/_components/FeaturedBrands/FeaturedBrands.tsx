@@ -6,9 +6,9 @@ import Marquee from 'react-fast-marquee';
 
 const FeaturedBrands = () => {
   return (
-    <div className="py-20">
+    <div className="py-10 md:py-20">
       <CustomContainer>
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-center">
+        <h1 className="text-xl sm:text-4xl lg:text-5xl font-bold text-center">
           Our Featured Yacht Brands
         </h1>
         <div className="space-y-10 my-20 px-4 sm:px-8 md:px-16 lg:px-[10%] relative overflow-hidden">
@@ -19,7 +19,7 @@ const FeaturedBrands = () => {
             <Marquee direction="right" gradient={false} speed={40} pauseOnHover>
               {brandImages.map((brand) => (
                 <div key={brand.id} className="mx-4 sm:mx-6 md:mx-8">
-                  <div className="relative w-24 sm:w-28 md:w-36 lg:w-40 h-10 sm:h-12 md:h-16">
+                  <div className="relative w-16 sm:w-28 md:w-36 lg:w-40 h-10 sm:h-12 md:h-16">
                     <Image
                       src={brand.image}
                       alt={`Brand ${brand.id}`}
@@ -37,7 +37,7 @@ const FeaturedBrands = () => {
             <Marquee direction="left" gradient={false} speed={25} pauseOnHover>
               {brandImages.map((brand) => (
                 <div key={brand.id} className="mx-4 sm:mx-6 md:mx-8">
-                  <div className="relative w-24 sm:w-28 md:w-36 lg:w-40 h-10 sm:h-12 md:h-16">
+                  <div className="relative w-16 sm:w-28 md:w-36 lg:w-40 h-10 sm:h-12 md:h-16">
                     <Image
                       src={brand.image}
                       alt={`Brand ${brand.id}`}

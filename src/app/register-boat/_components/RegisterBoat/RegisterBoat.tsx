@@ -21,7 +21,7 @@ const RegisterBoat = () => {
           </h1>
         </div>
       </GradientBannerCustom>
-      <div className="my-20">
+      <div className="my-5">
         <RegisterBoatForm />
       </div>
     </div>

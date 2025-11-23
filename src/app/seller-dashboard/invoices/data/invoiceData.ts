@@ -2,18 +2,62 @@ import icon1 from '@/assets/seller-dashboard/myListing/icon1.svg';
 import icon2 from '@/assets/seller-dashboard/myListing/icon2.svg';
 import icon3 from '@/assets/seller-dashboard/myListing/icon3.svg';
 
-type InvoiceStatus = 'Complete' | 'Failed';
+type InvoiceStatus =
+  | 'PAID'
+  | 'UPCOMING'
+  | 'VOID'
+  | 'PAST_DUE'
+  | 'FAILED'
+  | 'REFUNDED';
 
-export type InvoiceRecord = {
+export interface Plan {
+  id: string;
+  title: string;
+  planType: string;
+  price: number;
+  currency: string;
+  billingPeriodMonths: number;
+}
+
+export interface Subscription {
+  id: string;
+  stripeSubscriptionId: string;
+  status: string;
+  plan: Plan;
+}
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+}
+
+export interface InvoiceRecord {
+  id: string;
+  stripeInvoiceId: string;
+  status: InvoiceStatus;
+  amount: number;
+  currency: string;
+  paidAt: string | null;
+  dueAt: string | null;
+  failedAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+  subscription: Subscription;
+  user: User;
+}
+
+// Legacy interface for backward compatibility
+export interface InvoiceRecordLegacy {
   invoice_id: string;
   image: string;
   Name: string;
   charge: string;
   date: string;
-  status: InvoiceStatus;
-};
+  status: 'Complete' | 'Failed';
+}
 
-export const inoviceData: InvoiceRecord[] = [
+export const inoviceData: InvoiceRecordLegacy[] = [
   {
     invoice_id: 'INV619253',
     image: icon1.src,

@@ -1,0 +1,37 @@
+export const sendMessageToChatBot = async ({
+  message,
+  userId,
+}: {
+  message: string;
+  userId: string | null;
+}) => {
+  try {
+    const baseUrl =
+      process.env.NEXT_PUBLIC_CHATBOT_API_URL ||
+      'http://51.21.246.163:8080/api/v1';
+
+    const res = await fetch(`${baseUrl}/chat`, {
+      method: 'POST',
+      body: JSON.stringify({
+        messages: message,
+        user_id: userId || 'anonymous',
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (error: unknown) {
+    console.error('Chatbot error:', error);
+    if (error instanceof Error) {
+      throw error;
+    }
+    throw new Error('Failed to send message to chatbot');
+  }
+};

@@ -22,8 +22,8 @@ const BlogCard: React.FC<BlogCardProps> = ({ blog }) => {
         />
       </div>
 
-      <div className="p-5 flex flex-col flex-1">
-        <div className="flex items-center gap-4 text-sm text-gray-400 mb-3">
+      <div className="p-2 md:p-5 flex flex-col flex-1">
+        <div className="flex items-center gap-1 md:gap-4 text-xs md:text-sm text-gray-400 mb-1 md:mb-3">
           <span>{blog.readTime}</span>
           <span>|</span>
           <span>
@@ -35,11 +35,11 @@ const BlogCard: React.FC<BlogCardProps> = ({ blog }) => {
           </span>
         </div>
 
-        <h3 className="text-xl font-bold text-black mb-3 line-clamp-2">
+        <h3 className="text-sm md:text-xl font-bold text-black mb-3 line-clamp-2">
           {blog.title}
         </h3>
 
-        <p className="text-gray-400 text-sm leading-relaxed mb-4 line-clamp-2 flex-1">
+        <p className="text-gray-400 text-xs leading-relaxed mb-4 line-clamp-2 flex-1">
           {blog.excerpt}
         </p>
 

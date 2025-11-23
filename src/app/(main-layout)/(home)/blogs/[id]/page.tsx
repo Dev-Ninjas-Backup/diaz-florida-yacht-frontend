@@ -29,11 +29,11 @@ const BlogDetailsPage = () => {
             <SmallAdComponent />
           </div>
         </div>
-        <div className="py-10">
-          <h1 className="text-2xl font-semibold py-5">
+        <div className="py-5 md:py-10">
+          <h1 className="text-xl font-semibold py-5">
             Read More Related Blogs
           </h1>
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 md:gap-10">
             {demoBlogData.slice(0, 4).map((blog, index) => (
               <BlogCard key={index} blog={blog} />
             ))}

@@ -3,9 +3,12 @@ import exampleimg2 from '@/assets/yacht-images/image2.jpg';
 import exampleimg3 from '@/assets/yacht-images/image3.jpg';
 import exampleimg4 from '@/assets/yacht-images/image4.jpg';
 import exampleimg5 from '@/assets/yacht-images/image5.jpg';
-import { SubscriptionPlan } from '@/types/subscription-types-demo';
+import { SubscriptionPlan } from '@/types/subscription-types';
 
 import brand1Img from '@/assets/brands/brand1.png';
+import brand10Img from '@/assets/brands/brand10.png';
+import brand11Img from '@/assets/brands/brand11.png';
+import brand12Img from '@/assets/brands/brand12.png';
 import brand2Img from '@/assets/brands/brand2.png';
 import brand3Img from '@/assets/brands/brand3.png';
 import brand4Img from '@/assets/brands/brand4.png';
@@ -14,18 +17,15 @@ import brand6Img from '@/assets/brands/brand6.png';
 import brand7Img from '@/assets/brands/brand7.png';
 import brand8Img from '@/assets/brands/brand8.png';
 import brand9Img from '@/assets/brands/brand9.png';
-import brand10Img from '@/assets/brands/brand10.png';
-import brand11Img from '@/assets/brands/brand11.png';
-import brand12Img from '@/assets/brands/brand12.png';
 
-import centerConsoleImg from '@/assets/popular-categories/center-console.png';
-import sportfishImg from '@/assets/popular-categories/sportfish.png';
-import luxuryYachtsImg from '@/assets/popular-categories/luxury-yachts.png';
-import catamaransImg from '@/assets/popular-categories/catamarans.png';
-import cruisersImg from '@/assets/popular-categories/cruisers.png';
 import whyImg1 from '@/assets/local-marketplace/img1.jpg';
 import whyImg2 from '@/assets/local-marketplace/img2.png';
 import whyImg3 from '@/assets/local-marketplace/img3.png';
+import catamaransImg from '@/assets/popular-categories/catamarans.png';
+import centerConsoleImg from '@/assets/popular-categories/center-console.png';
+import cruisersImg from '@/assets/popular-categories/cruisers.png';
+import luxuryYachtsImg from '@/assets/popular-categories/luxury-yachts.png';
+import sportfishImg from '@/assets/popular-categories/sportfish.png';
 
 export const demodata = [
   {

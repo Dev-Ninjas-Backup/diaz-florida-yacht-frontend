@@ -1,5 +1,4 @@
 'use client';
-import { ArrowDownToLine, ChevronDown, Printer, Search } from 'lucide-react';
 import CustomTable, {
   Column,
 } from '@/components/shared/dashboard/CustomTable/CustomTable';
@@ -10,57 +9,100 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { inoviceData, InvoiceRecord } from '../../data/invoiceData';
-import Image from 'next/image';
+import { PaginationMetadata, usePagination } from '@/hooks/usePagination';
+import { getSellerInvoices } from '@/services/seller';
+import { ArrowDownToLine, ChevronDown, Printer, Search } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { InvoiceRecord } from '../../data/invoiceData';
 
 const InvoiceTable = () => {
-  //Pagination states
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const pageSize = 4;
+  const [invoices, setInvoices] = useState<InvoiceRecord[]>([]);
+  const [metadata, setMetadata] = useState<PaginationMetadata>({
+    page: 1,
+    limit: 10,
+    total: 0,
+    totalPage: 0,
+  });
+  const [search, setSearch] = useState('');
+  const [status, setStatus] = useState('all');
+  const [loading, setLoading] = useState(false);
+
+  const { page, limit, setPage } = usePagination({
+    initialPage: 1,
+    initialLimit: 10,
+  });
+
+  useEffect(() => {
+    const fetchInvoices = async () => {
+      setLoading(true);
+      try {
+        const invoicesFromApi = await getSellerInvoices({
+          page,
+          limit,
+          search,
+          status: status === 'all' ? '' : status,
+        });
+        setInvoices(invoicesFromApi.data || []);
+        setMetadata(invoicesFromApi.metadata);
+        console.log('Invoices from API:', invoicesFromApi);
+      } catch (error) {
+        console.error('Failed to fetch invoices:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchInvoices();
+  }, [page, limit, search, status]);
   //Table Config
   const invoiceColumns: Column<InvoiceRecord>[] = [
     {
       header: 'Invoice ID',
-      accessor: 'invoice_id',
+      cell: (row) => <p className="font-mono text-sm">{row.stripeInvoiceId}</p>,
     },
-    // File Name Column
     {
       header: 'Charged For',
       cell: (row) => (
-        <div className="flex items-center">
-          <div className="flex-shrink-0 w-24 h-12 ">
-            <Image
-              className="w-24 h-12 "
-              width={60}
-              height={60}
-              src={row.image}
-              alt={row.Name}
-            />
-          </div>
-          <h1>{row?.Name}</h1>
+        <div className="flex flex-col">
+          <h1 className="font-medium">{row.subscription.plan.title}</h1>
+          <p className="text-xs text-gray-500">
+            {row.subscription.plan.billingPeriodMonths} month subscription
+          </p>
         </div>
       ),
     },
     {
       header: 'Charge',
-      accessor: 'charge',
+      cell: (row) => (
+        <p className="font-medium">
+          ${(row.amount / 100).toFixed(2)} {row.currency.toUpperCase()}
+        </p>
+      ),
     },
-    // Type Column
     {
       header: 'Date',
-      accessor: 'date',
+      cell: (row) => (
+        <p>{new Date(row.createdAt).toLocaleDateString('en-US')}</p>
+      ),
     },
     {
       header: 'Status',
       cell: (row) => (
         <span
           className={` ${
-            row?.status === 'Complete'
+            row.status === 'PAID'
               ? 'bg-[#E5FFE3] text-[#007152] rounded-full px-4 py-1.5'
-              : 'bg-[#FFDDDD] text-[#AA3500] rounded-full px-4 py-1.5'
+              : row.status === 'UPCOMING'
+                ? 'bg-[#E3F2FD] text-[#1976D2] rounded-full px-4 py-1.5'
+                : row.status === 'PAST_DUE'
+                  ? 'bg-[#FFF4E3] text-[#AA6500] rounded-full px-4 py-1.5'
+                  : row.status === 'FAILED' || row.status === 'VOID'
+                    ? 'bg-[#FFDDDD] text-[#AA3500] rounded-full px-4 py-1.5'
+                    : row.status === 'REFUNDED'
+                      ? 'bg-[#F3E5F5] text-[#7B1FA2] rounded-full px-4 py-1.5'
+                      : 'bg-[#F4F4F4] text-gray-500 rounded-full px-4 py-1.5'
           }`}
         >
-          {row?.status}
+          {row.status.replace('_', ' ')}
         </span>
       ),
     },
@@ -84,16 +126,19 @@ const InvoiceTable = () => {
       <header className="flex items-center justify-between flex-wrap gap-5 bg-white rounded-t-lg p-4 mt-4">
         <div className="flex items-center flex-wrap gap-5">
           <div className="flex items-center gap-2">
-            <span className="text-lg shrink-0">Sort By</span>
-            <Select>
+            <span className="text-lg shrink-0">Filter</span>
+            <Select value={status} onValueChange={setStatus}>
               <SelectTrigger className="w-full sm:min-w-[150px] bg-[#F4F4F4] rounded-lg border-none py-5">
-                <SelectValue placeholder="Date" />
+                <SelectValue placeholder="Select" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem defaultValue={'all'} value="all">
-                  All
-                </SelectItem>
-                <SelectItem value="active">Export As</SelectItem>
+                <SelectItem value="all">All</SelectItem>
+                <SelectItem value="PAID">Paid</SelectItem>
+                <SelectItem value="UPCOMING">Upcoming</SelectItem>
+                <SelectItem value="VOID">Void</SelectItem>
+                <SelectItem value="PAST_DUE">Past Due</SelectItem>
+                <SelectItem value="FAILED">Failed</SelectItem>
+                <SelectItem value="REFUNDED">Refunded</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -103,6 +148,8 @@ const InvoiceTable = () => {
             </div>
             <input
               type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
               className="caret-black block w-full  p-2 pl-10 text-sm text-gray-900 focus:ring-purple-500 focus:border-purple-500   bg-[#F4F4F4] rounded-lg border-none py-3"
               placeholder="Search ..."
             />
@@ -113,13 +160,46 @@ const InvoiceTable = () => {
           <ChevronDown size={18} />
         </button>
       </header>
-      <CustomTable columns={invoiceColumns} data={inoviceData} />
-      {/* <CustomPagination
-        totalItems={blogData.length}
-        pageSize={pageSize}
-        currentPage={currentPage}
-        onPageChange={setCurrentPage}
-      /> */}
+
+      {loading ? (
+        <div className="bg-white p-8 text-center">
+          <p className="text-gray-500">Loading...</p>
+        </div>
+      ) : invoices.length > 0 ? (
+        <>
+          <CustomTable columns={invoiceColumns} data={invoices} />
+          <div className="bg-white p-4 rounded-b-lg flex items-center justify-between">
+            <p className="text-sm text-gray-600">
+              Showing {(page - 1) * limit + 1} to{' '}
+              {Math.min(page * limit, metadata.total)} of {metadata.total}{' '}
+              entries
+            </p>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setPage(page - 1)}
+                disabled={page === 1}
+                className="px-3 py-1 rounded border disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Previous
+              </button>
+              <span className="px-3 py-1">
+                Page {page} of {metadata.totalPage}
+              </span>
+              <button
+                onClick={() => setPage(page + 1)}
+                disabled={page >= metadata.totalPage}
+                className="px-3 py-1 rounded border disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        </>
+      ) : (
+        <div className="bg-white p-8 text-center">
+          <p className="text-gray-500">No invoices found</p>
+        </div>
+      )}
     </div>
   );
 };

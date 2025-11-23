@@ -1,43 +1,58 @@
 'use client';
 
-import React, { useState } from 'react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
-import { IoSparklesSharp } from 'react-icons/io5';
+import { sendMessageToChatBot } from '@/services/chatBot';
+import type { ChatbotModalProps, ChatbotResult } from '@/types/chatbot-types';
 import { ChevronLeft, Maximize2, Mic } from 'lucide-react';
 import Image from 'next/image';
-import type { ChatbotResult, ChatbotModalProps } from '@/types/chatbot-types';
+import React, { useState } from 'react';
+import { IoSparklesSharp } from 'react-icons/io5';
 
-const ChatbotModal: React.FC<ChatbotModalProps> = ({ isOpen, onClose }) => {
+const ChatbotModal: React.FC<ChatbotModalProps> = ({
+  isOpen,
+  onClose,
+  userId,
+}) => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<ChatbotResult[]>([]);
   const [isSearching, setIsSearching] = useState(false);
+  const [aiResponse, setAiResponse] = useState('');
 
   // Search function with API integration
   const handleSearch = async (searchQuery: string) => {
-    if (!searchQuery.trim()) {
+    if (!searchQuery.trim() || !userId) {
       setResults([]);
+      setAiResponse('');
       return;
     }
 
     setIsSearching(true);
+    setAiResponse('');
 
     try {
-      // API call to chatbot search endpoint
-      const response = await fetch('/api/chatbot/search', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query: searchQuery }),
+      // API call to chatbot using the service
+      const data = await sendMessageToChatBot({
+        message: searchQuery,
+        userId: userId,
       });
 
-      if (!response.ok) {
-        throw new Error('Search failed');
+      console.log('Chatbot response:', data);
+      console.log('User ID:', userId);
+
+      // Set the AI response text
+      if (data.messages) {
+        setAiResponse(data.messages);
       }
 
-      const data = await response.json();
-      setResults(data.results || []);
+      // Set results if available
+      if (data.results && Array.isArray(data.results)) {
+        setResults(data.results);
+      } else {
+        setResults([]);
+      }
     } catch (error) {
       console.error('Search error:', error);
-      // Show error state to user
+      setAiResponse('Sorry, I encountered an error. Please try again.');
       setResults([]);
     } finally {
       setIsSearching(false);
@@ -53,11 +68,11 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ isOpen, onClose }) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent
-        className="max-w-[90vw] sm:max-w-md md:max-w-lg h-[90vh] sm:h-auto max-h-[90vh] p-0 gap-0 overflow-hidden"
+        className="max-w-[90vw] sm:max-w-md md:max-w-lg h-[90vh] p-0 gap-0 overflow-hidden flex flex-col"
         showCloseButton={false}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-4 py-3 border-b bg-white sticky top-0 z-10">
+        <div className="flex items-center justify-between px-4 py-3 border-b bg-white flex-shrink-0">
           <button
             onClick={onClose}
             className="p-2 hover:bg-gray-100 rounded-full transition-colors"
@@ -75,20 +90,38 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ isOpen, onClose }) => {
         </div>
 
         {/* Content Area */}
-        <div className="flex-1 overflow-y-auto bg-gray-50">
+        <div className="flex-1 overflow-y-auto bg-gray-50 min-h-0">
           {/* User Query Display */}
-          <div className="px-4 py-4 bg-gray-100">
-            <p className="text-sm text-gray-700">
-              {query || 'Ask me anything about yachts...'}
-            </p>
-          </div>
+          {query && (
+            <div className="px-4 py-4 bg-gray-100">
+              <p className="text-sm text-gray-700 font-medium">You asked:</p>
+              <p className="text-sm text-gray-600 mt-1">{query}</p>
+            </div>
+          )}
+
+          {/* AI Response */}
+          {aiResponse && (
+            <div className="px-4 py-4">
+              <div className="flex items-center gap-2 mb-2">
+                <IoSparklesSharp className="text-[#004DAC] text-base" />
+                <span className="font-medium text-sm text-gray-700">
+                  AI Response
+                </span>
+              </div>
+              <div className="bg-white rounded-lg p-4 border border-gray-200">
+                <p className="text-sm text-gray-700 whitespace-pre-wrap">
+                  {aiResponse}
+                </p>
+              </div>
+            </div>
+          )}
 
           {/* AI Search Badge */}
           {results.length > 0 && (
             <div className="px-4 py-3">
               <div className="flex items-center gap-2 text-sm text-gray-600">
                 <IoSparklesSharp className="text-[#004DAC] text-base" />
-                <span className="font-medium">AI-Search</span>
+                <span className="font-medium">Recommended Yachts</span>
               </div>
             </div>
           )}
@@ -96,11 +129,6 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ isOpen, onClose }) => {
           {/* Results Section */}
           {results.length > 0 && (
             <div className="px-4 pb-4">
-              <p className="text-sm text-gray-700 mb-4">
-                Here are some results of available, along with their model,
-                year, and approximate price:
-              </p>
-
               <div className="space-y-3">
                 {results.map((result) => (
                   <div
@@ -145,7 +173,16 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ isOpen, onClose }) => {
           )}
 
           {/* Empty State */}
-          {!isSearching && results.length === 0 && query && (
+          {!isSearching && !aiResponse && !results.length && !query && (
+            <div className="px-4 py-8 text-center">
+              <IoSparklesSharp className="text-[#004DAC] text-4xl mx-auto mb-3" />
+              <p className="text-sm text-gray-500">
+                Ask me anything about yachts...
+              </p>
+            </div>
+          )}
+
+          {!isSearching && !aiResponse && results.length === 0 && query && (
             <div className="px-4 py-8 text-center">
               <p className="text-sm text-gray-500">
                 No results found. Try a different query.
@@ -155,7 +192,7 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ isOpen, onClose }) => {
         </div>
 
         {/* Input Area */}
-        <div className="px-4 py-3 border-t bg-white sticky bottom-0">
+        <div className="px-4 py-3 border-t bg-white flex-shrink-0">
           <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-3">
             <input
               type="text"
