@@ -9,7 +9,7 @@ import SubscriptionPlan from './_components/SubscriptionPlan/SubscriptionPlan';
 
 const HomePage = () => {
   return (
-    <div>
+    <div >
       <Banner />
       <PremiumDeals />
       <PopularCategories />
