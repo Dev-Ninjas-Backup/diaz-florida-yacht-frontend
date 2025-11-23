@@ -8,7 +8,7 @@ import {
 import Image from 'next/image';
 
 const SubscriptionPlan = async () => {
-  const { data: subscriptions} = await getAllSubscription();
+  const { data: subscriptions } = await getAllSubscription();
 
   const subscriptionPlans: SubscriptionPlanType[] = subscriptions.map(
     (plan: SubscriptionApiResponse) => ({

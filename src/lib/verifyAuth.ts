@@ -33,7 +33,6 @@ export const isTokenExpired = async (token: string): Promise<boolean> => {
   }
 };
 
-
 export const getValidToken = async (): Promise<string | null> => {
   try {
     const cookieStore = await cookies();
@@ -59,7 +58,6 @@ export const getValidToken = async (): Promise<string | null> => {
     return null;
   }
 };
-
 
 export const isAuthenticatedServer = async (): Promise<boolean> => {
   const token = await getValidToken();

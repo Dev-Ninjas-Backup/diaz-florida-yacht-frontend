@@ -20,7 +20,10 @@ const Step1Form: React.FC<Step1FormProps> = ({
   } = useFormContext();
   const selectedPackage = watch('selectedPackage');
 
-  console.log('Subscription Plans in Step1Form:', subscriptionPlans.toReversed());
+  console.log(
+    'Subscription Plans in Step1Form:',
+    subscriptionPlans.toReversed(),
+  );
 
   if (isLoading) {
     return (

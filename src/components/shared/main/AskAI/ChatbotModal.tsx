@@ -20,7 +20,7 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({
 
   // Search function with API integration
   const handleSearch = async (searchQuery: string) => {
-    if (!searchQuery.trim()) {
+    if (!searchQuery.trim() || !userId) {
       setResults([]);
       setAiResponse('');
       return;

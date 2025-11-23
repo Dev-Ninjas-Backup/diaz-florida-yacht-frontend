@@ -11,7 +11,6 @@ export interface SubscriptionPlan {
   buttonStyle: 'primary' | 'dark';
 }
 
-
 export interface SubscriptionApiResponse {
   id: string;
   title: string;
