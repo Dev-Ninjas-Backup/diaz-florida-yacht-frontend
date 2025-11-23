@@ -1,7 +1,6 @@
 import { demoBlogData } from '@/assets/demo-datas/demodata';
 import BlogCard from '@/components/Blog/BlogCard';
 import CustomContainer from '@/components/CustomComponents/CustomContainer';
-import React from 'react';
 
 const DockSideBlog = () => {
   return (
@@ -24,7 +23,7 @@ const DockSideBlog = () => {
           </div>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-8">
-          {demoBlogData.slice(0, 4).map((blog) => (
+          {demoBlogData.slice(0, 4)?.map((blog) => (
             <BlogCard key={blog.id} blog={blog} />
           ))}
         </div>

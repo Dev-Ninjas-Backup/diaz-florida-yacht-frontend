@@ -41,7 +41,7 @@ const Step1Form: React.FC<Step1FormProps> = ({
       <h3 className="text-lg font-semibold">Select a Package</h3>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {subscriptionPlans?.toReversed().map((plan) => (
+        {subscriptionPlans?.toReversed()?.map((plan) => (
           <div
             key={plan.id}
             className={`relative pb-16 px-3 bg-white rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300 cursor-pointer ${
@@ -79,7 +79,7 @@ const Step1Form: React.FC<Step1FormProps> = ({
 
               {/* Features List */}
               <div className="mb-3 sm:mb-4 space-y-2">
-                {plan.features.map((feature, index) => (
+                {plan.features?.map((feature, index) => (
                   <div key={index} className="flex items-start gap-3">
                     <IoCheckmarkCircle className="text-gray-500 text-xl sm:text-2xl flex-shrink-0 mt-0.5" />
                     <span className="text-gray-700 text-sm sm:text-base leading-relaxed">

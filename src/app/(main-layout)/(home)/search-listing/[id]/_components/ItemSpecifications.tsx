@@ -4,7 +4,10 @@ const ItemSpecifications = ({ specifications }: any) => {
   const specsArray: any[] = Array.isArray(specifications)
     ? specifications
     : specifications && typeof specifications === 'object'
-      ? Object.entries(specifications).map(([name, value]) => ({ name, value }))
+      ? Object.entries(specifications)?.map(([name, value]) => ({
+          name,
+          value,
+        }))
       : [];
 
   const formatValue = (spec: any) => {
@@ -34,7 +37,7 @@ const ItemSpecifications = ({ specifications }: any) => {
     if (name.includes(' ')) {
       return name
         .split(' ')
-        .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+        ?.map((w) => w.charAt(0).toUpperCase() + w.slice(1))
         .join(' ')
         .trim();
     }
@@ -70,7 +73,7 @@ const ItemSpecifications = ({ specifications }: any) => {
       <div className="bg-white rounded-2xl shadow border border-gray-100 overflow-hidden">
         <div className="">
           <div className="grid grid-cols-1 md:grid-cols-2 rounded border border-gray-100">
-            {specsArray.map((spec: any, index: number) => (
+            {specsArray?.map((spec: any, index: number) => (
               <div
                 key={`${spec.name ?? spec.label}-${index}`}
                 className="text-left border-b border-gray-200"

@@ -1,7 +1,6 @@
-import React from 'react';
-import Image from 'next/image';
 import { whyUsData } from '@/assets/demo-datas/demodata';
 import CustomContainer from '@/components/CustomComponents/CustomContainer';
+import Image from 'next/image';
 
 const WhyUs = () => {
   return (
@@ -21,7 +20,7 @@ const WhyUs = () => {
               </p>
 
               <div className="grid grid-cols-2 md:grid-cols-3 gap-6 pt-4">
-                {whyUsData.stats.map((s, idx) => (
+                {whyUsData.stats?.map((s, idx) => (
                   <div className="space-y-1" key={idx}>
                     <h3 className="text-sm font-semibold">{s.value}</h3>
                     <p className="text-sm text-gray-600">{s.label}</p>

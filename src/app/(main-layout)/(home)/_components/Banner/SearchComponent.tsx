@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useRef, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import { IoSearch } from 'react-icons/io5';
 import { TbSparkles } from 'react-icons/tb';
@@ -95,7 +95,7 @@ const SearchComponent = () => {
 
       {openDropdown === name && (
         <div className="absolute text-sm md:text-base bottom-full left-0 mt-1 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-100 max-h-60 overflow-y-auto">
-          {options.map((option) => (
+          {options?.map((option) => (
             <button
               key={option}
               onClick={() => {

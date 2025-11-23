@@ -24,7 +24,7 @@ export function StateField() {
 
     try {
       // Import the US_STATES from our data file
-      const opts = US_STATES.map((s: { code: string; name: string }) => ({
+      const opts = US_STATES?.map((s: { code: string; name: string }) => ({
         value: s.name,
         label: s.name,
       }));

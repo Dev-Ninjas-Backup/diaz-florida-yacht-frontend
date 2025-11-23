@@ -52,7 +52,7 @@ const RegisterBoatForm = () => {
       try {
         setIsLoadingPlans(true);
         const { data: subscriptions } = await getAllSubscription();
-        const transformed: SubscriptionPlan[] = subscriptions.map(
+        const transformed: SubscriptionPlan[] = subscriptions?.map(
           (plan: SubscriptionApiResponse) => ({
             id: plan.id,
             name: plan.title,
@@ -305,7 +305,7 @@ const RegisterBoatForm = () => {
           <div className="mt-6">
             <ProgressSteps
               currentStep={currentStep}
-              steps={steps.map((s) => s.label)}
+              steps={steps?.map((s) => s.label)}
               className="mb-6"
             />
           </div>
