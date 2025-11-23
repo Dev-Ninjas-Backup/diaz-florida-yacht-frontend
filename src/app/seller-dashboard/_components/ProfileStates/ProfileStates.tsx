@@ -8,7 +8,31 @@ import icon3 from '@/assets/seller-dashboard/states/icon3.svg';
 import { getSellerStats } from '@/services/seller';
 import { useEffect, useState } from 'react';
 
-const ProfileStates = () => {  
+interface SellerStats {
+  totalListing: number;
+  activeListing: number;
+  totalLeads: number;
+  name: string;
+  city: string;
+  state: string;
+  country: string;
+  zip: string;
+  avatarUrl: string;
+}
+
+const ProfileStates = () => {
+  const [stats, setStats] = useState<SellerStats | null>(null);
+
+  useEffect(() => {
+    // Fetch seller stats on component mount
+    const getStats = async () => {
+      const getStatesFromApi = await getSellerStats();
+      setStats(getStatesFromApi.data);
+    };
+    getStats();
+  }, []);
+
+  console.log('Seller Stats:', stats);
   return (
     <div className="">
       <CustomContainer>

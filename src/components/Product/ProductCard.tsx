@@ -12,7 +12,7 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, isPremium }) => {
   const formatPrice = (price: number) => {
-    return `$${price.toLocaleString("en-US")}`;
+    return `$${price.toLocaleString('en-US')}`;
   };
 
   return (
