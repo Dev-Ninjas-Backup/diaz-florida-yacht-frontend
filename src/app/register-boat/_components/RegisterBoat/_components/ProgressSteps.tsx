@@ -18,7 +18,7 @@ export const ProgressSteps: React.FC<ProgressStepsProps> = ({
 }) => {
   return (
     <div className={`flex justify-between gap-4 ${className}`}>
-      {steps.map((stepName, index) => {
+      {steps?.map((stepName, index) => {
         const stepNumber = index + 1;
         const isActive = currentStep === stepNumber;
         const isCompleted = currentStep > stepNumber;

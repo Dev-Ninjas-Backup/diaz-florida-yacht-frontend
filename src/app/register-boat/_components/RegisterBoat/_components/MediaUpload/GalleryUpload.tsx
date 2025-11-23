@@ -72,7 +72,7 @@ export const GalleryUpload: React.FC<GalleryUploadProps> = ({
         {/* Preview Grid */}
         {previews.length > 0 && (
           <div className="grid grid-cols-3 gap-4 mb-4">
-            {previews.map((preview, index) => (
+            {previews?.map((preview, index) => (
               <div
                 key={index}
                 className="relative aspect-square rounded-lg overflow-hidden border-2 border-gray-200"

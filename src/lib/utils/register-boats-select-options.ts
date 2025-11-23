@@ -179,7 +179,7 @@ export { US_STATES };
 export const countryOptions = [{ value: 'usa', label: 'United States' }];
 
 // State options derived from the authoritative US_STATES list
-export const stateOptions = US_STATES.map((s) => ({
+export const stateOptions = US_STATES?.map((s) => ({
   value: s.code,
   label: s.name,
 }));

@@ -6,8 +6,8 @@ import { demoBlogData } from '@/assets/demo-datas/demodata';
 
 import BlogCard from '@/components/Blog/BlogCard';
 import AdComponent from '@/components/CustomComponents/AdComponent';
-import ShareWIth from '@/components/shared/ShareWith/ShareWIth';
 import SmallAdComponent from '@/components/CustomComponents/SmallAdComponent';
+import ShareWIth from '@/components/shared/ShareWith/ShareWIth';
 import BlogInformations from './_components/BlogInformations';
 
 const BlogDetailsPage = () => {
@@ -34,7 +34,7 @@ const BlogDetailsPage = () => {
             Read More Related Blogs
           </h1>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 md:gap-10">
-            {demoBlogData.slice(0, 4).map((blog, index) => (
+            {demoBlogData.slice(0, 4)?.map((blog, index) => (
               <BlogCard key={index} blog={blog} />
             ))}
           </div>

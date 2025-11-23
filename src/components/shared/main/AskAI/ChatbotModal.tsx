@@ -130,7 +130,7 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({
           {results.length > 0 && (
             <div className="px-4 pb-4">
               <div className="space-y-3">
-                {results.map((result) => (
+                {results?.map((result) => (
                   <div
                     key={result.id}
                     className="flex items-center gap-3 p-3 bg-white rounded-lg hover:bg-gray-50 transition-colors cursor-pointer border border-gray-200"

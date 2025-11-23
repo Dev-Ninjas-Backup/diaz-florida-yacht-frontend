@@ -1,6 +1,5 @@
 import { demoBlogDetailsData } from '@/assets/demo-datas/demodata';
 import Image, { StaticImageData } from 'next/image';
-import React from 'react';
 
 const BlogInformations = ({
   blogDetailsImg,
@@ -32,7 +31,7 @@ const BlogInformations = ({
 
         {/* Dynamic Blog Sections */}
         <div className="prose prose-lg max-w-none space-y-6">
-          {demoBlogDetailsData.sections.map((section, index) => {
+          {demoBlogDetailsData.sections?.map((section, index) => {
             if (section.type === 'paragraph') {
               return (
                 <p

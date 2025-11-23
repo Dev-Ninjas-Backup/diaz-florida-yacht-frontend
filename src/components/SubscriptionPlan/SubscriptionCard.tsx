@@ -40,7 +40,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ plan }) => {
 
         {/* Features List */}
         <div className="mb-3 sm:mb-4 space-y-2">
-          {plan.features.map((feature, index) => (
+          {plan.features?.map((feature, index) => (
             <div key={index} className="flex items-start gap-3">
               <IoCheckmarkCircle className="text-gray-500 text-xl sm:text-2xl flex-shrink-0 mt-0.5" />
               <span className="text-gray-700 text-sm sm:text-base leading-relaxed">

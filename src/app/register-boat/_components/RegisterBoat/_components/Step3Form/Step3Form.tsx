@@ -130,7 +130,7 @@ function StateFieldStep3() {
 
     try {
       // Import the US_STATES from our data file
-      const opts = US_STATES.map((s: { code: string; name: string }) => ({
+      const opts = US_STATES?.map((s: { code: string; name: string }) => ({
         value: s.name,
         label: s.name,
       }));
@@ -237,7 +237,7 @@ function CityFieldStep3() {
     try {
       const list = getCitiesForState(selectedState);
       if (!mounted) return;
-      const opts = list.map((c) => ({ value: c.name, label: c.name }));
+      const opts = list?.map((c) => ({ value: c.name, label: c.name }));
       setCityOptions(opts);
     } catch (error) {
       console.error('Failed to load cities:', error);

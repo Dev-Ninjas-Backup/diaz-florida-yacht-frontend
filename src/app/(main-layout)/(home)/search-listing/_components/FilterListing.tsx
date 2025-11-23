@@ -1,6 +1,6 @@
 'use client';
-import React, { useState } from 'react';
 import { FilterState } from '@/types/filter-types';
+import { useState } from 'react';
 
 const FilterListing = () => {
   const [filters, setFilters] = useState<FilterState>({
@@ -123,7 +123,7 @@ const FilterListing = () => {
             }}
           >
             <option value="">Yacht</option>
-            {boatTypes.map((type) => (
+            {boatTypes?.map((type) => (
               <option key={type} value={type}>
                 {type}
               </option>
@@ -149,7 +149,7 @@ const FilterListing = () => {
             }}
           >
             <option value="">Mercury</option>
-            {makes.map((make) => (
+            {makes?.map((make) => (
               <option key={make} value={make}>
                 {make}
               </option>
@@ -175,7 +175,7 @@ const FilterListing = () => {
             }}
           >
             <option value="">Volvo</option>
-            {models.map((model) => (
+            {models?.map((model) => (
               <option key={model} value={model}>
                 {model}
               </option>
@@ -305,7 +305,7 @@ const FilterListing = () => {
             }}
           >
             <option value="">02</option>
-            {engineOptions.map((num) => (
+            {engineOptions?.map((num) => (
               <option key={num} value={num}>
                 {num}
               </option>
@@ -333,7 +333,7 @@ const FilterListing = () => {
             }}
           >
             <option value="">02</option>
-            {cabinOptions.map((num) => (
+            {cabinOptions?.map((num) => (
               <option key={num} value={num}>
                 {num}
               </option>
@@ -359,7 +359,7 @@ const FilterListing = () => {
             }}
           >
             <option value="">02</option>
-            {headOptions.map((num) => (
+            {headOptions?.map((num) => (
               <option key={num} value={num}>
                 {num}
               </option>
@@ -387,7 +387,7 @@ const FilterListing = () => {
             }}
           >
             <option value="">Jet ski</option>
-            {additionalUnits.map((unit) => (
+            {additionalUnits?.map((unit) => (
               <option key={unit} value={unit}>
                 {unit}
               </option>

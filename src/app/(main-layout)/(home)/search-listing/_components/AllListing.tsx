@@ -1,7 +1,7 @@
 import { demodata } from '@/assets/demo-datas/demodata';
 import ProductCard from '@/components/Product/ProductCard';
-import React, { useMemo, useState } from 'react';
 import Pagination from '@/components/ui/Pagination';
+import { useMemo, useState } from 'react';
 
 const AllListing = () => {
   const [page, setPage] = useState(1);
@@ -22,7 +22,7 @@ const AllListing = () => {
         {Math.min(page * perPage, totalItems)} of {totalItems} results
       </p>
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-5 md:gap-10 mt-3">
-        {pageItems.map((data, idx) => (
+        {pageItems?.map((data, idx) => (
           <ProductCard isPremium={false} key={idx} product={data} />
         ))}
       </div>

@@ -1,7 +1,6 @@
 import { brandImages } from '@/assets/demo-datas/demodata';
 import CustomContainer from '@/components/CustomComponents/CustomContainer';
 import Image from 'next/image';
-import React from 'react';
 import Marquee from 'react-fast-marquee';
 
 const FeaturedBrands = () => {
@@ -17,7 +16,7 @@ const FeaturedBrands = () => {
 
           <div className="flex items-center relative">
             <Marquee direction="right" gradient={false} speed={40} pauseOnHover>
-              {brandImages.map((brand) => (
+              {brandImages?.map((brand) => (
                 <div key={brand.id} className="mx-4 sm:mx-6 md:mx-8">
                   <div className="relative w-16 sm:w-28 md:w-36 lg:w-40 h-10 sm:h-12 md:h-16">
                     <Image
@@ -35,7 +34,7 @@ const FeaturedBrands = () => {
 
           <div>
             <Marquee direction="left" gradient={false} speed={25} pauseOnHover>
-              {brandImages.map((brand) => (
+              {brandImages?.map((brand) => (
                 <div key={brand.id} className="mx-4 sm:mx-6 md:mx-8">
                   <div className="relative w-16 sm:w-28 md:w-36 lg:w-40 h-10 sm:h-12 md:h-16">
                     <Image
