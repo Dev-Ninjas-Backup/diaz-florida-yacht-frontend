@@ -16,7 +16,6 @@ interface NavItemsMobileProps {
   handleLogout: () => void;
 }
 
-
 const NavItemsMobile: React.FC<NavItemsMobileProps> = ({
   setIsOpen,
   handleLocationClick,
@@ -29,7 +28,10 @@ const NavItemsMobile: React.FC<NavItemsMobileProps> = ({
 }) => {
   return (
     <div className="lg:hidden absolute top-0 rounded-xl left-0 w-full z-50 bg-gradient-to-b from-black/50 to-black/90 backdrop-blur-xs border-t border-white/20">
-        <IoClose className="absolute top-[2%] right-[5%] text-white text-3xl cursor-pointer" onClick={() => setIsOpen(false)} />
+      <IoClose
+        className="absolute top-[2%] right-[5%] text-white text-3xl cursor-pointer"
+        onClick={() => setIsOpen(false)}
+      />
       <div className="container mx-auto py-4 px-4 flex flex-col gap-4 rounded-xl">
         <Link
           href="/"

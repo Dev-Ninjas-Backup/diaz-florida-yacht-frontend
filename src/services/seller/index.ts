@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use server';
 
 import { getValidToken } from '@/lib/verifyAuth';
@@ -26,7 +27,7 @@ export const getSellerStats = async () => {
   }
 };
 
-export const getSellerBoats = async ({ page, limit, search, status }) => {
+export const getSellerBoats = async ({ page, limit, search, status }: any) => {
   try {
     const token = await getValidToken();
 
@@ -49,7 +50,12 @@ export const getSellerBoats = async ({ page, limit, search, status }) => {
   }
 };
 
-export const getSellerInvoices = async ({ page, limit, search, status }) => {
+export const getSellerInvoices = async ({
+  page,
+  limit,
+  search,
+  status,
+}: any) => {
   try {
     const token = await getValidToken();
 

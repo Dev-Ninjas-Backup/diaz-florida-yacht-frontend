@@ -42,7 +42,6 @@ export interface AuthError {
   error?: string;
 }
 
-
 export const loginService = async (
   data: LoginRequest,
 ): Promise<LoginResponse | AuthError> => {
@@ -120,7 +119,6 @@ export const loginService = async (
     };
   }
 };
-
 
 export const getUserProfile = async (): Promise<
   { success: true; data: User } | AuthError

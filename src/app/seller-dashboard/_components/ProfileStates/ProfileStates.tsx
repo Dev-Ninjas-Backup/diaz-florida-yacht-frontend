@@ -20,7 +20,7 @@ interface SellerStats {
   avatarUrl: string;
 }
 
-const ProfileStates =  () => {
+const ProfileStates = () => {
   const [stats, setStats] = useState<SellerStats | null>(null);
 
   useEffect(() => {
@@ -69,7 +69,9 @@ const ProfileStates =  () => {
               <h2 className="text-xl sm:text-2xl font-semibold text-gray-800">
                 {stats ? stats.name : 'Not Available'}
               </h2>
-              <p className="text-gray-600">{stats ? `${stats.city}, ${stats.state}` : 'Not Available'}</p>
+              <p className="text-gray-600">
+                {stats ? `${stats.city}, ${stats.state}` : 'Not Available'}
+              </p>
             </div>
           </div>
 
@@ -86,7 +88,9 @@ const ProfileStates =  () => {
               <span className="text-lg md:text-2xl mt-3 font-bold text-primary-txt">
                 {stats ? stats.totalListing : 'Not Available'}
               </span>
-              <span className="text-xs md:text-base text-primary-txt">Boat Listed</span>
+              <span className="text-xs md:text-base text-primary-txt">
+                Boat Listed
+              </span>
             </div>
             <div className="flex flex-col items-center justify-center bg-[#F4F4F4] rounded-lg p-2 md:p-4 text-center shadow-sm">
               <Image
@@ -99,7 +103,9 @@ const ProfileStates =  () => {
               <span className="text-lg md:text-2xl mt-3 font-bold text-primary-txt">
                 {stats ? stats.activeListing : 'Not Available'}
               </span>
-              <span className="text-xs md:text-base text-primary-txt">Active Listing</span>
+              <span className="text-xs md:text-base text-primary-txt">
+                Active Listing
+              </span>
             </div>
             <div className="flex flex-col items-center justify-center bg-[#F4F4F4] rounded-lg p-2 md:p-4 text-center shadow-sm">
               <Image
@@ -112,7 +118,9 @@ const ProfileStates =  () => {
               <span className="text-lg md:text-2xl mt-3 font-bold text-primary-txt">
                 {stats ? stats.totalLeads : 'Not Available'}
               </span>
-              <span className="text-xs md:text-base text-primary-txt">Lead Generated</span>
+              <span className="text-xs md:text-base text-primary-txt">
+                Lead Generated
+              </span>
             </div>
           </div>
         </div>

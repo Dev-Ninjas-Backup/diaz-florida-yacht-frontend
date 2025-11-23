@@ -54,6 +54,8 @@ export const FormSelect: React.FC<FormSelectProps> = ({
   const value = watch(name);
   const error = errors[name];
 
+  console.log(search, type, limit);
+
   const handleChange = (newValue: string) => {
     setValue(name, newValue);
     clearErrors(name);

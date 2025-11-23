@@ -1,4 +1,3 @@
-
 export const getTokenFromCookies = (): string | null => {
   if (typeof window === 'undefined') return null;
 
@@ -59,7 +58,6 @@ export const clearAuthCookies = (): void => {
   if (typeof window === 'undefined') return;
 
   try {
-
     document.cookie = 'user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     document.cookie =
       'isAuthenticated=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';

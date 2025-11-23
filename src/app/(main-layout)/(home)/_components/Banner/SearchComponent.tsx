@@ -80,7 +80,10 @@ const SearchComponent = () => {
     <div
       className={`${!isLast ? ' border-gray-200' : ''} p-2 md:p-4 hover:bg-gray-50 transition-colors relative`}
     >
-      <button onClick={() => toggleDropdown(name)} className="w-full text-left text-sm md:text-base">
+      <button
+        onClick={() => toggleDropdown(name)}
+        className="w-full text-left text-sm md:text-base"
+      >
         <label className="block text-sm font-semibold text-gray-700 mb-2 cursor-pointer">
           {label}{' '}
           <IoIosArrowDown
