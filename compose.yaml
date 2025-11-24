@@ -6,6 +6,7 @@ services:
     environment:
       - NEXT_PUBLIC_BASE_URL=https://development.floridayachttrader.com
       - NEXT_PUBLIC_BASE_API=https://api.floridayachttrader.com/api
+      - NEXT_PUBLIC_CHATBOT_API_URL=https://ai.jupitermarinesales.com/api/v1
       - NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_51RlFNRQNJ9V9C9o5Rz8lIUhKRJ7foy4WRfQR4z05Oy41puNBooAmZE0KuBy2K55iGVHrioX1CY3KotwYxwIyxHR800J4o3qINh
     ports:
       - "3000:3000"
