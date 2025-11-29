@@ -6,15 +6,13 @@ export const sendMessageToChatBot = async ({
   userId: string | null;
 }) => {
   try {
-    const baseUrl =
-      process.env.NEXT_PUBLIC_CHATBOT_API_URL ||
-      'http://51.21.246.163:8080/api/v1';
+    const baseUrl = process.env.NEXT_PUBLIC_CHATBOT_API_URL;
 
-    const res = await fetch(`${baseUrl}/chat`, {
+    const res = await fetch(`${baseUrl}/florida_chat`, {
       method: 'POST',
       body: JSON.stringify({
         messages: message,
-        user_id: userId || 'anonymous',
+        user_id: userId,
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -39,15 +37,13 @@ export const sendMessageToChatBot = async ({
   }
 };
 
-export const chatHistory = async(userId:string) => {
-    try {
-    const baseUrl =
-      process.env.NEXT_PUBLIC_CHATBOT_API_URL;
+export const chatHistory = async (userId: string) => {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_CHATBOT_API_URL;
 
-    const res = await fetch(`${baseUrl}/chat_history?user_id=${userId}`, {
+    const res = await fetch(`${baseUrl}/florida_chat_history?user_id=${userId}`, {
       method: 'GET',
       next: {
-        
         tags: ['CHATBOT'],
       },
     });

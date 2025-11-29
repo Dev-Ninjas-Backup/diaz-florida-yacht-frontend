@@ -10,7 +10,7 @@ const ContactPage = () => {
   return (
     <div>
       <CustomBanner banner={banner}>
-        <h1 className="text-white text-xl md:text-4xl lg:text-6xl uppercase font-bold md:tracking-[5px] text-center leading-normal">
+        <h1 className="text-white text-xl md:text-4xl xl:text-5xl 2xl:text-6xl uppercase font-bold md:tracking-[5px] text-center leading-normal">
           Get in Touch with <br /> Florida Yacht Traders
         </h1>
       </CustomBanner>

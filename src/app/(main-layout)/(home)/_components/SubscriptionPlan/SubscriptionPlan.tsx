@@ -36,8 +36,8 @@ const SubscriptionPlan = async () => {
             height={900}
             className="w-full"
           />
-          <div className="absolute bottom-[1%] md:bottom-0 px-[4%] md:px-[30%] flex flex-col items-center justify-center w-full text-center text-white space-y-3 md:space-y-10 ">
-            <h1 className="text-sm sm:text-4xl md:text-6xl font-bold">
+          <div className="absolute bottom-[1%] md:bottom-0 px-[4%] xl:px-[15%] 2xl:px-[30%] flex flex-col items-center justify-center w-full text-center text-white space-y-3 md:space-y-10 ">
+            <h1 className="text-sm sm:text-4xl xl:text-5xl 2xl:text-6xl font-bold">
               Looking to Sell Your Boat? Pick your perfect plan.
             </h1>
             <p className="text-xs md:text-xl">
