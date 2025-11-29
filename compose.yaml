@@ -13,8 +13,6 @@ services:
     restart: always
     command: >
       sh -c "
-        echo '🏁 Building the app...';
-        npm run build;
         echo '🚀 Starting app on 0.0.0.0...';
         HOST=0.0.0.0 PORT=3000 npm run start
       "
