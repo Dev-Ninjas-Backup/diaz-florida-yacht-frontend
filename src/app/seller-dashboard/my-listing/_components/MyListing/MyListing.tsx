@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 import CustomTable, {
   Column,
@@ -28,7 +29,6 @@ const MyListing = () => {
   const [status, setStatus] = useState('all');
   const [loading, setLoading] = useState(false);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { page, limit, setPage, setLimit } = usePagination({
     initialPage: 1,
     initialLimit: 10,

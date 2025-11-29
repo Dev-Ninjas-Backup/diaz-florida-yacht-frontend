@@ -78,7 +78,7 @@ const SearchComponent = () => {
     isLast?: boolean;
   }) => (
     <div
-      className={`${!isLast ? ' border-gray-200' : ''} p-2 md:p-4 hover:bg-gray-50 transition-colors relative`}
+      className={`${!isLast ? ' border-gray-200' : ''} p-2 xl:p-3 2xl:p-4 hover:bg-gray-50 transition-colors relative`}
     >
       <button
         onClick={() => toggleDropdown(name)}
@@ -119,7 +119,7 @@ const SearchComponent = () => {
   return (
     <div className="w-full mx-auto" ref={dropdownRef}>
       {/* Main Search Container */}
-      <div className="bg-white rounded-3xl shadow-lg overflow-visible p-2 md:p-6 relative">
+      <div className="bg-white rounded-3xl shadow-lg overflow-visible p-2 xl:p-3 2xl:p-6 relative">
         <div className="absolute -top-5 right-4 text-gray-700  sm:hidden bg-white rounded-full p-1 cursor-pointer shadow-md">
           <IoIosArrowUp
             onClick={() => setFilterOpen(!filterOpen)}
@@ -158,7 +158,7 @@ const SearchComponent = () => {
           />
 
           {/* Length */}
-          <div className=" border-gray-200 p-2 md:p-4 hover:bg-gray-50 transition-colors">
+          <div className=" border-gray-200 p-2 xl:p-3 2xl:p-4 hover:bg-gray-50 transition-colors">
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Length (ft)
             </label>
@@ -172,7 +172,7 @@ const SearchComponent = () => {
           </div>
 
           {/* Max Price */}
-          <div className=" border-gray-200 p-2 md:p-4 hover:bg-gray-50 transition-colors">
+          <div className=" border-gray-200 p-2 xl:p-3 2xl:p-4 hover:bg-gray-50 transition-colors">
             <label className="block text-sm md:text-base font-medium text-gray-700 mb-2">
               Max Price ($)
             </label>

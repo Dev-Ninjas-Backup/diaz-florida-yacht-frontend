@@ -9,7 +9,7 @@ interface CustomBannerProps {
 
 const CustomBanner = ({ banner, children }: CustomBannerProps) => {
   return (
-    <div className="w-full h-[200px] md:h-[400px] relative rounded-2xl overflow-hidden">
+    <div className="w-full h-[200px] xl:h-[300px] 2xl:h-[400px] relative rounded-2xl overflow-hidden">
       <Image
         src={banner}
         alt="Search Listing"
