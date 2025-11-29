@@ -40,7 +40,6 @@ export const FormSelect: React.FC<FormSelectProps> = ({
   required = false,
   disabled = false,
   className = '',
- 
 }) => {
   const {
     watch,
