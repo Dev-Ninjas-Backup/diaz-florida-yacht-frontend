@@ -38,7 +38,7 @@ export function MoreDetailsSection() {
           </div>
         </div>
       ) : (
-        fields.map((field, index) => (
+        fields?.map((field, index) => (
           <div key={field.id} className="space-y-4 mb-4 pb-4 border-b">
             <div>
               <Label>Title</Label>

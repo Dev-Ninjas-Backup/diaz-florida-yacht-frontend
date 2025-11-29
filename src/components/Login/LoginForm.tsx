@@ -18,7 +18,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   onInputChange,
   onSubmit,
   onTogglePassword,
-//   onGoogleLogin,
+  //   onGoogleLogin,
 }) => {
   return (
     <form onSubmit={onSubmit} className="space-y-5">

@@ -1,8 +1,6 @@
 'use client';
 
-import React from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import CustomContainer from '@/components/CustomComponents/CustomContainer';
 import {
   BriefcaseBusiness,
   CreditCard,
@@ -10,7 +8,8 @@ import {
   LogOut,
   UserRoundPen,
 } from 'lucide-react';
-import CustomContainer from '@/components/CustomComponents/CustomContainer';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const navItems = [
   {
@@ -39,7 +38,7 @@ const ProfileHeader = () => {
     <div>
       <CustomContainer>
         <div className="mt-8 flex items-center gap-5 flex-nowrap overflow-x-auto py-4 space-x-2 md:space-x-4">
-          {navItems.map(({ label, href, icon: Icon }) => {
+          {navItems?.map(({ label, href, icon: Icon }) => {
             const isActive = pathname === href;
 
             return (

@@ -1,5 +1,3 @@
-
-
 export const LoadingState = () => {
   return (
     <div className="flex flex-col items-center justify-center py-12 space-y-4">

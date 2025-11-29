@@ -58,7 +58,6 @@ const SearchListingPage = () => {
             ></div>
             <div className="absolute left-0 top-0 h-full w-80 bg-white p-4 overflow-y-auto">
               <div className="flex justify-end items-center mb-4">
-                
                 <button
                   onClick={() => setIsDrawerOpen(false)}
                   className="text-gray-500 hover:text-gray-900 font-semibold"

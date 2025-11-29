@@ -188,7 +188,7 @@ export const DynamicFormSelect: React.FC<DynamicFormSelectProps> = ({
           {/* Options */}
           {!loading && data && data.length > 0 && (
             <>
-              {data.map((option) => (
+              {data?.map((option) => (
                 <SelectItem key={option} value={option}>
                   {option}
                 </SelectItem>

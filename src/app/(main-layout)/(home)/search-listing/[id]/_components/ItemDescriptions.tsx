@@ -1,6 +1,6 @@
 'use client';
 import { demoDescription } from '@/assets/demo-datas/demodata';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { MdArrowForwardIos } from 'react-icons/md';
 
 const faq = [
@@ -32,7 +32,7 @@ const faq = [
 
 const ItemDescriptions = () => {
   const modifyText = (text: string) => {
-    return text.split(/\n\s*\n/).map((p) => p.trim());
+    return text.split(/\n\s*\n/)?.map((p) => p.trim());
   };
   const paragraphs = modifyText(demoDescription);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -47,14 +47,14 @@ const ItemDescriptions = () => {
         Description
       </h2>
       <div className="mt-3 text-sm md:text-base space-y-4 text-gray-500">
-        {paragraphs.map((para, idx) => (
+        {paragraphs?.map((para, idx) => (
           <p key={idx} className="whitespace-pre-line">
             {para}
           </p>
         ))}
       </div>
       <div className="mt-6 space-y-2">
-        {faq.map((item, idx) => (
+        {faq?.map((item, idx) => (
           <div key={idx} className="border-b">
             <button
               type="button"

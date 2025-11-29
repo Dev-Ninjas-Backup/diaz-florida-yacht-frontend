@@ -1,12 +1,12 @@
 'use client';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Camera, Eye, EyeOff, X } from 'lucide-react';
+import Image from 'next/image';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Camera, X, Eye, EyeOff } from 'lucide-react';
-import Image from 'next/image';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 
 // ✅ Zod schema updated (profession removed)
 const formSchema = z
@@ -289,7 +289,7 @@ const MyProfilePage = () => {
             { label: 'Enter Old Password', name: 'oldPassword' as const },
             { label: 'Enter New Password', name: 'newPassword' as const },
             { label: 'Confirm New Password', name: 'confirmPassword' as const },
-          ].map((field) => (
+          ]?.map((field) => (
             <div key={field.name} className="mt-4 first:mt-0">
               <label className="text-sm md:text-base font-medium text-black block mb-1">
                 {field.label}: *

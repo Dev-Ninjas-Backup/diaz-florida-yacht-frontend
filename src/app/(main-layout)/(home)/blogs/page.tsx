@@ -1,13 +1,12 @@
-import CustomBanner from '@/components/CustomComponents/CustomBanner';
-import React from 'react';
 import banner from '@/assets/blogs/banner.jpg';
-import CustomContainer from '@/components/CustomComponents/CustomContainer';
 import generalBlog from '@/assets/blogs/generalblog.jpg';
-import FrontBlog from './_components/FrontBlog/FrontBlog';
 import { demoBlogData } from '@/assets/demo-datas/demodata';
 import BlogCard from '@/components/Blog/BlogCard';
 import AdComponent from '@/components/CustomComponents/AdComponent';
+import CustomBanner from '@/components/CustomComponents/CustomBanner';
+import CustomContainer from '@/components/CustomComponents/CustomContainer';
 import SmallAdComponent from '@/components/CustomComponents/SmallAdComponent';
+import FrontBlog from './_components/FrontBlog/FrontBlog';
 
 const BlogPage = () => {
   return (
@@ -28,7 +27,7 @@ const BlogPage = () => {
           </div>
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-5 md:gap-10 mt-10">
-          {demoBlogData.slice(0, 6).map((blog, index) => (
+          {demoBlogData.slice(0, 6)?.map((blog, index) => (
             <BlogCard key={index} blog={blog} />
           ))}
         </div>

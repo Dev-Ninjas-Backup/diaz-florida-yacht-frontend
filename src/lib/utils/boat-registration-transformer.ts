@@ -63,7 +63,7 @@ function parseExtraDetails(
 
   return moreDetails
     .filter((detail) => detail.title && detail.description)
-    .map((detail) => ({
+    ?.map((detail) => ({
       key: detail.title,
       value: detail.description,
     }));

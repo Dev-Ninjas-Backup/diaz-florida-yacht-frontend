@@ -92,7 +92,7 @@ const ItemDetailsGallery = ({ images, name }: ItemDetailsGalleryProps) => {
             </button>
           )}
 
-          {getVisibleThumbnails().map((image, index) => {
+          {getVisibleThumbnails()?.map((image, index) => {
             const actualIndex = thumbnailStartIndex + index;
             const isLast = index === thumbnailsPerPage - 1;
             const isShowMorePosition =

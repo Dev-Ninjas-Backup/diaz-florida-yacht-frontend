@@ -52,6 +52,8 @@ export const FormSelect: React.FC<FormSelectProps> = ({
   const value = watch(name);
   const error = errors[name];
 
+  console.log(search, type, limit);
+
   const handleChange = (newValue: string) => {
     setValue(name, newValue);
     clearErrors(name);
@@ -71,7 +73,7 @@ export const FormSelect: React.FC<FormSelectProps> = ({
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>
-          {options.map((option) => (
+          {options?.map((option) => (
             <SelectItem key={option.value} value={option.value}>
               {option.label}
             </SelectItem>

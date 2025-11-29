@@ -1,10 +1,7 @@
-
-
 'use client';
 
 import { IUserProviderValues, UserContext } from '@/context/UserContext';
 import { useContext } from 'react';
-
 
 export const useAuth = (): IUserProviderValues => {
   const context = useContext(UserContext);
@@ -15,7 +12,6 @@ export const useAuth = (): IUserProviderValues => {
 
   return context;
 };
-
 
 export const useIsAuthenticated = (): boolean => {
   const { user, isLoading } = useAuth();

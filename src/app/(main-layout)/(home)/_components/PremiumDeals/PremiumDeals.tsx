@@ -1,7 +1,6 @@
 import { demodata } from '@/assets/demo-datas/demodata';
 import CustomContainer from '@/components/CustomComponents/CustomContainer';
 import ProductCard from '@/components/Product/ProductCard';
-import React from 'react';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
 const PremiumDeals = () => {
@@ -28,7 +27,7 @@ const PremiumDeals = () => {
           </div>
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-8">
-          {demodata.slice(0, 4).map((item) => (
+          {demodata.slice(0, 4)?.map((item) => (
             <ProductCard isPremium={true} key={item.name} product={item} />
           ))}
         </div>

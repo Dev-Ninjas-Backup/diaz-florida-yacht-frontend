@@ -51,7 +51,7 @@ const Pagination: React.FC<PaginationProps> = ({
           </button>
         </li>
 
-        {range.map((p, idx) => (
+        {range?.map((p, idx) => (
           <li key={idx}>
             {p === '...' ? (
               <span className="px-3 py-2 border bg-white text-gray-500">

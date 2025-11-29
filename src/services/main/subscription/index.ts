@@ -4,9 +4,8 @@
 // import { getValidToken } from '@/lib/verifyToken';
 // import { revalidateTag } from 'next/cache';
 
-
 export const getAllSubscription = async () => {
-//   const token = await getValidToken();
+  //   const token = await getValidToken();
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/subscription/plans`,
@@ -24,10 +23,9 @@ export const getAllSubscription = async () => {
   }
 };
 
-export const createSubscription = async (data : any): Promise<any> => {
-
-  try{
-     const res = await fetch(
+export const createSubscription = async (data: any): Promise<any> => {
+  try {
+    const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/boats/seller/onboarding`,
       {
         method: 'POST',
@@ -41,9 +39,11 @@ export const createSubscription = async (data : any): Promise<any> => {
   }
 };
 
-export const confirmSubscriptionPayment = async (userId: string): Promise<any> => {
-  try{
-     const res = await fetch(
+export const confirmSubscriptionPayment = async (
+  userId: string,
+): Promise<any> => {
+  try {
+    const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/boats/seller/subscription-confirmation/${userId}`,
       {
         method: 'GET',

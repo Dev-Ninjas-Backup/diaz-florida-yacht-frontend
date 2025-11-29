@@ -41,7 +41,7 @@ export const BoatPreview: React.FC<BoatPreviewProps> = ({
       {/* Details */}
       {details.length > 0 && (
         <div className="space-y-3">
-          {details.map((detail, index) => (
+          {details?.map((detail, index) => (
             <div key={index} className="flex justify-between items-center">
               <span className="text-gray-600 text-sm">{detail.label}:</span>
               <span className="text-gray-900 font-semibold text-sm">

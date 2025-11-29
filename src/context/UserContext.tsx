@@ -1,5 +1,3 @@
-
-
 'use client';
 
 import { getUserProfile, User } from '@/services/auth';
@@ -12,8 +10,6 @@ import {
   useState,
 } from 'react';
 
-
-
 export interface IUserProviderValues {
   user: User | null;
   isLoading: boolean;
@@ -24,18 +20,14 @@ export interface IUserProviderValues {
   clearUser: () => void;
 }
 
-
-
 export const UserContext = createContext<IUserProviderValues | undefined>(
   undefined,
 );
-
 
 const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
 
   const fetchUserProfile = useCallback(async () => {
     setIsLoading(true);
@@ -61,7 +53,6 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
       setIsLoading(false);
     }
   }, []);
-
 
   const refreshUser = useCallback(async () => {
     await fetchUserProfile();

@@ -29,6 +29,7 @@ const MyListing = () => {
   const [status, setStatus] = useState('all');
   const [loading, setLoading] = useState(false);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { page, limit, setPage, setLimit } = usePagination({
     initialPage: 1,
     initialLimit: 10,
@@ -139,7 +140,9 @@ const MyListing = () => {
                 <SelectItem value="PENDING">Pending</SelectItem>
                 <SelectItem value="SOLD">Sold</SelectItem>
                 <SelectItem value="DRAFT">Draft</SelectItem>
-                <SelectItem value="ONBOARDING_PENDING">Onboarding Pending</SelectItem>
+                <SelectItem value="ONBOARDING_PENDING">
+                  Onboarding Pending
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>

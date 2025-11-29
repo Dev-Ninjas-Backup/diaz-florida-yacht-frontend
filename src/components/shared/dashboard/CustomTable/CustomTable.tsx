@@ -22,7 +22,7 @@ const CustomTable = <T extends object>({ columns, data }: ITableProps<T>) => {
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-[#E3E3E3]">
           <tr>
-            {columns.map((column, index) => (
+            {columns?.map((column, index) => (
               <th
                 key={index}
                 scope="col"
@@ -34,9 +34,9 @@ const CustomTable = <T extends object>({ columns, data }: ITableProps<T>) => {
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {data.map((row, rowIndex) => (
+          {data?.map((row, rowIndex) => (
             <tr key={rowIndex}>
-              {columns.map((column, colIndex) => (
+              {columns?.map((column, colIndex) => (
                 <td
                   key={colIndex}
                   className="px-6 py-4 whitespace-nowrap text-sm text-[#1E1E1E]"

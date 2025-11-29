@@ -8,9 +8,9 @@ import {
 import Image from 'next/image';
 
 const SubscriptionPlan = async () => {
-  const { data: subscriptions} = await getAllSubscription();
+  const { data: subscriptions } = await getAllSubscription();
 
-  const subscriptionPlans: SubscriptionPlanType[] = subscriptions.map(
+  const subscriptionPlans: SubscriptionPlanType[] = subscriptions?.map(
     (plan: SubscriptionApiResponse) => ({
       id: plan.id,
       name: plan.title,
@@ -48,7 +48,7 @@ const SubscriptionPlan = async () => {
         </div>
         <div className="md:absolute md:bottom-[15%] md:left-1/2 md:-translate-x-1/2 md:translate-y-1/2 w-full max-w-7xl px-4 py-5">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-10">
-            {subscriptionPlans.reverse().map((plan) => (
+            {subscriptionPlans?.reverse()?.map((plan) => (
               <SubscriptionCard key={plan.id} plan={plan} />
             ))}
           </div>

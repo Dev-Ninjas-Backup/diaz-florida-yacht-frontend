@@ -18,7 +18,6 @@ import { StripePaymentForm } from './StripePaymentForm';
 import { LoadingState } from './LoadingState';
 import { usePaymentFlow } from './usePaymentFlow';
 
-
 export function PaymentModal({
   isOpen,
   onClose,
@@ -65,9 +64,7 @@ export function PaymentModal({
         <div className="space-y-6 mt-4">
           {/* Payment Method Selection */}
           <div>
-            <h3 className="font-semibold text-gray-900 mb-3">
-              Payment Method
-            </h3>
+            <h3 className="font-semibold text-gray-900 mb-3">Payment Method</h3>
             <RadioGroup value="stripe" disabled>
               <div className="flex items-center space-x-3 p-3 border border-blue-200 rounded-lg bg-blue-50/50">
                 <RadioGroupItem
