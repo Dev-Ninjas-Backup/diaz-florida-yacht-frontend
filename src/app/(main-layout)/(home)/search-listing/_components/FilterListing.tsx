@@ -1,8 +1,17 @@
 'use client';
+import { useSearchResults } from '@/context/SearchResultsContext';
+import { postAiQuery } from '@/services/query';
 import { FilterState } from '@/types/filter-types';
+import { convertApiDataToYachtProduct } from '@/types/product-types-demo';
+import { SearchQueryData } from '@/types/search-query-types';
 import { useState } from 'react';
+import { TbSparkles } from 'react-icons/tb';
 
 const FilterListing = () => {
+  const { setSearchResults, setIsSearchActive, queryData, setQueryData } =
+    useSearchResults();
+  const [isLoading, setIsLoading] = useState(false);
+
   const [filters, setFilters] = useState<FilterState>({
     boatType: '',
     make: '',
@@ -87,6 +96,77 @@ const FilterListing = () => {
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     }).format(price);
+  };
+
+  const handleApplyFilters = async () => {
+    try {
+      setIsLoading(true);
+
+      // Build filters object with only non-default values
+      const changedFilters: Record<string, string | number> = {};
+
+      if (filters.boatType) changedFilters.boat_type = filters.boatType;
+      if (filters.make) changedFilters.make = filters.make;
+      if (filters.model) changedFilters.model = filters.model;
+      if (filters.buildYearFrom)
+        changedFilters.build_year_min = Number(filters.buildYearFrom);
+      if (filters.buildYearTo)
+        changedFilters.build_year_max = Number(filters.buildYearTo);
+      if (filters.priceMin && filters.priceMin !== 12000)
+        changedFilters.price_min = filters.priceMin;
+      if (filters.priceMax && filters.priceMax !== 2250000)
+        changedFilters.price_max = filters.priceMax;
+      if (filters.lengthFrom)
+        changedFilters.length_min = Number(filters.lengthFrom);
+      if (filters.lengthTo)
+        changedFilters.length_max = Number(filters.lengthTo);
+      if (filters.beamFrom) changedFilters.beam_min = Number(filters.beamFrom);
+      if (filters.beamTo) changedFilters.beam_max = Number(filters.beamTo);
+      if (filters.numberOfEngines)
+        changedFilters.number_of_engine = Number(filters.numberOfEngines);
+      if (filters.numberOfCabins)
+        changedFilters.number_of_cabin = Number(filters.numberOfCabins);
+      if (filters.numberOfHeads)
+        changedFilters.number_of_heads = Number(filters.numberOfHeads);
+      if (filters.additionalUnit)
+        changedFilters.additional_unit = filters.additionalUnit;
+
+      // Build query data
+      const searchQueryData: SearchQueryData = {
+        query: queryData?.query || '',
+        filters: {
+          boat_type: changedFilters.boat_type as string,
+          make: changedFilters.make as string,
+          model: changedFilters.model as string,
+          build_year_min: changedFilters.build_year_min as number,
+          build_year_max: changedFilters.build_year_max as number,
+          price_min: changedFilters.price_min as number,
+          price_max: changedFilters.price_max as number,
+          length_min: changedFilters.length_min as number,
+          length_max: changedFilters.length_max as number,
+          beam_min: changedFilters.beam_min as number,
+          beam_max: changedFilters.beam_max as number,
+          number_of_engine: changedFilters.number_of_engine as number,
+          number_of_cabin: changedFilters.number_of_cabin as number,
+          number_of_heads: changedFilters.number_of_heads as number,
+          additional_unit: changedFilters.additional_unit as string,
+        },
+      };
+
+      // Call AI query API
+      const response = await postAiQuery({ queryData: searchQueryData });
+
+      // Convert and update context
+      const yachtProducts = response.map(convertApiDataToYachtProduct);
+
+      setSearchResults(yachtProducts);
+      setIsSearchActive(true);
+      setQueryData(searchQueryData);
+    } catch (error) {
+      console.error('Error applying filters:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -394,6 +474,44 @@ const FilterListing = () => {
             ))}
           </select>
         </div>
+
+        {/* Apply Filters Button */}
+        <button
+          onClick={handleApplyFilters}
+          disabled={isLoading}
+          className="w-full mt-4 px-4 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold rounded-lg hover:from-cyan-600 hover:to-blue-600 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+        >
+          {isLoading ? (
+            <>
+              <svg
+                className="animate-spin h-5 w-5"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                />
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                />
+              </svg>
+              Applying...
+            </>
+          ) : (
+            <>
+              <TbSparkles className="text-xl" />
+              Apply Filters
+            </>
+          )}
+        </button>
       </div>
     </div>
   );

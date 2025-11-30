@@ -16,6 +16,7 @@ const CustomBanner = ({ banner, children }: CustomBannerProps) => {
         className="w-full h-full object-cover"
         width={1200}
         height={300}
+        style={{ height: 'auto' }}
       />
       <div className="absolute inset-0 bg-black/50 flex items-center justify-end flex-col space-y-10 py-10 px-5">
         <CustomContainer>{children}</CustomContainer>
