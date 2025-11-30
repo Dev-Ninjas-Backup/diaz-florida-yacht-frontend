@@ -6,7 +6,6 @@ interface CustomBannerProps {
   banner: string | StaticImageData;
   children: React.ReactNode;
 }
-
 const CustomBanner = ({ banner, children }: CustomBannerProps) => {
   return (
     <div className="w-full h-[200px] xl:h-[300px] 2xl:h-[400px] relative rounded-2xl overflow-hidden">
