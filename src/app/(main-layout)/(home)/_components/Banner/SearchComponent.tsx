@@ -1,19 +1,54 @@
 'use client';
+import { useSearchResults } from '@/context/SearchResultsContext';
+import { postAiQuery } from '@/services/query';
+import {
+  ApiBoatData,
+  convertApiDataToYachtProduct,
+} from '@/types/product-types-demo';
+import { SearchQueryData } from '@/types/search-query-types';
+import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import { IoSearch } from 'react-icons/io5';
 import { TbSparkles } from 'react-icons/tb';
 
+const INITIAL_VALUES = {
+  year: '2008',
+  make: 'Viking (CCV)',
+  model: '80 Enclosed',
+  length: '60',
+  maxPrice: '$22,000',
+  boatType: 'Flybridge',
+  location: 'Florida',
+  buildYearFrom: '',
+  buildYearTo: '',
+  priceMin: 12000,
+  priceMax: 2250000,
+  lengthFrom: '',
+  lengthTo: '',
+  beamFrom: '',
+  beamTo: '',
+  numberOfEngines: '',
+  numberOfCabins: '',
+  numberOfHeads: '',
+  additionalUnit: '',
+};
+
 const SearchComponent = () => {
-  const [year, setYear] = useState('2008');
-  const [make, setMake] = useState('Viking (CCV)');
-  const [model, setModel] = useState('80 Enclosed');
-  const [length, setLength] = useState('60');
-  const [maxPrice, setMaxPrice] = useState('$22,000');
-  const [boatType, setBoatType] = useState('Flybridge');
-  const [location, setLocation] = useState('Florida');
+  const router = useRouter();
+  const { setSearchResults, setIsSearchActive, setQueryData } =
+    useSearchResults();
+
+  const [year, setYear] = useState(INITIAL_VALUES.year);
+  const [make, setMake] = useState(INITIAL_VALUES.make);
+  const [model, setModel] = useState(INITIAL_VALUES.model);
+  const [length, setLength] = useState(INITIAL_VALUES.length);
+  const [maxPrice, setMaxPrice] = useState(INITIAL_VALUES.maxPrice);
+  const [boatType, setBoatType] = useState(INITIAL_VALUES.boatType);
+  const [location, setLocation] = useState(INITIAL_VALUES.location);
   const [aiPrompt, setAiPrompt] = useState('');
   const [filterOpen, setFilterOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Dropdown open states
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
@@ -60,6 +95,86 @@ const SearchComponent = () => {
 
   const toggleDropdown = (name: string) => {
     setOpenDropdown(openDropdown === name ? null : name);
+  };
+
+  const askAiQuery = async () => {
+    if (!aiPrompt.trim()) return;
+
+    setIsLoading(true);
+    try {
+      // Build filters - only send changed values
+      const changedFilters: Record<string, string | number> = {};
+
+      if (boatType && boatType !== INITIAL_VALUES.boatType) {
+        changedFilters.boat_type = boatType;
+      }
+      if (make && make !== INITIAL_VALUES.make) {
+        changedFilters.make = make;
+      }
+      if (model && model !== INITIAL_VALUES.model) {
+        changedFilters.model = model;
+      }
+      if (year && year !== INITIAL_VALUES.year) {
+        const yearNum = parseInt(year);
+        if (!isNaN(yearNum)) {
+          changedFilters.build_year_min = yearNum;
+          changedFilters.build_year_max = yearNum;
+        }
+      }
+      if (maxPrice && maxPrice !== INITIAL_VALUES.maxPrice) {
+        const priceNum = parseFloat(maxPrice.replace(/[$,]/g, ''));
+        if (!isNaN(priceNum)) {
+          changedFilters.price_max = priceNum;
+        }
+      }
+      if (length && length !== INITIAL_VALUES.length) {
+        const lengthNum = parseFloat(length);
+        if (!isNaN(lengthNum)) {
+          changedFilters.length_min = lengthNum;
+          changedFilters.length_max = lengthNum;
+        }
+      }
+
+      const queryData: SearchQueryData = {
+        query: aiPrompt,
+        filters: {
+          boat_type: (changedFilters.boat_type as string) ?? null,
+          make: (changedFilters.make as string) ?? null,
+          model: (changedFilters.model as string) ?? null,
+          build_year_min: (changedFilters.build_year_min as number) ?? null,
+          build_year_max: (changedFilters.build_year_max as number) ?? null,
+          price_min: (changedFilters.price_min as number) ?? null,
+          price_max: (changedFilters.price_max as number) ?? null,
+          length_min: (changedFilters.length_min as number) ?? null,
+          length_max: (changedFilters.length_max as number) ?? null,
+          beam_min: (changedFilters.beam_min as number) ?? null,
+          beam_max: (changedFilters.beam_max as number) ?? null,
+          number_of_engine: (changedFilters.number_of_engine as number) ?? null,
+          number_of_cabin: (changedFilters.number_of_cabin as number) ?? null,
+          number_of_heads: (changedFilters.number_of_heads as number) ?? null,
+          additional_unit: (changedFilters.additional_unit as string) ?? null,
+        },
+      };
+
+      console.log('AI Query Data:', queryData);
+
+      const aiResponse = await postAiQuery({ queryData });
+      if (aiResponse?.success && aiResponse?.data) {
+        const convertedData: ApiBoatData[] = aiResponse.data;
+        const yachtProducts = convertedData.map((boat) =>
+          convertApiDataToYachtProduct(boat),
+        );
+
+        setSearchResults(yachtProducts);
+        setIsSearchActive(true);
+        setQueryData(queryData);
+        router.push('/search-listing');
+      }
+    } catch (error) {
+      console.error('AI Search Error:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const DropdownField = ({
@@ -215,9 +330,15 @@ const SearchComponent = () => {
               placeholder="Example: find me a Viking for sale from 2005 to 2008"
               className="w-full md:px-3 focus:outline-none bg-transparent text-gray-700 placeholder:text-gray-400 placeholder:text-xs md:placeholder:text-base"
             />
-            <button className="absolute top-1/2 mx-3 text-sm md:text-base transform -translate-y-1/2 right-0 px-2 md:px-3 py-1 md:py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg font-medium transition-colors flex items-center justify-center gap-2 whitespace-nowrap">
-              <TbSparkles className="text-sm md:text-lg" />
-              Ask AI
+            <button
+              className="absolute top-1/2 mx-3 text-sm md:text-base transform -translate-y-1/2 right-0 px-2 md:px-3 py-1 md:py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg font-medium transition-colors flex items-center justify-center gap-2 whitespace-nowrap active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
+              onClick={askAiQuery}
+              disabled={isLoading}
+            >
+              <TbSparkles
+                className={`text-sm md:text-lg ${isLoading ? 'animate-spin' : ''}`}
+              />
+              {isLoading ? 'Searching...' : 'Ask AI'}
             </button>
           </div>
 
