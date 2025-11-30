@@ -56,7 +56,9 @@ function getStagedFiles() {
       spinner.success(chalk.green(emoji('✅') + ' Lint checks passed!'));
 
       spinner.start('Applying lint fixes...');
-      const fixResult = runCommand(`npm run lint:fix -- ${lintFiles.join(' ')}`);
+      const fixResult = runCommand(
+        `npm run lint:fix -- ${lintFiles.join(' ')}`,
+      );
       spinner.success(chalk.green(emoji('⚙️') + ' Lint fixes applied!'));
 
       console.info(
