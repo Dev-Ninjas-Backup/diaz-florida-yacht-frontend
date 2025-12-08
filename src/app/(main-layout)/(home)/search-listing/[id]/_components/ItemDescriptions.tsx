@@ -1,7 +1,10 @@
 'use client';
-import { demoDescription } from '@/assets/demo-datas/demodata';
 import { useState } from 'react';
 import { MdArrowForwardIos } from 'react-icons/md';
+
+interface ItemDescriptionsProps {
+  description?: string;
+}
 
 const faq = [
   {
@@ -30,11 +33,11 @@ const faq = [
   },
 ];
 
-const ItemDescriptions = () => {
+const ItemDescriptions = ({ description }: ItemDescriptionsProps) => {
   const modifyText = (text: string) => {
     return text.split(/\n\s*\n/)?.map((p) => p.trim());
   };
-  const paragraphs = modifyText(demoDescription);
+  const paragraphs = description ? modifyText(description) : [];
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const viewAnswer = (idx: number) => {
