@@ -36,7 +36,6 @@ const PopularCategories = () => {
     loadCategories();
   }, []);
 
-
   if (loading) return <div className="">Loading ...</div>;
   if (categories.length === 0) return <div className="">No data</div>;
 

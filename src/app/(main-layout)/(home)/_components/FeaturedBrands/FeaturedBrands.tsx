@@ -9,7 +9,6 @@ import {
   getFeaturedBrands,
 } from '@/services/featuredBrands/featuredBrands';
 
-
 const FeaturedBrands = () => {
   const [brands, setBrands] = useState<FeaturedBrand[]>([]);
   const [isLoading, setIsLoading] = useState(true);
