@@ -1,14 +1,19 @@
 'use client';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Camera, Eye, EyeOff, X } from 'lucide-react';
+import { Camera, Eye, EyeOff } from 'lucide-react';
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import {
+  getProfile,
+  updateProfile,
+  changePassword,
+} from '@/services/auth/profile';
+import { toast } from 'sonner';
 
-// ✅ Zod schema updated (profession removed)
+// ✅ Zod schema updated
 const formSchema = z
   .object({
     firstName: z.string().min(1, { message: 'First Name is required' }),
@@ -22,8 +27,6 @@ const formSchema = z
       .string()
       .min(5, { message: 'ZIP Code must be at least 5 digits' })
       .max(10),
-    subCategories: z.array(z.string().min(1)).optional(),
-    portfolio: z.array(z.any()).optional(),
     avatar: z.any().optional(),
     oldPassword: z.string().optional(),
     newPassword: z.string().optional(),
@@ -47,23 +50,56 @@ export type FormSchema = z.infer<typeof formSchema>;
 const MyProfilePage = () => {
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showNewPassword, setShowNewPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowConfirmPassword] =
+    useState<boolean>(false);
+  const [isLoadingProfile, setIsLoadingProfile] = useState(true);
+  const [isSubmittingProfile, setIsSubmittingProfile] = useState(false);
+  const [isSubmittingPassword, setIsSubmittingPassword] = useState(false);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
+    reset,
   } = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      subCategories: [''],
-      portfolio: [],
-    },
   });
 
-  const onSubmit = (data: FormSchema) => {
-    console.log('Form Data:', data);
-  };
+  // Fetch profile data
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        setIsLoadingProfile(true);
+        const response = await getProfile();
+        if (response.success && response.data) {
+          const user = response.data;
+          const nameParts = user.name?.split(' ') || ['', ''];
+          reset({
+            firstName: nameParts[0] || '',
+            lastName: nameParts.slice(1).join(' ') || '',
+            email: user.email || '',
+            phone: user.phone || '',
+            country: user.country || '',
+            city: user.city || '',
+            state: user.state || '',
+            zipCode: user.zip || '',
+          });
+          if (user.avatarUrl) {
+            setAvatarPreview(user.avatarUrl);
+          }
+        }
+      } catch (error) {
+        console.error('Failed to fetch profile:', error);
+        toast.error('Failed to load profile');
+      } finally {
+        setIsLoadingProfile(false);
+      }
+    };
+
+    fetchProfile();
+  }, [reset]);
 
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -74,13 +110,71 @@ const MyProfilePage = () => {
     }
   };
 
+  const onSubmitProfile = async (data: FormSchema) => {
+    setIsSubmittingProfile(true);
+    try {
+      const formData = new FormData();
+      formData.append('name', `${data.firstName} ${data.lastName}`);
+      if (data.phone) formData.append('phone', data.phone);
+      formData.append('country', data.country);
+      formData.append('city', data.city);
+      formData.append('state', data.state);
+      formData.append('zip', data.zipCode);
+      if (data.avatar) formData.append('image', data.avatar);
+
+      const response = await updateProfile(formData);
+      if (response.success) {
+        toast.success('Profile updated successfully!');
+      } else {
+        toast.error(response.message || 'Failed to update profile');
+      }
+    } catch (error) {
+      console.error('Profile update error:', error);
+      toast.error('An error occurred while updating profile');
+    } finally {
+      setIsSubmittingProfile(false);
+    }
+  };
+
+  const onSubmitPassword = async (data: FormSchema) => {
+    if (!data.newPassword) {
+      toast.error('Please enter a new password');
+      return;
+    }
+
+    setIsSubmittingPassword(true);
+    try {
+      const response = await changePassword({
+        password: data.oldPassword,
+        newPassword: data.newPassword,
+      });
+      if (response.success) {
+        toast.success('Password changed successfully!');
+        setValue('oldPassword', '');
+        setValue('newPassword', '');
+        setValue('confirmPassword', '');
+      } else {
+        toast.error(response.message || 'Failed to change password');
+      }
+    } catch (error) {
+      console.error('Password change error:', error);
+      toast.error('An error occurred while changing password');
+    } finally {
+      setIsSubmittingPassword(false);
+    }
+  };
+
+  if (isLoadingProfile) {
+    return (
+      <div className="pb-28 flex items-center justify-center min-h-[400px]">
+        <div className="text-lg">Loading profile...</div>
+      </div>
+    );
+  }
+
   return (
     <div className="pb-28">
-      <form
-        id="main-form"
-        onSubmit={handleSubmit(onSubmit)}
-        className="space-y-8 bg-[#F4F4F4] p-4 rounded-[10px]"
-      >
+      <div className="space-y-8 bg-[#F4F4F4] p-4 rounded-[10px]">
         <h1 className="text-2xl font-semibold"> My Details</h1>
 
         {/* Profile Info */}
@@ -114,27 +208,26 @@ const MyProfilePage = () => {
               onChange={handleAvatarChange}
             />
             <div>
-              <div className="flex items-center gap-3 mt-1">
-                <label
-                  htmlFor="avatar-upload"
-                  className="text-primary font-medium cursor-pointer text-sm"
+              <label
+                htmlFor="avatar-upload"
+                className="inline-flex items-center gap-2 bg-[#006EF0] hover:bg-[#005ACC] text-white px-4 py-2 rounded-md cursor-pointer text-sm font-medium"
+              >
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
                 >
-                  Change Photo
-                </label>
-                {avatarPreview && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setAvatarPreview(null);
-                      setValue('avatar', null);
-                    }}
-                    className="text-red-500 w-6 h-6 p-1 bg-red-50 rounded-full border border-red-500 font-medium cursor-pointer text-sm flex items-center justify-center"
-                  >
-                    <X />
-                  </button>
-                )}
-              </div>
-              <p className="text-xs text-gray-400 mt-1">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                  />
+                </svg>
+                Upload Image
+              </label>
+              <p className="text-xs text-gray-400 mt-2">
                 JPG, PNG or GIF. Max size 5MB.
               </p>
             </div>
@@ -149,7 +242,7 @@ const MyProfilePage = () => {
                 type="text"
                 placeholder="Sarah"
                 {...register('firstName')}
-                className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-cyan-500"
+                className="w-full p-3 rounded-md focus:ring-2 focus:ring-cyan-500 bg-gray-100"
               />
               {errors.firstName && (
                 <p className="text-red-500 text-xs mt-1">
@@ -166,7 +259,7 @@ const MyProfilePage = () => {
                 type="text"
                 placeholder="Johnson"
                 {...register('lastName')}
-                className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-cyan-500"
+                className="w-full p-3 rounded-md focus:ring-2 focus:ring-cyan-500 bg-gray-100"
               />
               {errors.lastName && (
                 <p className="text-red-500 text-xs mt-1">
@@ -177,13 +270,13 @@ const MyProfilePage = () => {
 
             <div>
               <label className="text-sm md:text-base font-medium text-black block mb-1">
-                Phone Number
+                Contact Number: *
               </label>
               <input
                 type="text"
-                placeholder="+1 (555) 123-4567"
+                placeholder="0123 456789"
                 {...register('phone')}
-                className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-cyan-500"
+                className="w-full p-3 rounded-md focus:ring-2 focus:ring-cyan-500 bg-gray-100"
               />
             </div>
 
@@ -195,7 +288,8 @@ const MyProfilePage = () => {
                 type="email"
                 placeholder="sarah.johnson@gmail.com"
                 {...register('email')}
-                className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-cyan-500"
+                disabled
+                className="w-full p-3 rounded-md focus:ring-2 focus:ring-cyan-500 bg-gray-100"
               />
               {errors.email && (
                 <p className="text-red-500 text-xs mt-1">
@@ -205,16 +299,16 @@ const MyProfilePage = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full mt-5">
-            <div className="md:col-span-2">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mt-5">
+            <div className="md:col-span-3">
               <label className="text-sm md:text-base font-medium text-black block mb-1">
-                Country *
+                Country: *
               </label>
               <input
                 type="text"
-                placeholder="Country"
+                placeholder="USA"
                 {...register('country')}
-                className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-cyan-500"
+                className="w-full p-3 rounded-md focus:ring-2 focus:ring-cyan-500 bg-gray-100"
               />
               {errors.country && (
                 <p className="text-red-500 text-xs mt-1">
@@ -225,13 +319,13 @@ const MyProfilePage = () => {
 
             <div>
               <label className="text-sm md:text-base font-medium text-black block mb-1">
-                City *
+                City: *
               </label>
               <input
                 type="text"
-                placeholder="City"
+                placeholder="Jupiter"
                 {...register('city')}
-                className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-cyan-500"
+                className="w-full p-3 rounded-md focus:ring-2 focus:ring-cyan-500 bg-gray-100"
               />
               {errors.city && (
                 <p className="text-red-500 text-xs mt-1">
@@ -242,17 +336,14 @@ const MyProfilePage = () => {
 
             <div>
               <label className="text-sm md:text-base font-medium text-black block mb-1">
-                State *
+                State: *
               </label>
-              <select
+              <input
+                type="text"
+                placeholder="FL"
                 {...register('state')}
-                className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-cyan-500 bg-white"
-              >
-                <option value="">State</option>
-                <option value="CA">California</option>
-                <option value="NY">New York</option>
-                <option value="TX">Texas</option>
-              </select>
+                className="w-full p-3 rounded-md focus:ring-2 focus:ring-cyan-500 bg-gray-100"
+              />
               {errors.state && (
                 <p className="text-red-500 text-xs mt-1">
                   {errors.state.message}
@@ -260,15 +351,15 @@ const MyProfilePage = () => {
               )}
             </div>
 
-            <div className="md:col-span-2">
+            <div>
               <label className="text-sm md:text-base font-medium text-black block mb-1">
-                ZIP Code *
+                Zip: *
               </label>
               <input
                 type="text"
-                placeholder="12345"
+                placeholder="33478"
                 {...register('zipCode')}
-                className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-cyan-500"
+                className="w-full p-3 rounded-md focus:ring-2 focus:ring-cyan-500 bg-gray-100"
               />
               {errors.zipCode && (
                 <p className="text-red-500 text-xs mt-1">
@@ -279,59 +370,109 @@ const MyProfilePage = () => {
           </div>
         </div>
 
-        {/* Change Password Section */}
-        <div className="bg-white border border-[#D9D9D9]/30 rounded-[10px] p-4 mt-6">
-          <h2 className="text-xl font-semibold text-gray-800 mb-6">
+        {/* Password Section */}
+        <div className="bg-white border border-[#D9D9D9]/30 rounded-[10px] p-4">
+          <h2 className="text-sm md:text-base font-medium text-black mb-6">
             Change Password
           </h2>
 
-          {[
-            { label: 'Enter Old Password', name: 'oldPassword' as const },
-            { label: 'Enter New Password', name: 'newPassword' as const },
-            { label: 'Confirm New Password', name: 'confirmPassword' as const },
-          ]?.map((field) => (
-            <div key={field.name} className="mt-4 first:mt-0">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="md:col-span-2">
               <label className="text-sm md:text-base font-medium text-black block mb-1">
-                {field.label}: *
+                Enter Old Password: *
               </label>
               <div className="relative">
-                <Input
-                  className="pr-10 bg-[#F4F4F4] py-6"
+                <input
                   type={showPassword ? 'text' : 'password'}
-                  placeholder={'**********'}
-                  {...register(field.name)}
+                  placeholder="Enter old password"
+                  {...register('oldPassword')}
+                  className="w-full p-3 rounded-md focus:ring-2 focus:ring-cyan-500 bg-gray-100"
                 />
-                <span
-                  className="hover:cursor-pointer"
+                <button
+                  type="button"
                   onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
                 >
-                  {showPassword ? (
-                    <Eye
-                      size={18}
-                      className="text-slate-400 absolute top-4 right-2"
-                    />
-                  ) : (
-                    <EyeOff
-                      size={18}
-                      className="text-slate-400 absolute top-4 right-2"
-                    />
-                  )}
-                </span>
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
               </div>
-              {errors[field.name] && (
+            </div>
+
+            <div className="md:col-span-2">
+              <label className="text-sm md:text-base font-medium text-black block mb-1">
+                New Password: *
+              </label>
+              <div className="relative">
+                <input
+                  type={showNewPassword ? 'text' : 'password'}
+                  placeholder="Enter new password"
+                  {...register('newPassword')}
+                  className="w-full p-3 rounded-md focus:ring-2 focus:ring-cyan-500 bg-gray-100"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowNewPassword(!showNewPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                >
+                  {showNewPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
+              {errors.newPassword && (
                 <p className="text-red-500 text-xs mt-1">
-                  {errors[field.name]?.message?.toString()}
+                  {errors.newPassword.message}
                 </p>
               )}
             </div>
-          ))}
-        </div>
-      </form>
 
-      <div className="flex justify-end mt-8">
-        <Button type="submit" form="main-form" className="py-6 px-8">
-          Save Changes
-        </Button>
+            <div className="md:col-span-2">
+              <label className="text-sm md:text-base font-medium text-black block mb-1">
+                Confirm Password: *
+              </label>
+              <div className="relative">
+                <input
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  placeholder="Confirm new password"
+                  {...register('confirmPassword')}
+                  className="w-full p-3 rounded-md focus:ring-2 focus:ring-cyan-500 bg-gray-100"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                >
+                  {showConfirmPassword ? (
+                    <EyeOff size={20} />
+                  ) : (
+                    <Eye size={20} />
+                  )}
+                </button>
+              </div>
+              {errors.confirmPassword && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.confirmPassword.message}
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Single Save Changes Button */}
+        <div className="flex justify-start mt-6">
+          <Button
+            onClick={handleSubmit((data) => {
+              onSubmitProfile(data);
+              if (data.newPassword) {
+                onSubmitPassword(data);
+              }
+            })}
+            disabled={isSubmittingProfile || isSubmittingPassword}
+            className="bg-[#006EF0] hover:bg-[#005ACC] text-white px-8 py-3 rounded-md"
+          >
+            {isSubmittingProfile || isSubmittingPassword
+              ? 'Saving...'
+              : 'Save Changes'}
+          </Button>
+        </div>
       </div>
     </div>
   );

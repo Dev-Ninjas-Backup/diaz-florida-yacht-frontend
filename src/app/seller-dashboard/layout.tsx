@@ -11,6 +11,7 @@ import {
   DefaultLoadingComponent,
   ProtectedRoute,
 } from '@/components/auth/ProtectedRoute';
+import Footer from '@/components/shared/main/Footer/Footer';
 import { ReactNode } from 'react';
 import ProfileHeader from './_components/ProfileHeader/ProfileHeader';
 import ProfileStates from './_components/ProfileStates/ProfileStates';
@@ -27,12 +28,13 @@ const SellerDashboardLayout = ({ children }: { children: ReactNode }) => {
             Welcome To Dashboard
           </h1>
         </GradientBannerCustom>
-        <div className="mt-10 md:mt-20">
+        <div className="mt-6 md:mt-6">
           <ProfileStates />
           <ProfileHeader />
           <CustomContainer>{children}</CustomContainer>
         </div>
       </div>
+      <Footer />
     </ProtectedRoute>
   );
 };
