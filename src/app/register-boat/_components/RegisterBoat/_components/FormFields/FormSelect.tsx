@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /**
  * FormSelect Component
  * Reusable select field with label and error handling for React Hook Form
@@ -53,8 +54,6 @@ export const FormSelect: React.FC<FormSelectProps> = ({
 
   const value = watch(name);
   const error = errors[name];
-
-  console.log(search, type, limit);
 
   const handleChange = (newValue: string) => {
     setValue(name, newValue);

@@ -6,18 +6,19 @@ export const sendMessageToChatBot = async ({
   userId: string | null;
 }) => {
   try {
-    const baseUrl =
-      process.env.NEXT_PUBLIC_CHATBOT_API_URL ||
-      'http://51.21.246.163:8080/api/v1';
+    const baseUrl = process.env.NEXT_PUBLIC_CHATBOT_API_URL;
 
-    const res = await fetch(`${baseUrl}/chat`, {
+    const res = await fetch(`${baseUrl}/florida_chat`, {
       method: 'POST',
       body: JSON.stringify({
         messages: message,
-        user_id: userId || 'anonymous',
+        user_id: userId,
       }),
       headers: {
         'Content-Type': 'application/json',
+      },
+      next: {
+        tags: ['CHATBOT'],
       },
     });
 
@@ -33,5 +34,34 @@ export const sendMessageToChatBot = async ({
       throw error;
     }
     throw new Error('Failed to send message to chatbot');
+  }
+};
+
+export const chatHistory = async (userId: string) => {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_CHATBOT_API_URL;
+
+    const res = await fetch(
+      `${baseUrl}/florida_chat_history?user_id=${userId}`,
+      {
+        method: 'GET',
+        next: {
+          tags: ['CHATBOT'],
+        },
+      },
+    );
+
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (error: unknown) {
+    console.error('Chat History Error:', error);
+    if (error instanceof Error) {
+      throw error;
+    }
+    throw new Error('Failed to fetch chat history');
   }
 };

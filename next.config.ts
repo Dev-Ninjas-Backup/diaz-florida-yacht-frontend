@@ -13,6 +13,16 @@ const nextConfig: NextConfig = {
         hostname: 'floridayt.s3.eu-north-1.amazonaws.com',
         pathname: '/images/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.boatsgroup.com',
+        pathname: '/images/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'example.com',
+        pathname: '/uploads/boats/**',
+      },
     ],
   },
 };

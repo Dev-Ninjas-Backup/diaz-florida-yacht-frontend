@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 import CustomTable, {
   Column,
@@ -11,6 +12,7 @@ import {
 } from '@/components/ui/select';
 import { PaginationMetadata, usePagination } from '@/hooks/usePagination';
 import { getSellerBoats } from '@/services/seller';
+import Link from 'next/link';
 import { Eye, Plus, Search, SquarePen, Trash2 } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -25,14 +27,21 @@ const MyListing = () => {
     totalPage: 0,
   });
   const [search, setSearch] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
   const [status, setStatus] = useState('all');
   const [loading, setLoading] = useState(false);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { page, limit, setPage, setLimit } = usePagination({
     initialPage: 1,
     initialLimit: 10,
   });
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [search]);
 
   useEffect(() => {
     const getListings = async () => {
@@ -41,7 +50,7 @@ const MyListing = () => {
         const listingsFromApi = await getSellerBoats({
           page,
           limit,
-          search,
+          search: debouncedSearch,
           status: status === 'all' ? '' : status,
         });
         setMyListings(listingsFromApi.data || []);
@@ -54,7 +63,7 @@ const MyListing = () => {
       }
     };
     getListings();
-  }, [page, limit, search, status]);
+  }, [page, limit, debouncedSearch, status]);
 
   console.log('My Listings:', myListings);
   //Table Config
@@ -106,14 +115,20 @@ const MyListing = () => {
     },
     {
       header: 'Action',
-      cell: () => (
+      cell: (row) => (
         <div className="flex items-center space-x-2">
-          <button className="text-gray-400 hover:text-primary focus:outline-none focus:text-primary cursor-pointer bg-[#F4F4F4] p-1 rounded-full border border-gray-200">
+          <Link
+            href={`/seller-dashboard/my-listing/view/${row.id}`}
+            className="text-gray-400 hover:text-primary focus:outline-none focus:text-primary cursor-pointer bg-[#F4F4F4] p-1 rounded-full border border-gray-200"
+          >
             <Eye size={18} />
-          </button>
-          <button className="text-[#0064AE] hover:text-primary focus:outline-none focus:text-primary cursor-pointer bg-[#E6F0F7] p-1 rounded-full border border-[#B0CFE6]">
+          </Link>
+          <Link
+            href={`/seller-dashboard/my-listing/edit/${row.id}`}
+            className="text-[#0064AE] hover:text-primary focus:outline-none focus:text-primary cursor-pointer bg-[#E6F0F7] p-1 rounded-full border border-[#B0CFE6]"
+          >
             <SquarePen size={16} />
-          </button>
+          </Link>
           <button className="text-orange-600 hover:text-red-600 focus:outline-none focus:text-red-600 cursor-pointer bg-#FEE3D7] p-1 rounded-full border border-[#EDC2AF]">
             <Trash2 size={18} />
           </button>
@@ -158,10 +173,13 @@ const MyListing = () => {
             />
           </div>
         </div>
-        <button className="flex items-center px-6 py-2 sm:px-8 sm:py-3.5 rounded-lg text-white bg-[#006EF0]">
+        <Link
+          href="/seller-dashboard/my-listing/create"
+          className="flex items-center px-6 py-2 sm:px-8 sm:py-3.5 rounded-lg text-white bg-[#006EF0]"
+        >
           Post New
           <Plus size={18} />
-        </button>
+        </Link>
       </header>
 
       {loading ? (

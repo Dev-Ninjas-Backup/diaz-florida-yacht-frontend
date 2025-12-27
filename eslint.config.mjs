@@ -3,6 +3,7 @@ import pluginReact from 'eslint-plugin-react';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
+import nextPlugin from '@next/eslint-plugin-next';
 
 export default defineConfig([
   globalIgnores([
@@ -24,6 +25,7 @@ export default defineConfig([
     plugins: {
       js,
       react: pluginReact,
+      '@next/next': nextPlugin,
     },
   },
 
@@ -41,6 +43,8 @@ export default defineConfig([
     rules: {
       'react/react-in-jsx-scope': 'off',
       '@typescript-eslint/no-require-imports': 'off',
+      ...nextPlugin.configs.recommended.rules,
+      ...nextPlugin.configs['core-web-vitals'].rules,
     },
   },
 ]);
