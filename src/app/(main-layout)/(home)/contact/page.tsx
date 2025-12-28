@@ -9,8 +9,10 @@ import banner from '@/assets/contact/banner.jpg';
 const ContactPage = async () => {
   const bannerData = await getBanner('CONTACT', 'FLORIDA');
   const bannerUrl = bannerData?.background?.url || banner;
-  const bannerTitle = bannerData?.bannerTitle || 'Get in Touch with Florida Yacht Traders';
-  const bannerSubtitle = bannerData?.subtitle || 'Contact us for any questions or inquiries';
+  const bannerTitle =
+    bannerData?.bannerTitle || 'Get in Touch with Florida Yacht Traders';
+  const bannerSubtitle =
+    bannerData?.subtitle || 'Contact us for any questions or inquiries';
   return (
     <div>
       {/* Top Banner */}

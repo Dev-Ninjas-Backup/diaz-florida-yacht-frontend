@@ -25,7 +25,7 @@ export const submitContactUs = async (
       },
       body: JSON.stringify(data),
       next: {
-            tags: ['CONTACT_US'],
+        tags: ['CONTACT_US'],
       },
     });
 

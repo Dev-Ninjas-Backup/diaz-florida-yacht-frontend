@@ -35,12 +35,12 @@ export interface LoadingProps {
 
 /**
  * Reusable Loading component for displaying loading states
- * 
+ *
  * @example
  * ```tsx
  * <Loading message="Loading categories..." />
  * ```
- * 
+ *
  * @example
  * ```tsx
  * <Loading fullScreen message="Loading dashboard..." />
@@ -61,7 +61,7 @@ export function Loading({
         className={cn(
           'flex flex-col items-center justify-center gap-4',
           fullScreen && 'min-h-screen',
-          className
+          className,
         )}
       >
         <div className="flex gap-2">
@@ -73,7 +73,7 @@ export function Loading({
           <p
             className={cn(
               'text-sm md:text-base text-gray-600',
-              messageClassName
+              messageClassName,
             )}
           >
             {message}
@@ -88,22 +88,16 @@ export function Loading({
       className={cn(
         'flex flex-col items-center justify-center gap-4 p-8',
         fullScreen && 'min-h-screen',
-        className
+        className,
       )}
     >
       <Loader2
-        className={cn(
-          'animate-spin text-primary',
-          spinnerClassName
-        )}
+        className={cn('animate-spin text-primary', spinnerClassName)}
         size={size}
       />
       {message && (
         <p
-          className={cn(
-            'text-sm md:text-base text-gray-600',
-            messageClassName
-          )}
+          className={cn('text-sm md:text-base text-gray-600', messageClassName)}
         >
           {message}
         </p>
@@ -111,4 +105,3 @@ export function Loading({
     </div>
   );
 }
-

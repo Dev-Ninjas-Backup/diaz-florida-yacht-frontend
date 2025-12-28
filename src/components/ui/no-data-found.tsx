@@ -44,10 +44,10 @@ export interface NoDataFoundProps {
 
 /**
  * Reusable NoDataFound component for displaying empty states
- * 
+ *
  * @example
  * ```tsx
- * <NoDataFound 
+ * <NoDataFound
  *   title="No listings found"
  *   description="Try adjusting your search filters"
  * />
@@ -68,44 +68,36 @@ export function NoDataFound({
     <div
       className={cn(
         'flex flex-col items-center justify-center p-8 md:p-12 text-center',
-        className
+        className,
       )}
     >
       <Icon
-        className={cn(
-          'text-gray-400 mb-4',
-          iconClassName
-        )}
+        className={cn('text-gray-400 mb-4', iconClassName)}
         size={iconSize}
         strokeWidth={1.5}
       />
-      
+
       <h3
         className={cn(
           'text-lg md:text-xl font-semibold text-gray-700 mb-2',
-          titleClassName
+          titleClassName,
         )}
       >
         {title}
       </h3>
-      
+
       {description && (
         <p
           className={cn(
             'text-sm md:text-base text-gray-500 max-w-md',
-            descriptionClassName
+            descriptionClassName,
           )}
         >
           {description}
         </p>
       )}
-      
-      {action && (
-        <div className="mt-6">
-          {action}
-        </div>
-      )}
+
+      {action && <div className="mt-6">{action}</div>}
     </div>
   );
 }
-
