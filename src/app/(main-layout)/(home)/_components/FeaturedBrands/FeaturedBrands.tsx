@@ -8,6 +8,8 @@ import {
   FeaturedBrand,
   getFeaturedBrands,
 } from '@/services/featuredBrands/featuredBrands';
+import { Loading } from '@/components/ui/loading';
+import { NoDataFound } from '@/components/ui/no-data-found';
 
 const FeaturedBrands = () => {
   const [brands, setBrands] = useState<FeaturedBrand[]>([]);
@@ -22,8 +24,23 @@ const FeaturedBrands = () => {
     loadBrands();
   }, []);
 
-  if (isLoading) return <div className="">Loading ...</div>;
-  if (brands.length === 0) return <div className="">No data</div>;
+  if (isLoading) {
+    return (
+      <CustomContainer>
+        <Loading message="Loading brands..." />
+      </CustomContainer>
+    );
+  }
+  if (brands.length === 0) {
+    return (
+      <CustomContainer>
+        <NoDataFound
+          title="No featured brands found"
+          description="There are no featured brands available at the moment."
+        />
+      </CustomContainer>
+    );
+  }
 
   return (
     <div className="py-20">

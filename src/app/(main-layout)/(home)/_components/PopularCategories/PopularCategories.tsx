@@ -1,9 +1,11 @@
 'use client';
 
 import CustomContainer from '@/components/CustomComponents/CustomContainer';
-import React, { useEffect, useState } from 'react';
-import CategoryCard from './CategoryCard';
+import { Loading } from '@/components/ui/loading';
+import { NoDataFound } from '@/components/ui/no-data-found';
 import { getCategories } from '@/services/category/category';
+import { useEffect, useState } from 'react';
+import CategoryCard from './CategoryCard';
 
 type CategoryUI = {
   id: string;
@@ -36,8 +38,23 @@ const PopularCategories = () => {
     loadCategories();
   }, []);
 
-  if (loading) return <div className="">Loading ...</div>;
-  if (categories.length === 0) return <div className="">No data</div>;
+  if (loading) {
+    return (
+      <CustomContainer>
+        <Loading message="Loading categories..." />
+      </CustomContainer>
+    );
+  }
+  if (categories.length === 0) {
+    return (
+      <CustomContainer>
+        <NoDataFound
+          title="No categories found"
+          description="There are no popular categories available at the moment."
+        />
+      </CustomContainer>
+    );
+  }
 
   return (
     <CustomContainer>

@@ -3,6 +3,7 @@
 import CustomTable, {
   Column,
 } from '@/components/shared/dashboard/CustomTable/CustomTable';
+import { NoDataFound } from '@/components/ui/no-data-found';
 import {
   Select,
   SelectContent,
@@ -217,8 +218,11 @@ const MyListing = () => {
           </div>
         </>
       ) : (
-        <div className="bg-white p-8 text-center">
-          <p className="text-gray-500">No listings found</p>
+        <div className="bg-white rounded-b-lg">
+          <NoDataFound
+            title="No listings found"
+            description="You haven't created any listings yet. Click 'Post New' to create your first listing."
+          />
         </div>
       )}
     </div>

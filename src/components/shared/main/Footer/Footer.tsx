@@ -95,7 +95,7 @@ const Footer = () => {
               <ul className="space-y-2 sm:space-y-3">
                 <li>
                   <Link
-                    href="/faqs"
+                    href="/faq"
                     className="text-gray-300 hover:text-white transition-colors text-sm sm:text-base"
                   >
                     FAQs
@@ -119,7 +119,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <Link
-                    href="/disclaimer"
+                    href="/"
                     className="text-gray-300 hover:text-white transition-colors text-sm sm:text-base"
                   >
                     Disclaimer
