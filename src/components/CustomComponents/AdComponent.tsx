@@ -1,6 +1,5 @@
-import Image from 'next/image';
-import React from 'react';
 import bannerDown from '@/assets/yacht-images/subscription.png';
+import Image from 'next/image';
 const AdComponent = () => {
   return (
     <div className="pb-10 relative rounded-2xl">
