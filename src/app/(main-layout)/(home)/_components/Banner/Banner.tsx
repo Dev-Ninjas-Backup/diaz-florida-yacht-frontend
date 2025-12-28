@@ -4,6 +4,7 @@ import SearchComponent from './SearchComponent';
 import CustomContainer from '@/components/CustomComponents/CustomContainer';
 
 import { getBanner } from '@/services/main/banner';
+import Image from 'next/image';
 
 const Banner = async () => {
   const banner = await getBanner('HOME', 'FLORIDA').catch(() => null);
@@ -31,7 +32,7 @@ const Banner = async () => {
           Your browser does not support the video tag.
         </video>
       ) : (
-        <img
+        <Image
           src={backgroundUrl}
           alt={title}
           className="absolute top-0 left-0 w-full h-[380px] md:h-full object-cover rounded-2xl"

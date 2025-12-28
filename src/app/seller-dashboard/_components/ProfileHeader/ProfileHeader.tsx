@@ -1,6 +1,8 @@
 'use client';
 
 import CustomContainer from '@/components/CustomComponents/CustomContainer';
+import { useAuth } from '@/hooks/useAuth';
+import { clearAuthCookies } from '@/lib/auth-utils';
 import {
   BriefcaseBusiness,
   CreditCard,
@@ -9,7 +11,7 @@ import {
   UserRoundPen,
 } from 'lucide-react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 const navItems = [
   {
@@ -32,6 +34,14 @@ const navItems = [
 
 const ProfileHeader = () => {
   const pathname = usePathname();
+  const router = useRouter();
+  const { clearUser } = useAuth();
+
+  const handleLogout = () => {
+    clearAuthCookies();
+    clearUser();
+    router.push('/login');
+  };
 
   return (
     //  className=" sticky top-50 sm:top-60 z-10"
@@ -56,7 +66,10 @@ const ProfileHeader = () => {
               </Link>
             );
           })}
-          <button className="flex-shrink-0 flex items-center justify-center px-4 py-2 space-x-2 text-sm md:text-lg font-medium rounded-lg transition-colors duration-200 bg-[#F4F4F4] text-red-500 hover:bg-gray-200 gap-1.5 cursor-pointer">
+          <button
+            onClick={handleLogout}
+            className="flex-shrink-0 flex items-center justify-center px-4 py-2 space-x-2 text-sm md:text-lg font-medium rounded-lg transition-colors duration-200 bg-[#F4F4F4] text-red-500 hover:bg-gray-200 gap-1.5 cursor-pointer"
+          >
             <LogOut size={18} /> Logout
           </button>
         </div>
