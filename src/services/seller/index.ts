@@ -94,16 +94,20 @@ export const getSellerInvoices = async ({
 
 export const getSellerLeads = async ({ page, limit, search }: SellerQuery) => {
   try {
+    const token = await getValidToken();
+
     const params = new URLSearchParams();
     if (page) params.append('page', String(page));
     if (limit) params.append('limit', String(limit));
     if (search) params.append('search', search);
-    params.append('source', 'FLORIDA');
 
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/contact?${params.toString()}`,
+      `${process.env.NEXT_PUBLIC_BASE_API}/seller/leads?${params.toString()}`,
       {
         method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         next: {
           tags: ['SELLER_LEADS'],
         },

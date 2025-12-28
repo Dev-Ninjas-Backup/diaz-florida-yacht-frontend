@@ -23,15 +23,16 @@ export interface FloridaLead {
 
 export interface Lead {
   id: string;
+  boatId: string;
+  listingId: string;
+  listingSummary: LeadListingSummary;
+  source: string;
+  listingSource: string;
+  type: string;
   name: string;
   email: string;
   phone: string;
   message: string;
-  source: string;
-  type: string;
-  listingId: string | null;
-  listingSource: string | null;
   createdAt: string;
   updatedAt: string;
-  floridaLeads: FloridaLead[];
 }
