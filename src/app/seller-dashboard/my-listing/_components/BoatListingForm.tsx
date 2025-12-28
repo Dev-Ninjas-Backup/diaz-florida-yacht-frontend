@@ -71,8 +71,8 @@ export default function BoatListingForm({
           description: boatData.description || '',
           moreDetails: [],
           embedUrl: boatData.videoURL || '',
-          coverPhoto: undefined,
-          mediaGallery: [],
+          coverPhoto: boatData.coverImages?.[0]?.url || undefined,
+          mediaGallery: boatData.galleryImages?.map((img) => img.url) || [],
         }
       : {
           buildYear: '',
@@ -304,7 +304,11 @@ export default function BoatListingForm({
                   city={watchedFields[8]}
                   state={watchedFields[9]}
                   coverPhoto={watchedFields[10]}
-                  boatPreviewFallback={boatPreview}
+                  boatPreviewFallback={
+                    mode === 'edit' && boatData?.coverImages?.[0]?.url
+                      ? boatData.coverImages[0].url
+                      : boatPreview
+                  }
                 />
               </div>
             </div>

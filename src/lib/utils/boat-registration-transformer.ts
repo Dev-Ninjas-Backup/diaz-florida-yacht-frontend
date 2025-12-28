@@ -95,6 +95,7 @@ export function transformToBoatInfo(
     state: formData.state,
     zip: formData.zip,
     description: formData.description,
+    videoURL: formData.embedUrl || '',
     extraDetails: parseExtraDetails(formData.moreDetails),
   };
 }

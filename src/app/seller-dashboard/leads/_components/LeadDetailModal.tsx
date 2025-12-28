@@ -71,25 +71,24 @@ const LeadDetailModal = ({ lead, isOpen, onClose }: LeadDetailModalProps) => {
           </div>
 
           {/* Boat Info */}
-          {lead.floridaLeads && lead.floridaLeads.length > 0 && (
-            <div className="bg-blue-50 rounded-lg p-4 space-y-3">
-              <h3 className="font-semibold text-lg mb-3 flex items-center gap-2">
-                <Ship size={20} />
-                Boat Information
-              </h3>
-              {lead.floridaLeads.map((floridaLead) => (
-                <div key={floridaLead.id} className="space-y-2">
-                  <p className="font-medium">{floridaLead.boat.name}</p>
-                  <p className="text-sm text-gray-600">
-                    Listing ID: {floridaLead.boat.listingId}
-                  </p>
-                  <p className="text-lg font-semibold text-blue-600">
-                    ${floridaLead.boat.price.toLocaleString()}
-                  </p>
-                </div>
-              ))}
+          <div className="bg-blue-50 rounded-lg p-4 space-y-3">
+            <h3 className="font-semibold text-lg mb-3 flex items-center gap-2">
+              <Ship size={20} />
+              Boat Information
+            </h3>
+            <div className="space-y-2">
+              <p className="font-medium">{lead.listingSummary.name}</p>
+              <p className="text-sm text-gray-600">
+                Listing ID: {lead.listingSummary.listingId}
+              </p>
+              <p className="text-lg font-semibold text-blue-600">
+                ${lead.listingSummary.price.toLocaleString()}
+              </p>
+              <p className="text-sm text-gray-600">
+                Location: {lead.listingSummary.city}
+              </p>
             </div>
-          )}
+          </div>
 
           {/* Listing Info */}
           {lead.listingId && (
