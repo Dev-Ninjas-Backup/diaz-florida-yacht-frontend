@@ -6,12 +6,15 @@ import Step2Form from '@/app/register-boat/_components/RegisterBoat/_components/
 import { BoatDetail } from '@/types/boat-detail-types';
 import Image from 'next/image';
 import { Label } from '@/components/ui/label';
+import { X } from 'lucide-react';
 
 interface EditModeFormProps {
   boatData: BoatDetail;
+  imagesToDelete: string[];
+  onDeleteImage: (imageId: string) => void;
 }
 
-export default function EditModeForm({ boatData }: EditModeFormProps) {
+export default function EditModeForm({ boatData, imagesToDelete, onDeleteImage }: EditModeFormProps) {
   const { setValue } = useFormContext();
 
   console.log('Boat Data: ', boatData);
@@ -56,40 +59,40 @@ export default function EditModeForm({ boatData }: EditModeFormProps) {
             Current Gallery Images ({boatData.galleryImages.length})
           </Label>
           <div className="mt-2 grid grid-cols-4 gap-2">
-            {boatData.galleryImages.map((img) => (
-              <div
-                key={img.id}
-                className="relative aspect-square rounded overflow-hidden border border-gray-200"
-              >
-                <Image
-                  src={img.url || '/placeholder-boat.jpg'}
-                  alt="Gallery"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            ))}
+            {boatData.galleryImages.map((img) => {
+              const isDeleted = imagesToDelete.includes(img.id);
+              return (
+                <div
+                  key={img.id}
+                  className={`relative aspect-square rounded overflow-hidden border ${
+                    isDeleted ? 'border-red-500 opacity-50' : 'border-gray-200'
+                  }`}
+                >
+                  <Image
+                    src={img.url || '/placeholder-boat.jpg'}
+                    alt="Gallery"
+                    fill
+                    className="object-cover"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => onDeleteImage(img.id)}
+                    className="absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white rounded-full p-1 transition-colors"
+                    aria-label="Delete image"
+                  >
+                    <X size={16} />
+                  </button>
+                  {isDeleted && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                      <span className="text-white text-xs font-semibold">Will be deleted</span>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
           <p className="text-xs text-gray-500 mt-1">
             Upload new images below to add more
-          </p>
-        </div>
-      )}
-
-      {/* Existing Video URL Display */}
-      {boatData.videoURL && (
-        <div className="mb-6 p-4 bg-green-50 rounded-lg">
-          <h4 className="font-semibold mb-2 text-sm">Current Video URL</h4>
-          <a
-            href={boatData.videoURL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-600 hover:underline text-sm break-all"
-          >
-            {boatData.videoURL}
-          </a>
-          <p className="text-xs text-gray-600 mt-2">
-            Enter a new URL below to update
           </p>
         </div>
       )}

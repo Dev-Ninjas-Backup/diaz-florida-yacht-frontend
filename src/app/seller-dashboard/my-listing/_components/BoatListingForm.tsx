@@ -10,7 +10,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import z from 'zod';
 import Step2Form from '@/app/register-boat/_components/RegisterBoat/_components/Step2Form/Step2Form';
-import EditModeStep2Form from './EditModeForm';
+import EditModeForm from './EditModeForm';
 import PreviewSection from '@/app/register-boat/_components/Preview/PreviewSection';
 import boatPreview from '@/assets/register-boat/boatPreview.svg';
 import { BoatDetail } from '@/types/boat-detail-types';
@@ -31,9 +31,18 @@ export default function BoatListingForm({
 }: BoatListingFormProps) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [imagesToDelete, setImagesToDelete] = useState<string[]>([]);
+
+  const handleDeleteImage = (imageId: string) => {
+    setImagesToDelete((prev) =>
+      prev.includes(imageId)
+        ? prev.filter((id) => id !== imageId)
+        : [...prev, imageId],
+    );
+  };
 
   const form = useForm<z.infer<typeof step2Schema>>({
-    resolver: zodResolver(step2Schema),
+    resolver: mode === 'edit' ? undefined : zodResolver(step2Schema),
     mode: 'onChange',
     defaultValues: boatData
       ? {
@@ -71,8 +80,8 @@ export default function BoatListingForm({
           description: boatData.description || '',
           moreDetails: [],
           embedUrl: boatData.videoURL || '',
-          coverPhoto: boatData.coverImages?.[0]?.url || undefined,
-          mediaGallery: boatData.galleryImages?.map((img) => img.url) || [],
+          coverPhoto: undefined,
+          mediaGallery: [],
         }
       : {
           buildYear: '',
@@ -127,9 +136,51 @@ export default function BoatListingForm({
   ]);
 
   const handleSubmit = async () => {
-    const isValid = await trigger();
+    // Skip file validation for edit mode
+    const fieldsToValidate =
+      mode === 'edit'
+        ? [
+            'buildYear',
+            'make',
+            'model',
+            'name',
+            'lengthFeet',
+            'lengthInches',
+            'beamFeet',
+            'beamInches',
+            'draftFeet',
+            'draftInches',
+            'class',
+            'material',
+            'fuelType',
+            'numEngines',
+            'numCabins',
+            'numHeads',
+            'condition',
+            'price',
+            'city',
+            'state',
+            'zip',
+            'description',
+          ]
+        : undefined;
+
+    const isValid = fieldsToValidate
+      ? await trigger(
+          fieldsToValidate as Array<keyof z.infer<typeof step2Schema>>,
+        )
+      : await trigger();
+
     if (!isValid) {
       toast.error('Please fill all required fields correctly');
+      return;
+    }
+
+    const formValues = getValues();
+
+    // Check cover photo only for create mode
+    if (mode === 'create' && !formValues.coverPhoto) {
+      toast.error('Please upload a cover photo');
       return;
     }
 
@@ -139,7 +190,7 @@ export default function BoatListingForm({
       const formData = new FormData();
 
       // Build boatInfo object
-      const boatInfo = {
+      const boatInfo: Record<string, unknown> = {
         name: formValues.name,
         price: parseFloat(formValues.price),
         description: formValues.description,
@@ -188,6 +239,11 @@ export default function BoatListingForm({
           : [],
         extraDetails: formValues.moreDetails || [],
       };
+
+      // Add imagesToDelete for edit mode
+      if (mode === 'edit' && imagesToDelete.length > 0) {
+        boatInfo.imagesToDelete = imagesToDelete;
+      }
 
       formData.append('boatInfo', JSON.stringify(boatInfo));
 
@@ -258,7 +314,11 @@ export default function BoatListingForm({
               <div className=" rounded-lg p-6">
                 <FormProvider {...form}>
                   {mode === 'edit' && boatData ? (
-                    <EditModeStep2Form boatData={boatData} />
+                    <EditModeForm
+                      boatData={boatData}
+                      imagesToDelete={imagesToDelete}
+                      onDeleteImage={handleDeleteImage}
+                    />
                   ) : (
                     <Step2Form />
                   )}
