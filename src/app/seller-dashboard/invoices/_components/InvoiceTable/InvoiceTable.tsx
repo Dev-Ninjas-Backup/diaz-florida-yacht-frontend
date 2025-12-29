@@ -11,9 +11,16 @@ import {
 } from '@/components/ui/select';
 import { PaginationMetadata, usePagination } from '@/hooks/usePagination';
 import { getSellerInvoices } from '@/services/seller';
-import { ArrowDownToLine, ChevronDown, Printer, Search } from 'lucide-react';
+import {
+  ArrowDownToLine,
+  ChevronDown,
+  Eye,
+  Printer,
+  Search,
+} from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { InvoiceRecord } from '../../data/invoiceData';
+import InvoiceDetailModal from '../InvoiceDetailModal';
 
 const InvoiceTable = () => {
   const [invoices, setInvoices] = useState<InvoiceRecord[]>([]);
@@ -26,6 +33,10 @@ const InvoiceTable = () => {
   const [search, setSearch] = useState('');
   const [status, setStatus] = useState('all');
   const [loading, setLoading] = useState(false);
+  const [selectedInvoice, setSelectedInvoice] = useState<InvoiceRecord | null>(
+    null,
+  );
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { page, limit, setPage } = usePagination({
     initialPage: 1,
@@ -108,12 +119,28 @@ const InvoiceTable = () => {
     },
     {
       header: 'Action',
-      cell: () => (
+      cell: (row) => (
         <div className="flex items-center space-x-2">
-          <button className="text-[#0064AE] hover:text-primary focus:outline-none focus:text-primary cursor-pointer bg-[#E6F0F7] p-1 rounded-full border border-[#B0CFE6]">
+          <button
+            onClick={() => {
+              setSelectedInvoice(row);
+              setIsModalOpen(true);
+            }}
+            className="text-blue-600 hover:text-blue-700 focus:outline-none cursor-pointer bg-blue-50 p-1 rounded-full border border-blue-200"
+            title="View Details"
+          >
+            <Eye size={16} />
+          </button>
+          <button
+            className="text-[#0064AE] hover:text-primary focus:outline-none focus:text-primary cursor-pointer bg-[#E6F0F7] p-1 rounded-full border border-[#B0CFE6]"
+            aria-label="Download invoice"
+          >
             <ArrowDownToLine size={16} />
           </button>
-          <button className="text-gray-400 hover:text-primary focus:outline-none focus:text-primary cursor-pointer bg-[#F4F4F4] p-1 rounded-full border border-gray-200">
+          <button
+            className="text-gray-400 hover:text-primary focus:outline-none focus:text-primary cursor-pointer bg-[#F4F4F4] p-1 rounded-full border border-gray-200"
+            aria-label="Print invoice"
+          >
             <Printer size={16} />
           </button>
         </div>
@@ -200,6 +227,15 @@ const InvoiceTable = () => {
           <p className="text-gray-500">No invoices found</p>
         </div>
       )}
+
+      <InvoiceDetailModal
+        invoice={selectedInvoice}
+        open={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+          setSelectedInvoice(null);
+        }}
+      />
     </div>
   );
 };

@@ -31,6 +31,15 @@ export default function BoatListingForm({
 }: BoatListingFormProps) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [imagesToDelete, setImagesToDelete] = useState<string[]>([]);
+
+  const handleDeleteImage = (imageId: string) => {
+    setImagesToDelete((prev) =>
+      prev.includes(imageId)
+        ? prev.filter((id) => id !== imageId)
+        : [...prev, imageId],
+    );
+  };
 
   const form = useForm<z.infer<typeof step2Schema>>({
     resolver: mode === 'edit' ? undefined : zodResolver(step2Schema),
@@ -181,7 +190,7 @@ export default function BoatListingForm({
       const formData = new FormData();
 
       // Build boatInfo object
-      const boatInfo = {
+      const boatInfo: Record<string, unknown> = {
         name: formValues.name,
         price: parseFloat(formValues.price),
         description: formValues.description,
@@ -230,6 +239,11 @@ export default function BoatListingForm({
           : [],
         extraDetails: formValues.moreDetails || [],
       };
+
+      // Add imagesToDelete for edit mode
+      if (mode === 'edit' && imagesToDelete.length > 0) {
+        boatInfo.imagesToDelete = imagesToDelete;
+      }
 
       formData.append('boatInfo', JSON.stringify(boatInfo));
 
@@ -300,7 +314,11 @@ export default function BoatListingForm({
               <div className=" rounded-lg p-6">
                 <FormProvider {...form}>
                   {mode === 'edit' && boatData ? (
-                    <EditModeForm boatData={boatData} />
+                    <EditModeForm
+                      boatData={boatData}
+                      imagesToDelete={imagesToDelete}
+                      onDeleteImage={handleDeleteImage}
+                    />
                   ) : (
                     <Step2Form />
                   )}
