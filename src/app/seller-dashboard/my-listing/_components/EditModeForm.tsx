@@ -76,24 +76,6 @@ export default function EditModeForm({ boatData }: EditModeFormProps) {
         </div>
       )}
 
-      {/* Existing Video URL Display */}
-      {boatData.videoURL && (
-        <div className="mb-6 p-4 bg-green-50 rounded-lg">
-          <h4 className="font-semibold mb-2 text-sm">Current Video URL</h4>
-          <a
-            href={boatData.videoURL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-600 hover:underline text-sm break-all"
-          >
-            {boatData.videoURL}
-          </a>
-          <p className="text-xs text-gray-600 mt-2">
-            Enter a new URL below to update
-          </p>
-        </div>
-      )}
-
       {/* Regular Step2Form */}
       <Step2Form />
     </div>

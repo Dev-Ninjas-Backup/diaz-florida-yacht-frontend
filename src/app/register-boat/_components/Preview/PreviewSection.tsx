@@ -45,6 +45,14 @@ const PreviewSection: React.FC<PreviewSectionProps> = ({
             height={192}
             className="w-full h-48 object-cover"
           />
+        ) : boatPreviewFallback ? (
+          <Image
+            src={boatPreviewFallback}
+            alt="Boat preview"
+            width={400}
+            height={192}
+            className="w-full h-48 object-cover"
+          />
         ) : (
           <div className="w-full h-48 flex items-center justify-center bg-gray-100">
             <p className="text-gray-400 text-sm">
