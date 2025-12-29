@@ -26,9 +26,15 @@ export const generateInvoicePDF = (invoice: InvoiceRecord): void => {
 
   // Company Address
   pdf.setFontSize(9);
-  pdf.text('123 Marina Boulevard', pageWidth - margin, yPos + 8, { align: 'right' });
-  pdf.text('Miami, FL 33101', pageWidth - margin, yPos + 13, { align: 'right' });
-  pdf.text('contact@floridayacht.com', pageWidth - margin, yPos + 18, { align: 'right' });
+  pdf.text('123 Marina Boulevard', pageWidth - margin, yPos + 8, {
+    align: 'right',
+  });
+  pdf.text('Miami, FL 33101', pageWidth - margin, yPos + 13, {
+    align: 'right',
+  });
+  pdf.text('contact@floridayacht.com', pageWidth - margin, yPos + 18, {
+    align: 'right',
+  });
   pdf.text('(305) 555-0123', pageWidth - margin, yPos + 23, { align: 'right' });
 
   pdf.setTextColor(0, 0, 0);
@@ -59,7 +65,11 @@ export const generateInvoicePDF = (invoice: InvoiceRecord): void => {
   pdf.text('DATE', infoBoxX + 3, yPos + 10);
   pdf.setFont('helvetica', 'normal');
   pdf.setTextColor(0, 0, 0);
-  pdf.text(new Date(invoice.createdAt).toLocaleDateString('en-US'), infoBoxX + 3, yPos + 15);
+  pdf.text(
+    new Date(invoice.createdAt).toLocaleDateString('en-US'),
+    infoBoxX + 3,
+    yPos + 15,
+  );
 
   yPos += 35;
 
@@ -73,12 +83,19 @@ export const generateInvoicePDF = (invoice: InvoiceRecord): void => {
 
   // Status Badge
   const statusText = invoice.status.replace('_', ' ');
-  const statusColor = invoice.status === 'PAID' ? [34, 197, 94] : invoice.status === 'UPCOMING' ? [59, 130, 246] : [239, 68, 68];
+  const statusColor =
+    invoice.status === 'PAID'
+      ? [34, 197, 94]
+      : invoice.status === 'UPCOMING'
+        ? [59, 130, 246]
+        : [239, 68, 68];
   pdf.setFillColor(statusColor[0], statusColor[1], statusColor[2]);
   pdf.roundedRect(pageWidth - margin - 35, yPos + 1, 35, 6, 1.5, 1.5, 'F');
   pdf.setFontSize(9);
   pdf.setFont('helvetica', 'bold');
-  pdf.text(statusText, pageWidth - margin - 17.5, yPos + 5, { align: 'center' });
+  pdf.text(statusText, pageWidth - margin - 17.5, yPos + 5, {
+    align: 'center',
+  });
 
   yPos += 12;
   pdf.setTextColor(0, 0, 0);
@@ -97,11 +114,13 @@ export const generateInvoicePDF = (invoice: InvoiceRecord): void => {
   autoTable(pdf, {
     startY: yPos,
     head: [['DESCRIPTION', 'PERIOD', 'AMOUNT']],
-    body: [[
-      `${invoice.subscription.plan.title}\n${invoice.subscription.plan.planType}`,
-      `${invoice.subscription.plan.billingPeriodMonths} months`,
-      `$${(invoice.amount / 100).toFixed(2)}`
-    ]],
+    body: [
+      [
+        `${invoice.subscription.plan.title}\n${invoice.subscription.plan.planType}`,
+        `${invoice.subscription.plan.billingPeriodMonths} months`,
+        `$${(invoice.amount / 100).toFixed(2)}`,
+      ],
+    ],
     theme: 'grid',
     headStyles: {
       fillColor: [240, 242, 245],
@@ -123,7 +142,9 @@ export const generateInvoicePDF = (invoice: InvoiceRecord): void => {
     margin: { left: margin, right: margin },
   });
 
-  yPos = (pdf as jsPDF & { lastAutoTable: { finalY: number } }).lastAutoTable.finalY + 10;
+  yPos =
+    (pdf as jsPDF & { lastAutoTable: { finalY: number } }).lastAutoTable
+      .finalY + 10;
 
   // Total Section
   const totalBoxX = pageWidth - margin - 65;
@@ -135,7 +156,9 @@ export const generateInvoicePDF = (invoice: InvoiceRecord): void => {
   pdf.text('Subtotal', totalBoxX + 5, yPos + 8);
   pdf.setFont('helvetica', 'bold');
   pdf.setTextColor(0, 0, 0);
-  pdf.text(`$${(invoice.amount / 100).toFixed(2)}`, totalBoxX + 60, yPos + 8, { align: 'right' });
+  pdf.text(`$${(invoice.amount / 100).toFixed(2)}`, totalBoxX + 60, yPos + 8, {
+    align: 'right',
+  });
 
   pdf.setFont('helvetica', 'normal');
   pdf.setTextColor(80, 80, 80);
@@ -153,7 +176,12 @@ export const generateInvoicePDF = (invoice: InvoiceRecord): void => {
   pdf.setTextColor(0, 110, 240);
   pdf.text('TOTAL', totalBoxX + 5, yPos + 26);
   pdf.setTextColor(0, 0, 0);
-  pdf.text(`$${(invoice.amount / 100).toFixed(2)} ${invoice.currency.toUpperCase()}`, totalBoxX + 60, yPos + 26, { align: 'right' });
+  pdf.text(
+    `$${(invoice.amount / 100).toFixed(2)} ${invoice.currency.toUpperCase()}`,
+    totalBoxX + 60,
+    yPos + 26,
+    { align: 'right' },
+  );
 
   // Payment Status
   if (invoice.paidAt) {
@@ -167,7 +195,15 @@ export const generateInvoicePDF = (invoice: InvoiceRecord): void => {
     pdf.setFont('helvetica', 'bold');
     pdf.text('✓ Payment Received', margin + 5, yPos + 5);
     pdf.setFont('helvetica', 'normal');
-    pdf.text(new Date(invoice.paidAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }), margin + 5, yPos + 9);
+    pdf.text(
+      new Date(invoice.paidAt).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      }),
+      margin + 5,
+      yPos + 9,
+    );
   }
 
   // Footer
@@ -178,12 +214,24 @@ export const generateInvoicePDF = (invoice: InvoiceRecord): void => {
   pdf.setTextColor(255, 255, 255);
   pdf.setFontSize(9);
   pdf.setFont('helvetica', 'normal');
-  pdf.text('Thank you for your business!', pageWidth / 2, footerY + 8, { align: 'center' });
+  pdf.text('Thank you for your business!', pageWidth / 2, footerY + 8, {
+    align: 'center',
+  });
 
   pdf.setFontSize(8);
   pdf.setTextColor(200, 220, 255);
-  pdf.text(`Subscription ID: ${invoice.subscription.stripeSubscriptionId}`, pageWidth / 2, footerY + 13, { align: 'center' });
-  pdf.text('For questions, contact us at contact@floridayacht.com', pageWidth / 2, footerY + 18, { align: 'center' });
+  pdf.text(
+    `Subscription ID: ${invoice.subscription.stripeSubscriptionId}`,
+    pageWidth / 2,
+    footerY + 13,
+    { align: 'center' },
+  );
+  pdf.text(
+    'For questions, contact us at contact@floridayacht.com',
+    pageWidth / 2,
+    footerY + 18,
+    { align: 'center' },
+  );
 
   pdf.save(`invoice-${invoice.stripeInvoiceId}.pdf`);
 };
