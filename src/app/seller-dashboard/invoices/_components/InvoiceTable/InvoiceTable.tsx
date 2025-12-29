@@ -267,7 +267,9 @@ const InvoiceTable = () => {
 
       {/* Hidden Invoice Template for PDF/Print */}
       <div className="fixed -left-[9999px] top-0">
-        {selectedInvoice && <InvoiceTemplate ref={invoiceRef} invoice={selectedInvoice} />}
+        {selectedInvoice && (
+          <InvoiceTemplate ref={invoiceRef} invoice={selectedInvoice} />
+        )}
       </div>
     </div>
   );
