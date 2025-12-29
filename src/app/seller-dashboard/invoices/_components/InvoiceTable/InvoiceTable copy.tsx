@@ -18,11 +18,9 @@ import {
   Printer,
   Search,
 } from 'lucide-react';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { InvoiceRecord } from '../../data/invoiceData';
 import InvoiceDetailModal from '../InvoiceDetailModal';
-import InvoiceTemplate from '../InvoiceTemplate';
-import { useReactToPrint } from 'react-to-print';
 import { generateInvoicePDF } from '../../_utils/generateInvoicePDF';
 
 const InvoiceTable = () => {
@@ -40,28 +38,22 @@ const InvoiceTable = () => {
     null,
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const invoiceRef = useRef<HTMLDivElement>(null);
 
-  const handlePrint = useReactToPrint({
-    contentRef: invoiceRef,
-  });
-
-  const handleDownloadPDF = async (invoice: InvoiceRecord) => {
+  const handleDownloadPDF = (invoice: InvoiceRecord) => {
     try {
       generateInvoicePDF(invoice);
     } catch (error) {
-      console.error('PDF generation error:', error);
       alert(`Failed to generate PDF: ${error}`);
     }
   };
 
   const handlePrintInvoice = (invoice: InvoiceRecord) => {
-    setSelectedInvoice(invoice);
-    setTimeout(() => {
-      if (invoiceRef.current) {
-        handlePrint();
-      }
-    }, 500);
+    try {
+      generateInvoicePDF(invoice);
+      setTimeout(() => window.print(), 100);
+    } catch (error) {
+      alert(`Failed to print: ${error}`);
+    }
   };
 
   const { page, limit, setPage } = usePagination({
@@ -264,11 +256,6 @@ const InvoiceTable = () => {
           setSelectedInvoice(null);
         }}
       />
-
-      {/* Hidden Invoice Template for PDF/Print */}
-      <div className="fixed -left-[9999px] top-0">
-        {selectedInvoice && <InvoiceTemplate ref={invoiceRef} invoice={selectedInvoice} />}
-      </div>
     </div>
   );
 };
