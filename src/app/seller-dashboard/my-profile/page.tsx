@@ -323,7 +323,7 @@ const MyProfilePage = () => {
               </label>
               <input
                 type="text"
-                placeholder="Jupiter"
+                placeholder="Florida"
                 {...register('city')}
                 className="w-full p-3 rounded-md focus:ring-2 focus:ring-cyan-500 bg-gray-100"
               />
