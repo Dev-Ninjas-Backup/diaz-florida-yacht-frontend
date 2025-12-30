@@ -110,6 +110,7 @@ export interface BoatInfo {
 
   // Description
   description: string;
+  videoURL?: string;
   extraDetails?: ExtraDetail[];
 }
 

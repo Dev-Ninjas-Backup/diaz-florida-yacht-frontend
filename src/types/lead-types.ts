@@ -1,0 +1,38 @@
+export interface LeadListingSummary {
+  listingId: string;
+  name: string;
+  price: number;
+  city: string;
+}
+
+export interface FloridaLeadBoat {
+  id: string;
+  name: string;
+  listingId: string;
+  price: number;
+}
+
+export interface FloridaLead {
+  id: string;
+  contactId: string;
+  boatId: string;
+  createdAt: string;
+  updatedAt: string;
+  boat: FloridaLeadBoat;
+}
+
+export interface Lead {
+  id: string;
+  boatId: string;
+  listingId: string;
+  listingSummary: LeadListingSummary;
+  source: string;
+  listingSource: string;
+  type: string;
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+  createdAt: string;
+  updatedAt: string;
+}

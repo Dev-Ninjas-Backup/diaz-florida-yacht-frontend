@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React from 'react';
 
 interface PreviewSectionProps {
@@ -33,13 +34,23 @@ const PreviewSection: React.FC<PreviewSectionProps> = ({
     <>
       <div className="bg-gray-200 rounded-lg overflow-hidden">
         {coverPhoto ? (
-          <img
+          <Image
             src={
               coverPhoto instanceof File
                 ? URL.createObjectURL(coverPhoto)
-                : boatPreviewFallback
+                : boatPreviewFallback || '/placeholder-boat.jpg'
             }
             alt="Boat preview"
+            width={400}
+            height={192}
+            className="w-full h-48 object-cover"
+          />
+        ) : boatPreviewFallback ? (
+          <Image
+            src={boatPreviewFallback}
+            alt="Boat preview"
+            width={400}
+            height={192}
             className="w-full h-48 object-cover"
           />
         ) : (
