@@ -14,8 +14,6 @@ const SearchListingDetailsPage = () => {
   const navigate = useRouter();
   const [boatDetails, setBoatDetails] = useState<BoatDetails | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const params = useParams();
-  const id = params.id;
 
   useEffect(() => {
     const fetchBoatDetails = async () => {
