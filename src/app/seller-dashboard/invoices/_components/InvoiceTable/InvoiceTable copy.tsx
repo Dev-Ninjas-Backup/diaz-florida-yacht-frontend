@@ -18,16 +18,10 @@ import {
   Printer,
   Search,
 } from 'lucide-react';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { InvoiceRecord } from '../../data/invoiceData';
 import InvoiceDetailModal from '../InvoiceDetailModal';
-import InvoiceTemplate from '../InvoiceTemplate';
-import { useReactToPrint } from 'react-to-print';
 import { generateInvoicePDF } from '../../_utils/generateInvoicePDF';
-import {
-  exportInvoicesToExcel,
-  exportInvoicesToCSV,
-} from '../../_utils/exportInvoices';
 
 const InvoiceTable = () => {
   const [invoices, setInvoices] = useState<InvoiceRecord[]>([]);
@@ -44,38 +38,22 @@ const InvoiceTable = () => {
     null,
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [showExportMenu, setShowExportMenu] = useState(false);
-  const invoiceRef = useRef<HTMLDivElement>(null);
 
-  const handleExport = (format: 'excel' | 'csv') => {
-    if (format === 'excel') {
-      exportInvoicesToExcel(invoices);
-    } else {
-      exportInvoicesToCSV(invoices);
-    }
-    setShowExportMenu(false);
-  };
-
-  const handlePrint = useReactToPrint({
-    contentRef: invoiceRef,
-  });
-
-  const handleDownloadPDF = async (invoice: InvoiceRecord) => {
+  const handleDownloadPDF = (invoice: InvoiceRecord) => {
     try {
       generateInvoicePDF(invoice);
     } catch (error) {
-      console.error('PDF generation error:', error);
       alert(`Failed to generate PDF: ${error}`);
     }
   };
 
   const handlePrintInvoice = (invoice: InvoiceRecord) => {
-    setSelectedInvoice(invoice);
-    setTimeout(() => {
-      if (invoiceRef.current) {
-        handlePrint();
-      }
-    }, 500);
+    try {
+      generateInvoicePDF(invoice);
+      setTimeout(() => window.print(), 100);
+    } catch (error) {
+      alert(`Failed to print: ${error}`);
+    }
   };
 
   const { page, limit, setPage } = usePagination({
@@ -224,34 +202,9 @@ const InvoiceTable = () => {
             />
           </div>
         </div>
-        <button
-          onClick={() => setShowExportMenu(!showExportMenu)}
-          className="relative flex items-center px-6 gap-1.5 py-2 sm:px-8 sm:py-3.5 rounded-lg text-white bg-[#006EF0] hover:bg-[#0056b3]"
-        >
+        <button className="flex items-center px-6 gap-1.5 py-2 sm:px-8 sm:py-3.5 rounded-lg text-white bg-[#006EF0]">
           Export As
           <ChevronDown size={18} />
-          {showExportMenu && (
-            <div className="absolute top-full right-0 mt-2 w-40 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleExport('excel');
-                }}
-                className="w-full text-left px-4 py-2 hover:bg-gray-100 text-gray-700 rounded-t-lg"
-              >
-                Excel (.xlsx)
-              </button>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleExport('csv');
-                }}
-                className="w-full text-left px-4 py-2 hover:bg-gray-100 text-gray-700 rounded-b-lg"
-              >
-                CSV (.csv)
-              </button>
-            </div>
-          )}
         </button>
       </header>
 
@@ -303,13 +256,6 @@ const InvoiceTable = () => {
           setSelectedInvoice(null);
         }}
       />
-
-      {/* Hidden Invoice Template for PDF/Print */}
-      <div className="fixed -left-[9999px] top-0">
-        {selectedInvoice && (
-          <InvoiceTemplate ref={invoiceRef} invoice={selectedInvoice} />
-        )}
-      </div>
     </div>
   );
 };

@@ -12,7 +12,7 @@ import z from 'zod';
 import Step2Form from '@/app/register-boat/_components/RegisterBoat/_components/Step2Form/Step2Form';
 import EditModeForm from './EditModeForm';
 import PreviewSection from '@/app/register-boat/_components/Preview/PreviewSection';
-import boatPreview from '@/assets/register-boat/boatPreview.svg';
+// import boatPreview from '@/assets/register-boat/boatPreview.svg';
 import { BoatDetail } from '@/types/boat-detail-types';
 import {
   createBoatListing,
@@ -367,7 +367,7 @@ export default function BoatListingForm({
                   boatPreviewFallback={
                     mode === 'edit' && boatData?.coverImages?.[0]?.url
                       ? boatData.coverImages[0].url
-                      : boatPreview
+                      : ''
                   }
                 />
               </div>
