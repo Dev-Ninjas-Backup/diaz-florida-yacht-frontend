@@ -10,6 +10,7 @@ import ItemDetailsComponents from './_components/ItemDetailsComponents';
 import SendMessage from './_components/SendMessage';
 
 const SearchListingDetailsPage = () => {
+  const id = useParams().id as string;
   const navigate = useRouter();
   const [boatDetails, setBoatDetails] = useState<BoatDetails | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -81,7 +82,7 @@ const SearchListingDetailsPage = () => {
             <ItemDetailsComponents boatDetails={boatDetails} />
           </div>
           <div className="md:w-1/3">
-            <SendMessage />
+            <SendMessage listingId={id} />
           </div>
         </div>
       </CustomContainer>
