@@ -18,10 +18,17 @@ import { exportLeadsToExcel, exportLeadsToCSV } from '../../_utils/exportLeads';
 interface LeadTableProps {
   leads: Lead[];
   onSearch: (search: string) => void;
+  onListingIdFilter: (listingId: string) => void;
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
 }
 
-const LeadTable = ({ leads, onSearch }: LeadTableProps) => {
+const LeadTable = ({ leads, onSearch, onListingIdFilter, page, limit, total, totalPages, onPageChange }: LeadTableProps) => {
   const [searchValue, setSearchValue] = useState('');
+  const [listingIdValue, setListingIdValue] = useState('');
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showExportMenu, setShowExportMenu] = useState(false);
@@ -49,6 +56,12 @@ const LeadTable = ({ leads, onSearch }: LeadTableProps) => {
     const value = e.target.value;
     setSearchValue(value);
     onSearch(value);
+  };
+
+  const handleListingIdFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setListingIdValue(value);
+    onListingIdFilter(value);
   };
 
   const formatDate = (dateString: string) => {
@@ -123,10 +136,9 @@ const LeadTable = ({ leads, onSearch }: LeadTableProps) => {
   ];
 
   return (
-    <>
-      <div className=" p-4 bg-[#F4F4F4] rounded-lg">
-        <h1 className="text-2xl font-bold text-gray-900">All Leads</h1>
-        <header className="flex items-center justify-between flex-wrap gap-5 bg-white rounded-t-lg p-4 mt-4">
+    <div className=" p-4 bg-[#F4F4F4] rounded-lg">
+      <h1 className="text-2xl font-bold text-gray-900">All Leads</h1>
+      <header className="flex items-center justify-between flex-wrap gap-5 bg-white rounded-t-lg p-4 mt-4">
           <div className="flex items-center flex-wrap gap-5">
             <div className="flex items-center gap-2">
               <span className="text-lg shrink-0">Sort By</span>
@@ -138,9 +150,18 @@ const LeadTable = ({ leads, onSearch }: LeadTableProps) => {
                   <SelectItem defaultValue={'all'} value="all">
                     All
                   </SelectItem>
-                  <SelectItem value="active">Export As</SelectItem>
+                  <SelectItem value="date">Date</SelectItem>
                 </SelectContent>
               </Select>
+            </div>
+            <div className="relative w-full sm:w-[200px]">
+              <input
+                type="text"
+                value={listingIdValue}
+                onChange={handleListingIdFilter}
+                className="caret-black block w-full p-2 text-sm text-gray-900 focus:ring-purple-500 focus:border-purple-500 bg-[#F4F4F4] rounded-lg border-none py-3"
+                placeholder="Listing ID"
+              />
             </div>
             <div className="relative w-full sm:w-[250px]">
               <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -150,8 +171,8 @@ const LeadTable = ({ leads, onSearch }: LeadTableProps) => {
                 type="text"
                 value={searchValue}
                 onChange={handleSearch}
-                className="caret-black block w-full  p-2 pl-10 text-sm text-gray-900 focus:ring-purple-500 focus:border-purple-500   bg-[#F4F4F4] rounded-lg border-none py-3"
-                placeholder="Search ..."
+                className="caret-black block w-full p-2 pl-10 text-sm text-gray-900 focus:ring-purple-500 focus:border-purple-500 bg-[#F4F4F4] rounded-lg border-none py-3"
+                placeholder="Search boat name..."
               />
             </div>
           </div>
@@ -185,14 +206,48 @@ const LeadTable = ({ leads, onSearch }: LeadTableProps) => {
             )}
           </button>
         </header>
-        <CustomTable columns={leadColumns} data={leads} />
-      </div>
+        {leads.length > 0 ? (
+          <>
+            <CustomTable columns={leadColumns} data={leads} />
+            <div className="bg-white p-4 rounded-b-lg flex items-center justify-between">
+              <p className="text-sm text-gray-600">
+                Showing {(page - 1) * limit + 1} to{' '}
+                {Math.min(page * limit, total)} of {total}{' '}
+                entries
+              </p>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => onPageChange(page - 1)}
+                  disabled={page === 1}
+                  className="px-3 py-1 rounded border disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Previous
+                </button>
+                <span className="px-3 py-1">
+                  Page {page} of {totalPages}
+                </span>
+                <button
+                  onClick={() => onPageChange(page + 1)}
+                  disabled={page >= totalPages}
+                  className="px-3 py-1 rounded border disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className="bg-white p-8 text-center rounded-b-lg">
+            <p className="text-gray-500">No leads found</p>
+          </div>
+        )}
+
       <LeadDetailModal
         lead={selectedLead}
         isOpen={isModalOpen}
         onClose={handleCloseModal}
       />
-    </>
+    </div>
   );
 };
 

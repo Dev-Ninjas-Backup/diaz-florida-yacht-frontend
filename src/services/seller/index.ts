@@ -92,7 +92,7 @@ export const getSellerInvoices = async ({
   }
 };
 
-export const getSellerLeads = async ({ page, limit, search }: SellerQuery) => {
+export const getSellerLeads = async ({ page, limit, search, listingId }: SellerQuery & { listingId?: string }) => {
   try {
     const token = await getValidToken();
 
@@ -100,6 +100,7 @@ export const getSellerLeads = async ({ page, limit, search }: SellerQuery) => {
     if (page) params.append('page', String(page));
     if (limit) params.append('limit', String(limit));
     if (search) params.append('search', search);
+    if (listingId) params.append('listingId', listingId);
 
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/seller/leads?${params.toString()}`,
