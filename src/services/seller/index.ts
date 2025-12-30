@@ -92,7 +92,12 @@ export const getSellerInvoices = async ({
   }
 };
 
-export const getSellerLeads = async ({ page, limit, search, listingId }: SellerQuery & { listingId?: string }) => {
+export const getSellerLeads = async ({
+  page,
+  limit,
+  search,
+  listingId,
+}: SellerQuery & { listingId?: string }) => {
   try {
     const token = await getValidToken();
 

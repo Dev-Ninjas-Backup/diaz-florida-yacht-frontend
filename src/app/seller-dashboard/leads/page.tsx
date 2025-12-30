@@ -19,7 +19,12 @@ const LeadsPage = () => {
     const fetchLeads = async () => {
       try {
         setIsLoading(true);
-        const response = await getSellerLeads({ page, limit, search, listingId });
+        const response = await getSellerLeads({
+          page,
+          limit,
+          search,
+          listingId,
+        });
         if (response.success && response.data) {
           setLeads(response.data);
           setTotal(response.metadata?.total || 0);
@@ -59,8 +64,8 @@ const LeadsPage = () => {
 
   return (
     <div className="pb-20">
-      <LeadTable 
-        leads={leads} 
+      <LeadTable
+        leads={leads}
         onSearch={handleSearch}
         onListingIdFilter={handleListingIdFilter}
         page={page}
