@@ -10,57 +10,140 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { leadData, TClientInquiry } from '../../data/leadData';
+import { Lead } from '@/types/lead-types';
+import { useState } from 'react';
+import LeadDetailModal from '../LeadDetailModal';
+import { exportLeadsToExcel, exportLeadsToCSV } from '../../_utils/exportLeads';
 
-const LeadTable = () => {
-  //Pagination states
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const pageSize = 4;
-  //Table Config
-  const leadColumns: Column<TClientInquiry>[] = [
+interface LeadTableProps {
+  leads: Lead[];
+  onSearch: (search: string) => void;
+  onListingIdFilter: (listingId: string) => void;
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+}
+
+const LeadTable = ({
+  leads,
+  onSearch,
+  onListingIdFilter,
+  page,
+  limit,
+  total,
+  totalPages,
+  onPageChange,
+}: LeadTableProps) => {
+  const [searchValue, setSearchValue] = useState('');
+  const [listingIdValue, setListingIdValue] = useState('');
+  const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showExportMenu, setShowExportMenu] = useState(false);
+
+  const handleExport = (format: 'excel' | 'csv') => {
+    if (format === 'excel') {
+      exportLeadsToExcel(leads);
+    } else {
+      exportLeadsToCSV(leads);
+    }
+    setShowExportMenu(false);
+  };
+
+  const handleViewDetails = (lead: Lead) => {
+    setSelectedLead(lead);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedLead(null);
+  };
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchValue(value);
+    onSearch(value);
+  };
+
+  const handleListingIdFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setListingIdValue(value);
+    onListingIdFilter(value);
+  };
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
+  };
+
+  const truncateMessage = (message: string, maxLength = 30) => {
+    if (!message) return '';
+    return message.length > maxLength
+      ? `${message.substring(0, maxLength)}...`
+      : message;
+  };
+
+  const leadColumns: Column<Lead>[] = [
     {
       header: 'Listing ID',
-      accessor: 'listing_id',
+      accessor: 'listingId',
     },
-    // File Name Column
     {
       header: 'Client Name',
-      accessor: 'client_name',
+      accessor: 'name',
     },
     {
       header: 'Email',
       accessor: 'email',
     },
-    // Type Column
     {
       header: 'Phone',
       accessor: 'phone',
     },
     {
       header: 'Message',
-      accessor: 'message',
+      cell: (row) => truncateMessage(row.message),
     },
     {
       header: 'Date',
-      accessor: 'date',
+      cell: (row) => formatDate(row.createdAt),
     },
     {
       header: 'Action',
-      cell: () => (
+      cell: (row) => (
         <div className="flex items-center space-x-2">
-          <button className="text-gray-400 hover:text-primary focus:outline-none focus:text-primary cursor-pointer bg-[#F4F4F4] p-1 rounded-full border border-gray-200">
+          <button
+            onClick={() => handleViewDetails(row)}
+            className="text-gray-400 hover:text-primary focus:outline-none focus:text-primary cursor-pointer bg-[#F4F4F4] p-1 rounded-full border border-gray-200"
+            title="View Details"
+          >
             <Eye size={18} />
           </button>
-          <button className="text-gray-400 hover:text-primary focus:outline-none focus:text-primary cursor-pointer bg-[#F4F4F4] p-1 rounded-full border border-gray-200">
+          <a
+            href={`tel:${row.phone}`}
+            className="text-gray-400 hover:text-primary focus:outline-none focus:text-primary cursor-pointer bg-[#F4F4F4] p-1 rounded-full border border-gray-200"
+            title="Call"
+          >
             <Phone size={16} />
-          </button>
-          <button className="text-gray-400 hover:text-red-600 focus:outline-none focus:text-red-600 cursor-pointer bg-[#F4F4F4] p-1 rounded-full border border-gray-200">
+          </a>
+          <a
+            href={`mailto:${row.email}`}
+            className="text-gray-400 hover:text-red-600 focus:outline-none focus:text-red-600 cursor-pointer bg-[#F4F4F4] p-1 rounded-full border border-gray-200"
+            title="Email"
+          >
             <Mail size={18} />
-          </button>
+          </a>
         </div>
       ),
     },
   ];
+
   return (
     <div className=" p-4 bg-[#F4F4F4] rounded-lg">
       <h1 className="text-2xl font-bold text-gray-900">All Leads</h1>
@@ -76,9 +159,18 @@ const LeadTable = () => {
                 <SelectItem defaultValue={'all'} value="all">
                   All
                 </SelectItem>
-                <SelectItem value="active">Export As</SelectItem>
+                <SelectItem value="date">Date</SelectItem>
               </SelectContent>
             </Select>
+          </div>
+          <div className="relative w-full sm:w-[200px]">
+            <input
+              type="text"
+              value={listingIdValue}
+              onChange={handleListingIdFilter}
+              className="caret-black block w-full p-2 text-sm text-gray-900 focus:ring-purple-500 focus:border-purple-500 bg-[#F4F4F4] rounded-lg border-none py-3"
+              placeholder="Listing ID"
+            />
           </div>
           <div className="relative w-full sm:w-[250px]">
             <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -86,23 +178,83 @@ const LeadTable = () => {
             </div>
             <input
               type="text"
-              className="caret-black block w-full  p-2 pl-10 text-sm text-gray-900 focus:ring-purple-500 focus:border-purple-500   bg-[#F4F4F4] rounded-lg border-none py-3"
-              placeholder="Search ..."
+              value={searchValue}
+              onChange={handleSearch}
+              className="caret-black block w-full p-2 pl-10 text-sm text-gray-900 focus:ring-purple-500 focus:border-purple-500 bg-[#F4F4F4] rounded-lg border-none py-3"
+              placeholder="Search boat name..."
             />
           </div>
         </div>
-        <button className="flex items-center px-6 gap-1.5 py-2 sm:px-8 sm:py-3.5 rounded-lg text-white bg-[#006EF0]">
+        <button
+          onClick={() => setShowExportMenu(!showExportMenu)}
+          className="relative flex items-center px-6 gap-1.5 py-2 sm:px-8 sm:py-3.5 rounded-lg text-white bg-[#006EF0] hover:bg-[#0056b3]"
+        >
           Export As
           <ChevronDown size={18} />
+          {showExportMenu && (
+            <div className="absolute top-full right-0 mt-2 w-40 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleExport('excel');
+                }}
+                className="w-full text-left px-4 py-2 hover:bg-gray-100 text-gray-700 rounded-t-lg"
+              >
+                Excel (.xlsx)
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleExport('csv');
+                }}
+                className="w-full text-left px-4 py-2 hover:bg-gray-100 text-gray-700 rounded-b-lg"
+              >
+                CSV (.csv)
+              </button>
+            </div>
+          )}
         </button>
       </header>
-      <CustomTable columns={leadColumns} data={leadData} />
-      {/* <CustomPagination
-        totalItems={blogData.length}
-        pageSize={pageSize}
-        currentPage={currentPage}
-        onPageChange={setCurrentPage}
-      /> */}
+      {leads.length > 0 ? (
+        <>
+          <CustomTable columns={leadColumns} data={leads} />
+          <div className="bg-white p-4 rounded-b-lg flex items-center justify-between">
+            <p className="text-sm text-gray-600">
+              Showing {(page - 1) * limit + 1} to{' '}
+              {Math.min(page * limit, total)} of {total} entries
+            </p>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => onPageChange(page - 1)}
+                disabled={page === 1}
+                className="px-3 py-1 rounded border disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Previous
+              </button>
+              <span className="px-3 py-1">
+                Page {page} of {totalPages}
+              </span>
+              <button
+                onClick={() => onPageChange(page + 1)}
+                disabled={page >= totalPages}
+                className="px-3 py-1 rounded border disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        </>
+      ) : (
+        <div className="bg-white p-8 text-center rounded-b-lg">
+          <p className="text-gray-500">No leads found</p>
+        </div>
+      )}
+
+      <LeadDetailModal
+        lead={selectedLead}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
     </div>
   );
 };

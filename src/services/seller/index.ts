@@ -91,3 +91,38 @@ export const getSellerInvoices = async ({
     return Error(msg);
   }
 };
+
+export const getSellerLeads = async ({
+  page,
+  limit,
+  search,
+  listingId,
+}: SellerQuery & { listingId?: string }) => {
+  try {
+    const token = await getValidToken();
+
+    const params = new URLSearchParams();
+    if (page) params.append('page', String(page));
+    if (limit) params.append('limit', String(limit));
+    if (search) params.append('search', search);
+    if (listingId) params.append('listingId', listingId);
+
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/seller/leads?${params.toString()}`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        next: {
+          tags: ['SELLER_LEADS'],
+        },
+      },
+    );
+    const data = await res.json();
+    return data;
+  } catch (error: unknown) {
+    const msg = error instanceof Error ? error.message : String(error);
+    return Error(msg);
+  }
+};
