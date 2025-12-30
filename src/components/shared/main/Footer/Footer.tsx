@@ -1,6 +1,7 @@
 'use client';
 
 import logo from '@/assets/florida-yacht-logo.png';
+import memeberOfImage from '@/assets/yacht-images/memberof.png';
 import CustomContainer from '@/components/CustomComponents/CustomContainer';
 import { subscribeEmail } from '@/services/email-subscribe/emailSubscribe';
 import { FooterResponse, getFooter } from '@/services/footer/footer';
@@ -87,7 +88,7 @@ const Footer = () => {
   };
 
   // Default/fallback data
-  const companyName = footerData?.companyName || '';
+  const companyName = footerData?.companyName || 'Florida Yacht Trader';
   const companyDescription = footerData?.companyDescription;
   const quickLinks = footerData?.quickLinks || [
     { url: '/', label: 'Home' },
@@ -128,9 +129,27 @@ const Footer = () => {
                 <h2 className="text-xl sm:text-2xl font-bold">{companyName}</h2>
               </div>
               <div>
-                <p className="text-gray-50 text-sm mb-3">
+                {companyDescription ? (
+                  <p className="text-gray-50 text-sm mb-3">
+                    {companyDescription}
+                  </p>
+                ) : (
+                  <div>
+                    <p className="text-gray-400 text-sm mb-3">Member of:</p>
+                    <div className="w-40 sm:w-48">
+                      <Image
+                        src={memeberOfImage}
+                        alt="IYBA Member"
+                        width={200}
+                        height={80}
+                        className="w-full h-auto"
+                      />
+                    </div>
+                  </div>
+                )}
+                {/* <p className="text-gray-50 text-sm mb-3">
                   {companyDescription}
-                </p>
+                </p> */}
               </div>
             </div>
 

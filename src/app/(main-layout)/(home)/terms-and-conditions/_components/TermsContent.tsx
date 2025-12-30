@@ -36,7 +36,11 @@ const TermsContent = () => {
   }, []);
 
   if (loading) {
-    return <Loading message="Loading terms and conditions..." />;
+    return (
+      <div className="py-10 md:py-16">
+        <Loading message="Loading terms and conditions..." />
+      </div>
+    );
   }
 
   if (error || !htmlContent) {
@@ -44,7 +48,11 @@ const TermsContent = () => {
       <div className="py-10 md:py-16">
         <NoDataFound
           title="Terms and Conditions Not Available"
-          description="Failed to load terms and conditions. Please try refreshing the page."
+          description={
+            error
+              ? 'Failed to load terms and conditions. Please try refreshing the page.'
+              : 'No terms and conditions content is available at the moment.'
+          }
         />
       </div>
     );

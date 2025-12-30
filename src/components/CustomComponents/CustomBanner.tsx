@@ -30,9 +30,9 @@ const CustomBanner = ({
         height={300}
         priority
       />
-      <div className="absolute inset-0 bg-black/50 flex items-center justify-end flex-col space-y-10 py-10 px-5">
+      <div className="absolute inset-0 bg-black/50 flex items-center justify-center flex-col space-y-5 py-10 px-5">
         <CustomContainer>
-          <div className="pt-[5%] 2xl:pt-[7%] text-center w-full">
+          <div className="text-center w-full">
             {children ? (
               children
             ) : (

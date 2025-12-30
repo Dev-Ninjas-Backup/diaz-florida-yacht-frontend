@@ -45,16 +45,6 @@ const PopularCategories = () => {
       </CustomContainer>
     );
   }
-  if (categories.length === 0) {
-    return (
-      <CustomContainer>
-        <NoDataFound
-          title="No categories found"
-          description="There are no popular categories available at the moment."
-        />
-      </CustomContainer>
-    );
-  }
 
   return (
     <CustomContainer>
@@ -63,9 +53,18 @@ const PopularCategories = () => {
       </h2>
 
       <div className="flex flex-wrap justify-center items-center gap-10 my-10">
-        {categories.map((category) => (
-          <CategoryCard key={category.id} category={category} />
-        ))}
+        {categories.length === 0 ? (
+          <NoDataFound
+            title="No categories found"
+            description="There are no popular categories available at the moment."
+          />
+        ) : (
+          <div className="flex flex-wrap justify-center items-center gap-10 my-10">
+            {categories.map((category) => (
+              <CategoryCard key={category.id} category={category} />
+            ))}
+          </div>
+        )}
       </div>
     </CustomContainer>
   );
