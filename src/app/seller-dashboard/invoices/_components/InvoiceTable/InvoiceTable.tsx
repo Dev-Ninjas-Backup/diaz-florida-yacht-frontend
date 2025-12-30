@@ -24,6 +24,10 @@ import InvoiceDetailModal from '../InvoiceDetailModal';
 import InvoiceTemplate from '../InvoiceTemplate';
 import { useReactToPrint } from 'react-to-print';
 import { generateInvoicePDF } from '../../_utils/generateInvoicePDF';
+import {
+  exportInvoicesToExcel,
+  exportInvoicesToCSV,
+} from '../../_utils/exportInvoices';
 
 const InvoiceTable = () => {
   const [invoices, setInvoices] = useState<InvoiceRecord[]>([]);
@@ -40,7 +44,17 @@ const InvoiceTable = () => {
     null,
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showExportMenu, setShowExportMenu] = useState(false);
   const invoiceRef = useRef<HTMLDivElement>(null);
+
+  const handleExport = (format: 'excel' | 'csv') => {
+    if (format === 'excel') {
+      exportInvoicesToExcel(invoices);
+    } else {
+      exportInvoicesToCSV(invoices);
+    }
+    setShowExportMenu(false);
+  };
 
   const handlePrint = useReactToPrint({
     contentRef: invoiceRef,
@@ -210,9 +224,34 @@ const InvoiceTable = () => {
             />
           </div>
         </div>
-        <button className="flex items-center px-6 gap-1.5 py-2 sm:px-8 sm:py-3.5 rounded-lg text-white bg-[#006EF0]">
+        <button
+          onClick={() => setShowExportMenu(!showExportMenu)}
+          className="relative flex items-center px-6 gap-1.5 py-2 sm:px-8 sm:py-3.5 rounded-lg text-white bg-[#006EF0] hover:bg-[#0056b3]"
+        >
           Export As
           <ChevronDown size={18} />
+          {showExportMenu && (
+            <div className="absolute top-full right-0 mt-2 w-40 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleExport('excel');
+                }}
+                className="w-full text-left px-4 py-2 hover:bg-gray-100 text-gray-700 rounded-t-lg"
+              >
+                Excel (.xlsx)
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleExport('csv');
+                }}
+                className="w-full text-left px-4 py-2 hover:bg-gray-100 text-gray-700 rounded-b-lg"
+              >
+                CSV (.csv)
+              </button>
+            </div>
+          )}
         </button>
       </header>
 
