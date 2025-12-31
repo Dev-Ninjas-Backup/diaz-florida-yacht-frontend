@@ -1,8 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { BoatEngine, BoatSpecification } from '@/types/product-types';
+import { BoatEngine } from '@/types/product-types';
 
 interface ItemSpecificationsProps {
-  specifications: BoatSpecification[];
+  specifications: Array<{
+    name?: string;
+    key?: string;
+    value: string | number | boolean | null;
+  }>;
   engines?: BoatEngine[];
 }
 
@@ -12,7 +16,7 @@ const ItemSpecifications = ({
 }: ItemSpecificationsProps) => {
   // Transform specifications to include key as name for compatibility
   const specsArray: any[] = specifications.map((spec) => ({
-    name: spec.key,
+    name: spec.name || spec.key,
     value: spec.value,
   }));
 
@@ -135,7 +139,7 @@ const ItemSpecifications = ({
             {engines.map((engine, engineIndex) => {
               // Get all engine properties dynamically
               const engineFields = Object.entries(engine).filter(
-                ([key, value]) =>
+                ([, value]) =>
                   value !== null && value !== undefined && value !== '',
               );
 

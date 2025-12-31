@@ -10,6 +10,7 @@ export interface YachtProduct {
 }
 
 export interface BoatSpecification {
+  name: string;
   key: string;
   value: string | number | boolean | null;
 }

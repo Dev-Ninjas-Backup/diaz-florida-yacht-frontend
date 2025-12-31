@@ -1,47 +1,25 @@
 'use client';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { MdArrowForwardIos } from 'react-icons/md';
 
 interface ItemDescriptionsProps {
   description?: string;
 }
 
-const faq = [
-  {
-    question: 'Information & Features',
-    answer: 'This information is currently unavailable. It will come soon.',
-  },
-  {
-    question: 'Accommodations',
-    answer:
-      'This information is currently unavailable. It will come soon. due to the unavailability of data. working on it.',
-  },
-  {
-    question: 'Salon',
-    answer:
-      'This information is currently unavailable. It will come soon. due to the unavailability of data. working on it.',
-  },
-  {
-    question: 'Salon Day Head',
-    answer:
-      'This information is currently unavailable. It will come soon. due to the unavailability of data. working on it.',
-  },
-  {
-    question: 'Companionway',
-    answer:
-      'This information is currently unavailable. due to the unavailability of data. working on it.',
-  },
-];
+interface Section {
+  question: string;
+  answer: string;
+}
 
 const ItemDescriptions = ({ description }: ItemDescriptionsProps) => {
-  const modifyText = (text: string) => {
-    return text.split(/\n\s*\n/)?.map((p) => p.trim());
-  };
-  const paragraphs = description ? modifyText(description) : [];
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   // Parse the HTML description and extract sections
   const { mainDescription, sections } = useMemo(() => {
+    if (!description) {
+      return { mainDescription: '', sections: [] };
+    }
+
     // Split by <strong> tags to find sections
     const parts = description.split(/\n<strong>/);
     const main = parts[0]; // First part is main description

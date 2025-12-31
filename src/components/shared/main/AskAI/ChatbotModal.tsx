@@ -3,7 +3,7 @@
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { chatHistory, sendMessageToChatBot } from '@/services/chatBot';
 import type { ChatbotModalProps } from '@/types/chatbot-types';
-import { ChevronLeft, Maximize2, Send } from 'lucide-react';
+import { ChevronLeft, Send } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
 import { IoSparklesSharp } from 'react-icons/io5';
 import AnimatedLoadingMessages from './AnimatedLoadingMessages';
