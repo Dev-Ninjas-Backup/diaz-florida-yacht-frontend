@@ -1,11 +1,21 @@
 'use client';
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { FaFacebookF, FaTwitter, FaWhatsapp } from 'react-icons/fa';
 import { IoLocationOutline } from 'react-icons/io5';
-import { FaWhatsapp, FaFacebookF, FaTwitter } from 'react-icons/fa';
-import { MdEmail, MdContentCopy } from 'react-icons/md';
+import { MdContentCopy, MdEmail } from 'react-icons/md';
 import { toast } from 'sonner';
 
-const ShowItemsLocation = () => {
+interface ShowItemsLocationProps {
+  city?: string;
+  state?: string;
+  name?: string;
+}
+
+const ShowItemsLocation = ({
+  city = 'Miami',
+  state = 'Florida',
+  name = 'Boat',
+}: ShowItemsLocationProps) => {
   const latitude = 40.594834;
   const longitude = -73.510372;
   const [copied, setCopied] = useState(false);
@@ -15,9 +25,8 @@ const ShowItemsLocation = () => {
     typeof window !== 'undefined'
       ? window.location.href
       : 'https://floridayachttrader.com/boat-details/2011-viking-44';
-  const shareTitle = '2011 Viking 44 - Florida Yacht Trader';
+  const shareTitle = `${name} - Florida Yacht Trader`;
   const shareText = 'Check out this boat listing!';
-
   // OpenStreetMap iframe embed - completely free, no API key needed
   const osmEmbedUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${longitude - 0.01},${latitude - 0.01},${longitude + 0.01},${latitude + 0.01}&layer=mapnik&marker=${latitude},${longitude}`;
 
@@ -63,7 +72,9 @@ const ShowItemsLocation = () => {
         </h2>
         <div className="flex items-center gap-2 text-gray-400">
           <IoLocationOutline />
-          <span className="text-sm md:text-base">Jones Beach State Park</span>
+          <span className="text-sm md:text-base">
+            {city}, {state}
+          </span>
         </div>
       </div>
       <div className="">

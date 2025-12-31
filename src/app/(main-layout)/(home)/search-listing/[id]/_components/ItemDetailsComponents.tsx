@@ -1,19 +1,32 @@
-import React from 'react';
-import ItemDetailsGallery from './ItemsDetailsGallery';
-import { demodata, demoSpecifications } from '@/assets/demo-datas/demodata';
-import ItemSpecifications from './ItemSpecifications';
+'use client';
+import {
+  BoatDetails,
+  transformBoatDetailsToSpecifications,
+  transformBoatImagesToUrls,
+} from '@/types/boat-details-types';
 import ItemDescriptions from './ItemDescriptions';
+import ItemDetailsGallery from './ItemsDetailsGallery';
+import ItemSpecifications from './ItemSpecifications';
 import ShowItemsLocation from './ShowItemsLocation';
 
-const ItemDetailsComponents = () => {
-  const itemdetails = demodata[0];
-  console.log('Item Details:', itemdetails);
+interface ItemDetailsComponentsProps {
+  boatDetails: BoatDetails;
+}
+
+const ItemDetailsComponents = ({ boatDetails }: ItemDetailsComponentsProps) => {
+  const images = transformBoatImagesToUrls(boatDetails);
+  const specifications = transformBoatDetailsToSpecifications(boatDetails);
+
   return (
     <div>
-      <ItemDetailsGallery name={itemdetails.name} images={itemdetails.images} />
-      <ItemSpecifications specifications={demoSpecifications} />
-      <ItemDescriptions />
-      <ShowItemsLocation />
+      <ItemDetailsGallery name={boatDetails.name} images={images} />
+      <ItemSpecifications specifications={specifications} />
+      <ItemDescriptions description={boatDetails.description} />
+      <ShowItemsLocation
+        city={boatDetails.city}
+        state={boatDetails.state}
+        name={boatDetails.name}
+      />
     </div>
   );
 };

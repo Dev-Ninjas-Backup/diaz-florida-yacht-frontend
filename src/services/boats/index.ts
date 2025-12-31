@@ -29,3 +29,29 @@ export const getAllBoats = async ({
     throw new Error('Failed to fetch boats');
   }
 };
+
+export const getBoatDetails = async (boatId: string) => {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_API;
+
+    const res = await fetch(`${baseUrl}/boats/${boatId}/details`, {
+      method: 'GET',
+      next: {
+        tags: ['BOAT_DETAILS', boatId],
+      },
+    });
+
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (error: unknown) {
+    console.error('Boat Details Error:', error);
+    if (error instanceof Error) {
+      throw error;
+    }
+    throw new Error('Failed to fetch boat details');
+  }
+};
