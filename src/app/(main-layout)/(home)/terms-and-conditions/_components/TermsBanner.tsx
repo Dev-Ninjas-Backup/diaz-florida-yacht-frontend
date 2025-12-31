@@ -10,7 +10,7 @@ const TermsBanner = () => {
   useEffect(() => {
     const fetchTitle = async () => {
       try {
-        const data = await getTermsOfService('JUPITER');
+        const data = await getTermsOfService('FLORIDA');
         if (data?.termsTitle) {
           setTitle(data.termsTitle.toUpperCase());
         }
