@@ -31,16 +31,6 @@ const FeaturedBrands = () => {
       </CustomContainer>
     );
   }
-  if (brands.length === 0) {
-    return (
-      <CustomContainer>
-        <NoDataFound
-          title="No featured brands found"
-          description="There are no featured brands available at the moment."
-        />
-      </CustomContainer>
-    );
-  }
 
   return (
     <div className="py-20">
@@ -49,47 +39,64 @@ const FeaturedBrands = () => {
           Our Featured Yacht Brands
         </h1>
 
-        <div className="space-y-10 my-20 px-4 sm:px-8 md:px-16 lg:px-[10%] relative overflow-hidden">
-          {/* Fading Gradients */}
-          <div className="absolute left-0 top-0 h-full w-20 sm:w-[120px] md:w-[200px] lg:w-[350px] bg-linear-to-r from-white via-white/80 to-transparent pointer-events-none z-10" />
-          <div className="absolute right-0 top-0 h-full w-20 sm:w-[120px] md:w-[200px] lg:w-[350px] bg-linear-to-l from-white via-white/80 to-transparent pointer-events-none z-10" />
+        {brands.length === 0 ? (
+          <NoDataFound
+            title="No featured brands found"
+            description="There are no featured brands available at the moment."
+          />
+        ) : (
+          <div className="space-y-10 my-20 px-4 sm:px-8 md:px-16 lg:px-[10%] relative overflow-hidden">
+            {/* Fading Gradients */}
+            <div className="absolute left-0 top-0 h-full w-20 sm:w-[120px] md:w-[200px] lg:w-[350px] bg-linear-to-r from-white via-white/80 to-transparent pointer-events-none z-10" />
+            <div className="absolute right-0 top-0 h-full w-20 sm:w-[120px] md:w-[200px] lg:w-[350px] bg-linear-to-l from-white via-white/80 to-transparent pointer-events-none z-10" />
 
-          {/* First Row: Marquee Right */}
-          <div className="flex items-center relative">
-            <Marquee direction="right" gradient={false} speed={40} pauseOnHover>
-              {brands.map((brand) => (
-                <div key={brand.id} className="mx-6 sm:mx-10 md:mx-14">
-                  <div className="relative w-28 sm:w-36 md:w-44 h-12 sm:h-16">
-                    <Image
-                      src={brand.featuredbrandLogo.url}
-                      alt="Featured Brand"
-                      fill
-                      className="object-contain"
-                    />
+            {/* First Row: Marquee Right */}
+            <div className="flex items-center relative">
+              <Marquee
+                direction="right"
+                gradient={false}
+                speed={40}
+                pauseOnHover
+              >
+                {brands.map((brand) => (
+                  <div key={brand.id} className="mx-6 sm:mx-10 md:mx-14">
+                    <div className="relative w-28 sm:w-36 md:w-44 h-12 sm:h-16">
+                      <Image
+                        src={brand.featuredbrandLogo.url}
+                        alt="Featured Brand"
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
                   </div>
-                </div>
-              ))}
-            </Marquee>
-          </div>
+                ))}
+              </Marquee>
+            </div>
 
-          {/* Second Row: Marquee Left */}
-          <div>
-            <Marquee direction="left" gradient={false} speed={25} pauseOnHover>
-              {brands.map((brand) => (
-                <div key={brand.id} className="mx-6 sm:mx-10 md:mx-14">
-                  <div className="relative w-28 sm:w-36 md:w-44 h-12 sm:h-16">
-                    <Image
-                      src={brand.featuredbrandLogo.url}
-                      alt="Featured Brand"
-                      fill
-                      className="object-contain"
-                    />
+            {/* Second Row: Marquee Left */}
+            <div>
+              <Marquee
+                direction="left"
+                gradient={false}
+                speed={25}
+                pauseOnHover
+              >
+                {brands.map((brand) => (
+                  <div key={brand.id} className="mx-6 sm:mx-10 md:mx-14">
+                    <div className="relative w-28 sm:w-36 md:w-44 h-12 sm:h-16">
+                      <Image
+                        src={brand.featuredbrandLogo.url}
+                        alt="Featured Brand"
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
                   </div>
-                </div>
-              ))}
-            </Marquee>
+                ))}
+              </Marquee>
+            </div>
           </div>
-        </div>
+        )}
       </CustomContainer>
     </div>
   );

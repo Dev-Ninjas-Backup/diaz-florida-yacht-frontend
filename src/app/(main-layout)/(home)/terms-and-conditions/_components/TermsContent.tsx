@@ -1,6 +1,8 @@
 'use client';
 
 import HtmlContentWithToc from '@/components/CustomComponents/HtmlContentWithToc';
+import { Loading } from '@/components/ui/loading';
+import { NoDataFound } from '@/components/ui/no-data-found';
 import { getTermsOfService } from '@/services/terms-of-service/termsOfService';
 import { useEffect, useState } from 'react';
 
@@ -36,34 +38,22 @@ const TermsContent = () => {
   if (loading) {
     return (
       <div className="py-10 md:py-16">
-        <div className="flex justify-center items-center py-20">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-        </div>
+        <Loading message="Loading terms and conditions..." />
       </div>
     );
   }
 
-  if (error) {
+  if (error || !htmlContent) {
     return (
       <div className="py-10 md:py-16">
-        <div className="text-center py-20">
-          <p className="text-lg text-red-600">{error}</p>
-          <p className="text-sm text-gray-500 mt-2">
-            Please try refreshing the page.
-          </p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!htmlContent) {
-    return (
-      <div className="py-10 md:py-16">
-        <div className="text-center py-20">
-          <p className="text-lg text-gray-600">
-            No terms of service available.
-          </p>
-        </div>
+        <NoDataFound
+          title="Terms and Conditions Not Available"
+          description={
+            error
+              ? 'Failed to load terms and conditions. Please try refreshing the page.'
+              : 'No terms and conditions content is available at the moment.'
+          }
+        />
       </div>
     );
   }

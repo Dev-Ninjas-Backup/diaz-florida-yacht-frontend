@@ -10,7 +10,7 @@ const PrivacyPolicyBanner = () => {
   useEffect(() => {
     const fetchTitle = async () => {
       try {
-        const data = await getPrivacyPolicy('JUPITER');
+        const data = await getPrivacyPolicy('FLORIDA');
         if (data?.privacyTitle) {
           setTitle(data.privacyTitle.toUpperCase());
         }

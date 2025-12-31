@@ -128,9 +128,15 @@ const PremiumDeals = () => {
             <Loading message="Loading premium yachts..." />
           </div>
         ) : error ? (
-          <NoDataFound title="No premium yachts found" description={error} />
+          <NoDataFound
+            title="No premium yachts found"
+            description={error || 'Unable to load premium yachts information'}
+          />
         ) : visibleBoats.length === 0 ? (
-          <NoDataFound title="No premium yachts found" />
+          <NoDataFound
+            title="No premium yachts found"
+            description="There are no premium yachts available at the moment."
+          />
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
             {visibleBoats.map((boat) => (
