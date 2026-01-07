@@ -21,11 +21,44 @@ export const step2Schema = z.object({
 
   // Dimensions
   lengthFeet: z.string().min(1, 'Length (feet) is required'),
-  lengthInches: z.string().min(1, 'Length (inches) is required'),
+  lengthInches: z
+    .string()
+    .min(1, 'Length (inches) is required')
+    .refine(
+      (val) => {
+        const num = Number(val);
+        return !isNaN(num) && num >= 0 && num < 12;
+      },
+      {
+        message: 'Inches must be less than 12',
+      },
+    ),
   beamFeet: z.string().min(1, 'Beam (feet) is required'),
-  beamInches: z.string().min(1, 'Beam (inches) is required'),
+  beamInches: z
+    .string()
+    .min(1, 'Beam (inches) is required')
+    .refine(
+      (val) => {
+        const num = Number(val);
+        return !isNaN(num) && num >= 0 && num < 12;
+      },
+      {
+        message: 'Inches must be less than 12',
+      },
+    ),
   draftFeet: z.string().min(1, 'Draft (feet) is required'),
-  draftInches: z.string().min(1, 'Draft (inches) is required'),
+  draftInches: z
+    .string()
+    .min(1, 'Draft (inches) is required')
+    .refine(
+      (val) => {
+        const num = Number(val);
+        return !isNaN(num) && num >= 0 && num < 12;
+      },
+      {
+        message: 'Inches must be less than 12',
+      },
+    ),
 
   // Classification
   class: z.string().min(1, 'Boat class is required'),

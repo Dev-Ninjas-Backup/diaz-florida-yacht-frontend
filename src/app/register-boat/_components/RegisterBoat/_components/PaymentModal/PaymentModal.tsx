@@ -1,22 +1,23 @@
 'use client';
 
-import { Elements } from '@stripe/react-stripe-js';
-import Image from 'next/image';
 import stripeLogoImg from '@/assets/seller-dashboard/payment/Stripe.svg';
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { PaymentModalProps } from './types';
-import { getPackageInfo } from './utils';
-import { getStripeInstance, getStripeElementsOptions } from './stripe-config';
-import { StripePaymentForm } from './StripePaymentForm';
+import { Elements } from '@stripe/react-stripe-js';
+import Image from 'next/image';
 import { LoadingState } from './LoadingState';
+import { getStripeElementsOptions, getStripeInstance } from './stripe-config';
+import { StripePaymentForm } from './StripePaymentForm';
+import { PaymentModalProps } from './types';
 import { usePaymentFlow } from './usePaymentFlow';
+import { getPackageInfo } from './utils';
 
 export function PaymentModal({
   isOpen,
@@ -59,6 +60,9 @@ export function PaymentModal({
               />
             </div>
           </DialogTitle>
+          <DialogDescription className="sr-only">
+            Complete your payment to register your boat listing
+          </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-6 mt-4">
