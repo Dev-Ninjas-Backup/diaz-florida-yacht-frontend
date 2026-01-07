@@ -7,8 +7,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { InvoiceRecord } from '../data/invoiceData';
 import { X } from 'lucide-react';
+import { InvoiceRecord } from '../data/invoiceData';
 
 interface InvoiceDetailModalProps {
   invoice: InvoiceRecord | null;
