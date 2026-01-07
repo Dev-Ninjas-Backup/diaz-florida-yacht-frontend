@@ -3,6 +3,7 @@
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
@@ -38,6 +39,9 @@ export default function InvoiceDetailModal({
               <X size={20} />
             </button>
           </div>
+          <DialogDescription className="sr-only">
+            Detailed view of your invoice information
+          </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-6 mt-4">

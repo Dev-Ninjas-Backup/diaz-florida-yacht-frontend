@@ -1,6 +1,11 @@
 'use client';
 
-import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { chatHistory, sendMessageToChatBot } from '@/services/chatBot';
 import type { ChatbotModalProps } from '@/types/chatbot-types';
 import { ChevronLeft, Send } from 'lucide-react';
@@ -106,6 +111,9 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({
         <DialogTitle className="sr-only">
           Florida Yacht Trader AI Assistant
         </DialogTitle>
+        <DialogDescription className="sr-only">
+          Chat with our AI assistant to help you find the perfect yacht
+        </DialogDescription>
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b bg-white flex-shrink-0">
           <div className="flex items-center gap-3">

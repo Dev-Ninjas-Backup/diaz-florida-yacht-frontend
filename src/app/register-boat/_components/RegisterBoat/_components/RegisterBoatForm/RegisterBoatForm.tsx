@@ -45,6 +45,9 @@ const RegisterBoatForm = () => {
     SubscriptionPlan[]
   >([]);
   const [isLoadingPlans, setIsLoadingPlans] = useState(true);
+  const [backendErrors, setBackendErrors] = useState<Record<string, string>>(
+    {},
+  );
 
   // Fetch subscription plans
   useEffect(() => {
@@ -160,24 +163,50 @@ const RegisterBoatForm = () => {
   ]);
 
   const handleFormSubmit = async () => {
-    const allFormData = getValues() as BoatRegistrationFormValues;
-    const formDataToSend = createBoatRegistrationFormData(allFormData);
-    const res = await createSubscription(formDataToSend);
-    console.log('Subscription creation response:', res);
-    if (res.data.paymentIntentClientSecret) {
-      localStorage.setItem(
-        'paymentIntentClientSecret',
-        res.data.paymentIntentClientSecret,
-      );
-      localStorage.setItem('paymentIntentId', res.data.paymentIntentId);
-      localStorage.setItem('userId', res.data.userId);
-      setShowPaymentModal(true);
-      toast.success('Form submitted successfully! Proceed to payment.');
+    try {
+      setBackendErrors({});
+      const allFormData = getValues() as BoatRegistrationFormValues;
+      const formDataToSend = createBoatRegistrationFormData(allFormData);
+      const res = await createSubscription(formDataToSend);
+      console.log('Subscription creation response:', res);
+      if (res.data.paymentIntentClientSecret) {
+        localStorage.setItem(
+          'paymentIntentClientSecret',
+          res.data.paymentIntentClientSecret,
+        );
+        localStorage.setItem('paymentIntentId', res.data.paymentIntentId);
+        localStorage.setItem('userId', res.data.userId);
+        setShowPaymentModal(true);
+        toast.success('Form submitted successfully! Proceed to payment.');
+      }
+      setCompletedSteps([...completedSteps, 3]);
+    } catch (error: any) {
+      console.error('Form submission error:', error);
+
+      // Handle backend validation errors
+      if (error?.response?.data?.errors) {
+        const errors = error.response.data.errors;
+        const errorMessages: Record<string, string> = {};
+
+        // Parse backend errors and map them to form fields
+        Object.keys(errors).forEach((key) => {
+          errorMessages[key] = Array.isArray(errors[key])
+            ? errors[key][0]
+            : errors[key];
+        });
+
+        setBackendErrors(errorMessages);
+        toast.error('Please fix the errors in the form');
+      } else if (error?.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error('An error occurred while submitting the form');
+      }
     }
-    setCompletedSteps([...completedSteps, 3]);
   };
 
   const handleNext = async () => {
+    setBackendErrors({});
     let isValid = false;
     if (currentStep === 1) {
       isValid = await trigger(['selectedPackage']);
@@ -238,6 +267,7 @@ const RegisterBoatForm = () => {
     }
   };
   const handleBack = () => {
+    setBackendErrors({});
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
     }
@@ -327,6 +357,23 @@ const RegisterBoatForm = () => {
                   {currentStep === 2 && <Step2Form />}
                   {currentStep === 3 && <Step3Form />}
                 </FormProvider>
+
+                {/* Backend Errors Display */}
+                {Object.keys(backendErrors).length > 0 && (
+                  <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                    <h4 className="text-red-800 font-semibold mb-2">
+                      Please fix the following errors:
+                    </h4>
+                    <ul className="list-disc list-inside space-y-1">
+                      {Object.entries(backendErrors).map(([field, message]) => (
+                        <li key={field} className="text-red-600 text-sm">
+                          <span className="font-medium">{field}:</span>{' '}
+                          {message}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
 
                 {/* Navigation Buttons */}
                 <div className="flex justify-between mt-8">

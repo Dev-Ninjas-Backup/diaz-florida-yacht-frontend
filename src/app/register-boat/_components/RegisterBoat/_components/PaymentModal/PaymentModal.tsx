@@ -6,6 +6,7 @@ import stripeLogoImg from '@/assets/seller-dashboard/payment/Stripe.svg';
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
@@ -59,6 +60,9 @@ export function PaymentModal({
               />
             </div>
           </DialogTitle>
+          <DialogDescription className="sr-only">
+            Complete your payment to register your boat listing
+          </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-6 mt-4">
