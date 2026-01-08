@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import { useSearchResults } from '@/context/SearchResultsContext';
 import {
@@ -59,13 +60,6 @@ const FilterListing = () => {
   const engineOptions = ['1', '2', '3', '4', '5', '6'];
   const cabinOptions = ['1', '2', '3', '4', '5', '6'];
   const headOptions = ['1', '2', '3', '4', '5', '6'];
-  const additionalUnits = [
-    'Jet ski',
-    'Tender',
-    'Kayak',
-    'Paddleboard',
-    'Dinghy',
-  ];
 
   const handleInputChange = (
     field: keyof FilterState,
@@ -98,15 +92,6 @@ const FilterListing = () => {
     // Reset search results to show initial boats
     setSearchResults(null);
     setIsSearchActive(false);
-  };
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(price);
   };
 
   const handleApplyFilters = async () => {
