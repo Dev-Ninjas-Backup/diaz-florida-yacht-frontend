@@ -18,5 +18,5 @@ export interface SearchFilters {
 
 export interface SearchQueryData {
   query: string | null;
-  filters: SearchFilters;
+  limit: number | null;
 }
