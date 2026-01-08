@@ -44,7 +44,7 @@ export const getFilterOptions = async (): Promise<FilterOptions> => {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_API;
   const res = await fetch(`${baseUrl}/boats/filter-options`, {
     method: 'GET',
-    next: { tags: ['BOAT_FILTER_OPTIONS'] },
+    cache: 'no-store',
   });
 
   if (!res.ok) {
@@ -52,16 +52,18 @@ export const getFilterOptions = async (): Promise<FilterOptions> => {
   }
 
   const json = await res.json();
-  return (
-    json.data ?? {
-      makes: [],
-      models: [],
-      years: [],
-      cities: [],
-      states: [],
-      classes: [],
-    }
-  );
+  console.log('Filter options response:', json);
+
+  // Handle response that might be directly the data or wrapped in a data field
+  const data = json.data || json;
+  return {
+    makes: data.makes || [],
+    models: data.models || [],
+    years: data.years || [],
+    cities: data.cities || [],
+    states: data.states || [],
+    classes: data.classes || [],
+  };
 };
 
 export const getFilteredBoats = async (

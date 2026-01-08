@@ -104,8 +104,13 @@ export function convertApiDataToYachtProduct(
       : 'Location not specified',
     condition: 'Used',
     price: price,
-    images: apiData.Images?.Uri ? [apiData.Images.Uri] : [],
-    image: apiData.Images?.Uri || '/placeholder-boat.jpg',
+    images: Array.isArray(apiData.Images)
+      ? apiData.Images.map((img) => img.Uri).filter(Boolean)
+      : [],
+    image:
+      Array.isArray(apiData.Images) && apiData.Images[0]?.Uri
+        ? apiData.Images[0].Uri
+        : 'https://via.placeholder.com/400x300?text=No+Image',
     link: apiData.Link || `/search-listing/${apiData.DocumentID}`,
   };
 }

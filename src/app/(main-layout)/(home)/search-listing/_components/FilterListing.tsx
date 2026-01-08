@@ -28,8 +28,8 @@ const FilterListing = () => {
     model: '',
     buildYearFrom: '',
     buildYearTo: '',
-    priceMin: 12000,
-    priceMax: 2250000,
+    priceMin: '',
+    priceMax: '',
     lengthFrom: '',
     lengthTo: '',
     beamFrom: '',
@@ -44,7 +44,9 @@ const FilterListing = () => {
   useEffect(() => {
     const fetchFilterOptions = async () => {
       try {
+        console.log('Fetching filter options...');
         const options = await getFilterOptions();
+        console.log('Filter options received:', options);
         setFilterOptions(options);
       } catch (error) {
         console.error('Error fetching filter options:', error);
@@ -82,8 +84,8 @@ const FilterListing = () => {
       model: '',
       buildYearFrom: '',
       buildYearTo: '',
-      priceMin: 12000,
-      priceMax: 2250000,
+      priceMin: '',
+      priceMax: '',
       lengthFrom: '',
       lengthTo: '',
       beamFrom: '',
@@ -93,6 +95,9 @@ const FilterListing = () => {
       numberOfHeads: '',
       additionalUnit: '',
     });
+    // Reset search results to show initial boats
+    setSearchResults(null);
+    setIsSearchActive(false);
   };
 
   const formatPrice = (price: number) => {
@@ -121,10 +126,10 @@ const FilterListing = () => {
         filterParams.buildYearStart = Number(filters.buildYearFrom);
       if (filters.buildYearTo)
         filterParams.buildYearEnd = Number(filters.buildYearTo);
-      if (filters.priceMin && filters.priceMin !== 12000)
-        filterParams.priceStart = filters.priceMin;
-      if (filters.priceMax && filters.priceMax !== 2250000)
-        filterParams.priceEnd = filters.priceMax;
+      if (filters.priceMin && Number(filters.priceMin) > 0)
+        filterParams.priceStart = Number(filters.priceMin);
+      if (filters.priceMax && Number(filters.priceMax) > 0)
+        filterParams.priceEnd = Number(filters.priceMax);
       if (filters.lengthFrom)
         filterParams.lengthStart = Number(filters.lengthFrom);
       if (filters.lengthTo) filterParams.lengthEnd = Number(filters.lengthTo);
@@ -137,6 +142,8 @@ const FilterListing = () => {
         filterParams.cabinsNumber = Number(filters.numberOfCabins);
       if (filters.numberOfHeads)
         filterParams.headsNumber = Number(filters.numberOfHeads);
+
+      console.log('Applying filters:', filterParams);
 
       // Call filter API
       const response = await getFilteredBoats(filterParams);
@@ -283,26 +290,28 @@ const FilterListing = () => {
           <label className="block text-sm font-semibold text-gray-700 mb-2">
             Price Range
           </label>
-          <div className="space-y-3">
+          <div className="flex items-center gap-3">
             <input
-              type="range"
+              type="number"
+              placeholder="Min Price"
               min="0"
-              max="5000000"
-              step="1000"
-              value={filters.priceMin}
+              value={filters.priceMin || ''}
               onChange={(e) =>
                 handleInputChange('priceMin', Number(e.target.value))
               }
-              className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-cyan-500"
+              className="w-full px-3 py-2.5 bg-white border border-gray-300 rounded-lg text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent placeholder-gray-400"
             />
-            <div className="flex items-center justify-between text-sm">
-              <span className="text-cyan-500 font-semibold">
-                {formatPrice(filters.priceMin)}
-              </span>
-              <span className="text-cyan-500 font-semibold">
-                {formatPrice(filters.priceMax)}
-              </span>
-            </div>
+            <span className="text-gray-500 text-sm font-medium">to</span>
+            <input
+              type="number"
+              placeholder="Max Price"
+              min="0"
+              value={filters.priceMax || ''}
+              onChange={(e) =>
+                handleInputChange('priceMax', Number(e.target.value))
+              }
+              className="w-full px-3 py-2.5 bg-white border border-gray-300 rounded-lg text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent placeholder-gray-400"
+            />
           </div>
         </div>
 
