@@ -157,6 +157,11 @@ export function createBoatRegistrationFormData(
   // Add planId
   formDataToSend.append('planId', apiData.planId);
 
+  // Add promoCode if provided
+  if (formData.promoCode && formData.promoCode.trim() !== '') {
+    formDataToSend.append('promoCode', formData.promoCode.trim());
+  }
+
   // Add boatInfo as JSON string
   formDataToSend.append('boatInfo', JSON.stringify(apiData.boatInfo));
 
@@ -188,6 +193,10 @@ export function logBoatRegistrationData(
 
   console.log('=== BOAT REGISTRATION DATA ===');
   console.log('\n📦 Plan ID:', apiData.planId);
+  
+  if (formData.promoCode) {
+    console.log('🎟️  Promo Code:', formData.promoCode);
+  }
 
   console.log('\n🚤 Boat Info:', {
     ...apiData.boatInfo,

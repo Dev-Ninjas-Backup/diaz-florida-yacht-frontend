@@ -146,6 +146,7 @@ export interface BoatRegistrationFormData extends BoatRegistrationRequest {
 export interface BoatRegistrationFormValues {
   // Step 1
   selectedPackage: string;
+  promoCode?: string;
 
   // Step 2 - Boat Info
   buildYear: string;

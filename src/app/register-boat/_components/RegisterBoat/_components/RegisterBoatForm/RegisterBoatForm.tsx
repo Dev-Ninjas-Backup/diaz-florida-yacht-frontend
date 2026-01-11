@@ -93,7 +93,7 @@ const RegisterBoatForm = () => {
     defaultValues: {
       // Step 1
       selectedPackage: '',
-
+      promoCode: '',
       // Step 2 - Boat Info
       buildYear: '',
       make: '',

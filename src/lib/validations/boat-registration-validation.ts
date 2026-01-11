@@ -9,6 +9,7 @@ import { z } from 'zod';
 // Step 1: Package Selection Schema
 export const step1Schema = z.object({
   selectedPackage: z.string().min(1, 'Please select a package'),
+  promoCode: z.string().optional(),
 });
 
 // Step 2: Boat Information Schema
