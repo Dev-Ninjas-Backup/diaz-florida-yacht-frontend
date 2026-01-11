@@ -193,7 +193,7 @@ export function logBoatRegistrationData(
 
   console.log('=== BOAT REGISTRATION DATA ===');
   console.log('\n📦 Plan ID:', apiData.planId);
-  
+
   if (formData.promoCode) {
     console.log('🎟️  Promo Code:', formData.promoCode);
   }
