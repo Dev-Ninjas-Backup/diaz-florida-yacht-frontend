@@ -178,8 +178,17 @@ export interface BoatRegistrationFormValues {
   model2: string;
   totalPower: string;
   propellerType: string;
-
   engineFuelType: string;
+
+  // Dynamic engines array
+  engines: Array<{
+    hours: string;
+    make: string;
+    model: string;
+    totalPower: string;
+    propellerType: string;
+    engineFuelType: string;
+  }>;
 
   // Optional details
   moreDetails?: Array<{ title: string; description: string }>;

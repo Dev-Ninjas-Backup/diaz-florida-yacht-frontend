@@ -35,22 +35,35 @@ function parseDimensions(formData: BoatRegistrationFormValues): BoatDimensions {
 
 /**
  * Parse engine information from form
- * Note: Currently stores one engine configuration. In the future, this could be expanded
- * to support multiple distinct engines if the form collects data for each engine separately.
+ * Handles dynamic engines array based on the number of engines selected
  */
 function parseEngines(formData: BoatRegistrationFormValues): EngineInfo[] {
-  // Create a single engine entry with the provided specifications
-  // The number of engines is tracked separately in enginesNumber field
-  const engine: EngineInfo = {
-    hours: parseInt(formData.hours) || 0,
-    horsepower: parseInt(formData.totalPower) || 0,
-    make: formData.make2,
-    model: formData.model2,
-    fuelType: (formData.engineFuelType || formData.fuelType) as FuelType,
-    propellerType: formData.propellerType as PropellerType,
-  };
+  // If engines array exists and has data, use it
+  if (formData.engines && formData.engines.length > 0) {
+    return formData.engines.map((engine) => ({
+      hours: parseInt(engine.hours) || 0,
+      horsepower: parseInt(engine.totalPower) || 0,
+      make: engine.make,
+      model: engine.model,
+      fuelType: engine.engineFuelType as FuelType,
+      propellerType: engine.propellerType as PropellerType,
+    }));
+  }
 
-  return [engine];
+  // Fallback to legacy single engine fields for backward compatibility
+  if (formData.hours || formData.make2 || formData.model2) {
+    const engine: EngineInfo = {
+      hours: parseInt(formData.hours) || 0,
+      horsepower: parseInt(formData.totalPower) || 0,
+      make: formData.make2,
+      model: formData.model2,
+      fuelType: (formData.engineFuelType || formData.fuelType) as FuelType,
+      propellerType: formData.propellerType as PropellerType,
+    };
+    return [engine];
+  }
+
+  return [];
 }
 
 /**
