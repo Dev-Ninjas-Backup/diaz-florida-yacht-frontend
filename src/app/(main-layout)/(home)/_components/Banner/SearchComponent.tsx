@@ -137,23 +137,7 @@ const SearchComponent = () => {
 
       const queryData: SearchQueryData = {
         query: aiPrompt,
-        filters: {
-          boat_type: (changedFilters.boat_type as string) ?? null,
-          make: (changedFilters.make as string) ?? null,
-          model: (changedFilters.model as string) ?? null,
-          build_year_min: (changedFilters.build_year_min as number) ?? null,
-          build_year_max: (changedFilters.build_year_max as number) ?? null,
-          price_min: (changedFilters.price_min as number) ?? null,
-          price_max: (changedFilters.price_max as number) ?? null,
-          length_min: (changedFilters.length_min as number) ?? null,
-          length_max: (changedFilters.length_max as number) ?? null,
-          beam_min: (changedFilters.beam_min as number) ?? null,
-          beam_max: (changedFilters.beam_max as number) ?? null,
-          number_of_engine: (changedFilters.number_of_engine as number) ?? null,
-          number_of_cabin: (changedFilters.number_of_cabin as number) ?? null,
-          number_of_heads: (changedFilters.number_of_heads as number) ?? null,
-          additional_unit: (changedFilters.additional_unit as string) ?? null,
-        },
+        limit: 20,
       };
 
       console.log('AI Query Data:', queryData);
