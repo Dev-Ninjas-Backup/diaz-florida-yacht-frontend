@@ -1,5 +1,6 @@
 'use client';
 import { buildYearOptions } from '@/lib/utils/register-boats-select-options';
+import { useFormContext } from 'react-hook-form';
 import { DimensionInput } from '../FormFields/DimensionInput';
 import { DynamicFormSelect } from '../FormFields/DynamicFormSelect';
 import { FormInput } from '../FormFields/FormInput';
@@ -10,7 +11,22 @@ import { MediaGallerySection } from './MediaGallerySection';
 import { MoreDetailsSection } from './MoreDetailsSection';
 import { StateField } from './StateField';
 
+const engineCountOptions = [
+  { value: '1', label: '1' },
+  { value: '2', label: '2' },
+  { value: '3', label: '3' },
+  { value: '4', label: '4' },
+  { value: '5', label: '5' },
+  { value: '6', label: '6' },
+  { value: '7', label: '7' },
+  { value: '8', label: '8' },
+];
+
 const Step2Form = () => {
+  const { watch } = useFormContext();
+  const numEngines = watch('numEngines');
+  const engineCount = parseInt(numEngines) || 1;
+
   return (
     <div className="mt-10">
       {/* Specifications */}
@@ -83,11 +99,11 @@ const Step2Form = () => {
 
         {/* Number of Engines -- Cabins -- Heads */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5">
-          <FormInput
+          <FormSelect
             name="numEngines"
             label="Number of Engines"
-            placeholder="Type here"
-            type="number"
+            options={engineCountOptions}
+            placeholder="Select"
             required
           />
           <FormInput
@@ -107,58 +123,60 @@ const Step2Form = () => {
         </div>
       </div>
 
-      {/* Engine 1 */}
-      <div className="mt-10">
-        <h3 className="text-lg font-semibold mb-4">Engine 1</h3>
-        <div className="grid grid-cols-2 gap-4">
-          <FormInput
-            name="hours"
-            label="Hours"
-            placeholder="Type here"
-            type="number"
-            required
-          />
-          <FormInput
-            name="make2"
-            label="Make"
-            placeholder="Type here"
-            required
-          />
-        </div>
+      {/* Dynamic Engine Sections */}
+      {Array.from({ length: engineCount }, (_, index) => (
+        <div key={index + 1} className="mt-10">
+          <h3 className="text-lg font-semibold mb-4">Engine {index + 1}</h3>
+          <div className="grid grid-cols-2 gap-4">
+            <FormInput
+              name={`engines.${index}.hours`}
+              label="Hours"
+              placeholder="Type here"
+              type="number"
+              required
+            />
+            <FormInput
+              name={`engines.${index}.make`}
+              label="Make"
+              placeholder="Type here"
+              required
+            />
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-          <FormInput
-            name="model2"
-            label="Model"
-            placeholder="Type here"
-            required
-          />
-          <FormInput
-            name="totalPower"
-            label="Total Power (HP)"
-            placeholder="Type here"
-            type="number"
-            required
-          />
-        </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+            <FormInput
+              name={`engines.${index}.model`}
+              label="Model"
+              placeholder="Type here"
+              required
+            />
+            <FormInput
+              name={`engines.${index}.totalPower`}
+              label="Total Power (HP)"
+              placeholder="Type here"
+              type="number"
+              required
+            />
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-          <DynamicFormSelect
-            name="engineFuelType"
-            label="Engine Type"
-            type="ENGINE_TYPE"
-            placeholder="Select or type"
-            required
-          />
-          <DynamicFormSelect
-            name="propellerType"
-            label="Propeller Type"
-            type="PROP_TYPE"
-            placeholder="Select or type"
-            required
-          />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+            <DynamicFormSelect
+              name={`engines.${index}.engineFuelType`}
+              label="Engine Type"
+              type="ENGINE_TYPE"
+              placeholder="Select or type"
+              required
+            />
+            <DynamicFormSelect
+              name={`engines.${index}.propellerType`}
+              label="Propeller Type"
+              type="PROP_TYPE"
+              placeholder="Select or type"
+              required
+            />
+          </div>
         </div>
-      </div>
+      ))}
 
       {/* Basic Information */}
       <div className="mt-10">

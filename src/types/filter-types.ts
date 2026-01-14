@@ -4,8 +4,8 @@ export interface FilterState {
   model: string;
   buildYearFrom: string;
   buildYearTo: string;
-  priceMin: number;
-  priceMax: number;
+  priceMin: number | string;
+  priceMax: number | string;
   lengthFrom: string;
   lengthTo: string;
   beamFrom: string;

@@ -93,7 +93,7 @@ const RegisterBoatForm = () => {
     defaultValues: {
       // Step 1
       selectedPackage: '',
-
+      promoCode: '',
       // Step 2 - Boat Info
       buildYear: '',
       make: '',
@@ -108,9 +108,20 @@ const RegisterBoatForm = () => {
       class: '',
       material: '',
       fuelType: '',
-      numEngines: '',
+      propMaterial: '',
+      numEngines: '1',
       numCabins: '',
       numHeads: '',
+      engines: [
+        {
+          hours: '',
+          make: '',
+          model: '',
+          totalPower: '',
+          propellerType: '',
+          engineFuelType: '',
+        },
+      ],
       hours: '',
       make2: '',
       model2: '',
@@ -140,8 +151,31 @@ const RegisterBoatForm = () => {
     },
   });
 
-  const { watch, getValues, trigger } = form;
+  const { watch, getValues, trigger, setValue } = form;
   const selectedPackage = watch('selectedPackage');
+  const numEngines = watch('numEngines');
+
+  // Update engines array when numEngines changes
+  useEffect(() => {
+    const engineCount = parseInt(numEngines) || 1;
+    const currentEngines = getValues('engines') || [];
+
+    if (currentEngines.length !== engineCount) {
+      const newEngines = Array.from({ length: engineCount }, (_, index) => {
+        return (
+          currentEngines[index] || {
+            hours: '',
+            make: '',
+            model: '',
+            totalPower: '',
+            propellerType: '',
+            engineFuelType: '',
+          }
+        );
+      });
+      setValue('engines', newEngines);
+    }
+  }, [numEngines, getValues, setValue]);
 
   // Watch form fields for real-time preview
   const watchedFields = watch([
@@ -225,15 +259,11 @@ const RegisterBoatForm = () => {
         'class',
         'material',
         'fuelType',
+        'propMaterial',
         'numEngines',
         'numCabins',
         'numHeads',
-        'hours',
-        'make2',
-        'model2',
-        'totalPower',
-        'propellerType',
-        'engineFuelType',
+        'engines',
         'condition',
         'price',
         'city',

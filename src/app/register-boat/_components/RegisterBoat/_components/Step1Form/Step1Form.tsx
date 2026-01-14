@@ -3,6 +3,7 @@ import { SubscriptionPlan } from '@/types/subscription-types';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { IoCheckmarkCircle } from 'react-icons/io5';
+import { FormInput } from '../FormFields/FormInput';
 
 interface Step1FormProps {
   subscriptionPlans: SubscriptionPlan[];
@@ -38,6 +39,19 @@ const Step1Form: React.FC<Step1FormProps> = ({
 
   return (
     <div className="space-y-6 mt-10">
+      {/* Promo Code Section */}
+      <div className="flex justify-center mb-8">
+        <div className="w-full max-w-md">
+          <FormInput
+            name="promoCode"
+            label="Promo Code"
+            placeholder="Enter promo code (optional)"
+            type="text"
+            required={false}
+          />
+        </div>
+      </div>
+
       <h3 className="text-lg font-semibold">Select a Package</h3>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
