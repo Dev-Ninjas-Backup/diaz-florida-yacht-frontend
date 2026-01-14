@@ -1,5 +1,7 @@
 'use client';
 
+import PreviewSection from '@/app/register-boat/_components/Preview/PreviewSection';
+import Step2Form from '@/app/register-boat/_components/RegisterBoat/_components/Step2Form/Step2Form';
 import CustomContainer from '@/components/CustomComponents/CustomContainer';
 import { Button } from '@/components/ui/button';
 import { step2Schema } from '@/lib/validations/boat-registration-validation';
@@ -9,15 +11,13 @@ import { useRouter } from 'next/navigation';
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import z from 'zod';
-import Step2Form from '@/app/register-boat/_components/RegisterBoat/_components/Step2Form/Step2Form';
 import EditModeForm from './EditModeForm';
-import PreviewSection from '@/app/register-boat/_components/Preview/PreviewSection';
 // import boatPreview from '@/assets/register-boat/boatPreview.svg';
-import { BoatDetail } from '@/types/boat-detail-types';
 import {
   createBoatListing,
   updateBoatListing,
 } from '@/services/seller/boat-listing';
+import { BoatDetail } from '@/types/boat-detail-types';
 import { useState } from 'react';
 
 interface BoatListingFormProps {
@@ -231,8 +231,8 @@ export default function BoatListingForm({
                 make: formValues.make2,
                 model: formValues.model2,
                 fuelType: formValues.engineFuelType,
-                horsepower: parseInt(formValues.totalPower) || 0,
-                hours: parseInt(formValues.hours) || 0,
+                horsepower: parseInt(formValues.totalPower || '') || 0,
+                hours: parseInt(formValues.hours || '') || 0,
                 propellerType: formValues.propellerType,
               },
             ]
