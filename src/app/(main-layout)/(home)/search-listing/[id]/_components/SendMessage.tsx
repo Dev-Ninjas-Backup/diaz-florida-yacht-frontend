@@ -20,7 +20,9 @@ const SendMessage: React.FC<SendMessageProps> = ({ listingId }) => {
   const [isChatbotOpen, setIsChatbotOpen] = useState(false);
   const [userId, setUserId] = useState<string>('');
   const [topOffset, setTopOffset] = useState<string>('1rem');
-  const [bottomOffset, setBottomOffset] = useState<string | undefined>(undefined);
+  const [bottomOffset, setBottomOffset] = useState<string | undefined>(
+    undefined,
+  );
   const [shouldScrollWithContent, setShouldScrollWithContent] = useState(false);
   const formRef = useRef<HTMLDivElement>(null);
 
@@ -48,11 +50,15 @@ const SendMessage: React.FC<SendMessageProps> = ({ listingId }) => {
       if (typeof window === 'undefined') return;
 
       // Find the banner element (GradientBannerCustom uses fixed positioning with gradient background)
-      let banner = document.querySelector('[class*="bg-linear-to-b"]') as HTMLElement;
+      let banner = document.querySelector(
+        '[class*="bg-linear-to-b"]',
+      ) as HTMLElement;
 
       // Fallback: find by fixed positioning with z-50
       if (!banner) {
-        const fixedElements = Array.from(document.querySelectorAll('div[class*="fixed"]'));
+        const fixedElements = Array.from(
+          document.querySelectorAll('div[class*="fixed"]'),
+        );
         banner = fixedElements.find(
           (el) => window.getComputedStyle(el).zIndex === '50',
         ) as HTMLElement;
@@ -71,7 +77,11 @@ const SendMessage: React.FC<SendMessageProps> = ({ listingId }) => {
 
     // Handle footer detection on scroll - form should move up when footer appears
     const handleScroll = () => {
-      if (typeof window === 'undefined' || !formRef.current || window.innerWidth < 768) {
+      if (
+        typeof window === 'undefined' ||
+        !formRef.current ||
+        window.innerWidth < 768
+      ) {
         return;
       }
 
@@ -192,11 +202,14 @@ const SendMessage: React.FC<SendMessageProps> = ({ listingId }) => {
     <>
       <div
         ref={formRef}
-        className={`max-w-lg z-20 w-full bg-gray-50 rounded-2xl p-6 md:p-8 shadow-sm border border-gray-200 my-4 ${shouldScrollWithContent ? 'md:relative' : 'md:fixed'
-          }`}
+        className={`max-w-lg z-20 w-full bg-gray-50 rounded-2xl p-6 md:p-8 shadow-sm border border-gray-200 my-4 ${
+          shouldScrollWithContent ? 'md:relative' : 'md:fixed'
+        }`}
         style={{
           top:
-            typeof window !== 'undefined' && window.innerWidth >= 768 && !shouldScrollWithContent
+            typeof window !== 'undefined' &&
+            window.innerWidth >= 768 &&
+            !shouldScrollWithContent
               ? topOffset
               : undefined,
           bottom: bottomOffset,
