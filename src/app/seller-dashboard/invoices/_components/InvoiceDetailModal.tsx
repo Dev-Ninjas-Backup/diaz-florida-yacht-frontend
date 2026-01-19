@@ -3,11 +3,12 @@
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { InvoiceRecord } from '../data/invoiceData';
 import { X } from 'lucide-react';
+import { InvoiceRecord } from '../data/invoiceData';
 
 interface InvoiceDetailModalProps {
   invoice: InvoiceRecord | null;
@@ -38,6 +39,9 @@ export default function InvoiceDetailModal({
               <X size={20} />
             </button>
           </div>
+          <DialogDescription className="sr-only">
+            Detailed view of your invoice information
+          </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-6 mt-4">

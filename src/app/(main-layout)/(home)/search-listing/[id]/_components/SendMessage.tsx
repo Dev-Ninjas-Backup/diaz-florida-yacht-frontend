@@ -1,10 +1,15 @@
 'use client';
-import React, { useState } from 'react';
-import { IoPersonOutline, IoSparklesSharp } from 'react-icons/io5';
-import { MdLocationOn } from 'react-icons/md';
+import ChatbotModal from '@/components/shared/main/AskAI/ChatbotModal';
+import { submitContactOwner } from '@/services/contact';
+import React, { useEffect, useRef, useState } from 'react';
+import { IoSparklesSharp } from 'react-icons/io5';
 import { toast } from 'sonner';
 
-const SendMessage = () => {
+interface SendMessageProps {
+  listingId: string;
+}
+
+const SendMessage: React.FC<SendMessageProps> = ({ listingId }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -12,10 +17,119 @@ const SendMessage = () => {
     message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isChatbotOpen, setIsChatbotOpen] = useState(false);
+  const [userId, setUserId] = useState<string>('');
+  const [topOffset, setTopOffset] = useState<string>('1rem');
+  const [bottomOffset, setBottomOffset] = useState<string | undefined>(
+    undefined,
+  );
+  const [shouldScrollWithContent, setShouldScrollWithContent] = useState(false);
+  const formRef = useRef<HTMLDivElement>(null);
 
-  // Owner information
-  const ownerName = 'Joe Smith';
-  const ownerLocation = 'Florida';
+  useEffect(() => {
+    // Get or create user ID from localStorage
+    const STORAGE_KEY = 'GENERATED_UID';
+    if (typeof window !== 'undefined') {
+      const existingId = localStorage.getItem(STORAGE_KEY);
+      if (existingId) {
+        setUserId(existingId);
+      } else {
+        const randomNum = Math.floor(Math.random() * 1000000000)
+          .toString()
+          .padStart(9, '0');
+        const newId = `FY${randomNum}`;
+        localStorage.setItem(STORAGE_KEY, newId);
+        setUserId(newId);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    // Calculate banner height and set top offset
+    const calculateTopOffset = () => {
+      if (typeof window === 'undefined') return;
+
+      // Find the banner element (GradientBannerCustom uses fixed positioning with gradient background)
+      let banner = document.querySelector(
+        '[class*="bg-linear-to-b"]',
+      ) as HTMLElement;
+
+      // Fallback: find by fixed positioning with z-50
+      if (!banner) {
+        const fixedElements = Array.from(
+          document.querySelectorAll('div[class*="fixed"]'),
+        );
+        banner = fixedElements.find(
+          (el) => window.getComputedStyle(el).zIndex === '50',
+        ) as HTMLElement;
+      }
+
+      if (banner) {
+        const bannerRect = banner.getBoundingClientRect();
+        const bannerBottom = bannerRect.bottom;
+        // Set top offset to be below banner + 16px spacing
+        setTopOffset(`${bannerBottom + 16}px`);
+      } else {
+        // Fallback: use default spacing if banner not found
+        setTopOffset('1rem');
+      }
+    };
+
+    // Handle footer detection on scroll - form should move up when footer appears
+    const handleScroll = () => {
+      if (
+        typeof window === 'undefined' ||
+        !formRef.current ||
+        window.innerWidth < 768
+      ) {
+        return;
+      }
+
+      // Update top offset when scrolling (banner position might change)
+      calculateTopOffset();
+
+      const footer = document.querySelector('footer');
+      if (!footer) {
+        setBottomOffset(undefined);
+        return;
+      }
+
+      const footerRect = footer.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+
+      // If footer is in viewport, form should scroll with content (like left content)
+      if (footerRect.top < windowHeight) {
+        // Footer is visible, form should scroll with content
+        setShouldScrollWithContent(true);
+        setBottomOffset(undefined);
+      } else {
+        // Footer not in view yet, form stays fixed
+        setShouldScrollWithContent(false);
+        setBottomOffset(undefined);
+      }
+    };
+
+    // Handle resize and recalculate positions
+    const handleResize = () => {
+      calculateTopOffset();
+      handleScroll();
+    };
+
+    // Only apply on medium screens and up
+    if (typeof window !== 'undefined' && window.innerWidth >= 768) {
+      // Initial calculations
+      calculateTopOffset();
+      handleScroll();
+
+      window.addEventListener('scroll', handleScroll);
+      window.addEventListener('resize', handleResize);
+
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+        window.removeEventListener('resize', handleResize);
+      };
+    }
+  }, []);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -43,9 +157,19 @@ const SendMessage = () => {
       return;
     }
 
-    // Simulate API call
+    // Call API
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      await submitContactOwner({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        message: formData.message,
+        source: 'FLORIDA',
+        type: 'INDIVIDUAL_LISTING',
+        listingId: listingId,
+        listingSource: 'custom',
+      });
+
       toast.success('Message sent successfully!');
       // Reset form
       setFormData({
@@ -54,104 +178,121 @@ const SendMessage = () => {
         phone: '',
         message: '',
       });
-    } catch {
-      toast.error('Failed to send message. Please try again.');
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : 'Failed to send message. Please try again.',
+      );
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const handleAskAI = () => {
-    toast.info('AI Assistant coming soon!');
+    setIsChatbotOpen(true);
+  };
+
+  const handleCloseChatbot = () => {
+    setIsChatbotOpen(false);
   };
 
   return (
-    <div className="w-full bg-gray-50 rounded-2xl p-6 md:p-8 shadow-sm border border-gray-200 my-5">
-      {/* Header */}
-      <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
-        Contact Owner
-      </h2>
+    <>
+      <div
+        ref={formRef}
+        className={`max-w-lg z-20 w-full bg-gray-50 rounded-2xl p-6 md:p-8 shadow-sm border border-gray-200 my-4 ${
+          shouldScrollWithContent ? 'md:relative' : 'md:fixed'
+        }`}
+        style={{
+          top:
+            typeof window !== 'undefined' &&
+            window.innerWidth >= 768 &&
+            !shouldScrollWithContent
+              ? topOffset
+              : undefined,
+          bottom: bottomOffset,
+        }}
+      >
+        {/* Header */}
+        <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-4">
+          Contact Owner
+        </h2>
 
-      {/* Owner Info */}
-      <div className="mb-6 space-y-3">
-        <div className="flex items-center gap-2 text-gray-700">
-          <IoPersonOutline size={20} className="text-gray-600" />
-          <span className="font-medium">Name:</span>
-          <span className="text-gray-600">{ownerName}</span>
-        </div>
-        <div className="flex items-center gap-2 text-gray-700">
-          <MdLocationOn size={20} className="text-gray-600" />
-          <span className="font-medium">Location:</span>
-          <span className="text-gray-600">{ownerLocation}</span>
-        </div>
+        {/* Contact Form */}
+        <form onSubmit={handleSubmit} className="space-y-3">
+          {/* Name Input */}
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleInputChange}
+            placeholder="Your name"
+            className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+            required
+          />
+
+          {/* Email Input */}
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            placeholder="Your email address"
+            className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+            required
+          />
+
+          {/* Phone Input */}
+          <input
+            type="tel"
+            name="phone"
+            value={formData.phone}
+            onChange={handleInputChange}
+            placeholder="Your phone number"
+            className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+            required
+          />
+
+          {/* Message Textarea */}
+          <textarea
+            name="message"
+            value={formData.message}
+            onChange={handleInputChange}
+            placeholder="Write message..."
+            rows={4}
+            className="w-full px-4 py-2 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
+            required
+          />
+
+          {/* Send Message Button */}
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full bg-secondary hover:bg-[#0052CC] text-white font-semibold py-3 px-6 rounded-xl transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm md:text-base"
+          >
+            {isSubmitting ? 'Sending...' : 'Send Message'}
+          </button>
+        </form>
+
+        {/* Ask AI Button */}
+        <button
+          type="button"
+          onClick={handleAskAI}
+          className="w-full mt-4 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-3 px-6 rounded-xl transition-colors duration-200 flex items-center justify-center gap-2 text-base"
+        >
+          <IoSparklesSharp size={20} />
+          Ask AI
+        </button>
       </div>
 
-      {/* Contact Form */}
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Name Input */}
-        <input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleInputChange}
-          placeholder="Your name"
-          className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-          required
-        />
-
-        {/* Email Input */}
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleInputChange}
-          placeholder="Your email address"
-          className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-          required
-        />
-
-        {/* Phone Input */}
-        <input
-          type="tel"
-          name="phone"
-          value={formData.phone}
-          onChange={handleInputChange}
-          placeholder="Your phone number"
-          className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-          required
-        />
-
-        {/* Message Textarea */}
-        <textarea
-          name="message"
-          value={formData.message}
-          onChange={handleInputChange}
-          placeholder="Write message..."
-          rows={4}
-          className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
-          required
-        />
-
-        {/* Send Message Button */}
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="w-full bg-[#0066FF] hover:bg-[#0052CC] text-white font-semibold py-4 px-6 rounded-xl transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-base md:text-lg"
-        >
-          {isSubmitting ? 'Sending...' : 'Send Message'}
-        </button>
-      </form>
-
-      {/* Ask AI Button */}
-      <button
-        type="button"
-        onClick={handleAskAI}
-        className="w-full mt-4 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-3 px-6 rounded-xl transition-colors duration-200 flex items-center justify-center gap-2 text-base"
-      >
-        <IoSparklesSharp size={20} />
-        Ask AI
-      </button>
-    </div>
+      <ChatbotModal
+        isOpen={isChatbotOpen}
+        onClose={handleCloseChatbot}
+        userId={userId}
+      />
+    </>
   );
 };
 

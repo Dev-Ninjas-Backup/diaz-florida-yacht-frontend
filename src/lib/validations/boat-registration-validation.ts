@@ -9,6 +9,7 @@ import { z } from 'zod';
 // Step 1: Package Selection Schema
 export const step1Schema = z.object({
   selectedPackage: z.string().min(1, 'Please select a package'),
+  promoCode: z.string().optional(),
 });
 
 // Step 2: Boat Information Schema
@@ -21,16 +22,50 @@ export const step2Schema = z.object({
 
   // Dimensions
   lengthFeet: z.string().min(1, 'Length (feet) is required'),
-  lengthInches: z.string().min(1, 'Length (inches) is required'),
+  lengthInches: z
+    .string()
+    .min(1, 'Length (inches) is required')
+    .refine(
+      (val) => {
+        const num = Number(val);
+        return !isNaN(num) && num >= 0 && num < 12;
+      },
+      {
+        message: 'Inches must be less than 12',
+      },
+    ),
   beamFeet: z.string().min(1, 'Beam (feet) is required'),
-  beamInches: z.string().min(1, 'Beam (inches) is required'),
+  beamInches: z
+    .string()
+    .min(1, 'Beam (inches) is required')
+    .refine(
+      (val) => {
+        const num = Number(val);
+        return !isNaN(num) && num >= 0 && num < 12;
+      },
+      {
+        message: 'Inches must be less than 12',
+      },
+    ),
   draftFeet: z.string().min(1, 'Draft (feet) is required'),
-  draftInches: z.string().min(1, 'Draft (inches) is required'),
+  draftInches: z
+    .string()
+    .min(1, 'Draft (inches) is required')
+    .refine(
+      (val) => {
+        const num = Number(val);
+        return !isNaN(num) && num >= 0 && num < 12;
+      },
+      {
+        message: 'Inches must be less than 12',
+      },
+    ),
 
   // Classification
   class: z.string().min(1, 'Boat class is required'),
   material: z.string().min(1, 'Material is required'),
   fuelType: z.string().min(1, 'Fuel type is required'),
+  propMaterial: z.string().min(1, 'Propeller material is required'),
   condition: z.string().min(1, 'Condition is required'),
 
   // Capacity
@@ -38,13 +73,27 @@ export const step2Schema = z.object({
   numCabins: z.string().min(1, 'Number of cabins is required'),
   numHeads: z.string().min(1, 'Number of heads is required'),
 
-  // Engine Details
-  hours: z.string().min(1, 'Engine hours is required'),
-  make2: z.string().min(1, 'Engine make is required'),
-  model2: z.string().min(1, 'Engine model is required'),
-  totalPower: z.string().min(1, 'Total power (HP) is required'),
-  propellerType: z.string().min(1, 'Propeller type is required'),
-  engineFuelType: z.string().min(1, 'Engine fuel type is required'),
+  // Engine Details - Dynamic array
+  engines: z
+    .array(
+      z.object({
+        hours: z.string().min(1, 'Engine hours is required'),
+        make: z.string().min(1, 'Engine make is required'),
+        model: z.string().min(1, 'Engine model is required'),
+        totalPower: z.string().min(1, 'Total power (HP) is required'),
+        propellerType: z.string().min(1, 'Propeller type is required'),
+        engineFuelType: z.string().min(1, 'Engine fuel type is required'),
+      }),
+    )
+    .min(1, 'At least one engine is required'),
+
+  // Legacy Engine Details (kept for backward compatibility)
+  hours: z.string().optional(),
+  make2: z.string().optional(),
+  model2: z.string().optional(),
+  totalPower: z.string().optional(),
+  propellerType: z.string().optional(),
+  engineFuelType: z.string().optional(),
 
   // Pricing & Location
   price: z.string().min(1, 'Price is required'),

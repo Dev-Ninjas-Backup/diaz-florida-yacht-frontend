@@ -1,16 +1,27 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import { useSearchResults } from '@/context/SearchResultsContext';
-import { postAiQuery } from '@/services/query';
+import {
+  FilterOptions,
+  getFilterOptions,
+  getFilteredBoats,
+} from '@/services/boats/filter-boats';
 import { FilterState } from '@/types/filter-types';
 import { convertApiDataToYachtProduct } from '@/types/product-types-demo';
-import { SearchQueryData } from '@/types/search-query-types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TbSparkles } from 'react-icons/tb';
 
 const FilterListing = () => {
-  const { setSearchResults, setIsSearchActive, queryData, setQueryData } =
-    useSearchResults();
+  const { setSearchResults, setIsSearchActive } = useSearchResults();
   const [isLoading, setIsLoading] = useState(false);
+  const [filterOptions, setFilterOptions] = useState<FilterOptions>({
+    makes: [],
+    models: [],
+    years: [],
+    cities: [],
+    states: [],
+    classes: [],
+  });
 
   const [filters, setFilters] = useState<FilterState>({
     boatType: '',
@@ -18,8 +29,8 @@ const FilterListing = () => {
     model: '',
     buildYearFrom: '',
     buildYearTo: '',
-    priceMin: 12000,
-    priceMax: 2250000,
+    priceMin: '',
+    priceMax: '',
     lengthFrom: '',
     lengthTo: '',
     beamFrom: '',
@@ -30,34 +41,25 @@ const FilterListing = () => {
     additionalUnit: '',
   });
 
-  // Filter options
-  const boatTypes = [
-    'Yacht',
-    'Sailboat',
-    'Catamaran',
-    'Motor Yacht',
-    'Trawler',
-    'Sportfish',
-  ];
-  const makes = [
-    'Mercury',
-    'Yamaha',
-    'Honda',
-    'Suzuki',
-    'Evinrude',
-    'Volvo Penta',
-  ];
-  const models = ['Volvo', 'Mercruiser', 'Yanmar', 'Cummins', 'Caterpillar'];
-  const engineOptions = ['02', '03', '04', '05', '06'];
-  const cabinOptions = ['02', '03', '04', '05', '06'];
-  const headOptions = ['02', '03', '04', '05', '06'];
-  const additionalUnits = [
-    'Jet ski',
-    'Tender',
-    'Kayak',
-    'Paddleboard',
-    'Dinghy',
-  ];
+  // Fetch filter options on mount
+  useEffect(() => {
+    const fetchFilterOptions = async () => {
+      try {
+        console.log('Fetching filter options...');
+        const options = await getFilterOptions();
+        console.log('Filter options received:', options);
+        setFilterOptions(options);
+      } catch (error) {
+        console.error('Error fetching filter options:', error);
+      }
+    };
+    fetchFilterOptions();
+  }, []);
+
+  // Hardcoded options for non-API fields
+  const engineOptions = ['1', '2', '3', '4', '5', '6'];
+  const cabinOptions = ['1', '2', '3', '4', '5', '6'];
+  const headOptions = ['1', '2', '3', '4', '5', '6'];
 
   const handleInputChange = (
     field: keyof FilterState,
@@ -76,8 +78,8 @@ const FilterListing = () => {
       model: '',
       buildYearFrom: '',
       buildYearTo: '',
-      priceMin: 12000,
-      priceMax: 2250000,
+      priceMin: '',
+      priceMax: '',
       lengthFrom: '',
       lengthTo: '',
       beamFrom: '',
@@ -87,83 +89,62 @@ const FilterListing = () => {
       numberOfHeads: '',
       additionalUnit: '',
     });
-  };
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(price);
+    // Reset search results to show initial boats
+    setSearchResults(null);
+    setIsSearchActive(false);
   };
 
   const handleApplyFilters = async () => {
     try {
       setIsLoading(true);
 
-      // Build filters object with only non-default values
-      const changedFilters: Record<string, string | number> = {};
-
-      if (filters.boatType) changedFilters.boat_type = filters.boatType;
-      if (filters.make) changedFilters.make = filters.make;
-      if (filters.model) changedFilters.model = filters.model;
-      if (filters.buildYearFrom)
-        changedFilters.build_year_min = Number(filters.buildYearFrom);
-      if (filters.buildYearTo)
-        changedFilters.build_year_max = Number(filters.buildYearTo);
-      if (filters.priceMin && filters.priceMin !== 12000)
-        changedFilters.price_min = filters.priceMin;
-      if (filters.priceMax && filters.priceMax !== 2250000)
-        changedFilters.price_max = filters.priceMax;
-      if (filters.lengthFrom)
-        changedFilters.length_min = Number(filters.lengthFrom);
-      if (filters.lengthTo)
-        changedFilters.length_max = Number(filters.lengthTo);
-      if (filters.beamFrom) changedFilters.beam_min = Number(filters.beamFrom);
-      if (filters.beamTo) changedFilters.beam_max = Number(filters.beamTo);
-      if (filters.numberOfEngines)
-        changedFilters.number_of_engine = Number(filters.numberOfEngines);
-      if (filters.numberOfCabins)
-        changedFilters.number_of_cabin = Number(filters.numberOfCabins);
-      if (filters.numberOfHeads)
-        changedFilters.number_of_heads = Number(filters.numberOfHeads);
-      if (filters.additionalUnit)
-        changedFilters.additional_unit = filters.additionalUnit;
-
-      // Build query data
-      const searchQueryData: SearchQueryData = {
-        query: queryData?.query || '',
-        filters: {
-          boat_type: changedFilters.boat_type as string,
-          make: changedFilters.make as string,
-          model: changedFilters.model as string,
-          build_year_min: changedFilters.build_year_min as number,
-          build_year_max: changedFilters.build_year_max as number,
-          price_min: changedFilters.price_min as number,
-          price_max: changedFilters.price_max as number,
-          length_min: changedFilters.length_min as number,
-          length_max: changedFilters.length_max as number,
-          beam_min: changedFilters.beam_min as number,
-          beam_max: changedFilters.beam_max as number,
-          number_of_engine: changedFilters.number_of_engine as number,
-          number_of_cabin: changedFilters.number_of_cabin as number,
-          number_of_heads: changedFilters.number_of_heads as number,
-          additional_unit: changedFilters.additional_unit as string,
-        },
+      // Build filter parameters matching backend API
+      const filterParams: any = {
+        page: 1,
+        limit: 100,
       };
 
-      // Call AI query API
-      const response = await postAiQuery({ queryData: searchQueryData });
+      if (filters.make) filterParams.make = filters.make;
+      if (filters.model) filterParams.model = filters.model;
+      if (filters.boatType) filterParams.class = filters.boatType;
+      if (filters.buildYearFrom)
+        filterParams.buildYearStart = Number(filters.buildYearFrom);
+      if (filters.buildYearTo)
+        filterParams.buildYearEnd = Number(filters.buildYearTo);
+      if (filters.priceMin && Number(filters.priceMin) > 0)
+        filterParams.priceStart = Number(filters.priceMin);
+      if (filters.priceMax && Number(filters.priceMax) > 0)
+        filterParams.priceEnd = Number(filters.priceMax);
+      if (filters.lengthFrom)
+        filterParams.lengthStart = Number(filters.lengthFrom);
+      if (filters.lengthTo) filterParams.lengthEnd = Number(filters.lengthTo);
+      if (filters.beamFrom)
+        filterParams.beamSizeStart = Number(filters.beamFrom);
+      if (filters.beamTo) filterParams.beamSizeEnd = Number(filters.beamTo);
+      if (filters.numberOfEngines)
+        filterParams.enginesNumber = Number(filters.numberOfEngines);
+      if (filters.numberOfCabins)
+        filterParams.cabinsNumber = Number(filters.numberOfCabins);
+      if (filters.numberOfHeads)
+        filterParams.headsNumber = Number(filters.numberOfHeads);
 
-      // Convert and update context
-      const yachtProducts = response.map(convertApiDataToYachtProduct);
+      console.log('Applying filters:', filterParams);
 
-      setSearchResults(yachtProducts);
-      setIsSearchActive(true);
-      setQueryData(searchQueryData);
+      // Call filter API
+      const response = await getFilteredBoats(filterParams);
+
+      if (response.success && response.data) {
+        // Convert API data to yacht products
+        const yachtProducts = response.data.map((boat: any) =>
+          convertApiDataToYachtProduct(boat),
+        );
+
+        setSearchResults(yachtProducts);
+        setIsSearchActive(true);
+      }
     } catch (error) {
       console.error('Error applying filters:', error);
+      setSearchResults([]);
     } finally {
       setIsLoading(false);
     }
@@ -188,7 +169,7 @@ const FilterListing = () => {
         {/* Boat Type */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-2">
-            Boat Type
+            Boat Class
           </label>
           <select
             value={filters.boatType}
@@ -202,8 +183,8 @@ const FilterListing = () => {
               paddingRight: '2.5rem',
             }}
           >
-            <option value="">Yacht</option>
-            {boatTypes?.map((type) => (
+            <option value="">Select Class</option>
+            {filterOptions.classes?.map((type) => (
               <option key={type} value={type}>
                 {type}
               </option>
@@ -228,8 +209,8 @@ const FilterListing = () => {
               paddingRight: '2.5rem',
             }}
           >
-            <option value="">Mercury</option>
-            {makes?.map((make) => (
+            <option value="">Select Make</option>
+            {filterOptions.makes?.map((make) => (
               <option key={make} value={make}>
                 {make}
               </option>
@@ -254,8 +235,8 @@ const FilterListing = () => {
               paddingRight: '2.5rem',
             }}
           >
-            <option value="">Volvo</option>
-            {models?.map((model) => (
+            <option value="">Select Model</option>
+            {filterOptions.models?.map((model) => (
               <option key={model} value={model}>
                 {model}
               </option>
@@ -294,26 +275,28 @@ const FilterListing = () => {
           <label className="block text-sm font-semibold text-gray-700 mb-2">
             Price Range
           </label>
-          <div className="space-y-3">
+          <div className="flex items-center gap-3">
             <input
-              type="range"
+              type="number"
+              placeholder="Min Price"
               min="0"
-              max="5000000"
-              step="1000"
-              value={filters.priceMin}
+              value={filters.priceMin || ''}
               onChange={(e) =>
                 handleInputChange('priceMin', Number(e.target.value))
               }
-              className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-cyan-500"
+              className="w-full px-3 py-2.5 bg-white border border-gray-300 rounded-lg text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent placeholder-gray-400"
             />
-            <div className="flex items-center justify-between text-sm">
-              <span className="text-cyan-500 font-semibold">
-                {formatPrice(filters.priceMin)}
-              </span>
-              <span className="text-cyan-500 font-semibold">
-                {formatPrice(filters.priceMax)}
-              </span>
-            </div>
+            <span className="text-gray-500 text-sm font-medium">to</span>
+            <input
+              type="number"
+              placeholder="Max Price"
+              min="0"
+              value={filters.priceMax || ''}
+              onChange={(e) =>
+                handleInputChange('priceMax', Number(e.target.value))
+              }
+              className="w-full px-3 py-2.5 bg-white border border-gray-300 rounded-lg text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent placeholder-gray-400"
+            />
           </div>
         </div>
 
@@ -384,7 +367,7 @@ const FilterListing = () => {
               paddingRight: '2.5rem',
             }}
           >
-            <option value="">02</option>
+            <option value="">Select</option>
             {engineOptions?.map((num) => (
               <option key={num} value={num}>
                 {num}
@@ -412,7 +395,7 @@ const FilterListing = () => {
               paddingRight: '2.5rem',
             }}
           >
-            <option value="">02</option>
+            <option value="">Select</option>
             {cabinOptions?.map((num) => (
               <option key={num} value={num}>
                 {num}
@@ -438,7 +421,7 @@ const FilterListing = () => {
               paddingRight: '2.5rem',
             }}
           >
-            <option value="">02</option>
+            <option value="">Select</option>
             {headOptions?.map((num) => (
               <option key={num} value={num}>
                 {num}
@@ -447,33 +430,7 @@ const FilterListing = () => {
           </select>
         </div>
 
-        {/* Additional Unit */}
-        <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
-            Additional Unit
-          </label>
-          <select
-            value={filters.additionalUnit}
-            onChange={(e) =>
-              handleInputChange('additionalUnit', e.target.value)
-            }
-            className="w-full px-3 py-2.5 bg-white border border-gray-300 rounded-lg text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent appearance-none cursor-pointer"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
-              backgroundRepeat: 'no-repeat',
-              backgroundPosition: 'right 0.5rem center',
-              backgroundSize: '1.5em 1.5em',
-              paddingRight: '2.5rem',
-            }}
-          >
-            <option value="">Jet ski</option>
-            {additionalUnits?.map((unit) => (
-              <option key={unit} value={unit}>
-                {unit}
-              </option>
-            ))}
-          </select>
-        </div>
+        {/* Additional Unit - Removed from filters as not in API */}
 
         {/* Apply Filters Button */}
         <button

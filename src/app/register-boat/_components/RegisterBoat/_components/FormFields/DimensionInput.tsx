@@ -42,6 +42,7 @@ export const DimensionInput: React.FC<DimensionInputProps> = ({
             {...register(feetName)}
             placeholder="Feet"
             type="number"
+            min="0"
             className="w-full bg-white rounded-[12px] border-none shadow-none"
           />
           {feetError && (
@@ -55,6 +56,9 @@ export const DimensionInput: React.FC<DimensionInputProps> = ({
             {...register(inchesName)}
             placeholder="Inches"
             type="number"
+            min="0"
+            max="11"
+            step="0.1"
             className="w-full bg-white rounded-[12px] border-none shadow-none"
           />
           {inchesError && (

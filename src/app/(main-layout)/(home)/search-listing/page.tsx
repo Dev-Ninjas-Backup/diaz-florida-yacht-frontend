@@ -47,23 +47,7 @@ const SearchListingPage = () => {
     try {
       const updatedQueryData: SearchQueryData = {
         query: searchInput,
-        filters: queryData?.filters || {
-          boat_type: null,
-          make: null,
-          model: null,
-          build_year_min: null,
-          build_year_max: null,
-          price_min: null,
-          price_max: null,
-          length_min: null,
-          length_max: null,
-          beam_min: null,
-          beam_max: null,
-          number_of_engine: null,
-          number_of_cabin: null,
-          number_of_heads: null,
-          additional_unit: null,
-        },
+        limit: 20,
       };
 
       const aiResponse = await postAiQuery({ queryData: updatedQueryData });
