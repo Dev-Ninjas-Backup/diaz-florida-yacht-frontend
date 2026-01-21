@@ -56,7 +56,9 @@ export const confirmSubscriptionPayment = async (
   }
 };
 
-export const subscriptionPackageLimitations = async (id: string): Promise<any> => {
+export const subscriptionPackageLimitations = async (
+  id: string,
+): Promise<any> => {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/subscription/plans/${id}`,
@@ -72,4 +74,4 @@ export const subscriptionPackageLimitations = async (id: string): Promise<any> =
   } catch (error: any) {
     return Error(error.message);
   }
-}
+};
