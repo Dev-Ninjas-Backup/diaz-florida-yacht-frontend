@@ -1,5 +1,6 @@
 'use client';
 import { buildYearOptions } from '@/lib/utils/register-boats-select-options';
+import { FieldLimitations } from '@/types/subscription-types';
 import { useFormContext } from 'react-hook-form';
 import { DimensionInput } from '../FormFields/DimensionInput';
 import { DynamicFormSelect } from '../FormFields/DynamicFormSelect';
@@ -22,10 +23,17 @@ const engineCountOptions = [
   { value: '8', label: '8' },
 ];
 
-const Step2Form = () => {
+interface Step2FormProps {
+  fieldLimitations: FieldLimitations;
+}
+
+const Step2Form = ({ fieldLimitations }: Step2FormProps) => {
   const { watch } = useFormContext();
   const numEngines = watch('numEngines');
   const engineCount = parseInt(numEngines) || 1;
+
+  // Debug: Log field limitations
+  // console.log('🔍 Step2Form - Field Limitations:', fieldLimitations);
 
   return (
     <div className="mt-10">
@@ -224,6 +232,7 @@ const Step2Form = () => {
             placeholder="Write description..."
             rows={4}
             required
+            maxWords={fieldLimitations.wordLimit}
           />
         </div>
       </div>
@@ -232,7 +241,7 @@ const Step2Form = () => {
       <MoreDetailsSection />
 
       {/* Media & Gallery */}
-      <MediaGallerySection />
+      <MediaGallerySection fieldLimitations={fieldLimitations} />
     </div>
   );
 };

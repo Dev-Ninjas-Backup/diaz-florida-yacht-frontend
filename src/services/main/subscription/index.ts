@@ -55,3 +55,21 @@ export const confirmSubscriptionPayment = async (
     return Error(error.message);
   }
 };
+
+export const subscriptionPackageLimitations = async (id: string): Promise<any> => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/subscription/plans/${id}`,
+      {
+        method: 'GET',
+        next: {
+          tags: ['SUBSCRIPTION_LIMITATIONS'],
+        },
+      },
+    );
+    const data = await res.json();
+    return data;
+  } catch (error: any) {
+    return Error(error.message);
+  }
+}

@@ -10,6 +10,7 @@ interface GalleryUploadProps {
   required?: boolean;
   maxFiles?: number;
   className?: string;
+  disabled?: boolean;
 }
 
 export const GalleryUpload: React.FC<GalleryUploadProps> = ({
@@ -18,6 +19,7 @@ export const GalleryUpload: React.FC<GalleryUploadProps> = ({
   required = false,
   maxFiles = 10,
   className = '',
+  disabled = false,
 }) => {
   const {
     formState: { errors },
@@ -105,10 +107,11 @@ export const GalleryUpload: React.FC<GalleryUploadProps> = ({
               onChange={handleFilesChange}
               className="hidden"
               id={`${name}-input`}
+              disabled={disabled || maxFiles === 0}
             />
             <label
               htmlFor={`${name}-input`}
-              className="cursor-pointer flex flex-col items-center"
+              className={`flex flex-col items-center ${disabled || maxFiles === 0 ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
             >
               <svg
                 className="w-12 h-12 text-gray-400 mb-2"
@@ -123,7 +126,11 @@ export const GalleryUpload: React.FC<GalleryUploadProps> = ({
                   d="M12 4v16m8-8H4"
                 />
               </svg>
-              <p className="text-gray-600">Click to upload gallery images</p>
+              <p className="text-gray-600">
+                {disabled || maxFiles === 0
+                  ? 'Select a package to upload gallery images'
+                  : 'Click to upload gallery images'}
+              </p>
               <p className="text-gray-400 text-sm mt-1">
                 PNG, JPG, JPEG up to 10MB each
               </p>
