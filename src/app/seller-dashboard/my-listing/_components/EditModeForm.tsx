@@ -4,6 +4,7 @@ import { useFormContext } from 'react-hook-form';
 import { useEffect } from 'react';
 import Step2Form from '@/app/register-boat/_components/RegisterBoat/_components/Step2Form/Step2Form';
 import { BoatDetail } from '@/types/boat-detail-types';
+import { FieldLimitations } from '@/types/subscription-types';
 import Image from 'next/image';
 import { Label } from '@/components/ui/label';
 import { X } from 'lucide-react';
@@ -12,12 +13,14 @@ interface EditModeFormProps {
   boatData: BoatDetail;
   imagesToDelete: string[];
   onDeleteImage: (imageId: string) => void;
+  fieldLimitations: FieldLimitations;
 }
 
 export default function EditModeForm({
   boatData,
   imagesToDelete,
   onDeleteImage,
+  fieldLimitations,
 }: EditModeFormProps) {
   const { setValue } = useFormContext();
 
@@ -104,7 +107,7 @@ export default function EditModeForm({
       )}
 
       {/* Regular Step2Form */}
-      <Step2Form />
+      <Step2Form fieldLimitations={fieldLimitations} />
     </div>
   );
 }

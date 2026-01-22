@@ -34,7 +34,3 @@ export interface FieldLimitations {
   picLimit: number;
   wordLimit: number;
 }
-
-export interface SubscriptionPlanDetails extends SubscriptionApiResponse {
-  // Additional fields can be added here if needed
-}
