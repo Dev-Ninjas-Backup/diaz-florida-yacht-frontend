@@ -33,7 +33,7 @@ export default function BoatListingForm({
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [imagesToDelete, setImagesToDelete] = useState<string[]>([]);
-  
+
   // For seller dashboard, use generous defaults as users already have subscriptions
   const fieldLimitations: FieldLimitations = {
     picLimit: 50, // Generous limit for existing listings

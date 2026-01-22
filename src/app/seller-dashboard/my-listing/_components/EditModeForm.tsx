@@ -1,13 +1,13 @@
 'use client';
 
-import { useFormContext } from 'react-hook-form';
-import { useEffect } from 'react';
 import Step2Form from '@/app/register-boat/_components/RegisterBoat/_components/Step2Form/Step2Form';
+import { Label } from '@/components/ui/label';
 import { BoatDetail } from '@/types/boat-detail-types';
 import { FieldLimitations } from '@/types/subscription-types';
-import Image from 'next/image';
-import { Label } from '@/components/ui/label';
 import { X } from 'lucide-react';
+import Image from 'next/image';
+import { useEffect } from 'react';
+import { useFormContext } from 'react-hook-form';
 
 interface EditModeFormProps {
   boatData: BoatDetail;
