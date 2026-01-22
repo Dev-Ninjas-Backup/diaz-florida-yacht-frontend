@@ -25,9 +25,11 @@ import { steps } from '@/lib/utils/register-boats-select-options';
 import {
   createSubscription,
   getAllSubscription,
+  subscriptionPackageLimitations,
 } from '@/services/main/subscription';
 import type { BoatRegistrationFormValues } from '@/types/boat-registration-types';
 import {
+  FieldLimitations,
   SubscriptionApiResponse,
   SubscriptionPlan,
 } from '@/types/subscription-types';
@@ -48,6 +50,10 @@ const RegisterBoatForm = () => {
   const [backendErrors, setBackendErrors] = useState<Record<string, string>>(
     {},
   );
+  const [fieldLimitations, setFieldLimitations] = useState<FieldLimitations>({
+    picLimit: 0,
+    wordLimit: 0,
+  });
 
   // Fetch subscription plans
   useEffect(() => {
@@ -154,6 +160,35 @@ const RegisterBoatForm = () => {
   const { watch, getValues, trigger, setValue } = form;
   const selectedPackage = watch('selectedPackage');
   const numEngines = watch('numEngines');
+
+  // Fetch field limitations when package changes
+  useEffect(() => {
+    const fetchFieldLimitations = async () => {
+      if (selectedPackage) {
+        try {
+          const response =
+            await subscriptionPackageLimitations(selectedPackage);
+          console.log('📦 Package Limitations Response:', response);
+          if (response?.data) {
+            const limits = {
+              picLimit: response.data.picLimit || 0,
+              wordLimit: response.data.wordLimit || 0,
+            };
+            console.log('✅ Setting Field Limitations:', limits);
+            setFieldLimitations(limits);
+          }
+        } catch (error) {
+          console.error('Error fetching field limitations:', error);
+          toast.error('Failed to fetch package limitations');
+        }
+      } else {
+        // Reset limitations if no package selected
+        setFieldLimitations({ picLimit: 0, wordLimit: 0 });
+      }
+    };
+
+    fetchFieldLimitations();
+  }, [selectedPackage]);
 
   // Update engines array when numEngines changes
   useEffect(() => {
@@ -384,7 +419,9 @@ const RegisterBoatForm = () => {
                       isLoading={isLoadingPlans}
                     />
                   )}
-                  {currentStep === 2 && <Step2Form />}
+                  {currentStep === 2 && (
+                    <Step2Form fieldLimitations={fieldLimitations} />
+                  )}
                   {currentStep === 3 && <Step3Form />}
                 </FormProvider>
 
