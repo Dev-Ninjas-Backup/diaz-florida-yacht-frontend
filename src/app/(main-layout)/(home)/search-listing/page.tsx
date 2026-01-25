@@ -71,8 +71,8 @@ const SearchListingPage = () => {
   return (
     <div>
       <CustomBanner banner={banner}>
-        <div className="text-center ">
-          <h1 className="text-white text-xl md:text-4xl xl:text-5xl 2xl:text-6xl uppercase font-bold md:tracking-[5px]">
+        <div className="text-center pt-10">
+          <h1 className="text-white text-xl md:text-3xl xl:text-4xl 2xl:text-5xl uppercase font-bold md:tracking-[5px]">
             search FROM LISTING
           </h1>
           <div className="bg-white p-1 xl:p-2 2xl:p-3 rounded-2xl  w-full flex items-center gap-2 md:gap-5 mt-5">

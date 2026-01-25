@@ -42,11 +42,11 @@ const Banner = async () => {
       <div className="relative z-10 px-3 md:px-5 bg-black/20 md:bg-transparent py-5 md:py-0 h-full flex items-center">
         <CustomContainer>
           <div className="flex flex-col items-start justify-between  gap-5 h-full space-y-24 md:space-y-5">
-            <div className="text-white space-y-3 xl:space-y-[17%] pt-[20%] md:pt-[5%]">
-              <h1 className="text-2xl md:text-6xl xl:text-7xl 2xl:text-[115px] font-bold text-left uppercase tracking-[1px] md:tracking-[5px]">
+            <div className="w-full text-white space-y-3 xl:space-y-[17%] pt-[20%] md:pt-[5%]">
+              <h1 className="w-full text-2xl md:text-6xl xl:text-7xl 2xl:text-[115px] font-bold text-center uppercase tracking-[1px] md:tracking-[5px]">
                 {title}
               </h1>
-              <div className="text-xs xl:text-lg 2xl:text-xl max-w-[520px] pr-5 space-y-2">
+              <div className="w-1/2 text-xs xl:text-lg 2xl:text-xl max-w-[520px] px-10 space-y-2">
                 <h2 className="flex items-center gap-2 font-semibold">
                   <BsStars /> <span>AI Powered</span>
                 </h2>

@@ -23,6 +23,10 @@ const nextConfig: NextConfig = {
         hostname: 'example.com',
         pathname: '/uploads/boats/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'via.placeholder.com',
+      },
     ],
   },
 };
