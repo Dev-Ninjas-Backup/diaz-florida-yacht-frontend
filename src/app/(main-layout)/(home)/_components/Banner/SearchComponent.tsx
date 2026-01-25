@@ -1,5 +1,10 @@
 'use client';
 import { useSearchResults } from '@/context/SearchResultsContext';
+import {
+  FilterOptions,
+  getFilteredBoats,
+  getFilterOptions,
+} from '@/services/boats/filter-boats';
 import { postAiQuery } from '@/services/query';
 import {
   ApiBoatData,
@@ -49,35 +54,55 @@ const SearchComponent = () => {
   const [aiPrompt, setAiPrompt] = useState('');
   const [filterOpen, setFilterOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [filterOptions, setFilterOptions] = useState<FilterOptions>({
+    makes: [],
+    models: [],
+    years: [],
+    cities: [],
+    states: [],
+    classes: [],
+  });
 
   // Dropdown open states
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const currentYear = new Date().getFullYear();
-  const years = Array.from({ length: 50 }, (_, i) => currentYear - i);
-  const makes = [
-    'Viking (CCV)',
-    'Sea Ray',
-    'Boston Whaler',
-    'Bayliner',
-    'Grady-White',
-  ];
-  const models = ['80 Enclosed', '75 Sport', '60 Convertible', '55 Express'];
-  const boatTypes = [
-    'Flybridge',
-    'Cruiser',
-    'Sportfish',
-    'Express',
-    'Center Console',
-  ];
-  const locations = [
-    'Florida',
-    'California',
-    'Texas',
-    'New York',
-    'Massachusetts',
-  ];
+  // Use dynamic data from API or fallback to hardcoded
+  const years =
+    filterOptions.years.length > 0
+      ? filterOptions.years
+      : Array.from({ length: 50 }, (_, i) => new Date().getFullYear() - i);
+  const makes =
+    filterOptions.makes.length > 0
+      ? filterOptions.makes
+      : ['Viking (CCV)', 'Sea Ray', 'Boston Whaler', 'Bayliner', 'Grady-White'];
+  const models =
+    filterOptions.models.length > 0
+      ? filterOptions.models
+      : ['80 Enclosed', '75 Sport', '60 Convertible', '55 Express'];
+  const boatTypes =
+    filterOptions.classes.length > 0
+      ? filterOptions.classes
+      : ['Flybridge', 'Cruiser', 'Sportfish', 'Express', 'Center Console'];
+  const locations =
+    filterOptions.states.length > 0
+      ? filterOptions.states
+      : ['Florida', 'California', 'Texas', 'New York', 'Massachusetts'];
+
+  // Fetch filter options on mount
+  useEffect(() => {
+    const fetchFilterOptions = async () => {
+      try {
+        console.log('Fetching filter options...');
+        const options = await getFilterOptions();
+        console.log('Filter options received:', options);
+        setFilterOptions(options);
+      } catch (error) {
+        console.error('Error fetching filter options:', error);
+      }
+    };
+    fetchFilterOptions();
+  }, []);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -143,7 +168,13 @@ const SearchComponent = () => {
       console.log('AI Query Data:', queryData);
 
       const aiResponse = await postAiQuery({ queryData });
-      if (aiResponse?.success && aiResponse?.data) {
+      console.log('AI Response:', aiResponse);
+
+      if (
+        aiResponse?.data &&
+        !aiResponse?.error &&
+        Array.isArray(aiResponse.data)
+      ) {
         const convertedData: ApiBoatData[] = aiResponse.data;
         const yachtProducts = convertedData.map((boat) =>
           convertApiDataToYachtProduct(boat),
@@ -153,9 +184,88 @@ const SearchComponent = () => {
         setIsSearchActive(true);
         setQueryData(queryData);
         router.push('/search-listing');
+      } else if (aiResponse?.error) {
+        console.error('AI Query returned error:', aiResponse.error);
       }
     } catch (error) {
       console.error('AI Search Error:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const findMyBoat = async () => {
+    setIsLoading(true);
+    try {
+      // Build filter parameters matching backend API
+      const filterParams: Record<string, string | number> = {
+        page: 1,
+        limit: 100,
+      };
+
+      // Map form fields to API parameters
+      if (make && make !== INITIAL_VALUES.make) {
+        filterParams.make = make;
+      }
+      if (model && model !== INITIAL_VALUES.model) {
+        filterParams.model = model;
+      }
+      if (boatType && boatType !== INITIAL_VALUES.boatType) {
+        filterParams.class = boatType;
+      }
+
+      // Year: use as both buildYearFrom and buildYearTo
+      if (year && year !== INITIAL_VALUES.year) {
+        const yearNum = parseInt(year);
+        if (!isNaN(yearNum)) {
+          filterParams.buildYearStart = yearNum;
+          filterParams.buildYearEnd = yearNum;
+        }
+      }
+
+      // Price: priceMin defaults to 0, priceMax from maxPrice field
+      filterParams.priceStart = 0;
+      if (maxPrice && maxPrice !== INITIAL_VALUES.maxPrice) {
+        const priceNum = parseFloat(maxPrice.replace(/[$,]/g, ''));
+        if (!isNaN(priceNum) && priceNum > 0) {
+          filterParams.priceEnd = priceNum;
+        }
+      }
+
+      // Length: use as both lengthFrom and lengthTo
+      if (length && length !== INITIAL_VALUES.length) {
+        const lengthNum = parseFloat(length);
+        if (!isNaN(lengthNum)) {
+          filterParams.lengthStart = lengthNum;
+          filterParams.lengthEnd = lengthNum;
+        }
+      }
+
+      console.log('Find My Boat - Filter Params:', filterParams);
+
+      // Call filter API
+      const response = await getFilteredBoats(filterParams);
+
+      if (response.success && response.data) {
+        // Convert API data to yacht products
+        const yachtProducts = response.data.map((boat: ApiBoatData) =>
+          convertApiDataToYachtProduct(boat),
+        );
+
+        setSearchResults(yachtProducts);
+        setIsSearchActive(true);
+        router.push('/search-listing');
+      } else {
+        console.error('No boats found with current filters');
+        setSearchResults([]);
+        setIsSearchActive(true);
+        router.push('/search-listing');
+      }
+    } catch (error) {
+      console.error('Error finding boats:', error);
+      setSearchResults([]);
+      setIsSearchActive(true);
+      router.push('/search-listing');
     } finally {
       setIsLoading(false);
     }
@@ -326,9 +436,15 @@ const SearchComponent = () => {
             </button>
           </div>
 
-          <button className="px-8 py-2 md:py-3 bg-secondary hover:bg-blue-700 text-white rounded-2xl font-medium transition-colors hidden items-center justify-center gap-2 whitespace-nowrap shadow-md md:flex">
-            <IoSearch className="md:text-lg" />
-            Find My Boat
+          <button
+            onClick={findMyBoat}
+            disabled={isLoading}
+            className="px-8 py-2 md:py-3 bg-secondary hover:bg-blue-700 text-white rounded-2xl font-medium transition-colors hidden items-center justify-center gap-2 whitespace-nowrap shadow-md md:flex disabled:opacity-70 disabled:cursor-not-allowed active:scale-95"
+          >
+            <IoSearch
+              className={`md:text-lg ${isLoading ? 'animate-spin' : ''}`}
+            />
+            {isLoading ? 'Searching...' : 'Find My Boat'}
           </button>
         </div>
       </div>

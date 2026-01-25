@@ -1,5 +1,6 @@
 import bannerDown from '@/assets/yacht-images/subscription.png';
 import Image from 'next/image';
+import Link from 'next/link';
 const AdComponent = () => {
   return (
     <div className="pb-10 relative rounded-2xl">
@@ -16,9 +17,12 @@ const AdComponent = () => {
           Reach thousands of qualified buyers in Florida’s most active yacht
           marketplace.
         </p>
-        <button className="px-2 md:px-5 py-1 md:py-2 rounded-2xl bg-black text-xs md:text-base text-white">
+        <Link
+          href={'/register-boat'}
+          className="px-2 md:px-5 py-1 md:py-2 rounded-2xl bg-black text-xs md:text-base text-white"
+        >
           Sell Your Boat
-        </button>
+        </Link>
       </div>
     </div>
   );
