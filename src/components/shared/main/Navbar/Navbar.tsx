@@ -80,7 +80,7 @@ const Navbar = () => {
   };
   return (
     <nav
-      className={`fixed top-2 md:top-3 inset-x-2 md:inset-x-5  rounded-2xl px-3 py-2 text-white z-50 h-20 md:h-24 ${
+      className={`fixed top-2 md:top-3 inset-x-2 md:inset-x-5  rounded-2xl px-3 py-2 text-white z-100 h-20 md:h-24 ${
         scrolled ? 'bg-black/30 backdrop-blur-xs' : 'bg-transparent'
       }`}
     >
