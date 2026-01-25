@@ -98,7 +98,7 @@ const WhyUs = () => {
 
               <div className="pt-2 md:pt-4">
                 <Link
-                  href={data.buttonLink || '/about-us'}
+                  href={'/register-boat'}
                   className="inline-block bg-secondary hover:bg-blue-700 text-white font-medium px-4 md:px-8 py-2 md:py-3.5 rounded-lg transition-colors shadow-md"
                 >
                   {data.buttonText}
