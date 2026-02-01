@@ -28,9 +28,7 @@ export default function RootLayout({
         className={`${inter.className} max-w-screen overflow-x-hidden antialiased font-inter`}
         suppressHydrationWarning
       >
-        <Providers token={null}>
-          {children}
-        </Providers>
+        <Providers token={null}>{children}</Providers>
       </body>
     </html>
   );
