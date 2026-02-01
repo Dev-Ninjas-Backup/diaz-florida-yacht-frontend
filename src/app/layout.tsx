@@ -1,7 +1,6 @@
 import Providers from '@/providers/Providers';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { Toaster } from 'sonner';
 import './globals.css';
 
 const inter = Inter({
@@ -30,7 +29,6 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <Providers token={null}>
-          <Toaster />
           {children}
         </Providers>
       </body>
