@@ -17,7 +17,7 @@ import BlogInformations from './_components/BlogInformations';
 interface BlogCardData {
   id: string;
   title: string;
-  excerpt: string;
+  discription: string;
   readTime: string;
   publishDate: string;
   featuredImage: {
@@ -58,7 +58,9 @@ const BlogDetailsPage = () => {
             title: item.blogTitle,
             readTime: `${item.readTime} min read`,
             publishDate: item.createdAt,
-            excerpt: item.blogDescription.replace(/<[^>]+>/g, '').slice(0, 120),
+            discription: item.blogDescription
+              .replace(/<[^>]+>/g, '')
+              .slice(0, 120),
             featuredImage: {
               url: item.blogImage?.url ?? '',
               alt: item.blogTitle,
