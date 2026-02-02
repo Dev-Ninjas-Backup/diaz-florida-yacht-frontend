@@ -34,7 +34,9 @@ const DockSideBlog = () => {
           title: item.blogTitle,
           readTime: `${item.readTime} min read`,
           publishDate: item.createdAt,
-          discription: item.blogDescription.replace(/<[^>]+>/g, '').slice(0, 140),
+          discription: item.blogDescription
+            .replace(/<[^>]+>/g, '')
+            .slice(0, 140),
           featuredImage: {
             url: item.blogImage?.url ?? '',
             alt: item.blogTitle,
