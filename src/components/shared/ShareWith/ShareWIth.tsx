@@ -67,7 +67,7 @@ const ShareWIth = () => {
           </span>
           <button
             onClick={handleCopyLink}
-            className="flex items-center gap-2 px-2 py-2 text-gray-700 rounded-lg transition-colors text-sm font-medium"
+            className="flex items-center gap-2 px-2 py-2 text-gray-700 rounded-lg transition-colors text-sm font-medium cursor-pointer"
             title="Copy link"
           >
             <MdContentCopy size={18} />
