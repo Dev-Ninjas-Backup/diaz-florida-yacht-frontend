@@ -1,13 +1,13 @@
 'use client';
 
-import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import React from 'react';
 
 interface BlogCardData {
   id: string;
   title: string;
-  excerpt: string;
+  discription: string;
   readTime: string;
   publishDate: string;
   featuredImage: {
@@ -21,6 +21,7 @@ interface BlogCardProps {
 }
 
 const BlogCard: React.FC<BlogCardProps> = ({ blog }) => {
+  console.log('blog', blog.discription);
   return (
     <div className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 flex flex-col">
       {/* Image */}
@@ -54,9 +55,10 @@ const BlogCard: React.FC<BlogCardProps> = ({ blog }) => {
           {blog.title}
         </h3>
 
-        <p className="text-gray-400 text-sm leading-relaxed mb-4 line-clamp-2 flex-1">
-          {blog.excerpt}
-        </p>
+        <div
+          className="text-gray-400 text-sm leading-relaxed mb-4 line-clamp-2 flex-1"
+          dangerouslySetInnerHTML={{ __html: blog.discription }}
+        />
 
         <Link
           href={`/blogs/${blog.id}`}
