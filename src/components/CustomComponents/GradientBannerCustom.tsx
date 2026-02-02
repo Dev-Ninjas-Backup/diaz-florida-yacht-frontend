@@ -4,7 +4,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import BannerNav from '../shared/main/Navbar/BannerNav';
 import CustomContainer from './CustomContainer';
 
-const GradientBannerCustom = ({ children }: { children: React.ReactNode }) => {
+const GradientBannerCustom = ({
+  children,
+  showNav = true,
+}: {
+  children: React.ReactNode;
+  showNav?: boolean;
+}) => {
   const [bannerHeight, setBannerHeight] = useState(0);
   const bannerRef = useRef<HTMLDivElement>(null);
 
@@ -44,9 +50,9 @@ const GradientBannerCustom = ({ children }: { children: React.ReactNode }) => {
         ref={bannerRef}
         className="bg-linear-to-b from-[#006EF0] to-[#00CABE] rounded-xl md:rounded-2xl fixed top-0 left-0 right-0 z-50 mx-1 sm:mx-2 md:mx-5 my-1 sm:my-2 md:my-3"
       >
-        <BannerNav />
+        {showNav && <BannerNav />}
         <CustomContainer>
-          <div className="py-1 sm:py-2">{children}</div>
+          <div className="py-1 sm:py-2 md:py-4">{children}</div>
         </CustomContainer>
       </div>
     </>

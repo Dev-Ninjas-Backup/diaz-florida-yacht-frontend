@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/dialog';
 import { chatHistory, sendMessageToChatBot } from '@/services/chatBot';
 import type { ChatbotModalProps } from '@/types/chatbot-types';
-import { ChevronLeft, Send } from 'lucide-react';
+import { Send, X } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
 import { IoSparklesSharp } from 'react-icons/io5';
 import AnimatedLoadingMessages from './AnimatedLoadingMessages';
@@ -105,7 +105,7 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent
-        className="max-w-[90vw] sm:max-w-md md:max-w-2xl h-[90vh] p-0 gap-0 overflow-hidden flex flex-col"
+        className="max-w-[80vw] sm:max-w-md md:max-w-2xl lg:h-[70vh] h-[50vh] p-0 gap-0 overflow-hidden flex flex-col"
         showCloseButton={false}
       >
         <DialogTitle className="sr-only">
@@ -124,10 +124,10 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+            className="p-2 hover:bg-gray-100 rounded-full transition-colors cursor-pointer"
             aria-label="Close"
           >
-            <ChevronLeft className="w-5 h-5 text-gray-700" />
+            <X className="w-5 h-5 text-gray-700" />
           </button>
         </div>
 
@@ -174,7 +174,7 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({
           {!isSearching && chatMessages.length === 0 && (
             <div className="px-4 py-8 text-center">
               <IoSparklesSharp className="text-[#004DAC] text-4xl mx-auto mb-3" />
-              <p className="text-lg font-medium text-gray-900 mb-2">
+              <p className="text-sm lg:text-lg font-medium text-gray-900 mb-2">
                 Welcome to Florida Yacht Trader AI
               </p>
               <p className="text-sm text-gray-500">

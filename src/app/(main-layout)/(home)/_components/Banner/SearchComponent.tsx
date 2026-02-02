@@ -439,7 +439,7 @@ const SearchComponent = () => {
           <button
             onClick={findMyBoat}
             disabled={isLoading}
-            className="px-8 py-2 md:py-3 bg-secondary hover:bg-blue-700 text-white rounded-2xl font-medium transition-colors hidden items-center justify-center gap-2 whitespace-nowrap shadow-md md:flex disabled:opacity-70 disabled:cursor-not-allowed active:scale-95"
+            className="mt-4 md:mt-0 px-8 py-3 bg-secondary hover:bg-blue-700 text-white rounded-2xl font-medium transition-colors flex items-center justify-center gap-2 whitespace-nowrap shadow-md disabled:opacity-70 disabled:cursor-not-allowed active:scale-95"
           >
             <IoSearch
               className={`md:text-lg ${isLoading ? 'animate-spin' : ''}`}
