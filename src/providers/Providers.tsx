@@ -13,9 +13,7 @@ const Providers = ({ children, token }: ProvidersProps) => {
   return (
     <UserProvider>
       <VisitorTrackingProvider>
-        <NotificationProvider token={token}>
-          {children}
-        </NotificationProvider>
+        <NotificationProvider token={token}>{children}</NotificationProvider>
       </VisitorTrackingProvider>
     </UserProvider>
   );

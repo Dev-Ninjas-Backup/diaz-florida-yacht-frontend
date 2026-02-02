@@ -32,9 +32,7 @@ export default async function RootLayout({
         className={`${inter.className} max-w-screen overflow-x-hidden antialiased font-inter`}
         suppressHydrationWarning
       >
-        <Providers token={token}>
-          {children}
-        </Providers>
+        <Providers token={token}>{children}</Providers>
         <Toaster position="top-right" />
       </body>
     </html>
