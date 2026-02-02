@@ -47,3 +47,27 @@ export const updateBoatListing = async (boatId: string, formData: FormData) => {
     return { success: false, message: msg };
   }
 };
+
+
+export const deleteBoatListing = async (boatId: string) => {
+  try {
+    const token = await getValidToken();
+
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/admin/listings/${boatId}`,
+      {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+
+    const data = await res.json();
+    return data;
+  } catch (error: unknown) {
+    const msg = error instanceof Error ? error.message : String(error);
+    return { success: false, message: msg };
+  }
+};
+  
