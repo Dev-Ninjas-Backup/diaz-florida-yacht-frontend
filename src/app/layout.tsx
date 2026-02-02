@@ -14,9 +14,6 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'Florida yacht trader',
   description: 'Hire with trust, Work with confidence.',
-  // icons: {
-  //   icon: "/favicon.svg",
-  // },
 };
 
 export default async function RootLayout({
