@@ -1,7 +1,6 @@
 'use client';
 
 import UserProvider from '@/context/UserContext';
-import { Toaster } from 'sonner';
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -9,12 +8,7 @@ interface ProvidersProps {
 }
 
 const Providers = ({ children }: ProvidersProps) => {
-  return (
-    <UserProvider>
-      <Toaster position="top-center" />
-      {children}
-    </UserProvider>
-  );
+  return <UserProvider>{children}</UserProvider>;
 };
 
 export default Providers;
