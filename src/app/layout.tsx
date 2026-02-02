@@ -1,3 +1,4 @@
+import { getValidToken } from '@/lib/verifyAuth';
 import Providers from '@/providers/Providers';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
@@ -18,18 +19,22 @@ export const metadata: Metadata = {
   // },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const token = await getValidToken();
+
   return (
     <html lang="en">
       <body
         className={`${inter.className} max-w-screen overflow-x-hidden antialiased font-inter`}
         suppressHydrationWarning
       >
-        <Providers token={null}>{children}</Providers>
+        <Providers token={token}>
+          {children}
+        </Providers>
         <Toaster position="top-right" />
       </body>
     </html>

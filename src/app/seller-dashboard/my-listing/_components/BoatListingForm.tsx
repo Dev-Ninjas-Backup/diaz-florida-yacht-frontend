@@ -18,6 +18,7 @@ import {
   updateBoatListing,
 } from '@/services/seller/boat-listing';
 import { BoatDetail } from '@/types/boat-detail-types';
+import { FieldLimitations } from '@/types/subscription-types';
 import { useState } from 'react';
 
 interface BoatListingFormProps {
@@ -32,6 +33,12 @@ export default function BoatListingForm({
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [imagesToDelete, setImagesToDelete] = useState<string[]>([]);
+
+  // For seller dashboard, use generous defaults as users already have subscriptions
+  const fieldLimitations: FieldLimitations = {
+    picLimit: 50, // Generous limit for existing listings
+    wordLimit: 5000, // Generous word limit
+  };
 
   const handleDeleteImage = (imageId: string) => {
     setImagesToDelete((prev) =>
@@ -318,9 +325,10 @@ export default function BoatListingForm({
                       boatData={boatData}
                       imagesToDelete={imagesToDelete}
                       onDeleteImage={handleDeleteImage}
+                      fieldLimitations={fieldLimitations}
                     />
                   ) : (
-                    <Step2Form />
+                    <Step2Form fieldLimitations={fieldLimitations} />
                   )}
                 </FormProvider>
 

@@ -14,6 +14,7 @@ interface CoverPhotoUploadProps {
   label?: string;
   required?: boolean;
   className?: string;
+  disabled?: boolean;
 }
 
 export const CoverPhotoUpload: React.FC<CoverPhotoUploadProps> = ({
@@ -21,6 +22,7 @@ export const CoverPhotoUpload: React.FC<CoverPhotoUploadProps> = ({
   label = 'Cover Photo',
   required = false,
   className = '',
+  disabled = false,
 }) => {
   const {
     formState: { errors },
@@ -75,10 +77,11 @@ export const CoverPhotoUpload: React.FC<CoverPhotoUploadProps> = ({
               onChange={handleFileChange}
               className="hidden"
               id={`${name}-input`}
+              disabled={disabled}
             />
             <label
               htmlFor={`${name}-input`}
-              className="cursor-pointer flex flex-col items-center"
+              className={`flex flex-col items-center ${disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
             >
               <svg
                 className="w-12 h-12 text-gray-400 mb-2"
@@ -93,7 +96,11 @@ export const CoverPhotoUpload: React.FC<CoverPhotoUploadProps> = ({
                   d="M12 4v16m8-8H4"
                 />
               </svg>
-              <p className="text-gray-600">Click to upload cover photo</p>
+              <p className="text-gray-600">
+                {disabled
+                  ? 'Select a package to upload cover photo'
+                  : 'Click to upload cover photo'}
+              </p>
               <p className="text-gray-400 text-sm mt-1">
                 PNG, JPG, JPEG up to 10MB
               </p>

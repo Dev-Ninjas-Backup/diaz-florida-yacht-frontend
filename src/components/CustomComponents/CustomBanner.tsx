@@ -21,7 +21,7 @@ const CustomBanner = ({
   const bannerImage = banner || '/placeholder-banner.jpg';
 
   return (
-    <div className="w-full h-[200px] xl:h-[300px] 2xl:h-[400px] relative rounded-2xl overflow-hidden">
+    <div className="w-full h-[200px] xl:h-[280px] 2xl:h-[350px] relative rounded-2xl overflow-hidden">
       <Image
         src={bannerImage}
         alt={bannerTitle || 'Banner'}
@@ -38,7 +38,7 @@ const CustomBanner = ({
             ) : (
               <div className="space-y-3">
                 {bannerTitle && (
-                  <h1 className="text-white text-xl md:text-4xl xl:text-5xl 2xl:text-6xl uppercase font-bold md:tracking-[5px] leading-normal">
+                  <h1 className="text-white text-xl md:text-3xl xl:text-4xl 2xl:text-5xl uppercase font-bold md:tracking-[5px] leading-normal">
                     {bannerTitle}
                   </h1>
                 )}

@@ -29,3 +29,8 @@ export interface SubscriptionApiResponse {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface FieldLimitations {
+  picLimit: number;
+  wordLimit: number;
+}
