@@ -186,7 +186,7 @@ const ContactForm = () => {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="bg-secondary hover:bg-[#0052CC] text-white font-semibold px-8 py-3 rounded-lg transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed"
+          className="bg-secondary hover:bg-[#0052CC] text-white font-semibold px-8 py-3 rounded-lg transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
         >
           {isSubmitting ? 'Sending...' : 'Send Message'}
         </button>

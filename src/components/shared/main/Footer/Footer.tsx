@@ -89,6 +89,8 @@ const Footer = () => {
 
   // Default/fallback data
   const companyName = footerData?.companyName || 'Florida Yacht Trader';
+  const logoUrl = footerData?.logoUrl || logo;
+
   const companyDescription = footerData?.companyDescription;
   const quickLinks = footerData?.quickLinks || [
     { url: '/', label: 'Home' },
@@ -112,19 +114,21 @@ const Footer = () => {
     <footer className="bg-[#1a1a1a] text-white">
       <CustomContainer>
         {/* Main Footer Content */}
-        <div className=" mx-auto px-4 sm:px-5 lg:px-6 py-12 lg:py-16">
+        <div className=" mx-auto px-2 py-12 lg:py-16">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
             {/* Logo and Member Section */}
             <div className="space-y-6">
               <div className="flex items-center gap-3">
                 <div className="w-18 h-16 rounded-full flex items-center justify-center p-2 ">
-                  <Image
-                    src={logo}
-                    alt={`${companyName} Logo`}
-                    width={80}
-                    height={80}
-                    className="w-20 h-14"
-                  />
+                  {logoUrl && (
+                    <Image
+                      src={logoUrl}
+                      alt={`${companyName} Logo`}
+                      width={80}
+                      height={80}
+                      className="w-20 h-14"
+                    />
+                  )}
                 </div>
                 <h2 className="text-xl sm:text-2xl font-bold">{companyName}</h2>
               </div>
