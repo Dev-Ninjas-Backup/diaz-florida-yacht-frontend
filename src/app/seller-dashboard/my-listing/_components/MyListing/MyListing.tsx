@@ -143,7 +143,10 @@ const MyListing = () => {
           >
             <SquarePen size={16} />
           </Link>
-          <button onClick={() => handleDelete(row.id)} className="text-orange-600 hover:text-red-600 focus:outline-none focus:text-red-600 cursor-pointer bg-#FEE3D7] p-1 rounded-full border border-[#EDC2AF]">
+          <button
+            onClick={() => handleDelete(row.id)}
+            className="text-orange-600 hover:text-red-600 focus:outline-none focus:text-red-600 cursor-pointer bg-#FEE3D7] p-1 rounded-full border border-[#EDC2AF]"
+          >
             <Trash2 size={18} />
           </button>
         </div>

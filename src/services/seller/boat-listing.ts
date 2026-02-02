@@ -48,7 +48,6 @@ export const updateBoatListing = async (boatId: string, formData: FormData) => {
   }
 };
 
-
 export const deleteBoatListing = async (boatId: string) => {
   try {
     const token = await getValidToken();
@@ -70,4 +69,3 @@ export const deleteBoatListing = async (boatId: string) => {
     return { success: false, message: msg };
   }
 };
-  
