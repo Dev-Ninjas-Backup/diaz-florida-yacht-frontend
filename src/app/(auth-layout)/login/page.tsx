@@ -24,7 +24,6 @@ const LoginPage: React.FC = () => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
       <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-md p-8 md:p-10">
-
         {/* Logo */}
         <div className="flex justify-center mb-6">
           <div
