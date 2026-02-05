@@ -10,11 +10,7 @@ import { LOGIN_LABELS, LOGO_CONFIG } from '@/components/Login/constants';
 import { useLoginForm } from '@/components/Login/useLoginForm';
 import React from 'react';
 
-interface LoginProps {
-  onClose?: () => void;
-}
-
-const LoginPage: React.FC<LoginProps> = ({ onClose }) => {
+const LoginPage: React.FC = () => {
   const {
     formData,
     showPassword,
@@ -23,33 +19,11 @@ const LoginPage: React.FC<LoginProps> = ({ onClose }) => {
     togglePassword,
     handleSubmit,
     handleGoogleLogin,
-  } = useLoginForm({ onClose });
+  } = useLoginForm({ onClose: undefined });
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
       <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-md p-8 md:p-10">
-        {/* Close Button */}
-        {onClose && (
-          <button
-            onClick={onClose}
-            className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
-            aria-label="Close"
-          >
-            <svg
-              className="w-5 h-5 text-gray-600"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        )}
 
         {/* Logo */}
         <div className="flex justify-center mb-6">

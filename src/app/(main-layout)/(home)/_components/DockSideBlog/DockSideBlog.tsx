@@ -5,11 +5,13 @@ import BlogCard from '@/components/Blog/BlogCard';
 import React, { useEffect, useState } from 'react';
 import { getBlogs } from '@/services/blog/blog';
 import Link from 'next/link';
+import LoadingSpinner from '@/components/shared/LoadingSpinner/LoadingSpinner';
+import { NoDataFound } from '@/components/ui/no-data-found';
 
 type BlogUI = {
   id: string;
   title: string;
-  excerpt: string;
+  description: string;
   readTime: string;
   publishDate: string;
   featuredImage: {
@@ -32,7 +34,9 @@ const DockSideBlog = () => {
           title: item.blogTitle,
           readTime: `${item.readTime} min read`,
           publishDate: item.createdAt,
-          excerpt: item.blogDescription.replace(/<[^>]+>/g, '').slice(0, 140),
+          description: item.blogDescription
+            .replace(/<[^>]+>/g, '')
+            .slice(0, 140),
           featuredImage: {
             url: item.blogImage?.url ?? '',
             alt: item.blogTitle,
@@ -50,8 +54,8 @@ const DockSideBlog = () => {
     loadBlogs();
   }, []);
 
-  if (loading) return <div className="">Loading ...</div>;
-  if (blogs.length === 0) return <div className="">No data</div>;
+  if (loading) return <LoadingSpinner message="Loading blogs..." />;
+  if (blogs.length === 0) return <NoDataFound title="No blogs found" />;
 
   return (
     <CustomContainer>

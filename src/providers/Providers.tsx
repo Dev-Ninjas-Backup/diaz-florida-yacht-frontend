@@ -3,7 +3,6 @@
 import { NotificationProvider } from '@/context/NotificationContext';
 import UserProvider from '@/context/UserContext';
 import { VisitorTrackingProvider } from '@/context/VisitorTrackingContext';
-import { Toaster } from 'sonner';
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -14,10 +13,7 @@ const Providers = ({ children, token }: ProvidersProps) => {
   return (
     <UserProvider>
       <VisitorTrackingProvider>
-        <NotificationProvider token={token}>
-          <Toaster position="top-center" />
-          {children}
-        </NotificationProvider>
+        <NotificationProvider token={token}>{children}</NotificationProvider>
       </VisitorTrackingProvider>
     </UserProvider>
   );
