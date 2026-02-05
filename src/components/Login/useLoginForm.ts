@@ -1,8 +1,3 @@
-
-
-
-
-
 import { useAuth } from '@/hooks/useAuth';
 import { loginService } from '@/services/auth';
 import { useRouter } from 'next/navigation';
@@ -27,9 +22,6 @@ export const useLoginForm = ({ onClose }: UseLoginFormProps = {}) => {
   const router = useRouter();
   const { refreshUser } = useAuth();
 
-  
-
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
@@ -38,20 +30,13 @@ export const useLoginForm = ({ onClose }: UseLoginFormProps = {}) => {
     }));
   };
 
-  
-
-
   const togglePassword = () => {
     setShowPassword((prev) => !prev);
   };
 
-  
-
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    
     const validation = validateLoginForm(formData.email, formData.password);
     if (!validation.isValid) {
       toast.error(validation.error || LOGIN_ERRORS.unexpectedError);
@@ -75,7 +60,6 @@ export const useLoginForm = ({ onClose }: UseLoginFormProps = {}) => {
           if (onClose) onClose();
         }, 1500);
       } else {
-        
         setIsSubmitting(false);
         const errorMessage =
           'message' in result ? result.message : LOGIN_ERRORS.loginFailed;
@@ -94,15 +78,9 @@ export const useLoginForm = ({ onClose }: UseLoginFormProps = {}) => {
     }
   };
 
-  
-
-
   const handleGoogleLogin = () => {
     toast.info(LOGIN_SUCCESS_MESSAGES.googleComingSoon);
   };
-
-  
-
 
   const resetForm = () => {
     setFormData({

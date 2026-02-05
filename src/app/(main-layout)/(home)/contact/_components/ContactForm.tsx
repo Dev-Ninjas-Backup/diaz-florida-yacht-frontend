@@ -52,7 +52,6 @@ const ContactForm = () => {
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-      
       <div>
         <label htmlFor="fullName" className="block text-sm font-medium  mb-2">
           Full Name<span className="text-red-500">*</span>
@@ -77,9 +76,7 @@ const ContactForm = () => {
         )}
       </div>
 
-      
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        
         <div>
           <label htmlFor="phone" className="block text-sm font-medium  mb-2">
             Phone<span className="text-red-500">*</span>
@@ -100,7 +97,6 @@ const ContactForm = () => {
           )}
         </div>
 
-        
         <div>
           <label htmlFor="email" className="block text-sm font-medium  mb-2">
             Email<span className="text-red-500">*</span>
@@ -126,7 +122,6 @@ const ContactForm = () => {
         </div>
       </div>
 
-      
       <div>
         <label
           htmlFor="boatInformation"
@@ -156,7 +151,6 @@ const ContactForm = () => {
         )}
       </div>
 
-      
       <div>
         <label htmlFor="comments" className="block text-sm font-medium  mb-2">
           Comments<span className="text-red-500">*</span>
@@ -181,7 +175,6 @@ const ContactForm = () => {
         )}
       </div>
 
-      
       <div className="pt-2">
         <button
           type="submit"

@@ -21,7 +21,6 @@ const Navbar = () => {
     }
   };
 
-  
   useEffect(() => {
     getLocation();
   }, [getLocation]);
@@ -35,7 +34,6 @@ const Navbar = () => {
       window.removeEventListener('scroll', handleChangeBackgroundOnScroll);
   }, []);
 
-  
   const getUserDisplayName = () => {
     if (!user) return null;
     return (
@@ -53,26 +51,23 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      
       await logoutService();
     } catch (err) {
       console.error('Logout error:', err);
     }
 
-    
     clearUser();
     clearAuthCookies();
     setAccountOpen(false);
   };
-  
+
   const getLocationDisplay = () => {
     if (loading) return 'Getting location...';
     if (error) return 'Location unavailable';
     if (location) return `${location.city}, ${location.state}`;
-    return 'Florida - USA'; 
+    return 'Florida - USA';
   };
 
-  
   const handleLocationClick = () => {
     if (!loading) {
       getLocation();

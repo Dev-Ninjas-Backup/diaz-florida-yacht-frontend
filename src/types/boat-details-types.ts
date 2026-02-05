@@ -91,7 +91,6 @@ export interface BoatSpecification {
   value: string | number | boolean | null;
 }
 
-
 export function transformBoatDetailsToSpecifications(
   boat: BoatDetails,
 ): BoatSpecification[] {
@@ -206,7 +205,6 @@ export function transformBoatDetailsToSpecifications(
         : []),
   ];
 }
-
 
 export function transformBoatImagesToUrls(boat: BoatDetails): string[] {
   const coverUrls = boat.coverImages?.map((img) => img.url) || [];

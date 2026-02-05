@@ -1,8 +1,3 @@
-
-
-
-
-
 import { useCallback, useEffect, useState } from 'react';
 
 interface LocationData {
@@ -26,10 +21,6 @@ interface UseLocationReturn {
   clearLocation: () => void;
 }
 
-
-
-
-
 const reverseGeocode = async (
   latitude: number,
   longitude: number,
@@ -38,7 +29,7 @@ const reverseGeocode = async (
     `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&addressdetails=1&zoom=10`,
     {
       headers: {
-        'User-Agent': 'Diaz-Florida-Yacht-App/1.0', 
+        'User-Agent': 'Diaz-Florida-Yacht-App/1.0',
       },
     },
   );
@@ -65,23 +56,15 @@ const reverseGeocode = async (
   };
 };
 
-
-
-
-
 export const useLocation = (): UseLocationReturn => {
   const [location, setLocation] = useState<LocationData | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<LocationError | null>(null);
 
-  
-
-
   const getLocation = useCallback(async (): Promise<void> => {
     setLoading(true);
     setError(null);
 
-    
     if (!navigator.geolocation) {
       setError({
         code: -1,
@@ -96,15 +79,14 @@ export const useLocation = (): UseLocationReturn => {
         (resolve, reject) => {
           navigator.geolocation.getCurrentPosition(resolve, reject, {
             enableHighAccuracy: true,
-            timeout: 10000, 
-            maximumAge: 300000, 
+            timeout: 10000,
+            maximumAge: 300000,
           });
         },
       );
 
       const { latitude, longitude } = position.coords;
 
-      
       const locationData = await reverseGeocode(latitude, longitude);
 
       setLocation(locationData);
@@ -144,9 +126,6 @@ export const useLocation = (): UseLocationReturn => {
     }
   }, []);
 
-  
-
-
   const clearLocation = useCallback(() => {
     setLocation(null);
     setError(null);
@@ -160,9 +139,6 @@ export const useLocation = (): UseLocationReturn => {
     clearLocation,
   };
 };
-
-
-
 
 export const useLocationAuto = (
   autoLoad: boolean = false,

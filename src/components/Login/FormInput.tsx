@@ -1,8 +1,3 @@
-
-
-
-
-
 import React from 'react';
 import type { FormInputProps } from './types';
 

@@ -27,10 +27,9 @@ const ShowItemsLocation = ({
       : 'https://floridayachttrader.com/boat-details/2011-viking-44';
   const shareTitle = `${name} - Florida Yacht Trader`;
   const shareText = 'Check out this boat listing!';
-  
+
   const osmEmbedUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${longitude - 0.01},${latitude - 0.01},${longitude + 0.01},${latitude + 0.01}&layer=mapnik&marker=${latitude},${longitude}`;
 
-  
   const handleCopyLink = async () => {
     try {
       await navigator.clipboard.writeText(shareUrl);
@@ -42,7 +41,6 @@ const ShowItemsLocation = ({
     }
   };
 
-  
   const handleWhatsAppShare = () => {
     const url = `https://wa.me/?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`;
     window.open(url, '_blank');
@@ -78,7 +76,6 @@ const ShowItemsLocation = ({
         </div>
       </div>
       <div className="">
-        
         <div className="w-full h-[400px] rounded-2xl overflow-hidden border border-gray-300">
           <iframe
             width="100%"

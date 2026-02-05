@@ -1,8 +1,3 @@
-
-
-
-
-
 export const LOGIN_LABELS = {
   title: 'Login',
   email: 'Email',
@@ -47,5 +42,5 @@ export const LOGO_CONFIG = {
 export const FORM_CONFIG = {
   minPasswordLength: 6,
   rememberMeDefault: false,
-  submitDelay: 1500, 
+  submitDelay: 1500,
 } as const;

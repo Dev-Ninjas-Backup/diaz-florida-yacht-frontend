@@ -1,6 +1,5 @@
 import { loadStripe, Stripe, StripeElementsOptions } from '@stripe/stripe-js';
 
-
 let stripeInstance: Promise<Stripe | null> | null = null;
 
 export const getStripeInstance = (): Promise<Stripe | null> => {
@@ -26,10 +25,10 @@ export const getStripeElementsOptions = (
   appearance: {
     theme: 'stripe',
     variables: {
-      colorPrimary: '#2563eb', 
+      colorPrimary: '#2563eb',
       colorBackground: '#ffffff',
-      colorText: '#1f2937', 
-      colorDanger: '#ef4444', 
+      colorText: '#1f2937',
+      colorDanger: '#ef4444',
       fontFamily: 'system-ui, sans-serif',
       spacingUnit: '4px',
       borderRadius: '8px',

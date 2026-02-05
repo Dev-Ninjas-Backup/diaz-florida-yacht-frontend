@@ -55,7 +55,6 @@ const RegisterBoatForm = () => {
     wordLimit: 0,
   });
 
-  
   useEffect(() => {
     const fetchPlans = async () => {
       try {
@@ -86,7 +85,6 @@ const RegisterBoatForm = () => {
     fetchPlans();
   }, []);
 
-  
   const combineSchema = z.object({
     ...step1Schema.shape,
     ...step2Schema.shape,
@@ -97,10 +95,9 @@ const RegisterBoatForm = () => {
     resolver: zodResolver(combineSchema),
     mode: 'onChange',
     defaultValues: {
-      
       selectedPackage: '',
       promoCode: '',
-      
+
       buildYear: '',
       make: '',
       model: '',
@@ -145,7 +142,6 @@ const RegisterBoatForm = () => {
       coverPhoto: undefined,
       mediaGallery: [],
 
-      
       firstName: '',
       lastName: '',
       contactNumber: '',
@@ -161,7 +157,6 @@ const RegisterBoatForm = () => {
   const selectedPackage = watch('selectedPackage');
   const numEngines = watch('numEngines');
 
-  
   useEffect(() => {
     const fetchFieldLimitations = async () => {
       if (selectedPackage) {
@@ -182,7 +177,6 @@ const RegisterBoatForm = () => {
           toast.error('Failed to fetch package limitations');
         }
       } else {
-        
         setFieldLimitations({ picLimit: 0, wordLimit: 0 });
       }
     };
@@ -190,7 +184,6 @@ const RegisterBoatForm = () => {
     fetchFieldLimitations();
   }, [selectedPackage]);
 
-  
   useEffect(() => {
     const engineCount = parseInt(numEngines) || 1;
     const currentEngines = getValues('engines') || [];
@@ -212,7 +205,6 @@ const RegisterBoatForm = () => {
     }
   }, [numEngines, getValues, setValue]);
 
-  
   const watchedFields = watch([
     'buildYear',
     'make',
@@ -252,12 +244,10 @@ const RegisterBoatForm = () => {
     } catch (error: any) {
       console.error('Form submission error:', error);
 
-      
       if (error?.response?.data?.errors) {
         const errors = error.response.data.errors;
         const errorMessages: Record<string, string> = {};
 
-        
         Object.keys(errors).forEach((key) => {
           errorMessages[key] = Array.isArray(errors[key])
             ? errors[key][0]
@@ -321,7 +311,6 @@ const RegisterBoatForm = () => {
         'confirmPassword',
       ]);
       if (isValid) {
-        
         handleFormSubmit();
         return;
       }
@@ -341,14 +330,11 @@ const RegisterBoatForm = () => {
   const handlePaymentSubmit = (paymentData: any) => {
     const allFormData = getValues() as BoatRegistrationFormValues;
 
-    
     console.log('\n========== BOAT REGISTRATION SUBMISSION ==========\n');
     logBoatRegistrationData(allFormData);
 
-    
     const formDataToSend = createBoatRegistrationFormData(allFormData);
 
-    
     console.log('\n========== FORMDATA ENTRIES ==========');
     console.log('planId:', formDataToSend.get('planId'));
     console.log(
@@ -388,7 +374,6 @@ const RegisterBoatForm = () => {
     <div>
       <CustomContainer>
         <div className="rounded-lg bg-[#F4F4F4] p-3 sm:p-5 md:p-8">
-          
           <div className="flex items-center gap-3 flex-wrap justify-between">
             <h1 className="text-lg sm:text-3xl font-semibold">
               Listing Progress
@@ -396,7 +381,6 @@ const RegisterBoatForm = () => {
             <span className="font-medium">Step {currentStep}</span>
           </div>
 
-          
           <div className="mt-6">
             <ProgressSteps
               currentStep={currentStep}
@@ -405,9 +389,7 @@ const RegisterBoatForm = () => {
             />
           </div>
 
-          
           <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-6">
-            
             <div
               className={`${currentStep === 1 ? 'col-span-3' : 'col-span-2'}`}
             >
@@ -425,7 +407,6 @@ const RegisterBoatForm = () => {
                   {currentStep === 3 && <Step3Form />}
                 </FormProvider>
 
-                
                 {Object.keys(backendErrors).length > 0 && (
                   <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg">
                     <h4 className="text-red-800 font-semibold mb-2">
@@ -442,7 +423,6 @@ const RegisterBoatForm = () => {
                   </div>
                 )}
 
-                
                 <div className="flex justify-between mt-8">
                   <Button
                     variant="outline"
@@ -463,7 +443,6 @@ const RegisterBoatForm = () => {
               </div>
             </div>
 
-            
             <div
               className={`${
                 currentStep === 1 ? 'hidden' : 'block'
@@ -472,7 +451,6 @@ const RegisterBoatForm = () => {
               <div className="p-4 sticky top-60 bg-white rounded-xl mt-8">
                 <h3 className="font-semibold mb-4">Preview</h3>
 
-                
                 {currentStep === 2 && (
                   <PreviewSection
                     buildYear={watchedFields[0]}
@@ -490,7 +468,6 @@ const RegisterBoatForm = () => {
                   />
                 )}
 
-                
                 {currentStep === 3 && (
                   <SellerPreviewSection
                     firstName={watchedFields[11]}
@@ -511,7 +488,6 @@ const RegisterBoatForm = () => {
         </div>
       </CustomContainer>
 
-      
       <PaymentModal
         isOpen={showPaymentModal}
         onClose={() => setShowPaymentModal(false)}

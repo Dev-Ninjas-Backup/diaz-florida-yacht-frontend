@@ -1,12 +1,4 @@
-
-
-
-
-
 import type { ValidationResult } from './types';
-
-
-
 
 export const validateEmail = (email: string): ValidationResult => {
   if (!email.trim()) {
@@ -21,9 +13,6 @@ export const validateEmail = (email: string): ValidationResult => {
   return { isValid: true };
 };
 
-
-
-
 export const validatePassword = (password: string): ValidationResult => {
   if (!password.trim()) {
     return { isValid: false, error: 'Password is required' };
@@ -35,9 +24,6 @@ export const validatePassword = (password: string): ValidationResult => {
 
   return { isValid: true };
 };
-
-
-
 
 export const validateLoginForm = (
   email: string,
@@ -55,9 +41,6 @@ export const validateLoginForm = (
 
   return { isValid: true };
 };
-
-
-
 
 export const sanitizeInput = (input: string): string => {
   return input.trim().replace(/[<>]/g, '');

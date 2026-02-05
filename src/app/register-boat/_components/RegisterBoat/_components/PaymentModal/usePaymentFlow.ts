@@ -18,7 +18,6 @@ export const usePaymentFlow = (
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  
   useEffect(() => {
     if (!isOpen) {
       setIsLoading(true);
@@ -37,7 +36,6 @@ export const usePaymentFlow = (
     setIsLoading(false);
   }, [isOpen]);
 
-  
   const handlePaymentSuccess = async () => {
     try {
       console.log('🎉 Payment completed successfully');
@@ -49,34 +47,26 @@ export const usePaymentFlow = (
         throw new Error('User ID not found');
       }
 
-      
       const { data: confirmResponse } =
         await confirmSubscriptionPayment(userId);
       console.log('✅ Subscription confirmed:', confirmResponse);
 
-      
       if (confirmResponse?.data?.user?.id) {
         clearPaymentStorage();
       }
 
-      
       onPaymentSuccess();
 
-      
       router.push('/login');
 
-      
       onClose();
     } catch (error) {
       console.error('❌ Error confirming subscription:', error);
-      
     }
   };
 
-  
   const handlePaymentError = (error: string) => {
     console.error('❌ Payment error:', error);
-    
   };
 
   return {

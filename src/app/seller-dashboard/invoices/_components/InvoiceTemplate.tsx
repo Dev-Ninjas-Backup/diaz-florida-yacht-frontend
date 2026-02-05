@@ -19,7 +19,6 @@ const InvoiceTemplate = React.forwardRef<HTMLDivElement, InvoiceTemplateProps>(
           color: '#000000',
         }}
       >
-        
         <div
           style={{
             marginBottom: '40px',
@@ -81,7 +80,6 @@ const InvoiceTemplate = React.forwardRef<HTMLDivElement, InvoiceTemplateProps>(
           </table>
         </div>
 
-        
         <div style={{ marginBottom: '40px' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <tbody>
@@ -161,7 +159,6 @@ const InvoiceTemplate = React.forwardRef<HTMLDivElement, InvoiceTemplateProps>(
           </table>
         </div>
 
-        
         <table
           style={{
             width: '100%',
@@ -248,7 +245,6 @@ const InvoiceTemplate = React.forwardRef<HTMLDivElement, InvoiceTemplateProps>(
           </tbody>
         </table>
 
-        
         <div style={{ marginBottom: '30px' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <tbody>
@@ -331,7 +327,6 @@ const InvoiceTemplate = React.forwardRef<HTMLDivElement, InvoiceTemplateProps>(
           </table>
         </div>
 
-        
         {invoice.paidAt && (
           <div
             style={{
@@ -349,7 +344,6 @@ const InvoiceTemplate = React.forwardRef<HTMLDivElement, InvoiceTemplateProps>(
           </div>
         )}
 
-        
         <div
           style={{
             borderTop: '1px solid #ddd',

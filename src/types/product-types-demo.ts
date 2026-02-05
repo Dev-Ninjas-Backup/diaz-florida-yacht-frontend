@@ -17,7 +17,7 @@ export interface YachtProduct {
   name: string;
   location: string;
   condition: string;
-  price?: number; 
+  price?: number;
   images: (string | StaticImageData)[];
   image: string | StaticImageData;
   link?: string;
@@ -29,7 +29,6 @@ export interface CategoryImg {
   name: string;
   image: string | StaticImageData;
 }
-
 
 export interface ApiBoatData {
   document_id: string;
@@ -48,7 +47,7 @@ export interface ApiBoatData {
     LastModifiedDateTime?: string;
   }>;
   link?: string;
-  
+
   Source?: string;
   DocumentID?: string;
   BeamMeasure?: string;
@@ -86,11 +85,9 @@ export interface ApiBoatData {
   MaxDraft?: string;
 }
 
-
 export function convertApiDataToYachtProduct(
   apiData: ApiBoatData,
 ): YachtProduct {
-  
   const documentId = apiData.document_id || apiData.DocumentID || '';
   const make = apiData.make || apiData.MakeString || 'Unknown Make';
   const model = apiData.model || apiData.Model || 'Unknown Model';
@@ -98,7 +95,6 @@ export function convertApiDataToYachtProduct(
   const location = apiData.location || apiData.BoatLocation;
   const link = apiData.link || apiData.Link || `/search-listing/${documentId}`;
 
-  
   let price: number | undefined;
   if (typeof apiData.price === 'number') {
     price = apiData.price;
@@ -111,19 +107,16 @@ export function convertApiDataToYachtProduct(
     price = apiData.Price;
   }
 
-  
   let imageUrls: string[] = [];
   let primaryImage = 'https://via.placeholder.com/400x300?text=No+Image';
 
   if (Array.isArray(apiData.images) && apiData.images.length > 0) {
-    
     const sortedImages = [...apiData.images].sort(
       (a, b) => a.Priority - b.Priority,
     );
     imageUrls = sortedImages.map((img) => img.Uri).filter(Boolean);
     primaryImage = imageUrls[0] || primaryImage;
   } else if (Array.isArray(apiData.Images)) {
-    
     imageUrls = apiData.Images.map((img) => img.Uri).filter(Boolean);
     primaryImage = imageUrls[0] || primaryImage;
   }

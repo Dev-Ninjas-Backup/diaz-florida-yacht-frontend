@@ -3,48 +3,20 @@ import { Loader2 } from 'lucide-react';
 import React from 'react';
 
 export interface LoadingProps {
-  
-
-
   message?: string;
-  
-
 
   size?: number;
-  
-
 
   className?: string;
-  
-
 
   spinnerClassName?: string;
-  
-
 
   messageClassName?: string;
-  
-
 
   fullScreen?: boolean;
-  
-
 
   variant?: 'spinner' | 'dots';
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 export function Loading({
   message = 'Loading...',

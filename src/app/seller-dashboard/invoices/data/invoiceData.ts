@@ -47,7 +47,6 @@ export interface InvoiceRecord {
   user: User;
 }
 
-
 export interface InvoiceRecordLegacy {
   invoice_id: string;
   image: string;

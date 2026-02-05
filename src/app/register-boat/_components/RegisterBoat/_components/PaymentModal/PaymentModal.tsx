@@ -25,17 +25,13 @@ export function PaymentModal({
   selectedPlanDetails,
   onPaymentSuccess,
 }: PaymentModalProps) {
-  
   const packageInfo = getPackageInfo(selectedPlanDetails);
 
-  
   const { clientSecret, isLoading, handlePaymentSuccess, handlePaymentError } =
     usePaymentFlow(isOpen, onClose, onPaymentSuccess);
 
-  
   const stripePromise = getStripeInstance();
 
-  
   const stripeOptions = clientSecret
     ? getStripeElementsOptions(clientSecret)
     : undefined;
@@ -43,7 +39,6 @@ export function PaymentModal({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-        
         <DialogHeader>
           <DialogTitle className="flex items-center gap-3 flex-wrap">
             <div className="w-14 h-14 rounded-full border-2 border-blue-600 flex items-center justify-center text-blue-600 font-bold text-lg shadow-sm">
@@ -66,7 +61,6 @@ export function PaymentModal({
         </DialogHeader>
 
         <div className="space-y-6 mt-4">
-          
           <div>
             <h3 className="font-semibold text-gray-900 mb-3">Payment Method</h3>
             <RadioGroup value="stripe" disabled>
@@ -89,7 +83,6 @@ export function PaymentModal({
             </RadioGroup>
           </div>
 
-          
           {isLoading ? (
             <LoadingState />
           ) : clientSecret && stripeOptions ? (

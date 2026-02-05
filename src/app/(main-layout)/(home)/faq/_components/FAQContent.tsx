@@ -39,14 +39,12 @@ const FAQContent = () => {
     );
   }
 
-  
   const midPoint = Math.ceil(faqData.questions.length / 2);
   const leftColumnFAQs = faqData.questions.slice(0, midPoint);
   const rightColumnFAQs = faqData.questions.slice(midPoint);
 
   return (
     <div className="py-10 md:py-16">
-      
       <div className="text-center mb-10 md:mb-16">
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 md:mb-6">
           {faqData.title || 'Frequently Asked Questions'}
@@ -58,9 +56,7 @@ const FAQContent = () => {
         )}
       </div>
 
-      
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-16">
-        
         <div className="space-y-8 md:space-y-10">
           {leftColumnFAQs.map((faq, index) => (
             <div key={index} className="space-y-3">
@@ -74,7 +70,6 @@ const FAQContent = () => {
           ))}
         </div>
 
-        
         <div className="space-y-8 md:space-y-10">
           {rightColumnFAQs.map((faq, index) => (
             <div key={index + midPoint} className="space-y-3">

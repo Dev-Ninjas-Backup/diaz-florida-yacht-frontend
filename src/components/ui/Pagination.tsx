@@ -15,7 +15,7 @@ const Pagination: React.FC<PaginationProps> = ({
   if (totalPages <= 1) return null;
 
   const createPageRange = () => {
-    const delta = 1; 
+    const delta = 1;
     const range: (number | string)[] = [];
     let l: number | null = null;
 

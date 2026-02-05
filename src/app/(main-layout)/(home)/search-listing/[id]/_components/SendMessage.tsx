@@ -27,7 +27,6 @@ const SendMessage: React.FC<SendMessageProps> = ({ listingId }) => {
   const formRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    
     const STORAGE_KEY = 'GENERATED_UID';
     if (typeof window !== 'undefined') {
       const existingId = localStorage.getItem(STORAGE_KEY);
@@ -45,16 +44,13 @@ const SendMessage: React.FC<SendMessageProps> = ({ listingId }) => {
   }, []);
 
   useEffect(() => {
-    
     const calculateTopOffset = () => {
       if (typeof window === 'undefined') return;
 
-      
       let banner = document.querySelector(
         '[class*="bg-linear-to-b"]',
       ) as HTMLElement;
 
-      
       if (!banner) {
         const fixedElements = Array.from(
           document.querySelectorAll('div[class*="fixed"]'),
@@ -67,15 +63,13 @@ const SendMessage: React.FC<SendMessageProps> = ({ listingId }) => {
       if (banner) {
         const bannerRect = banner.getBoundingClientRect();
         const bannerBottom = bannerRect.bottom;
-        
+
         setTopOffset(`${bannerBottom + 16}px`);
       } else {
-        
         setTopOffset('1rem');
       }
     };
 
-    
     const handleScroll = () => {
       if (
         typeof window === 'undefined' ||
@@ -85,7 +79,6 @@ const SendMessage: React.FC<SendMessageProps> = ({ listingId }) => {
         return;
       }
 
-      
       calculateTopOffset();
 
       const footer = document.querySelector('footer');
@@ -97,27 +90,21 @@ const SendMessage: React.FC<SendMessageProps> = ({ listingId }) => {
       const footerRect = footer.getBoundingClientRect();
       const windowHeight = window.innerHeight;
 
-      
       if (footerRect.top < windowHeight) {
-        
         setShouldScrollWithContent(true);
         setBottomOffset(undefined);
       } else {
-        
         setShouldScrollWithContent(false);
         setBottomOffset(undefined);
       }
     };
 
-    
     const handleResize = () => {
       calculateTopOffset();
       handleScroll();
     };
 
-    
     if (typeof window !== 'undefined' && window.innerWidth >= 768) {
-      
       calculateTopOffset();
       handleScroll();
 
@@ -145,7 +132,6 @@ const SendMessage: React.FC<SendMessageProps> = ({ listingId }) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    
     if (
       !formData.name ||
       !formData.email ||
@@ -157,7 +143,6 @@ const SendMessage: React.FC<SendMessageProps> = ({ listingId }) => {
       return;
     }
 
-    
     try {
       await submitContactOwner({
         name: formData.name,
@@ -171,7 +156,7 @@ const SendMessage: React.FC<SendMessageProps> = ({ listingId }) => {
       });
 
       toast.success('Message sent successfully!');
-      
+
       setFormData({
         name: '',
         email: '',
@@ -215,14 +200,11 @@ const SendMessage: React.FC<SendMessageProps> = ({ listingId }) => {
           bottom: bottomOffset,
         }}
       >
-        
         <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-4">
           Contact Owner
         </h2>
 
-        
         <form onSubmit={handleSubmit} className="space-y-3">
-          
           <input
             type="text"
             name="name"
@@ -233,7 +215,6 @@ const SendMessage: React.FC<SendMessageProps> = ({ listingId }) => {
             required
           />
 
-          
           <input
             type="email"
             name="email"
@@ -244,7 +225,6 @@ const SendMessage: React.FC<SendMessageProps> = ({ listingId }) => {
             required
           />
 
-          
           <input
             type="tel"
             name="phone"
@@ -255,7 +235,6 @@ const SendMessage: React.FC<SendMessageProps> = ({ listingId }) => {
             required
           />
 
-          
           <textarea
             name="message"
             value={formData.message}
@@ -266,7 +245,6 @@ const SendMessage: React.FC<SendMessageProps> = ({ listingId }) => {
             required
           />
 
-          
           <button
             type="submit"
             disabled={isSubmitting}
@@ -276,7 +254,6 @@ const SendMessage: React.FC<SendMessageProps> = ({ listingId }) => {
           </button>
         </form>
 
-        
         <button
           type="button"
           onClick={handleAskAI}

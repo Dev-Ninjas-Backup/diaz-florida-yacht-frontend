@@ -24,7 +24,6 @@ const BlogCard: React.FC<BlogCardProps> = ({ blog }) => {
   console.log('blog', blog.description);
   return (
     <div className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 flex flex-col">
-      
       {blog.featuredImage?.url && (
         <div className="relative w-full aspect-[4/2.7] overflow-hidden">
           <Image
@@ -37,7 +36,6 @@ const BlogCard: React.FC<BlogCardProps> = ({ blog }) => {
         </div>
       )}
 
-      
       <div className="p-5 flex flex-col flex-1">
         <div className="flex items-center gap-4 text-sm text-gray-400 mb-3">
           <span>{blog.readTime}</span>

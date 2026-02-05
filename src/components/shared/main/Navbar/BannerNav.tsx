@@ -16,20 +16,17 @@ const BannerNav = () => {
   const router = useRouter();
   const [accountOpen, setAccountOpen] = useState(false);
 
-  
   useEffect(() => {
     getLocation();
   }, [getLocation]);
 
-  
   const getLocationDisplay = () => {
     if (loading) return 'Getting location...';
     if (error) return 'Location unavailable';
     if (location) return `${location.city}, ${location.state}`;
-    return 'Florida - USA'; 
+    return 'Florida - USA';
   };
 
-  
   const handleLocationClick = () => {
     if (!loading) {
       getLocation();

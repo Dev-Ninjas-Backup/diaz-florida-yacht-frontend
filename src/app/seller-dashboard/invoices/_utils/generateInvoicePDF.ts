@@ -10,11 +10,9 @@ export const generateInvoicePDF = (invoice: InvoiceRecord): void => {
   const contentWidth = pageWidth - 2 * margin;
   let yPos = margin;
 
-  
   pdf.setFillColor(0, 110, 240);
   pdf.rect(0, 0, pageWidth, 45, 'F');
 
-  
   pdf.setTextColor(255, 255, 255);
   pdf.setFontSize(32);
   pdf.setFont('helvetica', 'bold');
@@ -24,7 +22,6 @@ export const generateInvoicePDF = (invoice: InvoiceRecord): void => {
   pdf.setFont('helvetica', 'normal');
   pdf.text('Premium Yacht Sales & Services', margin, yPos + 17);
 
-  
   pdf.setFontSize(9);
   pdf.text('123 Marina Boulevard', pageWidth - margin, yPos + 8, {
     align: 'right',
@@ -40,12 +37,10 @@ export const generateInvoicePDF = (invoice: InvoiceRecord): void => {
   pdf.setTextColor(0, 0, 0);
   yPos = 55;
 
-  
   pdf.setFontSize(24);
   pdf.setFont('helvetica', 'bold');
   pdf.text('INVOICE', margin, yPos);
 
-  
   const infoBoxX = pageWidth - margin - 60;
   pdf.setFillColor(245, 247, 250);
   pdf.roundedRect(infoBoxX, yPos - 8, 60, 28, 2, 2, 'F');
@@ -73,7 +68,6 @@ export const generateInvoicePDF = (invoice: InvoiceRecord): void => {
 
   yPos += 35;
 
-  
   pdf.setFillColor(0, 110, 240);
   pdf.rect(margin, yPos, contentWidth, 8, 'F');
   pdf.setTextColor(255, 255, 255);
@@ -81,7 +75,6 @@ export const generateInvoicePDF = (invoice: InvoiceRecord): void => {
   pdf.setFont('helvetica', 'bold');
   pdf.text('BILL TO', margin + 3, yPos + 5.5);
 
-  
   const statusText = invoice.status.replace('_', ' ');
   const statusColor =
     invoice.status === 'PAID'
@@ -110,7 +103,6 @@ export const generateInvoicePDF = (invoice: InvoiceRecord): void => {
 
   yPos += 18;
 
-  
   autoTable(pdf, {
     startY: yPos,
     head: [['DESCRIPTION', 'PERIOD', 'AMOUNT']],
@@ -146,7 +138,6 @@ export const generateInvoicePDF = (invoice: InvoiceRecord): void => {
     (pdf as jsPDF & { lastAutoTable: { finalY: number } }).lastAutoTable
       .finalY + 10;
 
-  
   const totalBoxX = pageWidth - margin - 65;
   pdf.setFillColor(245, 247, 250);
   pdf.roundedRect(totalBoxX, yPos, 65, 35, 2, 2, 'F');
@@ -183,7 +174,6 @@ export const generateInvoicePDF = (invoice: InvoiceRecord): void => {
     { align: 'right' },
   );
 
-  
   if (invoice.paidAt) {
     yPos += 45;
     pdf.setFillColor(220, 252, 231);
@@ -206,7 +196,6 @@ export const generateInvoicePDF = (invoice: InvoiceRecord): void => {
     );
   }
 
-  
   const footerY = pageHeight - 25;
   pdf.setFillColor(0, 110, 240);
   pdf.rect(0, footerY, pageWidth, 25, 'F');

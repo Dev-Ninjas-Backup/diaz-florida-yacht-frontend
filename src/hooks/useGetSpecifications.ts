@@ -10,7 +10,7 @@ interface SpecificationParams {
 }
 
 interface UseGetSpecificationsOptions {
-  enabled?: boolean; 
+  enabled?: boolean;
   initialParams?: SpecificationParams;
 }
 
@@ -53,12 +53,11 @@ export const useGetSpecifications = (
         });
 
         console.log('Specification response:', response);
-        
+
         if (response instanceof Error) {
           throw response;
         }
 
-        
         if (response?.items) {
           setData(response.items);
         } else if (Array.isArray(response)) {

@@ -13,7 +13,6 @@ import {
 } from '@/services/auth/profile';
 import { toast } from 'sonner';
 
-
 const formSchema = z
   .object({
     firstName: z.string().min(1, { message: 'First Name is required' }),
@@ -67,7 +66,6 @@ const MyProfilePage = () => {
     resolver: zodResolver(formSchema),
   });
 
-  
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -177,7 +175,6 @@ const MyProfilePage = () => {
       <div className="space-y-8 bg-[#F4F4F4] p-4 rounded-[10px]">
         <h1 className="text-2xl font-semibold"> My Details</h1>
 
-        
         <div className="bg-white border border-[#D9D9D9]/30 rounded-[10px] p-4 mt-6">
           <div className="flex items-center mb-6">
             <h2 className="text-sm md:text-base font-medium text-black">
@@ -370,7 +367,6 @@ const MyProfilePage = () => {
           </div>
         </div>
 
-        
         <div className="bg-white border border-[#D9D9D9]/30 rounded-[10px] p-4">
           <h2 className="text-sm md:text-base font-medium text-black mb-6">
             Change Password
@@ -456,7 +452,6 @@ const MyProfilePage = () => {
           </div>
         </div>
 
-        
         <div className="flex justify-start mt-6">
           <Button
             onClick={handleSubmit((data) => {

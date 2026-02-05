@@ -5,14 +5,12 @@ export { PaymentSummary } from './PaymentSummary';
 export { StripePaymentForm } from './StripePaymentForm';
 export { usePaymentFlow } from './usePaymentFlow';
 
-
 export type {
   PackageInfo,
   PaymentModalProps,
   PlanDetails,
   StripePaymentFormProps,
 } from './types';
-
 
 export {
   clearPaymentStorage,

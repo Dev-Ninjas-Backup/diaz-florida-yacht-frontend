@@ -23,7 +23,6 @@ export function StateField() {
     setLoading(true);
 
     try {
-      
       const opts = US_STATES?.map((s: { code: string; name: string }) => ({
         value: s.name,
         label: s.name,

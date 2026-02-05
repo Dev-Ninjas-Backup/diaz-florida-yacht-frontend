@@ -1,26 +1,16 @@
-
-
-
-
-
-
 import { z } from 'zod';
-
 
 export const step1Schema = z.object({
   selectedPackage: z.string().min(1, 'Please select a package'),
   promoCode: z.string().optional(),
 });
 
-
 export const step2Schema = z.object({
-  
   buildYear: z.string().min(1, 'Build year is required'),
   make: z.string().min(1, 'Make is required'),
   model: z.string().min(1, 'Model is required'),
   name: z.string().min(1, 'Boat name is required'),
 
-  
   lengthFeet: z.string().min(1, 'Length (feet) is required'),
   lengthInches: z
     .string()
@@ -61,19 +51,16 @@ export const step2Schema = z.object({
       },
     ),
 
-  
   class: z.string().min(1, 'Boat class is required'),
   material: z.string().min(1, 'Material is required'),
   fuelType: z.string().min(1, 'Fuel type is required'),
   propMaterial: z.string().min(1, 'Propeller material is required'),
   condition: z.string().min(1, 'Condition is required'),
 
-  
   numEngines: z.string().min(1, 'Number of engines is required'),
   numCabins: z.string().min(1, 'Number of cabins is required'),
   numHeads: z.string().min(1, 'Number of heads is required'),
 
-  
   engines: z
     .array(
       z.object({
@@ -87,7 +74,6 @@ export const step2Schema = z.object({
     )
     .min(1, 'At least one engine is required'),
 
-  
   hours: z.string().optional(),
   make2: z.string().optional(),
   model2: z.string().optional(),
@@ -95,16 +81,13 @@ export const step2Schema = z.object({
   propellerType: z.string().optional(),
   engineFuelType: z.string().optional(),
 
-  
   price: z.string().min(1, 'Price is required'),
   city: z.string().min(1, 'City is required'),
   state: z.string().min(1, 'State is required'),
   zip: z.string().min(1, 'Zip code is required'),
 
-  
   description: z.string().min(10, 'Description must be at least 10 characters'),
 
-  
   moreDetails: z
     .array(
       z.object({
@@ -115,11 +98,9 @@ export const step2Schema = z.object({
     .optional(),
   embedUrl: z.string().url().optional().or(z.literal('')),
 
-  
   coverPhoto: z.instanceof(File).optional(),
   mediaGallery: z.array(z.instanceof(File)).optional(),
 });
-
 
 export const step3Schema = z
   .object({
@@ -143,13 +124,11 @@ export const step3Schema = z
     path: ['confirmPassword'],
   });
 
-
 export const completeBoatRegistrationSchema = z.object({
   ...step1Schema.shape,
   ...step2Schema.shape,
   ...step3Schema.shape,
 });
-
 
 export type Step1FormData = z.infer<typeof step1Schema>;
 export type Step2FormData = z.infer<typeof step2Schema>;

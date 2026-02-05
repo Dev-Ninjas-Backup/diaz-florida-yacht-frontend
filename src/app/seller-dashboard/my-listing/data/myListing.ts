@@ -92,7 +92,6 @@ export interface IListing {
   updatedAt: string;
 }
 
-
 export interface IListingLegacy {
   'Listing ID': string;
   image: string;

@@ -26,10 +26,8 @@ export default function EditModeForm({
 
   console.log('Boat Data: ', boatData);
 
-  
   useEffect(() => {
     if (boatData.city) {
-      
       setTimeout(() => {
         setValue('city', boatData.city, { shouldValidate: true });
       }, 100);
@@ -38,7 +36,6 @@ export default function EditModeForm({
 
   return (
     <div>
-      
       {boatData.coverImages.length > 0 && (
         <div className="mb-6">
           <Label>Current Cover Photo</Label>
@@ -59,7 +56,6 @@ export default function EditModeForm({
         </div>
       )}
 
-      
       {boatData.galleryImages.length > 0 && (
         <div className="mb-6">
           <Label>
@@ -106,7 +102,6 @@ export default function EditModeForm({
         </div>
       )}
 
-      
       <Step2Form fieldLimitations={fieldLimitations} />
     </div>
   );

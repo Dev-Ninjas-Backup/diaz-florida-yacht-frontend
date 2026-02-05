@@ -24,7 +24,6 @@ const ProfileStates = () => {
   const [stats, setStats] = useState<SellerStats | null>(null);
 
   useEffect(() => {
-    
     const getStats = async () => {
       const getStatesFromApi = await getSellerStats();
       setStats(getStatesFromApi.data);
@@ -36,22 +35,8 @@ const ProfileStates = () => {
   return (
     <div className="">
       <CustomContainer>
-        
-        
-
-
-
-
-
-
-
-
-
-        
         <div className="w-full flex lg:flex-row flex-col gap-5 md:gap-10 justify-between flex-wrap">
-          
           <div className="flex flex-col sm:flex-row items-center space-y-2 md:space-y-4 sm:space-y-0 sm:space-x-8">
-            
             <div className="flex-shrink-0">
               <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full overflow-hidden border-2 border-gray-200 shadow-md">
                 <Image
@@ -64,7 +49,6 @@ const ProfileStates = () => {
               </div>
             </div>
 
-            
             <div className="flex-grow text-center sm:text-left">
               <h2 className="text-xl sm:text-2xl font-semibold text-gray-800">
                 {stats ? stats.name : 'Not Available'}
@@ -75,7 +59,6 @@ const ProfileStates = () => {
             </div>
           </div>
 
-          
           <div className="grid grid-cols-3 gap-4">
             <div className="flex flex-col items-center justify-center bg-[#F4F4F4] rounded-lg p-2 md:p-4 text-center shadow-sm">
               <Image

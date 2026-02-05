@@ -26,7 +26,6 @@ const ShareWIth = () => {
     }
   };
 
-  
   const handleWhatsAppShare = () => {
     const url = `https://wa.me/?text=${encodeURIComponent(
       shareText + ' ' + shareUrl,

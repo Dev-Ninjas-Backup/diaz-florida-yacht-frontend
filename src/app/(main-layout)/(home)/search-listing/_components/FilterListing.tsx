@@ -41,7 +41,6 @@ const FilterListing = () => {
     additionalUnit: '',
   });
 
-  
   useEffect(() => {
     const fetchFilterOptions = async () => {
       try {
@@ -56,7 +55,6 @@ const FilterListing = () => {
     fetchFilterOptions();
   }, []);
 
-  
   const engineOptions = ['1', '2', '3', '4', '5', '6'];
   const cabinOptions = ['1', '2', '3', '4', '5', '6'];
   const headOptions = ['1', '2', '3', '4', '5', '6'];
@@ -89,7 +87,7 @@ const FilterListing = () => {
       numberOfHeads: '',
       additionalUnit: '',
     });
-    
+
     setSearchResults(null);
     setIsSearchActive(false);
   };
@@ -98,7 +96,6 @@ const FilterListing = () => {
     try {
       setIsLoading(true);
 
-      
       const filterParams: any = {
         page: 1,
         limit: 100,
@@ -130,11 +127,9 @@ const FilterListing = () => {
 
       console.log('Applying filters:', filterParams);
 
-      
       const response = await getFilteredBoats(filterParams);
 
       if (response.success && response.data) {
-        
         const yachtProducts = response.data.map((boat: any) =>
           convertApiDataToYachtProduct(boat),
         );
@@ -152,7 +147,6 @@ const FilterListing = () => {
 
   return (
     <div className="bg-gray-50 rounded-lg shadow-sm border border-gray-200 p-4 sm:p-5 lg:p-6 h-full top-4">
-      
       <div className="flex items-center justify-between mb-6 pb-4 border-b border-gray-200">
         <h2 className="text-lg sm:text-xl font-bold text-gray-900">
           Filter Listing
@@ -166,7 +160,6 @@ const FilterListing = () => {
       </div>
 
       <div className="space-y-5 pb-10">
-        
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-2">
             Boat Class
@@ -192,7 +185,6 @@ const FilterListing = () => {
           </select>
         </div>
 
-        
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-2">
             Make
@@ -218,7 +210,6 @@ const FilterListing = () => {
           </select>
         </div>
 
-        
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-2">
             Model
@@ -244,7 +235,6 @@ const FilterListing = () => {
           </select>
         </div>
 
-        
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-2">
             Build Year
@@ -270,7 +260,6 @@ const FilterListing = () => {
           </div>
         </div>
 
-        
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-2">
             Price Range
@@ -300,7 +289,6 @@ const FilterListing = () => {
           </div>
         </div>
 
-        
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-2">
             Lengths Range (ft)
@@ -324,7 +312,6 @@ const FilterListing = () => {
           </div>
         </div>
 
-        
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-2">
             Beam Size (ft)
@@ -348,7 +335,6 @@ const FilterListing = () => {
           </div>
         </div>
 
-        
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-2">
             Number of Engine
@@ -376,7 +362,6 @@ const FilterListing = () => {
           </select>
         </div>
 
-        
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-2">
             Number of Cabin
@@ -404,7 +389,6 @@ const FilterListing = () => {
           </select>
         </div>
 
-        
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-2">
             Number of Heads
@@ -430,9 +414,6 @@ const FilterListing = () => {
           </select>
         </div>
 
-        
-
-        
         <button
           onClick={handleApplyFilters}
           disabled={isLoading}

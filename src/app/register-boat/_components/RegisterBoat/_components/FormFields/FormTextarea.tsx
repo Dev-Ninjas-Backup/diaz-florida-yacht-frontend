@@ -1,8 +1,3 @@
-
-
-
-
-
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import React, { useState } from 'react';
@@ -39,10 +34,6 @@ export const FormTextarea: React.FC<FormTextareaProps> = ({
   const [wordCountError, setWordCountError] = useState('');
   const currentValue = watch(name) || '';
 
-  
-  
-
-  
   const wordCount =
     currentValue.trim() === '' ? 0 : currentValue.trim().split(/\s+/).length;
 

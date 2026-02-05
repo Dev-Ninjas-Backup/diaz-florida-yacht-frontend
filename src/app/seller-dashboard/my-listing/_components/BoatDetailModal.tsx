@@ -19,7 +19,6 @@ export default function BoatDetailModal({ boat }: BoatDetailModalProps) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
       <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto">
-        
         <button
           onClick={handleClose}
           className="sticky top-4 right-4 float-right z-10 w-10 h-10 flex items-center justify-center rounded-full bg-white hover:bg-gray-100 transition-colors shadow-lg"
@@ -29,7 +28,6 @@ export default function BoatDetailModal({ boat }: BoatDetailModalProps) {
         </button>
 
         <div className="p-6 md:p-8">
-          
           {boat.coverImages.length > 0 && (
             <div className="mb-6">
               <div className="relative w-full h-64 md:h-96 rounded-lg overflow-hidden">
@@ -60,7 +58,6 @@ export default function BoatDetailModal({ boat }: BoatDetailModalProps) {
             </div>
           )}
 
-          
           <div className="mb-6">
             <div className="flex items-start justify-between gap-4 mb-2">
               <h1 className="text-3xl font-bold text-gray-900">{boat.name}</h1>
@@ -82,7 +79,6 @@ export default function BoatDetailModal({ boat }: BoatDetailModalProps) {
             </p>
           </div>
 
-          
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 p-4 bg-gray-50 rounded-lg">
             <div>
               <p className="text-sm text-gray-500">Year</p>
@@ -102,7 +98,6 @@ export default function BoatDetailModal({ boat }: BoatDetailModalProps) {
             </div>
           </div>
 
-          
           {boat.description && (
             <div className="mb-6">
               <h2 className="text-xl font-bold mb-2">Description</h2>
@@ -112,7 +107,6 @@ export default function BoatDetailModal({ boat }: BoatDetailModalProps) {
             </div>
           )}
 
-          
           <div className="mb-6">
             <h2 className="text-xl font-bold mb-4">Specifications</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -164,7 +158,6 @@ export default function BoatDetailModal({ boat }: BoatDetailModalProps) {
             </div>
           </div>
 
-          
           {boat.engines.length > 0 && (
             <div className="mb-6">
               <h2 className="text-xl font-bold mb-4">Engines</h2>
@@ -206,7 +199,6 @@ export default function BoatDetailModal({ boat }: BoatDetailModalProps) {
             </div>
           )}
 
-          
           <div className="mb-6">
             <h2 className="text-xl font-bold mb-2">Location</h2>
             <p className="text-gray-700">
@@ -214,7 +206,6 @@ export default function BoatDetailModal({ boat }: BoatDetailModalProps) {
             </p>
           </div>
 
-          
           {boat.owner && (
             <div className="mb-6">
               <h2 className="text-xl font-bold mb-2">Owner</h2>

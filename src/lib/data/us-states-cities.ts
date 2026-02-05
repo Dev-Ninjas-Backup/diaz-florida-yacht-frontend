@@ -1,6 +1,3 @@
-
-
-
 export const US_STATES = [
   { code: 'AL', name: 'Alabama' },
   { code: 'AK', name: 'Alaska' },
@@ -53,7 +50,6 @@ export const US_STATES = [
   { code: 'WI', name: 'Wisconsin' },
   { code: 'WY', name: 'Wyoming' },
 ];
-
 
 export const US_CITIES_BY_STATE: Record<string, { name: string }[]> = {
   AL: [

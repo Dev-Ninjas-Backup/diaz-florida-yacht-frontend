@@ -93,7 +93,6 @@ const NavItems: React.FC<NavItemsProps> = ({
           <IoIosArrowDown className="text-white" />
         </div>
 
-        
         <div className="relative">
           {!userLoading && user ? (
             <div className="relative">

@@ -1,4 +1,3 @@
-
 export type Column<T> =
   | {
       header: string;

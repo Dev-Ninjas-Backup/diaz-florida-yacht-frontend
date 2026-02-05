@@ -49,7 +49,6 @@ const AllListing = () => {
           if (response?.success && response?.data) {
             const convertedBoats: YachtProduct[] = response.data.map(
               (boat: ApiBoatResponse) => {
-                
                 let price: number | undefined;
                 if (typeof boat.Price === 'string') {
                   const priceMatch = boat.Price.match(/([\d,.]+)/);

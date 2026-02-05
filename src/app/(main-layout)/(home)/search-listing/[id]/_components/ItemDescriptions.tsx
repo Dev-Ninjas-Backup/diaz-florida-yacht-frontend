@@ -14,19 +14,16 @@ interface Section {
 const ItemDescriptions = ({ description }: ItemDescriptionsProps) => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  
   const { mainDescription, sections } = useMemo(() => {
     if (!description) {
       return { mainDescription: '', sections: [] };
     }
 
-    
     const parts = description.split(/\n<strong>/);
-    const main = parts[0]; 
+    const main = parts[0];
 
     const extractedSections: Section[] = [];
 
-    
     for (let i = 1; i < parts.length; i++) {
       const part = parts[i];
       const titleMatch = part.match(/^([^<]+)<\/strong>/);

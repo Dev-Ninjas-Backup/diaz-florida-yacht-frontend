@@ -47,5 +47,4 @@ export const getBanner = async (
   }
 };
 
-
 export const getHomeBanner = getBanner;

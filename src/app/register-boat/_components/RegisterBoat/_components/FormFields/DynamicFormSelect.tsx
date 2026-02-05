@@ -1,8 +1,3 @@
-
-
-
-
-
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -21,7 +16,7 @@ import { useFormContext } from 'react-hook-form';
 interface DynamicFormSelectProps {
   name: string;
   label: string;
-  type: string; 
+  type: string;
   placeholder?: string;
   required?: boolean;
   disabled?: boolean;
@@ -52,7 +47,6 @@ export const DynamicFormSelect: React.FC<DynamicFormSelectProps> = ({
   const [showCustomInput, setShowCustomInput] = useState(false);
   const [customValue, setCustomValue] = useState('');
 
-  
   const {
     data,
     loading,
@@ -64,7 +58,6 @@ export const DynamicFormSelect: React.FC<DynamicFormSelectProps> = ({
   });
   console.log('Fetched specifications:', data);
 
-  
   useEffect(() => {
     setParams({ type, search: searchQuery, limit });
   }, [searchQuery, limit, type, setParams]);
@@ -92,10 +85,9 @@ export const DynamicFormSelect: React.FC<DynamicFormSelectProps> = ({
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
-    setLimit(20); 
+    setLimit(20);
   };
 
-  
   useEffect(() => {
     if (value && data) {
       const isInOptions = data.some((item) => item === value || item === value);
@@ -156,7 +148,6 @@ export const DynamicFormSelect: React.FC<DynamicFormSelectProps> = ({
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent className="max-h-[300px]">
-          
           <div className="p-2 border-b sticky top-0 bg-white z-10">
             <div className="relative">
               <Search className="absolute left-2 top-2.5 h-4 w-4 text-gray-400" />
@@ -170,7 +161,6 @@ export const DynamicFormSelect: React.FC<DynamicFormSelectProps> = ({
             </div>
           </div>
 
-          
           {loading && (
             <div className="flex items-center justify-center py-4">
               <Loader2 className="h-5 w-5 animate-spin text-gray-400" />
@@ -178,14 +168,12 @@ export const DynamicFormSelect: React.FC<DynamicFormSelectProps> = ({
             </div>
           )}
 
-          
           {apiError && (
             <div className="px-2 py-4 text-center text-sm text-red-500">
               Failed to load options
             </div>
           )}
 
-          
           {!loading && data && data.length > 0 && (
             <>
               {data?.map((option) => (
@@ -194,7 +182,6 @@ export const DynamicFormSelect: React.FC<DynamicFormSelectProps> = ({
                 </SelectItem>
               ))}
 
-              
               {data.length >= limit && (
                 <div className="p-2 border-t sticky bottom-0 bg-white">
                   <Button
@@ -214,14 +201,12 @@ export const DynamicFormSelect: React.FC<DynamicFormSelectProps> = ({
             </>
           )}
 
-          
           {!loading && data && data.length === 0 && (
             <div className="px-2 py-4 text-center text-sm text-gray-500">
               No results found
             </div>
           )}
 
-          
           <div className="p-2 border-t sticky bottom-0 bg-white">
             <SelectItem value="__custom__">
               <span className="text-blue-600 font-medium">

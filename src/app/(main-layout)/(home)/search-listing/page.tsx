@@ -62,7 +62,6 @@ const SearchListingPage = () => {
           convertApiDataToYachtProduct(boat),
         );
 
-
         setSearchResults(yachtProducts);
         setIsSearchActive(true);
         setQueryData(updatedQueryData);

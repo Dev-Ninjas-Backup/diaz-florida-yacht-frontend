@@ -4,54 +4,24 @@ import React from 'react';
 import { Inbox } from 'lucide-react';
 
 export interface NoDataFoundProps {
-  
-
-
   title?: string;
-  
-
 
   description?: string;
-  
-
 
   icon?: LucideIcon;
-  
-
 
   iconSize?: number;
-  
-
 
   className?: string;
-  
-
 
   iconClassName?: string;
-  
-
 
   titleClassName?: string;
-  
-
 
   descriptionClassName?: string;
-  
-
 
   action?: React.ReactNode;
 }
-
-
-
-
-
-
-
-
-
-
-
 
 export function NoDataFound({
   title = 'No data found',

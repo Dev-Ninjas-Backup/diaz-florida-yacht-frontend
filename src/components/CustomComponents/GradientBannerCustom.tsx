@@ -15,7 +15,6 @@ const GradientBannerCustom = ({
   const bannerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    
     const measureHeights = () => {
       if (bannerRef.current) {
         setBannerHeight(bannerRef.current.offsetHeight);
@@ -24,7 +23,6 @@ const GradientBannerCustom = ({
 
     measureHeights();
 
-    
     const handleResize = () => {
       measureHeights();
     };
@@ -38,7 +36,6 @@ const GradientBannerCustom = ({
 
   return (
     <>
-      
       <div
         className="w-full"
         style={{

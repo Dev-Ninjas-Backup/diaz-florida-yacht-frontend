@@ -32,20 +32,18 @@ const HtmlContentWithToc = ({
     setTocItems(toc);
   }, [htmlContent, title]);
 
-  
   const decodeHtmlEntities = (text: string): string => {
-    
     if (typeof document !== 'undefined') {
       const div = document.createElement('div');
       div.innerHTML = text;
       let decoded = div.textContent || div.innerText || text;
-      
+
       decoded = decoded.replace(/&nbsp;/g, ' ');
-      
+
       decoded = decoded.replace(/\s+/g, ' ');
       return decoded.trim();
     }
-    
+
     return text
       .replace(/&nbsp;/g, ' ')
       .replace(/&amp;/g, '&')
@@ -57,18 +55,15 @@ const HtmlContentWithToc = ({
       .trim();
   };
 
-  
   const processHtmlContent = (html: string, pageTitle?: string) => {
     const toc: TocItem[] = [];
     let sectionCounter = 0;
     let processedHtml = html;
 
-    
     if (pageTitle) {
       processedHtml = `<h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">${pageTitle}</h1>${processedHtml}`;
     }
 
-    
     const h1Regex = /<h1[^>]*>(.*?)<\/h1>/gi;
     const h1Matches = Array.from(processedHtml.matchAll(h1Regex));
 
@@ -78,7 +73,6 @@ const HtmlContentWithToc = ({
       textContent = decodeHtmlEntities(textContent);
       const fullMatch = match[0];
 
-      
       if (
         textContent.toLowerCase().includes('effective date') ||
         textContent.toLowerCase().includes('last updated')
@@ -88,12 +82,10 @@ const HtmlContentWithToc = ({
         return;
       }
 
-      
       if (pageTitle && textContent === pageTitle) {
         return;
       }
 
-      
       sectionCounter++;
       const id = `section-${sectionCounter}`;
 
@@ -107,7 +99,6 @@ const HtmlContentWithToc = ({
       processedHtml = processedHtml.replace(fullMatch, replacement);
     });
 
-    
     const h2Regex = /<h2[^>]*>(.*?)<\/h2>/gi;
     const h2Matches = Array.from(processedHtml.matchAll(h2Regex));
 
@@ -117,12 +108,10 @@ const HtmlContentWithToc = ({
       textContent = decodeHtmlEntities(textContent);
       const fullMatch = match[0];
 
-      
       if (fullMatch.includes('id=')) {
         return;
       }
 
-      
       sectionCounter++;
       const id = `section-${sectionCounter}`;
 
@@ -136,14 +125,13 @@ const HtmlContentWithToc = ({
       processedHtml = processedHtml.replace(fullMatch, replacement);
     });
 
-    
     processedHtml = processedHtml
-      
+
       .replace(
         /<p(?![^>]*class)/g,
         '<p class="text-gray-700 text-base md:text-lg leading-relaxed mb-4"',
       )
-      
+
       .replace(
         /<h3(?![^>]*class)/g,
         '<h3 class="text-xl font-semibold text-gray-800 mb-3 mt-6"',
@@ -160,7 +148,7 @@ const HtmlContentWithToc = ({
         /<h6(?![^>]*class)/g,
         '<h6 class="text-sm font-semibold text-gray-800 mb-2 mt-4"',
       )
-      
+
       .replace(
         /<ul(?![^>]*class)/g,
         '<ul class="list-disc list-inside space-y-2 text-gray-700 mb-4 ml-4"',
@@ -170,26 +158,26 @@ const HtmlContentWithToc = ({
         '<ol class="list-decimal list-inside space-y-2 text-gray-700 mb-4 ml-4"',
       )
       .replace(/<li(?![^>]*class)/g, '<li class="mb-1"')
-      
+
       .replace(
         /<a(?![^>]*class)/g,
         '<a class="text-primary hover:text-[#0052CC] underline"',
       )
-      
+
       .replace(
         /<strong(?![^>]*class)/g,
         '<strong class="font-bold text-gray-900"',
       )
       .replace(/<b(?![^>]*class)/g, '<b class="font-bold text-gray-900"')
-      
+
       .replace(/<em(?![^>]*class)/g, '<em class="italic"')
       .replace(/<i(?![^>]*class)/g, '<i class="italic"')
-      
+
       .replace(
         /<blockquote(?![^>]*class)/g,
         '<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-700 mb-4"',
       )
-      
+
       .replace(
         /<code(?![^>]*class)/g,
         '<code class="bg-gray-100 px-1 py-0.5 rounded text-sm"',
@@ -198,9 +186,9 @@ const HtmlContentWithToc = ({
         /<pre(?![^>]*class)/g,
         '<pre class="bg-gray-100 p-4 rounded-lg overflow-x-auto mb-4"',
       )
-      
+
       .replace(/<img(?![^>]*class)/g, '<img class="rounded-lg w-full mb-4"')
-      
+
       .replace(
         /<table(?![^>]*class)/g,
         '<table class="w-full border-collapse border border-gray-300 mb-4"',
@@ -213,7 +201,7 @@ const HtmlContentWithToc = ({
         /<td(?![^>]*class)/g,
         '<td class="border border-gray-300 px-4 py-2"',
       )
-      
+
       .replace(/<div(?![^>]*class)/g, '<div class="mb-4"');
 
     return {
@@ -222,7 +210,6 @@ const HtmlContentWithToc = ({
     };
   };
 
-  
   useEffect(() => {
     if (!processedHtml || tocItems.length === 0) return;
 
@@ -266,7 +253,6 @@ const HtmlContentWithToc = ({
     <div
       className={`grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-12 py-10 md:py-16 ${className}`}
     >
-      
       <div className="lg:col-span-3 space-y-6">
         <div
           ref={contentRef}
@@ -275,7 +261,6 @@ const HtmlContentWithToc = ({
         />
       </div>
 
-      
       {tocItems.length > 0 && (
         <div className="lg:col-span-1">
           <div className="sticky top-24">

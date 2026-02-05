@@ -3,14 +3,11 @@ import ReactMarkdown, { Components } from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 
-
 const markdownComponents: Components = {
-  
   p: ({ children }) => (
     <p className="mb-3 text-sm text-gray-700 leading-relaxed">{children}</p>
   ),
 
-  
   h3: ({ children }) => (
     <h3 className="font-bold text-gray-900 mt-5 mb-3 text-lg border-b border-gray-200 pb-2">
       {children}
@@ -20,7 +17,6 @@ const markdownComponents: Components = {
     <h4 className="font-bold text-gray-900 mt-4 mb-2 text-base">{children}</h4>
   ),
 
-  
   a: ({ href, children }) => (
     <a
       href={href}
@@ -32,7 +28,6 @@ const markdownComponents: Components = {
     </a>
   ),
 
-  
   ul: ({ children }) => (
     <ul className="space-y-2 ml-5 my-3 list-disc list-outside">{children}</ul>
   ),
@@ -40,15 +35,12 @@ const markdownComponents: Components = {
     <li className="text-sm text-gray-700 leading-relaxed pl-1">{children}</li>
   ),
 
-  
   ol: ({ children }) => <ol className="space-y-4 my-4">{children}</ol>,
 
-  
   strong: ({ children }) => (
     <strong className="font-bold text-gray-900">{children}</strong>
   ),
 
-  
   img: ({ src, alt }) => {
     if (!src || typeof src !== 'string') return null;
 

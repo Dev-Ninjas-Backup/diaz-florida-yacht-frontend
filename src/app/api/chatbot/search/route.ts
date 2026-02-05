@@ -4,32 +4,15 @@ import type {
   ChatbotSearchResponse,
 } from '@/types/chatbot-types';
 
-
-
-
-
-
-
-
-
 export async function POST(request: NextRequest) {
   try {
     const body: ChatbotSearchRequest = await request.json();
     const { query } = body;
-    
 
-    
     if (!query || query.trim().length === 0) {
       return NextResponse.json({ error: 'Query is required' }, { status: 400 });
     }
 
-    
-    
-    
-    
-    
-
-    
     const mockResults: ChatbotSearchResponse = {
       results: [
         {
@@ -81,7 +64,6 @@ export async function POST(request: NextRequest) {
       ],
     };
 
-    
     await new Promise((resolve) => setTimeout(resolve, 300));
 
     return NextResponse.json(mockResults);
@@ -93,9 +75,6 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-
-
-
 
 export async function GET() {
   return NextResponse.json({

@@ -14,7 +14,6 @@ const ItemSpecifications = ({
   specifications,
   engines,
 }: ItemSpecificationsProps) => {
-  
   const specsArray: any[] = specifications.map((spec) => ({
     name: spec.name || spec.key,
     value: spec.value,
@@ -61,20 +60,16 @@ const ItemSpecifications = ({
   const formatEngineValue = (key: string, value: any): string => {
     if (value === null || value === undefined || value === '') return '-';
 
-    
     if (typeof value === 'number') {
       return value.toLocaleString();
     }
 
-    
     if (typeof value === 'boolean') {
       return value ? 'Yes' : 'No';
     }
 
-    
     const strValue = String(value);
 
-    
     if (strValue.includes('|')) {
       const parts = strValue.split('|');
       return parts.join(' ');
@@ -127,7 +122,6 @@ const ItemSpecifications = ({
         </div>
       </div>
 
-      
       {engines && engines.length > 0 && (
         <div className="mt-6">
           <div className="py-2 flex">
@@ -137,7 +131,6 @@ const ItemSpecifications = ({
           </div>
           <div className="bg-white rounded-2xl shadow border border-gray-100 overflow-hidden">
             {engines.map((engine, engineIndex) => {
-              
               const engineFields = Object.entries(engine).filter(
                 ([, value]) =>
                   value !== null && value !== undefined && value !== '',

@@ -3,15 +3,6 @@
 import { getValidToken } from '@/lib/verifyAuth';
 import { cookies } from 'next/headers';
 
-
-
-
-
-
-
-
-
-
 export interface User {
   id: string;
   email: string;
@@ -59,7 +50,6 @@ export const loginService = async (
       },
     });
 
-    
     if (!res.ok) {
       const errorData = await res.json().catch(() => ({}));
       return {
@@ -74,30 +64,27 @@ export const loginService = async (
     const user = responseData.data?.user;
 
     if (responseData.success && token && user) {
-      
       cookieStore.set('accessToken', token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',
-        maxAge: 60 * 60 * 24 * 7, 
+        maxAge: 60 * 60 * 24 * 7,
         path: '/',
       });
 
-      
       cookieStore.set('user', JSON.stringify(user), {
-        httpOnly: false, 
+        httpOnly: false,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',
-        maxAge: 60 * 60 * 24 * 7, 
+        maxAge: 60 * 60 * 24 * 7,
         path: '/',
       });
 
-      
       cookieStore.set('isAuthenticated', 'true', {
-        httpOnly: false, 
+        httpOnly: false,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',
-        maxAge: 60 * 60 * 24 * 7, 
+        maxAge: 60 * 60 * 24 * 7,
         path: '/',
       });
 
@@ -177,13 +164,6 @@ export const getUserProfile = async (): Promise<
     };
   }
 };
-
-
-
-
-
-
-
 
 export const logoutService = async (): Promise<{ success: boolean }> => {
   try {

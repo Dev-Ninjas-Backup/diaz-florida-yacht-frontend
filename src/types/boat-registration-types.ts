@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 export enum BoatClass {
   SAILBOAT = 'SAILBOAT',
   MOTORBOAT = 'MOTORBOAT',
@@ -50,7 +43,6 @@ export enum Condition {
   DAMAGED = 'DAMAGED',
 }
 
-
 export interface BoatDimensions {
   lengthFeet: number;
   lengthInches: number;
@@ -59,7 +51,6 @@ export interface BoatDimensions {
   draftFeet: number;
   draftInches: number;
 }
-
 
 export interface EngineInfo {
   hours: number;
@@ -70,50 +61,40 @@ export interface EngineInfo {
   propellerType: PropellerType;
 }
 
-
 export interface ExtraDetail {
   key: string;
   value: string;
 }
 
-
 export interface BoatInfo {
-  
   buildYear: number;
   make: string;
   model: string;
   name: string;
 
-  
   boatDimensions: BoatDimensions;
 
-  
   boatClass: BoatClass;
   material: Material;
   propMaterial: string;
   condition: Condition;
 
-  
   cabinsNumber: number;
   headsNumber: number;
   enginesNumber: number;
 
-  
   engines: EngineInfo[];
   fuelType: FuelType;
 
-  
   price: number;
   city: string;
   state: string;
   zip: string;
 
-  
   description: string;
   videoURL?: string;
   extraDetails?: ExtraDetail[];
 }
-
 
 export interface SellerInfo {
   name: string;
@@ -122,13 +103,11 @@ export interface SellerInfo {
   username: string;
   password: string;
 
-  
   country: string;
   city: string;
   state: string;
   zip: string;
 }
-
 
 export interface BoatRegistrationRequest {
   planId: string;
@@ -136,19 +115,15 @@ export interface BoatRegistrationRequest {
   sellerInfo: SellerInfo;
 }
 
-
 export interface BoatRegistrationFormData extends BoatRegistrationRequest {
-  covers: File; 
-  galleries: File[]; 
+  covers: File;
+  galleries: File[];
 }
 
-
 export interface BoatRegistrationFormValues {
-  
   selectedPackage: string;
   promoCode?: string;
 
-  
   buildYear: string;
   make: string;
   model: string;
@@ -173,7 +148,6 @@ export interface BoatRegistrationFormValues {
   zip: string;
   description: string;
 
-  
   hours: string;
   make2: string;
   model2: string;
@@ -181,7 +155,6 @@ export interface BoatRegistrationFormValues {
   propellerType: string;
   engineFuelType: string;
 
-  
   engines: Array<{
     hours: string;
     make: string;
@@ -191,15 +164,12 @@ export interface BoatRegistrationFormValues {
     engineFuelType: string;
   }>;
 
-  
   moreDetails?: Array<{ title: string; description: string }>;
   embedUrl?: string;
 
-  
   coverPhoto?: File;
   mediaGallery?: File[];
 
-  
   firstName: string;
   lastName: string;
   contactNumber: string;

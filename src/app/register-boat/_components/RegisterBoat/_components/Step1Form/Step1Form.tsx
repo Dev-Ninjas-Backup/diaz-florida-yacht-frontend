@@ -39,7 +39,6 @@ const Step1Form: React.FC<Step1FormProps> = ({
 
   return (
     <div className="space-y-6 mt-10">
-      
       <div className="flex justify-center mb-8">
         <div className="w-full max-w-md">
           <FormInput
@@ -65,7 +64,6 @@ const Step1Form: React.FC<Step1FormProps> = ({
             }`}
             onClick={() => setValue('selectedPackage', plan.id)}
           >
-            
             {plan.featured && plan.featuredLabel && (
               <div className="absolute top-4 -right-7 z-10 rotate-45">
                 <div className="bg-gradient-to-br from-green-400 to-green-600 text-white text-xs font-bold px-6 py-2 rounded-bl-2xl shadow-lg transform rotate-0">
@@ -74,9 +72,7 @@ const Step1Form: React.FC<Step1FormProps> = ({
               </div>
             )}
 
-            
             <div className="p-4">
-              
               <div className="mb-3 border-b border-gray-200 pb-3">
                 <h3 className="text-xl font-bold text-gray-900 mb-3">
                   {plan.name}
@@ -91,7 +87,6 @@ const Step1Form: React.FC<Step1FormProps> = ({
                 </div>
               </div>
 
-              
               <div className="mb-3 sm:mb-4 space-y-2">
                 {plan.features?.map((feature, index) => (
                   <div key={index} className="flex items-start gap-3">
@@ -121,10 +116,7 @@ const Step1Form: React.FC<Step1FormProps> = ({
       </div>
 
       {errors.selectedPackage && (
-        <p className="text-red-500 text-sm">
-          
-          Please select a package
-        </p>
+        <p className="text-red-500 text-sm">Please select a package</p>
       )}
     </div>
   );

@@ -40,7 +40,6 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
         setUser(result.data);
         setError(null);
       } else if ('success' in result && !result.success) {
-        
         setUser(null);
         setError(result.message || 'Authentication failed');
         console.warn('User not authenticated:', result.message);

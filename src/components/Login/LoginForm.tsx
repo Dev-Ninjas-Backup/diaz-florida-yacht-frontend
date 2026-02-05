@@ -1,8 +1,3 @@
-
-
-
-
-
 import React from 'react';
 import { FaUser } from 'react-icons/fa';
 import { FormInput } from './FormInput';
@@ -18,11 +13,9 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   onInputChange,
   onSubmit,
   onTogglePassword,
-  
 }) => {
   return (
     <form onSubmit={onSubmit} className="space-y-5">
-      
       <FormInput
         id="email"
         name="email"
@@ -35,7 +28,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         required
       />
 
-      
       <PasswordInput
         id="password"
         name="password"
@@ -48,7 +40,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         required
       />
 
-      
       <div className="flex items-center justify-between">
         <label className="flex items-center cursor-pointer">
           <input
@@ -70,7 +61,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         </a>
       </div>
 
-      
       <button
         type="submit"
         disabled={isSubmitting}
@@ -79,10 +69,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         {isSubmitting ? LOGIN_LABELS.loggingIn : LOGIN_LABELS.loginButton}
       </button>
 
-      
-      
-
-      
       <p className="text-center text-sm text-gray-700 mt-6">
         {LOGIN_LABELS.dontHaveAccount}{' '}
         <a

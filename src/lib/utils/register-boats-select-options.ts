@@ -5,7 +5,6 @@ export const steps = [
   { id: 4, label: 'Pay & Post', key: 'payPost' },
 ];
 
-
 export const classOptions = [
   { value: 'SAILBOAT', label: 'Sailboat' },
   { value: 'MOTORBOAT', label: 'Motorboat' },
@@ -51,9 +50,7 @@ export const conditionOptions = [
   { value: 'DAMAGED', label: 'Damaged' },
 ];
 
-
 export const buildYearOptions = [
-  
   { value: '2025', label: '2025' },
   { value: '2024', label: '2024' },
   { value: '2023', label: '2023' },
@@ -90,8 +87,6 @@ export const buildYearOptions = [
   { value: '1980', label: '1980' },
 ];
 
-
-
 export const makeOptions = [
   { value: 'azimut', label: 'Azimut' },
   { value: 'sunseeker', label: 'Sunseeker' },
@@ -114,7 +109,6 @@ export const makeOptions = [
   { value: 'pershing', label: 'Pershing' },
   { value: 'other', label: 'Other / Custom' },
 ];
-
 
 export const modelOptions = [
   { value: 'azimut-55-fly', label: '55 Fly', make: 'azimut' },
@@ -159,42 +153,28 @@ export const modelOptions = [
   { value: 'fairline-targa', label: 'Targa', make: 'fairline' },
   { value: 'pershing-70', label: '70', make: 'pershing' },
 
-  
   { value: 'other', label: 'Other / Custom', make: 'other' },
 ];
-
-
-
-
 
 export const getModelsByMake = (make: string) =>
   modelOptions.filter((m) => m.make === make);
 
 import { US_CITIES_BY_STATE, US_STATES } from '@/lib/data/us-states-cities';
 
-
 export { US_STATES };
 
-
 export const countryOptions = [{ value: 'usa', label: 'United States' }];
-
 
 export const stateOptions = US_STATES?.map((s) => ({
   value: s.code,
   label: s.name,
 }));
 
-
-
-
-
 export function getCitiesForState(stateIdentifier: string): { name: string }[] {
   if (!stateIdentifier) return [];
 
-  
   let cities = US_CITIES_BY_STATE[stateIdentifier.toUpperCase()];
 
-  
   if (!cities) {
     const state = US_STATES.find(
       (s) => s.name.toLowerCase() === stateIdentifier.toLowerCase(),

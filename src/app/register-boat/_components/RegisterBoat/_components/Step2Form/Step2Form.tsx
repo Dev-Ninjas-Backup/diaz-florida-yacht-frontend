@@ -32,16 +32,11 @@ const Step2Form = ({ fieldLimitations }: Step2FormProps) => {
   const numEngines = watch('numEngines');
   const engineCount = parseInt(numEngines) || 1;
 
-  
-  
-
   return (
     <div className="mt-10">
-      
       <div>
         <h3 className="text-lg font-semibold mb-4">Specifications</h3>
 
-        
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <FormSelect
             name="buildYear"
@@ -66,14 +61,12 @@ const Step2Form = ({ fieldLimitations }: Step2FormProps) => {
           />
         </div>
 
-        
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5">
           <DimensionInput namePrefix="length" label="Length" required />
           <DimensionInput namePrefix="beam" label="Beam Size" required />
           <DimensionInput namePrefix="draft" label="Max Draft" required />
         </div>
 
-        
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5">
           <DynamicFormSelect
             name="class"
@@ -105,7 +98,6 @@ const Step2Form = ({ fieldLimitations }: Step2FormProps) => {
           />
         </div>
 
-        
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5">
           <FormSelect
             name="numEngines"
@@ -131,7 +123,6 @@ const Step2Form = ({ fieldLimitations }: Step2FormProps) => {
         </div>
       </div>
 
-      
       {Array.from({ length: engineCount }, (_, index) => (
         <div key={index + 1} className="mt-10">
           <h3 className="text-lg font-semibold mb-4">Engine {index + 1}</h3>
@@ -186,7 +177,6 @@ const Step2Form = ({ fieldLimitations }: Step2FormProps) => {
         </div>
       ))}
 
-      
       <div className="mt-10">
         <h3 className="text-lg font-semibold mb-4">Basic Information</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -207,10 +197,8 @@ const Step2Form = ({ fieldLimitations }: Step2FormProps) => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-          
           <StateField />
 
-          
           <CityField />
 
           <FormInput name="zip" label="Zip" placeholder="Type here" required />
@@ -237,10 +225,8 @@ const Step2Form = ({ fieldLimitations }: Step2FormProps) => {
         </div>
       </div>
 
-      
       <MoreDetailsSection />
 
-      
       <MediaGallerySection fieldLimitations={fieldLimitations} />
     </div>
   );

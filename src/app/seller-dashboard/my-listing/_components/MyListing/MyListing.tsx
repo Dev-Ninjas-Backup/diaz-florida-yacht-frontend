@@ -80,13 +80,13 @@ const MyListing = () => {
   };
 
   console.log('My Listings:', myListings);
-  
+
   const listingColumns: Column<IListing>[] = [
     {
       header: 'Listing ID',
       cell: (row) => <p>{row.listingId}</p>,
     },
-    
+
     {
       header: 'Name',
       cell: (row) => (
