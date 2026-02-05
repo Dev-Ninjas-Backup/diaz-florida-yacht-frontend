@@ -52,9 +52,13 @@ const SearchListingPage = () => {
 
       const aiResponse = await postAiQuery({ queryData: updatedQueryData });
       // console.log('AI Response:', aiResponse);
-      
+
       // Handle the response structure: { counts, data, error }
-      if (aiResponse?.data && Array.isArray(aiResponse.data) && !aiResponse.error) {
+      if (
+        aiResponse?.data &&
+        Array.isArray(aiResponse.data) &&
+        !aiResponse.error
+      ) {
         const convertedData: ApiBoatData[] = aiResponse.data;
         const yachtProducts = convertedData.map((boat) =>
           convertApiDataToYachtProduct(boat),
