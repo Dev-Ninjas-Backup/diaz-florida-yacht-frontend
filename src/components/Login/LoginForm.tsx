@@ -1,13 +1,13 @@
-/**
- * Login Form Component
- * Main form UI with all input fields and buttons
- */
+
+
+
+
 
 import React from 'react';
 import { FaUser } from 'react-icons/fa';
 import { FormInput } from './FormInput';
 import { PasswordInput } from './PasswordInput';
-// import { SocialLoginButtons } from './SocialLoginButtons';
+
 import { LOGIN_LABELS, LOGIN_PLACEHOLDERS } from './constants';
 import type { LoginFormProps } from './types';
 
@@ -18,11 +18,11 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   onInputChange,
   onSubmit,
   onTogglePassword,
-  //   onGoogleLogin,
+  
 }) => {
   return (
     <form onSubmit={onSubmit} className="space-y-5">
-      {/* Email Field */}
+      
       <FormInput
         id="email"
         name="email"
@@ -35,7 +35,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         required
       />
 
-      {/* Password Field */}
+      
       <PasswordInput
         id="password"
         name="password"
@@ -48,7 +48,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         required
       />
 
-      {/* Remember Me & Forgot Password */}
+      
       <div className="flex items-center justify-between">
         <label className="flex items-center cursor-pointer">
           <input
@@ -70,7 +70,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         </a>
       </div>
 
-      {/* Login Button */}
+      
       <button
         type="submit"
         disabled={isSubmitting}
@@ -79,10 +79,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         {isSubmitting ? LOGIN_LABELS.loggingIn : LOGIN_LABELS.loginButton}
       </button>
 
-      {/* Social Login Buttons */}
-      {/* <SocialLoginButtons onGoogleLogin={onGoogleLogin} /> */}
+      
+      
 
-      {/* Register Link */}
+      
       <p className="text-center text-sm text-gray-700 mt-6">
         {LOGIN_LABELS.dontHaveAccount}{' '}
         <a

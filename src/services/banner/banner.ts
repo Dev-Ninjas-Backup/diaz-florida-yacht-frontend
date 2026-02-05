@@ -47,5 +47,5 @@ export const getBanner = async (
   }
 };
 
-// Keep getHomeBanner for backward compatibility
+
 export const getHomeBanner = getBanner;

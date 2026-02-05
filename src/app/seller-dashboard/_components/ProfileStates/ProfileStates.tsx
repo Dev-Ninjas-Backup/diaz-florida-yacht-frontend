@@ -24,7 +24,7 @@ const ProfileStates = () => {
   const [stats, setStats] = useState<SellerStats | null>(null);
 
   useEffect(() => {
-    // Fetch seller stats on component mount
+    
     const getStats = async () => {
       const getStatesFromApi = await getSellerStats();
       setStats(getStatesFromApi.data);
@@ -36,22 +36,22 @@ const ProfileStates = () => {
   return (
     <div className="">
       <CustomContainer>
-        {/* Back button */}
-        {/* <div className="mt-28">
-          <Link
-            href="/"
-            className="flex items-center bg-[#F8F9FA] border border-[#D9D9D9]/30 rounded-[10px] text-gray-600 hover:text-gray-800 transition-colors duration-200 mb-8 w-fit px-4 py-2"
-          >
-            <FaArrowLeft className="mr-2" />
-            Back to Home Page
-          </Link>
-        </div> */}
+        
+        
 
-        {/* Card */}
+
+
+
+
+
+
+
+
+        
         <div className="w-full flex lg:flex-row flex-col gap-5 md:gap-10 justify-between flex-wrap">
-          {/* Header */}
+          
           <div className="flex flex-col sm:flex-row items-center space-y-2 md:space-y-4 sm:space-y-0 sm:space-x-8">
-            {/* Profile Picture */}
+            
             <div className="flex-shrink-0">
               <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full overflow-hidden border-2 border-gray-200 shadow-md">
                 <Image
@@ -64,7 +64,7 @@ const ProfileStates = () => {
               </div>
             </div>
 
-            {/* User Info */}
+            
             <div className="flex-grow text-center sm:text-left">
               <h2 className="text-xl sm:text-2xl font-semibold text-gray-800">
                 {stats ? stats.name : 'Not Available'}
@@ -75,7 +75,7 @@ const ProfileStates = () => {
             </div>
           </div>
 
-          {/* Stats Section */}
+          
           <div className="grid grid-cols-3 gap-4">
             <div className="flex flex-col items-center justify-center bg-[#F4F4F4] rounded-lg p-2 md:p-4 text-center shadow-sm">
               <Image

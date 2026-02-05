@@ -38,7 +38,7 @@ const LeadDetailModal = ({ lead, isOpen, onClose }: LeadDetailModalProps) => {
         </div>
 
         <div className="p-6 space-y-6">
-          {/* Contact Info */}
+          
           <div className="bg-gray-50 rounded-lg p-4 space-y-3">
             <h3 className="font-semibold text-lg mb-3">Contact Information</h3>
             <div className="flex items-center gap-3">
@@ -70,7 +70,7 @@ const LeadDetailModal = ({ lead, isOpen, onClose }: LeadDetailModalProps) => {
             </div>
           </div>
 
-          {/* Boat Info */}
+          
           <div className="bg-blue-50 rounded-lg p-4 space-y-3">
             <h3 className="font-semibold text-lg mb-3 flex items-center gap-2">
               <Ship size={20} />
@@ -90,7 +90,7 @@ const LeadDetailModal = ({ lead, isOpen, onClose }: LeadDetailModalProps) => {
             </div>
           </div>
 
-          {/* Listing Info */}
+          
           {lead.listingId && (
             <div className="bg-gray-50 rounded-lg p-4">
               <h3 className="font-semibold mb-2">Listing Details</h3>
@@ -105,7 +105,7 @@ const LeadDetailModal = ({ lead, isOpen, onClose }: LeadDetailModalProps) => {
             </div>
           )}
 
-          {/* Message */}
+          
           <div className="bg-gray-50 rounded-lg p-4">
             <h3 className="font-semibold mb-3 flex items-center gap-2">
               <MessageSquare size={18} />
@@ -114,7 +114,7 @@ const LeadDetailModal = ({ lead, isOpen, onClose }: LeadDetailModalProps) => {
             <p className="text-gray-700 whitespace-pre-wrap">{lead.message}</p>
           </div>
 
-          {/* Actions */}
+          
           <div className="flex gap-3">
             <a
               href={`mailto:${lead.email}`}

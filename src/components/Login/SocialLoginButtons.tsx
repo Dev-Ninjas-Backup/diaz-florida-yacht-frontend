@@ -1,7 +1,7 @@
-/**
- * Social Login Buttons Component
- * OAuth provider login buttons (Google, Facebook, etc.)
- */
+
+
+
+
 
 import React from 'react';
 import { FcGoogle } from 'react-icons/fc';
@@ -16,7 +16,7 @@ export const SocialLoginButtons: React.FC<SocialLoginButtonsProps> = ({
 }) => {
   return (
     <div className="space-y-4">
-      {/* Divider */}
+      
       <div className="relative flex items-center justify-center">
         <div className="absolute inset-0 flex items-center">
           <div className="w-full border-t border-gray-300"></div>
@@ -28,7 +28,7 @@ export const SocialLoginButtons: React.FC<SocialLoginButtonsProps> = ({
         </div>
       </div>
 
-      {/* Google Login Button */}
+      
       <button
         type="button"
         onClick={onGoogleLogin}
@@ -38,9 +38,9 @@ export const SocialLoginButtons: React.FC<SocialLoginButtonsProps> = ({
         <span>{LOGIN_LABELS.continueWithGoogle}</span>
       </button>
 
-      {/* Future: Add more social login buttons here */}
-      {/* <button type="button" onClick={onFacebookLogin}>Facebook</button> */}
-      {/* <button type="button" onClick={onAppleLogin}>Apple</button> */}
+      
+      
+      
     </div>
   );
 };

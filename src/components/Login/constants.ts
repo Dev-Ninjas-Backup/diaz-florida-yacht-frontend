@@ -1,7 +1,7 @@
-/**
- * Login Module Constants
- * Centralized constants for labels, placeholders, messages, etc.
- */
+
+
+
+
 
 export const LOGIN_LABELS = {
   title: 'Login',
@@ -47,5 +47,5 @@ export const LOGO_CONFIG = {
 export const FORM_CONFIG = {
   minPasswordLength: 6,
   rememberMeDefault: false,
-  submitDelay: 1500, // milliseconds
+  submitDelay: 1500, 
 } as const;

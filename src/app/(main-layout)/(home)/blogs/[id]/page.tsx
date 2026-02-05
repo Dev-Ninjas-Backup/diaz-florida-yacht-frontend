@@ -12,7 +12,7 @@ import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import BlogInformations from './_components/BlogInformations';
 
-/* ---------- types ---------- */
+
 
 interface BlogCardData {
   id: string;
@@ -26,7 +26,7 @@ interface BlogCardData {
   };
 }
 
-/* ---------- component ---------- */
+
 
 const BlogDetailsPage = () => {
   const params = useParams<{ id: string }>();
@@ -41,11 +41,11 @@ const BlogDetailsPage = () => {
 
     const loadData = async () => {
       try {
-        //  blog details
+        
         const blogDetails = await getBlogDetails(blogId);
         setBlog(blogDetails);
 
-        // related blogs
+        
         const blogs = await getBlogs();
 
         const related = blogs
@@ -95,7 +95,7 @@ const BlogDetailsPage = () => {
       <CustomContainer>
         <div className="flex flex-col md:flex-row items-start gap-10 py-10">
           <div className="w-full md:w-3/4 overflow-hidden">
-            {/* Blog Thumbnail */}
+            
             {blog.blogImage?.url && (
               <div className="mb-8 w-full">
                 <div className="relative w-full h-[250px] sm:h-[400px] md:h-[400px] lg:h-[500px] rounded-xl overflow-hidden">

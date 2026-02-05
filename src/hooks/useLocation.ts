@@ -1,7 +1,7 @@
-/**
- * Location Hook
- * Get user's current location (city and state) using browser geolocation and reverse geocoding
- */
+
+
+
+
 
 import { useCallback, useEffect, useState } from 'react';
 
@@ -26,10 +26,10 @@ interface UseLocationReturn {
   clearLocation: () => void;
 }
 
-/**
- * Reverse geocode coordinates to get city and state
- * Uses OpenStreetMap Nominatim API (free, no API key required)
- */
+
+
+
+
 const reverseGeocode = async (
   latitude: number,
   longitude: number,
@@ -38,7 +38,7 @@ const reverseGeocode = async (
     `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&addressdetails=1&zoom=10`,
     {
       headers: {
-        'User-Agent': 'Diaz-Florida-Yacht-App/1.0', // Required by Nominatim
+        'User-Agent': 'Diaz-Florida-Yacht-App/1.0', 
       },
     },
   );
@@ -65,23 +65,23 @@ const reverseGeocode = async (
   };
 };
 
-/**
- * Get user's current location using browser geolocation API
- * Returns city and state names via reverse geocoding
- */
+
+
+
+
 export const useLocation = (): UseLocationReturn => {
   const [location, setLocation] = useState<LocationData | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<LocationError | null>(null);
 
-  /**
-   * Get current location
-   */
+  
+
+
   const getLocation = useCallback(async (): Promise<void> => {
     setLoading(true);
     setError(null);
 
-    // Check if geolocation is supported
+    
     if (!navigator.geolocation) {
       setError({
         code: -1,
@@ -96,15 +96,15 @@ export const useLocation = (): UseLocationReturn => {
         (resolve, reject) => {
           navigator.geolocation.getCurrentPosition(resolve, reject, {
             enableHighAccuracy: true,
-            timeout: 10000, // 10 seconds
-            maximumAge: 300000, // 5 minutes
+            timeout: 10000, 
+            maximumAge: 300000, 
           });
         },
       );
 
       const { latitude, longitude } = position.coords;
 
-      // Reverse geocode to get city and state
+      
       const locationData = await reverseGeocode(latitude, longitude);
 
       setLocation(locationData);
@@ -144,9 +144,9 @@ export const useLocation = (): UseLocationReturn => {
     }
   }, []);
 
-  /**
-   * Clear location data
-   */
+  
+
+
   const clearLocation = useCallback(() => {
     setLocation(null);
     setError(null);
@@ -161,9 +161,9 @@ export const useLocation = (): UseLocationReturn => {
   };
 };
 
-/**
- * Hook to get location on mount (optional auto-load)
- */
+
+
+
 export const useLocationAuto = (
   autoLoad: boolean = false,
 ): UseLocationReturn => {

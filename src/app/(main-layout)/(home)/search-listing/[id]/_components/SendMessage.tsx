@@ -27,7 +27,7 @@ const SendMessage: React.FC<SendMessageProps> = ({ listingId }) => {
   const formRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Get or create user ID from localStorage
+    
     const STORAGE_KEY = 'GENERATED_UID';
     if (typeof window !== 'undefined') {
       const existingId = localStorage.getItem(STORAGE_KEY);
@@ -45,16 +45,16 @@ const SendMessage: React.FC<SendMessageProps> = ({ listingId }) => {
   }, []);
 
   useEffect(() => {
-    // Calculate banner height and set top offset
+    
     const calculateTopOffset = () => {
       if (typeof window === 'undefined') return;
 
-      // Find the banner element (GradientBannerCustom uses fixed positioning with gradient background)
+      
       let banner = document.querySelector(
         '[class*="bg-linear-to-b"]',
       ) as HTMLElement;
 
-      // Fallback: find by fixed positioning with z-50
+      
       if (!banner) {
         const fixedElements = Array.from(
           document.querySelectorAll('div[class*="fixed"]'),
@@ -67,15 +67,15 @@ const SendMessage: React.FC<SendMessageProps> = ({ listingId }) => {
       if (banner) {
         const bannerRect = banner.getBoundingClientRect();
         const bannerBottom = bannerRect.bottom;
-        // Set top offset to be below banner + 16px spacing
+        
         setTopOffset(`${bannerBottom + 16}px`);
       } else {
-        // Fallback: use default spacing if banner not found
+        
         setTopOffset('1rem');
       }
     };
 
-    // Handle footer detection on scroll - form should move up when footer appears
+    
     const handleScroll = () => {
       if (
         typeof window === 'undefined' ||
@@ -85,7 +85,7 @@ const SendMessage: React.FC<SendMessageProps> = ({ listingId }) => {
         return;
       }
 
-      // Update top offset when scrolling (banner position might change)
+      
       calculateTopOffset();
 
       const footer = document.querySelector('footer');
@@ -97,27 +97,27 @@ const SendMessage: React.FC<SendMessageProps> = ({ listingId }) => {
       const footerRect = footer.getBoundingClientRect();
       const windowHeight = window.innerHeight;
 
-      // If footer is in viewport, form should scroll with content (like left content)
+      
       if (footerRect.top < windowHeight) {
-        // Footer is visible, form should scroll with content
+        
         setShouldScrollWithContent(true);
         setBottomOffset(undefined);
       } else {
-        // Footer not in view yet, form stays fixed
+        
         setShouldScrollWithContent(false);
         setBottomOffset(undefined);
       }
     };
 
-    // Handle resize and recalculate positions
+    
     const handleResize = () => {
       calculateTopOffset();
       handleScroll();
     };
 
-    // Only apply on medium screens and up
+    
     if (typeof window !== 'undefined' && window.innerWidth >= 768) {
-      // Initial calculations
+      
       calculateTopOffset();
       handleScroll();
 
@@ -145,7 +145,7 @@ const SendMessage: React.FC<SendMessageProps> = ({ listingId }) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Validate form
+    
     if (
       !formData.name ||
       !formData.email ||
@@ -157,7 +157,7 @@ const SendMessage: React.FC<SendMessageProps> = ({ listingId }) => {
       return;
     }
 
-    // Call API
+    
     try {
       await submitContactOwner({
         name: formData.name,
@@ -171,7 +171,7 @@ const SendMessage: React.FC<SendMessageProps> = ({ listingId }) => {
       });
 
       toast.success('Message sent successfully!');
-      // Reset form
+      
       setFormData({
         name: '',
         email: '',
@@ -215,14 +215,14 @@ const SendMessage: React.FC<SendMessageProps> = ({ listingId }) => {
           bottom: bottomOffset,
         }}
       >
-        {/* Header */}
+        
         <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-4">
           Contact Owner
         </h2>
 
-        {/* Contact Form */}
+        
         <form onSubmit={handleSubmit} className="space-y-3">
-          {/* Name Input */}
+          
           <input
             type="text"
             name="name"
@@ -233,7 +233,7 @@ const SendMessage: React.FC<SendMessageProps> = ({ listingId }) => {
             required
           />
 
-          {/* Email Input */}
+          
           <input
             type="email"
             name="email"
@@ -244,7 +244,7 @@ const SendMessage: React.FC<SendMessageProps> = ({ listingId }) => {
             required
           />
 
-          {/* Phone Input */}
+          
           <input
             type="tel"
             name="phone"
@@ -255,7 +255,7 @@ const SendMessage: React.FC<SendMessageProps> = ({ listingId }) => {
             required
           />
 
-          {/* Message Textarea */}
+          
           <textarea
             name="message"
             value={formData.message}
@@ -266,7 +266,7 @@ const SendMessage: React.FC<SendMessageProps> = ({ listingId }) => {
             required
           />
 
-          {/* Send Message Button */}
+          
           <button
             type="submit"
             disabled={isSubmitting}
@@ -276,7 +276,7 @@ const SendMessage: React.FC<SendMessageProps> = ({ listingId }) => {
           </button>
         </form>
 
-        {/* Ask AI Button */}
+        
         <button
           type="button"
           onClick={handleAskAI}

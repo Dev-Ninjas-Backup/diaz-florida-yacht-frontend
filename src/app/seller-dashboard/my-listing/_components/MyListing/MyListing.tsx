@@ -80,13 +80,13 @@ const MyListing = () => {
   };
 
   console.log('My Listings:', myListings);
-  //Table Config
+  
   const listingColumns: Column<IListing>[] = [
     {
       header: 'Listing ID',
       cell: (row) => <p>{row.listingId}</p>,
     },
-    // File Name Column
+    
     {
       header: 'Name',
       cell: (row) => (

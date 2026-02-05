@@ -21,7 +21,7 @@ export default function AnimatedLoadingMessages() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % loadingMessages.length);
-    }, 5000); // Change message every 2 seconds
+    }, 5000); 
 
     return () => clearInterval(interval);
   }, []);

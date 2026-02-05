@@ -1,7 +1,7 @@
-/**
- * BoatPreview Component
- * Displays a preview card of the boat being registered
- */
+
+
+
+
 
 import Image from 'next/image';
 import React from 'react';
@@ -26,7 +26,7 @@ export const BoatPreview: React.FC<BoatPreviewProps> = ({
     <div className={`bg-white rounded-2xl shadow-lg p-6 ${className}`}>
       <h3 className="text-xl font-bold text-gray-800 mb-4">{title}</h3>
 
-      {/* Image Preview */}
+      
       {imageUrl && (
         <div className="relative w-full h-48 mb-4 rounded-lg overflow-hidden">
           <Image
@@ -38,7 +38,7 @@ export const BoatPreview: React.FC<BoatPreviewProps> = ({
         </div>
       )}
 
-      {/* Details */}
+      
       {details.length > 0 && (
         <div className="space-y-3">
           {details?.map((detail, index) => (

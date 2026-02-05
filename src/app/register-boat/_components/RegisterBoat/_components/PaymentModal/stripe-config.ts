@@ -1,6 +1,6 @@
 import { loadStripe, Stripe, StripeElementsOptions } from '@stripe/stripe-js';
 
-// Singleton instance of Stripe
+
 let stripeInstance: Promise<Stripe | null> | null = null;
 
 export const getStripeInstance = (): Promise<Stripe | null> => {
@@ -26,10 +26,10 @@ export const getStripeElementsOptions = (
   appearance: {
     theme: 'stripe',
     variables: {
-      colorPrimary: '#2563eb', // Blue-600
+      colorPrimary: '#2563eb', 
       colorBackground: '#ffffff',
-      colorText: '#1f2937', // Gray-800
-      colorDanger: '#ef4444', // Red-500
+      colorText: '#1f2937', 
+      colorDanger: '#ef4444', 
       fontFamily: 'system-ui, sans-serif',
       spacingUnit: '4px',
       borderRadius: '8px',

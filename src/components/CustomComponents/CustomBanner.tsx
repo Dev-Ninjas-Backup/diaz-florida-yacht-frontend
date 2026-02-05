@@ -17,7 +17,7 @@ const CustomBanner = ({
   subtitle,
   children,
 }: CustomBannerProps) => {
-  // Use provided banner or fallback
+  
   const bannerImage = banner || '/placeholder-banner.jpg';
 
   return (

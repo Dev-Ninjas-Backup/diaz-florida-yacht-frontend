@@ -1,7 +1,7 @@
-/**
- * DimensionInput Component
- * Reusable dimension input with feet and inches fields
- */
+
+
+
+
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';

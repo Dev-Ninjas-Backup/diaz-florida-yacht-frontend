@@ -79,7 +79,7 @@ const NavItemsMobile: React.FC<NavItemsMobileProps> = ({
             <IoIosArrowDown className="text-white" />
           </div>
 
-          {/* Account section - show dropdown items for logged in users */}
+          
           {!userLoading && user ? (
             <div>
               <div className="flex items-center gap-2 px-3 py-2 mb-2">

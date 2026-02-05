@@ -49,7 +49,7 @@ const AllListing = () => {
           if (response?.success && response?.data) {
             const convertedBoats: YachtProduct[] = response.data.map(
               (boat: ApiBoatResponse) => {
-                // Parse price from "114900.00 USD" format
+                
                 let price: number | undefined;
                 if (typeof boat.Price === 'string') {
                   const priceMatch = boat.Price.match(/([\d,.]+)/);

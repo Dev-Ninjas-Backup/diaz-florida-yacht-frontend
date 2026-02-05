@@ -9,7 +9,7 @@ const RegisterBoat = () => {
   const router = useRouter();
   return (
     <div className="my-2 md:my-3 mx-2 md:mx-5 rounded-2xl">
-      {/* <Navbar /> */}
+      
       <GradientBannerCustom>
         <div className="flex items-center gap-3  pt-10">
           <IoArrowBack

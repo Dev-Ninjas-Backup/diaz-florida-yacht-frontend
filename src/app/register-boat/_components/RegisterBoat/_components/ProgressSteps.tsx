@@ -1,7 +1,7 @@
-/**
- * ProgressSteps Component
- * Displays the current step indicator for multi-step forms
- */
+
+
+
+
 
 import React from 'react';
 

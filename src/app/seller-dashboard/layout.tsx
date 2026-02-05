@@ -1,7 +1,7 @@
-/**
- * Seller Dashboard Layout
- * Protected layout - requires authentication
- */
+
+
+
+
 
 'use client';
 

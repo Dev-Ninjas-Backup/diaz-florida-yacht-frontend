@@ -23,7 +23,7 @@ export function StateField() {
     setLoading(true);
 
     try {
-      // Import the US_STATES from our data file
+      
       const opts = US_STATES?.map((s: { code: string; name: string }) => ({
         value: s.name,
         label: s.name,

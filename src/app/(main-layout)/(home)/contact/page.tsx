@@ -15,7 +15,7 @@ const ContactPage = async () => {
     bannerData?.subtitle || 'Contact us for any questions or inquiries';
   return (
     <div>
-      {/* Top Banner */}
+      
       <CustomBanner
         banner={bannerUrl}
         bannerTitle={bannerTitle}
@@ -24,7 +24,7 @@ const ContactPage = async () => {
       <CustomContainer>
         <div className="py-10 md:py-12 lg:py-16">
           <div className="flex flex-col md:flex-row items-center gap-8 lg:gap-12">
-            {/* Contact Form */}
+            
             <div className="bg-white w-full  md:w-2/3">
               <h2 className="text-2xl md:text-3xl font-bold  mb-6 md:mb-8">
                 Contact Us
@@ -33,7 +33,7 @@ const ContactPage = async () => {
             </div>
 
             <div className=" w-full md:w-1/3">
-              {/* Return Policy */}
+              
               <div className="bg-gray-50 rounded-2xl p-8 md:p-10 flex flex-col items-center text-center">
                 <div className="w-20 h-20 mb-6">
                   <Image

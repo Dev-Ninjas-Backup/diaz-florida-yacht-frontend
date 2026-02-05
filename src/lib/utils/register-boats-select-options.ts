@@ -5,7 +5,7 @@ export const steps = [
   { id: 4, label: 'Pay & Post', key: 'payPost' },
 ];
 
-// Select options - Aligned with backend enums
+
 export const classOptions = [
   { value: 'SAILBOAT', label: 'Sailboat' },
   { value: 'MOTORBOAT', label: 'Motorboat' },
@@ -51,9 +51,9 @@ export const conditionOptions = [
   { value: 'DAMAGED', label: 'Damaged' },
 ];
 
-// Build year options (expanded for broader yacht listings)
+
 export const buildYearOptions = [
-  // Recent
+  
   { value: '2025', label: '2025' },
   { value: '2024', label: '2024' },
   { value: '2023', label: '2023' },
@@ -90,8 +90,8 @@ export const buildYearOptions = [
   { value: '1980', label: '1980' },
 ];
 
-// Make/Model options focused on popular yacht builders and models
-// Separate lists for makers and models to enable independent selects
+
+
 export const makeOptions = [
   { value: 'azimut', label: 'Azimut' },
   { value: 'sunseeker', label: 'Sunseeker' },
@@ -115,7 +115,7 @@ export const makeOptions = [
   { value: 'other', label: 'Other / Custom' },
 ];
 
-// modelOptions include the make so the UI can filter models by selected make
+
 export const modelOptions = [
   { value: 'azimut-55-fly', label: '55 Fly', make: 'azimut' },
   { value: 'azimut-62s', label: '62S', make: 'azimut' },
@@ -159,42 +159,42 @@ export const modelOptions = [
   { value: 'fairline-targa', label: 'Targa', make: 'fairline' },
   { value: 'pershing-70', label: '70', make: 'pershing' },
 
-  // Generic / fallback
+  
   { value: 'other', label: 'Other / Custom', make: 'other' },
 ];
 
-/**
- * Helper to fetch models by make value
- * @param make - maker value matching entries in `makeOptions` (e.g. 'azimut')
- */
+
+
+
+
 export const getModelsByMake = (make: string) =>
   modelOptions.filter((m) => m.make === make);
 
 import { US_CITIES_BY_STATE, US_STATES } from '@/lib/data/us-states-cities';
 
-// Re-export for convenience
+
 export { US_STATES };
 
-// Select options
+
 export const countryOptions = [{ value: 'usa', label: 'United States' }];
 
-// State options derived from the authoritative US_STATES list
+
 export const stateOptions = US_STATES?.map((s) => ({
   value: s.code,
   label: s.name,
 }));
 
-/**
- * Get cities for a given state code (e.g. 'CA') or state name (e.g. 'California').
- * Returns the cities from the US_CITIES_BY_STATE map.
- */
+
+
+
+
 export function getCitiesForState(stateIdentifier: string): { name: string }[] {
   if (!stateIdentifier) return [];
 
-  // Try to find by code first
+  
   let cities = US_CITIES_BY_STATE[stateIdentifier.toUpperCase()];
 
-  // If not found, try to find by name
+  
   if (!cities) {
     const state = US_STATES.find(
       (s) => s.name.toLowerCase() === stateIdentifier.toLowerCase(),

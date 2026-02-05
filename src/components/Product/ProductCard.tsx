@@ -23,7 +23,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isPremium }) => {
       href={product.link || `/search-listing/${product.id || 2}`}
       className="relative bg-white rounded-lg sm:rounded-xl lg:rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 group"
     >
-      {/* Image Section with Bookmark */}
+      
       <div className="relative w-full aspect-[4/2.6] overflow-hidden">
         <Image
           src={product.image}
@@ -42,9 +42,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isPremium }) => {
         )}
       </div>
 
-      {/* Content Section */}
+      
       <div className="p-2 sm:p-3 md:p-4 lg:p-5 pb-2 sm:pb-3 md:pb-4 lg:pb-5">
-        {/* Location */}
+        
         <div className="flex items-center gap-1 text-gray-400 mb-1 sm:mb-2 md:mb-3">
           <IoLocationOutline className="text-xs sm:text-sm md:text-base lg:text-lg text-black flex-shrink-0" />
           <span className="text-[10px] sm:text-xs md:text-sm lg:text-base font-normal truncate">
@@ -52,7 +52,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isPremium }) => {
           </span>
         </div>
 
-        {/* Product Name - Truncated */}
+        
         <h3
           className="truncate text-sm sm:text-base md:text-lg lg:text-xl font-semibold mb-1 sm:mb-2 md:mb-3 lg:mb-4"
           title={product.name}
@@ -60,7 +60,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isPremium }) => {
           {product.name}
         </h3>
 
-        {/* Specs Grid */}
+        
         <div className="flex flex-row items-start justify-between gap-2 sm:gap-3 md:gap-4 mb-4 sm:mb-6 md:mb-8 lg:mb-10 border-y border-gray-200 py-1.5 sm:py-2 md:py-3 lg:py-4">
           <div className="flex-1 min-w-0">
             <p className="text-[10px] sm:text-xs md:text-sm text-gray-500 mb-0.5 sm:mb-1">
@@ -94,7 +94,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isPremium }) => {
           </div>
         </div>
       </div>
-      {/* Price */}
+      
       <div className="absolute bottom-0 left-0 w-full p-2 sm:p-3 md:p-4 lg:p-5">
         <p
           className="text-xs sm:text-sm md:text-base lg:text-xl font-semibold text-primary truncate"

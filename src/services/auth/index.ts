@@ -3,14 +3,14 @@
 import { getValidToken } from '@/lib/verifyAuth';
 import { cookies } from 'next/headers';
 
-/**
- * Authentication Service
- * Server-side authentication operations using Next.js server actions
- */
 
-// ============================================================================
-// Types
-// ============================================================================
+
+
+
+
+
+
+
 
 export interface User {
   id: string;
@@ -59,7 +59,7 @@ export const loginService = async (
       },
     });
 
-    // Handle non-200 responses
+    
     if (!res.ok) {
       const errorData = await res.json().catch(() => ({}));
       return {
@@ -74,30 +74,30 @@ export const loginService = async (
     const user = responseData.data?.user;
 
     if (responseData.success && token && user) {
-      // Set httpOnly cookie for token (secure, not accessible via JS)
+      
       cookieStore.set('accessToken', token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',
-        maxAge: 60 * 60 * 24 * 7, // 7 days
+        maxAge: 60 * 60 * 24 * 7, 
         path: '/',
       });
 
-      // Set user cookie WITHOUT httpOnly so client can check auth status
+      
       cookieStore.set('user', JSON.stringify(user), {
-        httpOnly: false, // Client-side accessible for auth checks
+        httpOnly: false, 
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',
-        maxAge: 60 * 60 * 24 * 7, // 7 days
+        maxAge: 60 * 60 * 24 * 7, 
         path: '/',
       });
 
-      // Set a simple auth flag for client-side checks
+      
       cookieStore.set('isAuthenticated', 'true', {
-        httpOnly: false, // Client-side accessible
+        httpOnly: false, 
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',
-        maxAge: 60 * 60 * 24 * 7, // 7 days
+        maxAge: 60 * 60 * 24 * 7, 
         path: '/',
       });
 
@@ -178,13 +178,13 @@ export const getUserProfile = async (): Promise<
   }
 };
 
-// ============================================================================
-// Logout Service
-// ============================================================================
 
-/**
- * Clear authentication cookies and log out user
- */
+
+
+
+
+
+
 export const logoutService = async (): Promise<{ success: boolean }> => {
   try {
     const cookieStore = await cookies();

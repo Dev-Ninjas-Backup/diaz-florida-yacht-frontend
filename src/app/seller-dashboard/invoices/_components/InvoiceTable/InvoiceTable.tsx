@@ -104,7 +104,7 @@ const InvoiceTable = () => {
     };
     fetchInvoices();
   }, [page, limit, search, status]);
-  //Table Config
+  
   const invoiceColumns: Column<InvoiceRecord>[] = [
     {
       header: 'Invoice ID',
@@ -304,7 +304,7 @@ const InvoiceTable = () => {
         }}
       />
 
-      {/* Hidden Invoice Template for PDF/Print */}
+      
       <div className="fixed -left-[9999px] top-0">
         {selectedInvoice && (
           <InvoiceTemplate ref={invoiceRef} invoice={selectedInvoice} />

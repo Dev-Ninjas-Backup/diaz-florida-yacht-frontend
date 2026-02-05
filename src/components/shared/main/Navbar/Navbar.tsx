@@ -21,7 +21,7 @@ const Navbar = () => {
     }
   };
 
-  // Auto-get location on component mount
+  
   useEffect(() => {
     getLocation();
   }, [getLocation]);
@@ -35,7 +35,7 @@ const Navbar = () => {
       window.removeEventListener('scroll', handleChangeBackgroundOnScroll);
   }, []);
 
-  // Build display name / avatar initials
+  
   const getUserDisplayName = () => {
     if (!user) return null;
     return (
@@ -53,26 +53,26 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      // Call server-side logout to clear httpOnly cookie
+      
       await logoutService();
     } catch (err) {
       console.error('Logout error:', err);
     }
 
-    // Clear client-side state and cookies
+    
     clearUser();
     clearAuthCookies();
     setAccountOpen(false);
   };
-  // Format location display
+  
   const getLocationDisplay = () => {
     if (loading) return 'Getting location...';
     if (error) return 'Location unavailable';
     if (location) return `${location.city}, ${location.state}`;
-    return 'Florida - USA'; // fallback
+    return 'Florida - USA'; 
   };
 
-  // Handle location click - refresh location
+  
   const handleLocationClick = () => {
     if (!loading) {
       getLocation();

@@ -1,8 +1,8 @@
-/**
- * Boat Registration Form Data Transformer
- *
- * Utilities to transform form data into API-ready format
- */
+
+
+
+
+
 
 import type {
   BoatClass,
@@ -19,9 +19,9 @@ import type {
   SellerInfo,
 } from '@/types/boat-registration-types';
 
-/**
- * Parse dimensions from separate feet/inches fields
- */
+
+
+
 function parseDimensions(formData: BoatRegistrationFormValues): BoatDimensions {
   return {
     lengthFeet: parseInt(formData.lengthFeet) || 0,
@@ -33,12 +33,12 @@ function parseDimensions(formData: BoatRegistrationFormValues): BoatDimensions {
   };
 }
 
-/**
- * Parse engine information from form
- * Handles dynamic engines array based on the number of engines selected
- */
+
+
+
+
 function parseEngines(formData: BoatRegistrationFormValues): EngineInfo[] {
-  // If engines array exists and has data, use it
+  
   if (formData.engines && formData.engines.length > 0) {
     return formData.engines.map((engine) => ({
       hours: parseInt(engine.hours) || 0,
@@ -50,7 +50,7 @@ function parseEngines(formData: BoatRegistrationFormValues): EngineInfo[] {
     }));
   }
 
-  // Fallback to legacy single engine fields for backward compatibility
+  
   if (formData.hours || formData.make2 || formData.model2) {
     const engine: EngineInfo = {
       hours: parseInt(formData.hours) || 0,
@@ -66,9 +66,9 @@ function parseEngines(formData: BoatRegistrationFormValues): EngineInfo[] {
   return [];
 }
 
-/**
- * Parse extra details from moreDetails array
- */
+
+
+
 function parseExtraDetails(
   moreDetails?: Array<{ title: string; description: string }>,
 ): ExtraDetail[] {
@@ -82,9 +82,9 @@ function parseExtraDetails(
     }));
 }
 
-/**
- * Transform form data to BoatInfo structure
- */
+
+
+
 export function transformToBoatInfo(
   formData: BoatRegistrationFormValues,
 ): BoatInfo {
@@ -113,9 +113,9 @@ export function transformToBoatInfo(
   };
 }
 
-/**
- * Transform form data to SellerInfo structure
- */
+
+
+
 export function transformToSellerInfo(
   formData: BoatRegistrationFormValues,
 ): SellerInfo {
@@ -132,9 +132,9 @@ export function transformToSellerInfo(
   };
 }
 
-/**
- * Transform complete form data to API request structure
- */
+
+
+
 export function transformToBoatRegistrationRequest(
   formData: BoatRegistrationFormValues,
 ): BoatRegistrationRequest {
@@ -145,35 +145,35 @@ export function transformToBoatRegistrationRequest(
   };
 }
 
-/**
- * Create FormData for multipart/form-data submission
- */
+
+
+
 export function createBoatRegistrationFormData(
   formData: BoatRegistrationFormValues,
 ): FormData {
   const apiData = transformToBoatRegistrationRequest(formData);
   const formDataToSend = new FormData();
 
-  // Add planId
+  
   formDataToSend.append('planId', apiData.planId);
 
-  // Add promoCode if provided
+  
   if (formData.promoCode && formData.promoCode.trim() !== '') {
     formDataToSend.append('promoCode', formData.promoCode.trim());
   }
 
-  // Add boatInfo as JSON string
+  
   formDataToSend.append('boatInfo', JSON.stringify(apiData.boatInfo));
 
-  // Add sellerInfo as JSON string
+  
   formDataToSend.append('sellerInfo', JSON.stringify(apiData.sellerInfo));
 
-  // Add cover photo
+  
   if (formData.coverPhoto) {
     formDataToSend.append('covers', formData.coverPhoto);
   }
 
-  // Add gallery images
+  
   if (formData.mediaGallery && formData.mediaGallery.length > 0) {
     formData.mediaGallery.forEach((file) => {
       formDataToSend.append(`galleries`, file);
@@ -183,9 +183,9 @@ export function createBoatRegistrationFormData(
   return formDataToSend;
 }
 
-/**
- * Log form data in a readable format for debugging
- */
+
+
+
 export function logBoatRegistrationData(
   formData: BoatRegistrationFormValues,
 ): void {

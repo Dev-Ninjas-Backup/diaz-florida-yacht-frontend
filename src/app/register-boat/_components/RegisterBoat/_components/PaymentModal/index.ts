@@ -5,7 +5,7 @@ export { PaymentSummary } from './PaymentSummary';
 export { StripePaymentForm } from './StripePaymentForm';
 export { usePaymentFlow } from './usePaymentFlow';
 
-// Export types
+
 export type {
   PackageInfo,
   PaymentModalProps,
@@ -13,7 +13,7 @@ export type {
   StripePaymentFormProps,
 } from './types';
 
-// Export utilities
+
 export {
   clearPaymentStorage,
   formatPrice,

@@ -44,7 +44,7 @@ const ProfileHeader = () => {
   };
 
   return (
-    //  className=" sticky top-50 sm:top-60 z-10"
+    
     <div>
       <CustomContainer>
         <div className="mt-8 flex items-center gap-5 flex-nowrap overflow-x-auto py-4 space-x-2 md:space-x-4">

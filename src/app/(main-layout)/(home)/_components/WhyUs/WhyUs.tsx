@@ -64,7 +64,7 @@ const WhyUs = () => {
     );
   }
 
-  // Map API data to component structure
+  
   const stats = [
     { value: data.excellence, label: 'Years of Excellence' },
     { value: data.boatsSoldPerYear, label: 'Boats Sold Per Year' },
@@ -107,7 +107,7 @@ const WhyUs = () => {
             </div>
 
             <div className="relative flex items-center justify-center h-[250px] sm:h-[320px] md:h-[350px] lg:h-[400px] xl:h-[450px] w-full lg:w-1/2">
-              {/* Left Image */}
+              
               <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[45%] md:w-[40%] lg:w-[38%] aspect-[4.7/5] lg:aspect-[4/5] z-10">
                 <div className="relative w-full h-full rounded-3xl overflow-hidden shadow-xl">
                   <Image
@@ -120,7 +120,7 @@ const WhyUs = () => {
                 </div>
               </div>
 
-              {/* Center Image */}
+              
               <div className="absolute left-1/2 lg:top-0 -translate-x-1/2 w-[55%] md:w-[50%] lg:w-[48%] aspect-[4.8/5] lg:aspect-[3/4] z-30">
                 <div className="relative w-full h-full rounded-3xl overflow-hidden shadow-2xl bg-teal-900">
                   <Image
@@ -133,7 +133,7 @@ const WhyUs = () => {
                 </div>
               </div>
 
-              {/* Right Image */}
+              
               <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[45%] md:w-[40%] lg:w-[38%] aspect-[4.7/5] lg:aspect-[4/5] z-50">
                 <div className="relative w-full h-full rounded-3xl overflow-hidden shadow-xl">
                   <Image

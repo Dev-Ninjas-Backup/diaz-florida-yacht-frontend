@@ -63,11 +63,11 @@ const SearchComponent = () => {
     classes: [],
   });
 
-  // Dropdown open states
+  
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Use dynamic data from API or fallback to hardcoded
+  
   const years =
     filterOptions.years.length > 0
       ? filterOptions.years
@@ -89,7 +89,7 @@ const SearchComponent = () => {
       ? filterOptions.states
       : ['Florida', 'California', 'Texas', 'New York', 'Massachusetts'];
 
-  // Fetch filter options on mount
+  
   useEffect(() => {
     const fetchFilterOptions = async () => {
       try {
@@ -104,7 +104,7 @@ const SearchComponent = () => {
     fetchFilterOptions();
   }, []);
 
-  // Close dropdown when clicking outside
+  
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -127,7 +127,7 @@ const SearchComponent = () => {
 
     setIsLoading(true);
     try {
-      // Build filters - only send changed values
+      
       const changedFilters: Record<string, string | number> = {};
 
       if (boatType && boatType !== INITIAL_VALUES.boatType) {
@@ -197,13 +197,13 @@ const SearchComponent = () => {
   const findMyBoat = async () => {
     setIsLoading(true);
     try {
-      // Build filter parameters matching backend API
+      
       const filterParams: Record<string, string | number> = {
         page: 1,
         limit: 100,
       };
 
-      // Map form fields to API parameters
+      
       if (make && make !== INITIAL_VALUES.make) {
         filterParams.make = make;
       }
@@ -214,7 +214,7 @@ const SearchComponent = () => {
         filterParams.class = boatType;
       }
 
-      // Year: use as both buildYearFrom and buildYearTo
+      
       if (year && year !== INITIAL_VALUES.year) {
         const yearNum = parseInt(year);
         if (!isNaN(yearNum)) {
@@ -223,7 +223,7 @@ const SearchComponent = () => {
         }
       }
 
-      // Price: priceMin defaults to 0, priceMax from maxPrice field
+      
       filterParams.priceStart = 0;
       if (maxPrice && maxPrice !== INITIAL_VALUES.maxPrice) {
         const priceNum = parseFloat(maxPrice.replace(/[$,]/g, ''));
@@ -232,7 +232,7 @@ const SearchComponent = () => {
         }
       }
 
-      // Length: use as both lengthFrom and lengthTo
+      
       if (length && length !== INITIAL_VALUES.length) {
         const lengthNum = parseFloat(length);
         if (!isNaN(lengthNum)) {
@@ -243,11 +243,11 @@ const SearchComponent = () => {
 
       console.log('Find My Boat - Filter Params:', filterParams);
 
-      // Call filter API
+      
       const response = await getFilteredBoats(filterParams);
 
       if (response.success && response.data) {
-        // Convert API data to yacht products
+        
         const yachtProducts = response.data.map((boat: ApiBoatData) =>
           convertApiDataToYachtProduct(boat),
         );
@@ -327,7 +327,7 @@ const SearchComponent = () => {
 
   return (
     <div className="w-full mx-auto" ref={dropdownRef}>
-      {/* Main Search Container */}
+      
       <div className="bg-white rounded-3xl shadow-lg overflow-visible p-2 xl:p-3 2xl:p-6 relative">
         <div className="absolute -top-5 right-4 text-gray-700  sm:hidden bg-white rounded-full p-1 cursor-pointer shadow-md">
           <IoIosArrowUp
@@ -335,11 +335,11 @@ const SearchComponent = () => {
             className={`${filterOpen ? 'rotate-180' : ''} transition-transform text-2xl`}
           />
         </div>
-        {/* Filters Row */}
+        
         <div
           className={`${filterOpen ? 'grid' : 'hidden'} sm:grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-0 pb-2`}
         >
-          {/* Year */}
+          
           <DropdownField
             label="Year"
             value={year}
@@ -348,7 +348,7 @@ const SearchComponent = () => {
             name="year"
           />
 
-          {/* Make */}
+          
           <DropdownField
             label="Make"
             value={make}
@@ -357,7 +357,7 @@ const SearchComponent = () => {
             name="make"
           />
 
-          {/* Model */}
+          
           <DropdownField
             label="Model"
             value={model}
@@ -366,7 +366,7 @@ const SearchComponent = () => {
             name="model"
           />
 
-          {/* Length */}
+          
           <div className=" border-gray-200 p-2 xl:p-3 2xl:p-4 hover:bg-gray-50 transition-colors">
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Length (ft)
@@ -380,7 +380,7 @@ const SearchComponent = () => {
             />
           </div>
 
-          {/* Max Price */}
+          
           <div className=" border-gray-200 p-2 xl:p-3 2xl:p-4 hover:bg-gray-50 transition-colors">
             <label className="block text-sm md:text-base font-medium text-gray-700 mb-2">
               Max Price ($)
@@ -394,7 +394,7 @@ const SearchComponent = () => {
             />
           </div>
 
-          {/* Boat Type */}
+          
           <DropdownField
             label="Boat Type"
             value={boatType}
@@ -403,7 +403,7 @@ const SearchComponent = () => {
             name="boatType"
           />
 
-          {/* Location */}
+          
           <DropdownField
             label="Location"
             value={location}
@@ -414,7 +414,7 @@ const SearchComponent = () => {
           />
         </div>
 
-        {/* AI Search Row */}
+        
         <div className="flex flex-col sm:flex-row md:gap-3 items-stretch sm:items-center md:border-t border-gray-200 md:pt-4">
           <div className="flex-1 relative bg-gray-100 rounded-2xl px-2 py-2 md:py-3">
             <input
