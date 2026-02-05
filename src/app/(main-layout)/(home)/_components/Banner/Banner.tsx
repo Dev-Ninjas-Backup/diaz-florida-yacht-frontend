@@ -18,7 +18,6 @@ const Banner = async () => {
 
   return (
     <section className="relative min-h-[550px] md:min-h-screen w-full flex items-center justify-center overflow-hidden rounded-2xl md:py-10">
-      {/* Background media */}
       {fileType === 'video' ? (
         <video
           className="absolute top-0 left-0 w-full h-full object-cover rounded-2xl"

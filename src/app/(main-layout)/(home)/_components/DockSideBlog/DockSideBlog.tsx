@@ -60,7 +60,6 @@ const DockSideBlog = () => {
   return (
     <CustomContainer>
       <div className="my-20 space-y-10">
-        {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
           <div className="text-left space-y-3 max-w-3xl">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold">
@@ -82,7 +81,6 @@ const DockSideBlog = () => {
           </div>
         </div>
 
-        {/* Blog Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
           {blogs.slice(0, 4).map((blog) => (
             <BlogCard key={blog.id} blog={blog} />

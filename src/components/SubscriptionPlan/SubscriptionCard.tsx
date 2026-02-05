@@ -14,7 +14,6 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ plan }) => {
         plan.featured ? 'ring-2 ring-blue-500' : ''
       }`}
     >
-      {/* Featured Badge */}
       {plan.featured && plan.featuredLabel && (
         <div className="absolute top-4 -right-7 z-10 rotate-45">
           <div className="bg-gradient-to-br from-green-400 to-green-600 text-white text-xs font-bold px-6 py-2 rounded-bl-2xl shadow-lg transform rotate-0">
@@ -23,9 +22,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ plan }) => {
         </div>
       )}
 
-      {/* Card Content */}
       <div className="p-4">
-        {/* Header */}
         <div className="mb-3 border-b border-gray-200 pb-3">
           <h3 className="text-xl font-bold text-gray-900 mb-3">{plan.name}</h3>
           <div className="flex items-baseline gap-1">
@@ -38,7 +35,6 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ plan }) => {
           </div>
         </div>
 
-        {/* Features List */}
         <div className="mb-3 sm:mb-4 space-y-2">
           {plan.features?.map((feature, index) => (
             <div key={index} className="flex items-start gap-3">
@@ -51,7 +47,6 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ plan }) => {
         </div>
 
         <div className="absolute bottom-5 left-0 right-0 w-full px-3">
-          {/* CTA Button */}
           <Link
             href={'/register-boat'}
             className={`block text-center py-3 px-4 w-full rounded-xl font-semibold text-base sm:text-lg transition-all duration-300 ${

@@ -26,10 +26,8 @@ export default function EditModeForm({
 
   console.log('Boat Data: ', boatData);
 
-  // Force set city value after component mounts to override CityField's reset
   useEffect(() => {
     if (boatData.city) {
-      // Small delay to ensure CityField has initialized
       setTimeout(() => {
         setValue('city', boatData.city, { shouldValidate: true });
       }, 100);
@@ -38,7 +36,6 @@ export default function EditModeForm({
 
   return (
     <div>
-      {/* Existing Cover Photo */}
       {boatData.coverImages.length > 0 && (
         <div className="mb-6">
           <Label>Current Cover Photo</Label>
@@ -59,7 +56,6 @@ export default function EditModeForm({
         </div>
       )}
 
-      {/* Existing Gallery */}
       {boatData.galleryImages.length > 0 && (
         <div className="mb-6">
           <Label>
@@ -106,7 +102,6 @@ export default function EditModeForm({
         </div>
       )}
 
-      {/* Regular Step2Form */}
       <Step2Form fieldLimitations={fieldLimitations} />
     </div>
   );

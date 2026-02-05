@@ -55,7 +55,6 @@ export const getFilterOptions = async (): Promise<FilterOptions> => {
   const json = await res.json();
   console.log('Filter options response:', json);
 
-  // Handle response that might be directly the data or wrapped in a data field
   const data = json.data || json;
   return {
     makes: data.makes || [],
@@ -73,11 +72,9 @@ export const getFilteredBoats = async (
   const baseUrl = process.env.NEXT_PUBLIC_BASE_API;
   const queryParams = new URLSearchParams();
 
-  // Add default pagination
   queryParams.append('page', String(filters.page ?? 1));
   queryParams.append('limit', String(filters.limit ?? 10));
 
-  // Add other filters only if they have values
   Object.entries(filters).forEach(([key, value]) => {
     if (
       value !== undefined &&

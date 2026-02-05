@@ -36,18 +36,15 @@ const BlogPage = () => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        // Load blogs and banner in parallel
         const [blogsData, banner] = await Promise.all([
           getBlogs(),
           getBanner('BLOG', 'FLORIDA'),
         ]);
 
-        // Set banner data
         if (banner) {
           setBannerData(banner);
         }
 
-        // Parse blogs data
         const parsed: BlogCardData[] = blogsData.map((item) => ({
           id: item.id,
           title: item.blogTitle,
@@ -75,7 +72,6 @@ const BlogPage = () => {
 
   return (
     <div>
-      {/* Top Banner */}
       <CustomBanner
         banner={bannerData?.background?.url || banner}
         bannerTitle={bannerData?.bannerTitle}
@@ -92,7 +88,6 @@ const BlogPage = () => {
           />
         ) : (
           <>
-            {/* Featured / Front section */}
             <div className="flex flex-col md:flex-row items-stretch gap-10 py-10">
               <div className="w-full md:w-3/4 flex">
                 <div className="w-full h-full">
@@ -106,14 +101,12 @@ const BlogPage = () => {
               </div>
             </div>
 
-            {/* Blog Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 my-10">
               {blogs.slice(1, visibleCount + 1).map((blog) => (
                 <BlogCard key={blog.id} blog={blog} />
               ))}
             </div>
 
-            {/* Load More */}
             {blogs.length > visibleCount && (
               <div className="flex justify-center my-10">
                 <button
@@ -128,7 +121,6 @@ const BlogPage = () => {
         )}
       </CustomContainer>
 
-      {/* AdComponent - Always shows as separate section */}
       <AdComponent />
     </div>
   );

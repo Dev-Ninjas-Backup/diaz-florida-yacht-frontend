@@ -46,11 +46,9 @@ const FeaturedBrands = () => {
           />
         ) : (
           <div className="space-y-10 my-20 px-4 sm:px-8 md:px-16 lg:px-[10%] relative overflow-hidden">
-            {/* Fading Gradients */}
             <div className="absolute left-0 top-0 h-full w-20 sm:w-[120px] md:w-[200px] lg:w-[350px] bg-linear-to-r from-white via-white/80 to-transparent pointer-events-none z-10" />
             <div className="absolute right-0 top-0 h-full w-20 sm:w-[120px] md:w-[200px] lg:w-[350px] bg-linear-to-l from-white via-white/80 to-transparent pointer-events-none z-10" />
 
-            {/* First Row: Marquee Right */}
             <div className="flex items-center relative">
               <Marquee
                 direction="right"
@@ -73,7 +71,6 @@ const FeaturedBrands = () => {
               </Marquee>
             </div>
 
-            {/* Second Row: Marquee Left */}
             <div>
               <Marquee
                 direction="left"

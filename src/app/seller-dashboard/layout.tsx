@@ -1,8 +1,3 @@
-/**
- * Seller Dashboard Layout
- * Protected layout - requires authentication
- */
-
 'use client';
 
 import CustomContainer from '@/components/CustomComponents/CustomContainer';

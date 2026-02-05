@@ -71,7 +71,6 @@ export const GalleryUpload: React.FC<GalleryUploadProps> = ({
         {label} {required && '*'}
       </Label>
       <div className="mt-2">
-        {/* Preview Grid */}
         {previews.length > 0 && (
           <div className="grid grid-cols-3 gap-4 mb-4">
             {previews?.map((preview, index) => (
@@ -97,7 +96,6 @@ export const GalleryUpload: React.FC<GalleryUploadProps> = ({
           </div>
         )}
 
-        {/* Upload Area */}
         {previews.length < maxFiles && (
           <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-[#01B6FF] transition-colors">
             <Input

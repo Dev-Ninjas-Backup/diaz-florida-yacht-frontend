@@ -1,8 +1,3 @@
-/**
- * FormInput Component
- * Reusable input field with label and error handling for React Hook Form
- */
-
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import React from 'react';

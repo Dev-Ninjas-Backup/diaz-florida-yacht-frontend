@@ -1,8 +1,3 @@
-/**
- * Form Input Component
- * Reusable input field with icon support
- */
-
 import React from 'react';
 import type { FormInputProps } from './types';
 

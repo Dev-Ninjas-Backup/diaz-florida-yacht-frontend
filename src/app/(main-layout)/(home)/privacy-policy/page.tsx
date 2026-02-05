@@ -6,14 +6,11 @@ import PrivacyPolicyContent from './_components/PrivacyPolicyContent';
 const PrivacyPolicyPage = () => {
   return (
     <div>
-      {/* Banner */}
       <PrivacyPolicyBanner />
 
-      {/* Main Content */}
       <CustomContainer>
         <PrivacyPolicyContent />
 
-        {/* Footer - Get In Touch */}
         <GetInTouch />
       </CustomContainer>
     </div>

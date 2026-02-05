@@ -1,8 +1,3 @@
-/**
- * Login Module Types
- * TypeScript interfaces and types for the login flow
- */
-
 export interface LoginFormData {
   email: string;
   password: string;

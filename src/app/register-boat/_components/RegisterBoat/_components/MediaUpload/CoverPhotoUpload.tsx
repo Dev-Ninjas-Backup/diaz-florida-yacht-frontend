@@ -1,8 +1,3 @@
-/**
- * CoverPhotoUpload Component
- * Reusable component for uploading a single cover photo
- */
-
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import Image from 'next/image';

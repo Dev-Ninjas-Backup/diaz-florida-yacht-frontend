@@ -6,7 +6,6 @@ import PremiumDeals from './_components/PremiumDeals/PremiumDeals';
 import SubscriptionPlan from './_components/SubscriptionPlan/SubscriptionPlan';
 import WhyUs from './_components/WhyUs/WhyUs';
 
-// Enable ISR - revalidate every hour
 export const revalidate = 3600;
 
 const HomePage = () => {

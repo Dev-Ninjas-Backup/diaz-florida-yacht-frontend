@@ -82,7 +82,7 @@ const InvoiceTable = () => {
     };
     fetchInvoices();
   }, [page, limit, search, status]);
-  //Table Config
+
   const invoiceColumns: Column<InvoiceRecord>[] = [
     {
       header: 'Invoice ID',

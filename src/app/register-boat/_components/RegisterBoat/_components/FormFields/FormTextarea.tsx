@@ -1,8 +1,3 @@
-/**
- * FormTextarea Component
- * Reusable textarea field with label and error handling for React Hook Form
- */
-
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import React, { useState } from 'react';
@@ -39,10 +34,6 @@ export const FormTextarea: React.FC<FormTextareaProps> = ({
   const [wordCountError, setWordCountError] = useState('');
   const currentValue = watch(name) || '';
 
-  // Debug: Log maxWords prop
-  // console.log(`📝 FormTextarea [${name}] - maxWords:`, maxWords);
-
-  // Count words in the current value
   const wordCount =
     currentValue.trim() === '' ? 0 : currentValue.trim().split(/\s+/).length;
 

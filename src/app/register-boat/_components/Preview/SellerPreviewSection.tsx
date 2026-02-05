@@ -57,7 +57,6 @@ const SellerPreviewSection: React.FC<SellerPreviewSectionProps> = ({
         </div>
       </div>
 
-      {/* Boat Summary on Step 3 */}
       <div className="bg-gray-50 rounded-lg p-4">
         <h4 className="font-semibold text-sm mb-3">Boat Summary</h4>
         <div className="space-y-2 text-xs">

@@ -16,7 +16,6 @@ import {
   FaTwitter,
 } from 'react-icons/fa';
 
-// Map social media platform to icon component
 const getSocialIcon = (platform: string) => {
   const platformLower = platform.toLowerCase();
   if (platformLower.includes('facebook')) return FaFacebookF;
@@ -70,7 +69,6 @@ const Footer = () => {
       });
       setNewsletterEmail('');
 
-      // Clear success message after 5 seconds
       setTimeout(() => {
         setSubscribeStatus({ type: null, message: '' });
       }, 5000);
@@ -87,7 +85,6 @@ const Footer = () => {
     }
   };
 
-  // Default/fallback data
   const companyName = footerData?.companyName || 'Florida Yacht Trader';
   const logoUrl = footerData?.logoUrl || logo;
 
@@ -113,10 +110,8 @@ const Footer = () => {
   return (
     <footer className="bg-[#1a1a1a] text-white">
       <CustomContainer>
-        {/* Main Footer Content */}
         <div className=" mx-auto px-2 py-12 lg:py-16">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-            {/* Logo and Member Section */}
             <div className="space-y-6">
               <div className="flex items-center gap-3">
                 <div className="w-18 h-16 rounded-full flex items-center justify-center p-2 ">
@@ -151,13 +146,9 @@ const Footer = () => {
                     </div>
                   </div>
                 )}
-                {/* <p className="text-gray-50 text-sm mb-3">
-                  {companyDescription}
-                </p> */}
               </div>
             </div>
 
-            {/* Quick Links */}
             <div>
               <h3 className="text-lg font-semibold mb-4 sm:mb-6">
                 Quick Links
@@ -176,7 +167,6 @@ const Footer = () => {
               </ul>
             </div>
 
-            {/* Need Help */}
             <div>
               <h3 className="text-lg font-semibold mb-4 sm:mb-6">
                 Helpful Links
@@ -195,7 +185,6 @@ const Footer = () => {
               </ul>
             </div>
 
-            {/* Contact and Newsletter */}
             <div>
               <h3 className="text-lg font-semibold mb-4 sm:mb-6">Need Help?</h3>
               <div className="space-y-3 sm:space-y-4 mb-6">
@@ -207,7 +196,6 @@ const Footer = () => {
                 )}
               </div>
 
-              {/* Newsletter Subscription */}
               <form onSubmit={handleSubscribe} className="space-y-3">
                 <div className="relative">
                   <input
@@ -231,7 +219,6 @@ const Footer = () => {
                   {isSubscribing ? 'Subscribing...' : 'Subscribe'}
                 </button>
 
-                {/* Status Messages */}
                 {subscribeStatus.type && (
                   <div
                     className={`flex items-center gap-2 text-sm p-2 rounded ${
@@ -253,16 +240,13 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom Bar */}
         <div className="border-t border-gray-700">
           <div className=" mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-              {/* Copyright */}
               <p className="text-gray-400 text-sm text-center sm:text-left">
                 {copyrightText}
               </p>
 
-              {/* Social Links */}
               {socialMediaLinks.length > 0 && (
                 <div className="flex items-center gap-1">
                   <span className="text-gray-400 text-sm mr-3">

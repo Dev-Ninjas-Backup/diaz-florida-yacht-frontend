@@ -12,7 +12,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import z from 'zod';
 import EditModeForm from './EditModeForm';
-// import boatPreview from '@/assets/register-boat/boatPreview.svg';
+
 import {
   createBoatListing,
   updateBoatListing,
@@ -34,10 +34,9 @@ export default function BoatListingForm({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [imagesToDelete, setImagesToDelete] = useState<string[]>([]);
 
-  // For seller dashboard, use generous defaults as users already have subscriptions
   const fieldLimitations: FieldLimitations = {
-    picLimit: 50, // Generous limit for existing listings
-    wordLimit: 5000, // Generous word limit
+    picLimit: 50,
+    wordLimit: 5000,
   };
 
   const handleDeleteImage = (imageId: string) => {
@@ -143,7 +142,6 @@ export default function BoatListingForm({
   ]);
 
   const handleSubmit = async () => {
-    // Skip file validation for edit mode
     const fieldsToValidate =
       mode === 'edit'
         ? [
@@ -185,7 +183,6 @@ export default function BoatListingForm({
 
     const formValues = getValues();
 
-    // Check cover photo only for create mode
     if (mode === 'create' && !formValues.coverPhoto) {
       toast.error('Please upload a cover photo');
       return;
@@ -196,7 +193,6 @@ export default function BoatListingForm({
       const formValues = getValues();
       const formData = new FormData();
 
-      // Build boatInfo object
       const boatInfo: Record<string, unknown> = {
         name: formValues.name,
         price: parseFloat(formValues.price),
@@ -247,19 +243,16 @@ export default function BoatListingForm({
         extraDetails: formValues.moreDetails || [],
       };
 
-      // Add imagesToDelete for edit mode
       if (mode === 'edit' && imagesToDelete.length > 0) {
         boatInfo.imagesToDelete = imagesToDelete;
       }
 
       formData.append('boatInfo', JSON.stringify(boatInfo));
 
-      // Add cover photo
       if (formValues.coverPhoto) {
         formData.append('covers', formValues.coverPhoto);
       }
 
-      // Add gallery images
       if (formValues.mediaGallery && formValues.mediaGallery.length > 0) {
         formValues.mediaGallery.forEach((file) => {
           formData.append('galleries', file);
@@ -300,7 +293,6 @@ export default function BoatListingForm({
     <div className="my-2 md:my-3 mx-2 md:mx-5">
       <CustomContainer>
         <div className="rounded-lg bg-[#F4F4F4] p-3 sm:p-5 md:p-8">
-          {/* Header */}
           <div className="flex items-center gap-3 mb-6">
             <button
               onClick={handleBack}
@@ -314,9 +306,7 @@ export default function BoatListingForm({
             </h1>
           </div>
 
-          {/* Main Content */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Form */}
             <div className="col-span-2">
               <div className=" rounded-lg p-6">
                 <FormProvider {...form}>
@@ -332,7 +322,6 @@ export default function BoatListingForm({
                   )}
                 </FormProvider>
 
-                {/* Action Buttons */}
                 <div className="flex justify-between mt-8">
                   <Button
                     variant="outline"
@@ -356,7 +345,6 @@ export default function BoatListingForm({
               </div>
             </div>
 
-            {/* Preview */}
             <div className="w-full">
               <div className="p-4 sticky top-4 bg-white rounded-xl">
                 <h3 className="font-semibold mb-4">Preview</h3>

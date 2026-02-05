@@ -51,9 +51,7 @@ const SearchListingPage = () => {
       };
 
       const aiResponse = await postAiQuery({ queryData: updatedQueryData });
-      // console.log('AI Response:', aiResponse);
 
-      // Handle the response structure: { counts, data, error }
       if (
         aiResponse?.data &&
         Array.isArray(aiResponse.data) &&
@@ -63,9 +61,6 @@ const SearchListingPage = () => {
         const yachtProducts = convertedData.map((boat) =>
           convertApiDataToYachtProduct(boat),
         );
-
-        // console.log('AI Search Results:', yachtProducts);
-        // console.log('Total counts:', aiResponse.counts);
 
         setSearchResults(yachtProducts);
         setIsSearchActive(true);

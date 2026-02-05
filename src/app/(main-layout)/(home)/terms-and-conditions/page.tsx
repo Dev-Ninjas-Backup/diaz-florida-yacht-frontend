@@ -6,12 +6,11 @@ import TermsContent from './_components/TermsContent';
 const TermsAndConditionsPage = () => {
   return (
     <div>
-      {/* Banner */}
       <TermsBanner />
-      {/* Main Content */}
+
       <CustomContainer>
         <TermsContent />
-        {/* Footer - Get In Touch */}
+
         <GetInTouch />
       </CustomContainer>
     </div>
