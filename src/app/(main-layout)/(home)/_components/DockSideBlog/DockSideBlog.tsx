@@ -11,7 +11,7 @@ import { NoDataFound } from '@/components/ui/no-data-found';
 type BlogUI = {
   id: string;
   title: string;
-  discription: string;
+  description: string;
   readTime: string;
   publishDate: string;
   featuredImage: {
@@ -34,7 +34,7 @@ const DockSideBlog = () => {
           title: item.blogTitle,
           readTime: `${item.readTime} min read`,
           publishDate: item.createdAt,
-          discription: item.blogDescription
+          description: item.blogDescription
             .replace(/<[^>]+>/g, '')
             .slice(0, 140),
           featuredImage: {

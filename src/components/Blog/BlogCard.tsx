@@ -7,7 +7,7 @@ import React from 'react';
 interface BlogCardData {
   id: string;
   title: string;
-  discription: string;
+  description: string;
   readTime: string;
   publishDate: string;
   featuredImage: {
@@ -21,7 +21,7 @@ interface BlogCardProps {
 }
 
 const BlogCard: React.FC<BlogCardProps> = ({ blog }) => {
-  console.log('blog', blog.discription);
+  console.log('blog', blog.description);
   return (
     <div className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 flex flex-col">
       {/* Image */}
@@ -57,7 +57,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ blog }) => {
 
         <div
           className="text-gray-400 text-sm leading-relaxed mb-4 line-clamp-2 flex-1"
-          dangerouslySetInnerHTML={{ __html: blog.discription }}
+          dangerouslySetInnerHTML={{ __html: blog.description }}
         />
 
         <Link

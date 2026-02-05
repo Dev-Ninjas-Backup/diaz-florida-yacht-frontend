@@ -51,15 +51,29 @@ const SearchListingPage = () => {
       };
 
       const aiResponse = await postAiQuery({ queryData: updatedQueryData });
-      if (aiResponse?.success && aiResponse?.data) {
+      // console.log('AI Response:', aiResponse);
+
+      // Handle the response structure: { counts, data, error }
+      if (
+        aiResponse?.data &&
+        Array.isArray(aiResponse.data) &&
+        !aiResponse.error
+      ) {
         const convertedData: ApiBoatData[] = aiResponse.data;
         const yachtProducts = convertedData.map((boat) =>
           convertApiDataToYachtProduct(boat),
         );
 
+        // console.log('AI Search Results:', yachtProducts);
+        // console.log('Total counts:', aiResponse.counts);
+
         setSearchResults(yachtProducts);
         setIsSearchActive(true);
         setQueryData(updatedQueryData);
+      } else if (aiResponse?.error) {
+        console.error('AI Query returned error:', aiResponse.error);
+        setSearchResults(null);
+        setIsSearchActive(false);
       }
     } catch (error) {
       console.error('AI Search Error:', error);
