@@ -1,12 +1,12 @@
 'use client';
 
-import CustomContainer from '@/components/CustomComponents/CustomContainer';
 import BlogCard from '@/components/Blog/BlogCard';
-import React, { useEffect, useState } from 'react';
-import { getBlogs } from '@/services/blog/blog';
-import Link from 'next/link';
+import CustomContainer from '@/components/CustomComponents/CustomContainer';
 import LoadingSpinner from '@/components/shared/LoadingSpinner/LoadingSpinner';
 import { NoDataFound } from '@/components/ui/no-data-found';
+import { getBlogs } from '@/services/blog/blog';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 type BlogUI = {
   id: string;
