@@ -47,16 +47,7 @@ export const useVisitorTracking = () => {
       process.env.NEXT_PUBLIC_SOCKET_DEBUG === 'true' ||
       process.env.NODE_ENV === 'development';
 
-    if (debugEnabled) {
-      socket.onAny((eventName, ...args) => {
-        console.log('[socket:visitors] event', eventName, args);
-      });
-    }
-
     socket.on('connect', () => {
-      if (debugEnabled) {
-        console.log('[socket:visitors] connected', socket.id);
-      }
       setIsConnected(true);
       setError(null);
 
@@ -66,10 +57,7 @@ export const useVisitorTracking = () => {
       }
     });
 
-    socket.on('disconnect', (reason) => {
-      if (debugEnabled) {
-        console.log('[socket:visitors] disconnected', reason);
-      }
+    socket.on('disconnect', () => {
       setIsConnected(false);
       startedRef.current = false;
     });

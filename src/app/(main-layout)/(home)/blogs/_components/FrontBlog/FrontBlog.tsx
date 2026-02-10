@@ -22,8 +22,6 @@ const FrontBlog = ({ blog }: { blog: BlogCardData }) => {
     year: 'numeric',
   });
 
-  console.log(blog.featuredImage.url);
-
   return (
     <Link
       href={`/blogs/${blog.id}`}

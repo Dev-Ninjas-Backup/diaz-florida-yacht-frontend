@@ -90,9 +90,7 @@ const SearchComponent = () => {
   useEffect(() => {
     const fetchFilterOptions = async () => {
       try {
-        console.log('Fetching filter options...');
         const options = await getFilterOptions();
-        console.log('Filter options received:', options);
         setFilterOptions(options);
       } catch (error) {
         console.error('Error fetching filter options:', error);
@@ -160,10 +158,7 @@ const SearchComponent = () => {
         limit: 20,
       };
 
-      console.log('AI Query Data:', queryData);
-
       const aiResponse = await postAiQuery({ queryData });
-      console.log('AI Response:', aiResponse);
 
       if (
         aiResponse?.data &&
@@ -230,8 +225,6 @@ const SearchComponent = () => {
           filterParams.lengthEnd = lengthNum;
         }
       }
-
-      console.log('Find My Boat - Filter Params:', filterParams);
 
       const response = await getFilteredBoats(filterParams);
 
