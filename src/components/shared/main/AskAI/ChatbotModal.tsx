@@ -32,12 +32,9 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({
   useEffect(() => {
     if (!userId) return;
 
-    console.log('User ID in ChatbotModal:', userId);
-
     const fetchChatHistory = async () => {
       try {
         const chatHistoryData = await chatHistory(userId);
-        console.log('Chat History:', chatHistoryData);
         if (Array.isArray(chatHistoryData)) {
           setChatMessages(chatHistoryData);
         }
@@ -61,18 +58,14 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({
     setIsSearching(true);
 
     try {
-      const data = await sendMessageToChatBot({
+      await sendMessageToChatBot({
         message: searchQuery,
         userId: userId || null,
       });
 
-      console.log('Chatbot response:', data);
-      console.log('User ID:', userId);
-
       if (userId) {
         try {
           const chatHistoryData = await chatHistory(userId);
-          console.log('Updated Chat History:', chatHistoryData);
           if (Array.isArray(chatHistoryData)) {
             setChatMessages(chatHistoryData);
           }

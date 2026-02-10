@@ -28,9 +28,8 @@ export const usePaymentFlow = (
 
     if (secret) {
       setClientSecret(secret);
-      console.log('✅ Setup Intent Client Secret loaded');
     } else {
-      console.error('❌ No setup intent client secret found in localStorage');
+      console.error('No setup intent client secret found in localStorage');
     }
 
     setIsLoading(false);
@@ -38,8 +37,6 @@ export const usePaymentFlow = (
 
   const handlePaymentSuccess = async () => {
     try {
-      console.log('🎉 Payment completed successfully');
-
       const userId = getUserIdFromStorage();
 
       if (!userId) {
@@ -49,7 +46,6 @@ export const usePaymentFlow = (
 
       const { data: confirmResponse } =
         await confirmSubscriptionPayment(userId);
-      console.log('✅ Subscription confirmed:', confirmResponse);
 
       if (confirmResponse?.data?.user?.id) {
         clearPaymentStorage();

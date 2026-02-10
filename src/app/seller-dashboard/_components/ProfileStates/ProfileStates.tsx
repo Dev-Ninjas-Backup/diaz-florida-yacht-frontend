@@ -1,11 +1,11 @@
 'use client';
-import Image from 'next/image';
 import profilePhoto from '@/assets/seller-dashboard/profileAvatar.svg';
-import CustomContainer from '@/components/CustomComponents/CustomContainer';
 import icon1 from '@/assets/seller-dashboard/states/icon1.svg';
 import icon2 from '@/assets/seller-dashboard/states/icon2.svg';
 import icon3 from '@/assets/seller-dashboard/states/icon3.svg';
+import CustomContainer from '@/components/CustomComponents/CustomContainer';
 import { getSellerStats } from '@/services/seller';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 interface SellerStats {
@@ -30,8 +30,6 @@ const ProfileStates = () => {
     };
     getStats();
   }, []);
-
-  console.log('Seller Stats:', stats);
   return (
     <div className="">
       <CustomContainer>

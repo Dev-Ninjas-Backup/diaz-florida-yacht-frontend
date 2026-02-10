@@ -32,20 +32,11 @@ export const useNotifications = (token: string | null) => {
       process.env.NEXT_PUBLIC_SOCKET_DEBUG === 'true' ||
       process.env.NODE_ENV === 'development';
 
-    if (debugEnabled) {
-      socket.onAny((eventName, ...args) => {
-        console.log('[socket:notifications] event', eventName, args);
-      });
-    }
-
     const handleNotification = (notification: NotificationItem) => {
       setNotifications((prev) => [notification, ...prev]);
     };
 
     socket.on('success', () => {
-      if (debugEnabled) {
-        console.log('[socket:notifications] connected');
-      }
       setIsConnected(true);
       setError(null);
     });

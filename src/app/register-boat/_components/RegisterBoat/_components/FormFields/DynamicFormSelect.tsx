@@ -56,7 +56,6 @@ export const DynamicFormSelect: React.FC<DynamicFormSelectProps> = ({
     enabled: true,
     initialParams: { type, search: '', limit: 20 },
   });
-  console.log('Fetched specifications:', data);
 
   useEffect(() => {
     setParams({ type, search: searchQuery, limit });

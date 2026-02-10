@@ -44,9 +44,7 @@ const FilterListing = () => {
   useEffect(() => {
     const fetchFilterOptions = async () => {
       try {
-        console.log('Fetching filter options...');
         const options = await getFilterOptions();
-        console.log('Filter options received:', options);
         setFilterOptions(options);
       } catch (error) {
         console.error('Error fetching filter options:', error);
@@ -124,8 +122,6 @@ const FilterListing = () => {
         filterParams.cabinsNumber = Number(filters.numberOfCabins);
       if (filters.numberOfHeads)
         filterParams.headsNumber = Number(filters.numberOfHeads);
-
-      console.log('Applying filters:', filterParams);
 
       const response = await getFilteredBoats(filterParams);
 

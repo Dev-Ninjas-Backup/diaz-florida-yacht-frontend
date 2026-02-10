@@ -1,12 +1,10 @@
 'use client';
-import React from 'react';
-import { FaWhatsapp, FaFacebookF, FaTwitter } from 'react-icons/fa';
-import { MdEmail, MdContentCopy } from 'react-icons/md';
-import { toast } from 'sonner';
 import { useState } from 'react';
+import { FaFacebookF, FaTwitter, FaWhatsapp } from 'react-icons/fa';
+import { MdContentCopy, MdEmail } from 'react-icons/md';
+import { toast } from 'sonner';
 const ShareWIth = () => {
-  const [copied, setCopied] = useState(false);
-  console.log(copied);
+  const [, setCopied] = useState(false);
 
   const shareUrl =
     typeof window !== 'undefined'

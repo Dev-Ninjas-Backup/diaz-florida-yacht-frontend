@@ -46,7 +46,6 @@ export const StripePaymentForm = ({
         setErrorMessage(errorMsg);
         onError(errorMsg);
       } else if (setupIntent?.status === 'succeeded') {
-        console.log('✅ Payment method setup successful', setupIntent.id);
         onSuccess();
       } else {
         setErrorMessage('Payment setup completed but status is unclear');

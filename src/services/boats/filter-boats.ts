@@ -53,7 +53,6 @@ export const getFilterOptions = async (): Promise<FilterOptions> => {
   }
 
   const json = await res.json();
-  console.log('Filter options response:', json);
 
   const data = json.data || json;
   return {

@@ -20,13 +20,11 @@ const getOrCreateUserId = (): string => {
   const existingId = localStorage.getItem(STORAGE_KEY);
 
   if (existingId) {
-    console.log('Welcome back!');
     return existingId;
   }
 
   const newId = generateUserId();
   localStorage.setItem(STORAGE_KEY, newId);
-  console.log('New user ID generated:', newId);
   return newId;
 };
 
