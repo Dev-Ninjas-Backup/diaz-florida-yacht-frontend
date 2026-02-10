@@ -12,7 +12,6 @@ type SellerQuery = {
 export const getSellerStats = async () => {
   try {
     const token = await getValidToken();
-    console.log('Seller Service Token:', token);
 
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/seller/stats`,

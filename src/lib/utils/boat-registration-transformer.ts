@@ -148,38 +148,8 @@ export function createBoatRegistrationFormData(
 }
 
 export function logBoatRegistrationData(
-  formData: BoatRegistrationFormValues,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _formData: BoatRegistrationFormValues,
 ): void {
-  const apiData = transformToBoatRegistrationRequest(formData);
-
-  console.log('=== BOAT REGISTRATION DATA ===');
-  console.log('\n📦 Plan ID:', apiData.planId);
-
-  if (formData.promoCode) {
-    console.log('🎟️  Promo Code:', formData.promoCode);
-  }
-
-  console.log('\n🚤 Boat Info:', {
-    ...apiData.boatInfo,
-    price: `$${apiData.boatInfo.price.toLocaleString()}`,
-  });
-
-  console.log('\n👤 Seller Info:', apiData.sellerInfo);
-
-  console.log('\n📸 Media Files:');
-  console.log('  - Cover Photo:', formData.coverPhoto?.name || 'None');
-  console.log(
-    '  - Gallery Images:',
-    formData.mediaGallery?.length || 0,
-    'files',
-  );
-  if (formData.mediaGallery && formData.mediaGallery.length > 0) {
-    formData.mediaGallery.forEach((file, index) => {
-      console.log(
-        `    ${index + 1}. ${file.name} (${(file.size / 1024).toFixed(2)} KB)`,
-      );
-    });
-  }
-
-  console.log('\n=== END OF DATA ===\n');
+  // Debug logging removed in production
 }

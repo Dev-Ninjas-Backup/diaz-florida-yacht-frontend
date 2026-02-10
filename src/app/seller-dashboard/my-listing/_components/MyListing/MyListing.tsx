@@ -58,7 +58,6 @@ const MyListing = () => {
         });
         setMyListings(listingsFromApi.data || []);
         setMetadata(listingsFromApi.metadata);
-        console.log('Listings from API:', listingsFromApi);
       } catch (error) {
         console.error('Failed to fetch listings:', error);
       } finally {
@@ -78,8 +77,6 @@ const MyListing = () => {
       toast.error('Failed to delete listing');
     }
   };
-
-  console.log('My Listings:', myListings);
 
   const listingColumns: Column<IListing>[] = [
     {

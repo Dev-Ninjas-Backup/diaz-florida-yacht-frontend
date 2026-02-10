@@ -24,8 +24,6 @@ export default function EditModeForm({
 }: EditModeFormProps) {
   const { setValue } = useFormContext();
 
-  console.log('Boat Data: ', boatData);
-
   useEffect(() => {
     if (boatData.city) {
       setTimeout(() => {

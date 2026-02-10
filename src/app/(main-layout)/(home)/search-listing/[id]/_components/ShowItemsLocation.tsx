@@ -18,8 +18,7 @@ const ShowItemsLocation = ({
 }: ShowItemsLocationProps) => {
   const latitude = 40.594834;
   const longitude = -73.510372;
-  const [copied, setCopied] = useState(false);
-  console.log(copied);
+  const [, setCopied] = useState(false);
 
   const shareUrl =
     typeof window !== 'undefined'

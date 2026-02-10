@@ -52,8 +52,6 @@ export const useGetSpecifications = (
           limit: queryParams.limit || 20,
         });
 
-        console.log('Specification response:', response);
-
         if (response instanceof Error) {
           throw response;
         }

@@ -163,13 +163,13 @@ const RegisterBoatForm = () => {
         try {
           const response =
             await subscriptionPackageLimitations(selectedPackage);
-          console.log('📦 Package Limitations Response:', response);
+
           if (response?.data) {
             const limits = {
               picLimit: response.data.picLimit || 0,
               wordLimit: response.data.wordLimit || 0,
             };
-            console.log('✅ Setting Field Limitations:', limits);
+
             setFieldLimitations(limits);
           }
         } catch (error) {
@@ -229,7 +229,7 @@ const RegisterBoatForm = () => {
       const allFormData = getValues() as BoatRegistrationFormValues;
       const formDataToSend = createBoatRegistrationFormData(allFormData);
       const res = await createSubscription(formDataToSend);
-      console.log('Subscription creation response:', res);
+
       if (res.data.paymentIntentClientSecret) {
         localStorage.setItem(
           'paymentIntentClientSecret',
@@ -327,41 +327,12 @@ const RegisterBoatForm = () => {
     }
   };
 
-  const handlePaymentSubmit = (paymentData: any) => {
+  const handlePaymentSubmit = () => {
     const allFormData = getValues() as BoatRegistrationFormValues;
 
-    console.log('\n========== BOAT REGISTRATION SUBMISSION ==========\n');
     logBoatRegistrationData(allFormData);
 
     const formDataToSend = createBoatRegistrationFormData(allFormData);
-
-    console.log('\n========== FORMDATA ENTRIES ==========');
-    console.log('planId:', formDataToSend.get('planId'));
-    console.log(
-      'boatInfo:',
-      JSON.parse(formDataToSend.get('boatInfo') as string),
-    );
-    console.log(
-      'sellerInfo:',
-      JSON.parse(formDataToSend.get('sellerInfo') as string),
-    );
-    console.log('covers:', formDataToSend.get('covers'));
-
-    const galleries = formDataToSend.getAll('galleries');
-    console.log('galleries:', galleries.length, 'files');
-    galleries.forEach((file, index) => {
-      if (file instanceof File) {
-        console.log(
-          `  Gallery ${index + 1}:`,
-          file.name,
-          `(${(file.size / 1024).toFixed(2)} KB)`,
-        );
-      }
-    });
-
-    console.log('\n========== PAYMENT DATA ==========');
-    console.log(paymentData);
-    console.log('\n==================================================\n');
 
     return formDataToSend;
   };
