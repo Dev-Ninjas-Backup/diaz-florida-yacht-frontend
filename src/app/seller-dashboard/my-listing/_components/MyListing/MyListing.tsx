@@ -13,13 +13,13 @@ import {
 } from '@/components/ui/select';
 import { PaginationMetadata, usePagination } from '@/hooks/usePagination';
 import { getSellerBoats } from '@/services/seller';
-import Link from 'next/link';
+import { deleteBoatListing } from '@/services/seller/boat-listing';
 import { Eye, Plus, Search, SquarePen, Trash2 } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { IListing } from '../../data/myListing';
-import { deleteBoatListing } from '@/services/seller/boat-listing';
 import { toast } from 'sonner';
+import { IListing } from '../../data/myListing';
 
 const MyListing = () => {
   const [myListings, setMyListings] = useState<IListing[]>([]);
