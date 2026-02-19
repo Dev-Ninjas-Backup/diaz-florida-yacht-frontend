@@ -47,14 +47,25 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({
   }, [userId]);
 
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [chatMessages, isSearching]);
+    if (isOpen && chatMessages.length > 0) {
+      // Scroll to bottom when modal opens or messages change
+      setTimeout(() => {
+        chatEndRef.current?.scrollIntoView({ behavior: 'instant' });
+      }, 100);
+    }
+  }, [isOpen, chatMessages, isSearching]);
 
   const handleSearch = async (searchQuery: string) => {
     if (!searchQuery.trim()) {
       return;
     }
 
+    // Add user message immediately
+    setChatMessages((prev) => [
+      ...prev,
+      { role: 'user', content: searchQuery },
+    ]);
+    setQuery('');
     setIsSearching(true);
 
     try {
@@ -73,8 +84,6 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({
           console.error('Failed to fetch updated chat history:', historyError);
         }
       }
-
-      setQuery('');
     } catch (error) {
       console.error('Search error:', error);
     } finally {
@@ -91,7 +100,7 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent
-        className="max-w-[80vw] sm:max-w-md md:max-w-2xl lg:h-[70vh] h-[50vh] p-0 gap-0 overflow-hidden flex flex-col"
+        className="max-w-[90vw] sm:max-w-md md:max-w-2xl h-[90vh] p-0 gap-0 overflow-hidden flex flex-col"
         showCloseButton={false}
       >
         <DialogTitle className="sr-only">
