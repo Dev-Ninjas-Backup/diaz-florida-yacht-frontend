@@ -53,6 +53,8 @@ const AskAI = () => {
           Ask AI
         </h2>
         <button
+          type="button"
+          aria-label="Open AI Chat"
           onClick={openChatBotModal}
           className="relative rounded-full bg-white border border-gray-200 shadow-lg hover:shadow-xl transition-shadow duration-200 overflow-hidden w-20 h-20 md:w-24 md:h-24 flex items-center justify-center cursor-pointer"
         >
