@@ -7,7 +7,7 @@ const CategoryCard = ({
   category: { name: string; image: string };
 }) => {
   return (
-    <div className="relative w-96 h-56 rounded-3xl overflow-hidden shadow-lg cursor-pointer hover:scale-105 transition-transform duration-300">
+    <div className="relative w-72 h-44 2xl:w-96 2xl:h-56 rounded-3xl overflow-hidden shadow-lg cursor-pointer hover:scale-105 transition-transform duration-300">
       {category.image && (
         <Image
           src={category.image}

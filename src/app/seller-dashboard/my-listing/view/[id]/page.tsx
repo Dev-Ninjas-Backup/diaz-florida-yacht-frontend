@@ -15,7 +15,6 @@ export default async function BoatViewPage({
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-6xl mx-auto px-4">
         <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
-          {/* Back Button */}
           <Link
             href="/seller-dashboard/my-listing"
             className="inline-flex items-center gap-2 mb-6 text-gray-600 hover:text-gray-900"
@@ -24,7 +23,6 @@ export default async function BoatViewPage({
             Back to Listings
           </Link>
 
-          {/* Images */}
           {boat.coverImages.length > 0 && (
             <div className="mb-6">
               <div className="relative w-full h-64 md:h-96 rounded-lg overflow-hidden">
@@ -55,7 +53,6 @@ export default async function BoatViewPage({
             </div>
           )}
 
-          {/* Header */}
           <div className="mb-6">
             <div className="flex items-start justify-between gap-4 mb-2">
               <h1 className="text-3xl font-bold text-gray-900">{boat.name}</h1>
@@ -77,7 +74,6 @@ export default async function BoatViewPage({
             </p>
           </div>
 
-          {/* Basic Info */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 p-4 bg-gray-50 rounded-lg">
             <div>
               <p className="text-sm text-gray-500">Year</p>
@@ -97,7 +93,6 @@ export default async function BoatViewPage({
             </div>
           </div>
 
-          {/* Description */}
           {boat.description && (
             <div className="mb-6">
               <h2 className="text-xl font-bold mb-2">Description</h2>
@@ -107,7 +102,6 @@ export default async function BoatViewPage({
             </div>
           )}
 
-          {/* Specifications */}
           <div className="mb-6">
             <h2 className="text-xl font-bold mb-4">Specifications</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -159,7 +153,6 @@ export default async function BoatViewPage({
             </div>
           </div>
 
-          {/* Engines */}
           {boat.engines.length > 0 && (
             <div className="mb-6">
               <h2 className="text-xl font-bold mb-4">Engines</h2>
@@ -201,7 +194,6 @@ export default async function BoatViewPage({
             </div>
           )}
 
-          {/* Location */}
           <div className="mb-6">
             <h2 className="text-xl font-bold mb-2">Location</h2>
             <p className="text-gray-700">
@@ -209,7 +201,6 @@ export default async function BoatViewPage({
             </p>
           </div>
 
-          {/* Owner */}
           {boat.owner && (
             <div className="mb-6">
               <h2 className="text-xl font-bold mb-2">Owner</h2>

@@ -18,16 +18,16 @@ import {
   Printer,
   Search,
 } from 'lucide-react';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useReactToPrint } from 'react-to-print';
+import {
+  exportInvoicesToCSV,
+  exportInvoicesToExcel,
+} from '../../_utils/exportInvoices';
+import { generateInvoicePDF } from '../../_utils/generateInvoicePDF';
 import { InvoiceRecord } from '../../data/invoiceData';
 import InvoiceDetailModal from '../InvoiceDetailModal';
 import InvoiceTemplate from '../InvoiceTemplate';
-import { useReactToPrint } from 'react-to-print';
-import { generateInvoicePDF } from '../../_utils/generateInvoicePDF';
-import {
-  exportInvoicesToExcel,
-  exportInvoicesToCSV,
-} from '../../_utils/exportInvoices';
 
 const InvoiceTable = () => {
   const [invoices, setInvoices] = useState<InvoiceRecord[]>([]);
@@ -95,7 +95,6 @@ const InvoiceTable = () => {
         });
         setInvoices(invoicesFromApi.data || []);
         setMetadata(invoicesFromApi.metadata);
-        console.log('Invoices from API:', invoicesFromApi);
       } catch (error) {
         console.error('Failed to fetch invoices:', error);
       } finally {
@@ -104,7 +103,7 @@ const InvoiceTable = () => {
     };
     fetchInvoices();
   }, [page, limit, search, status]);
-  //Table Config
+
   const invoiceColumns: Column<InvoiceRecord>[] = [
     {
       header: 'Invoice ID',
@@ -304,7 +303,6 @@ const InvoiceTable = () => {
         }}
       />
 
-      {/* Hidden Invoice Template for PDF/Print */}
       <div className="fixed -left-[9999px] top-0">
         {selectedInvoice && (
           <InvoiceTemplate ref={invoiceRef} invoice={selectedInvoice} />

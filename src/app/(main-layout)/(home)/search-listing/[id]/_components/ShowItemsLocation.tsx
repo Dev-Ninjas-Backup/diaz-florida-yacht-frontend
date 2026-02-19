@@ -18,8 +18,7 @@ const ShowItemsLocation = ({
 }: ShowItemsLocationProps) => {
   const latitude = 40.594834;
   const longitude = -73.510372;
-  const [copied, setCopied] = useState(false);
-  console.log(copied);
+  const [, setCopied] = useState(false);
 
   const shareUrl =
     typeof window !== 'undefined'
@@ -27,10 +26,9 @@ const ShowItemsLocation = ({
       : 'https://floridayachttrader.com/boat-details/2011-viking-44';
   const shareTitle = `${name} - Florida Yacht Trader`;
   const shareText = 'Check out this boat listing!';
-  // OpenStreetMap iframe embed - completely free, no API key needed
+
   const osmEmbedUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${longitude - 0.01},${latitude - 0.01},${longitude + 0.01},${latitude + 0.01}&layer=mapnik&marker=${latitude},${longitude}`;
 
-  // Copy link to clipboard
   const handleCopyLink = async () => {
     try {
       await navigator.clipboard.writeText(shareUrl);
@@ -42,7 +40,6 @@ const ShowItemsLocation = ({
     }
   };
 
-  // Share handlers
   const handleWhatsAppShare = () => {
     const url = `https://wa.me/?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`;
     window.open(url, '_blank');
@@ -78,7 +75,6 @@ const ShowItemsLocation = ({
         </div>
       </div>
       <div className="">
-        {/* Map Display - Simple OpenStreetMap iframe (no library needed) */}
         <div className="w-full h-[400px] rounded-2xl overflow-hidden border border-gray-300">
           <iframe
             width="100%"

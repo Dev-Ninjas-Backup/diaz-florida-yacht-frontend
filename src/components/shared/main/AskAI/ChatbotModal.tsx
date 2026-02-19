@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/dialog';
 import { chatHistory, sendMessageToChatBot } from '@/services/chatBot';
 import type { ChatbotModalProps } from '@/types/chatbot-types';
-import { ChevronLeft, Send } from 'lucide-react';
+import { Send, X } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
 import { IoSparklesSharp } from 'react-icons/io5';
 import AnimatedLoadingMessages from './AnimatedLoadingMessages';
@@ -32,12 +32,9 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({
   useEffect(() => {
     if (!userId) return;
 
-    console.log('User ID in ChatbotModal:', userId);
-
     const fetchChatHistory = async () => {
       try {
         const chatHistoryData = await chatHistory(userId);
-        console.log('Chat History:', chatHistoryData);
         if (Array.isArray(chatHistoryData)) {
           setChatMessages(chatHistoryData);
         }
@@ -49,36 +46,37 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({
     fetchChatHistory();
   }, [userId]);
 
-  // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [chatMessages, isSearching]);
+    if (isOpen && chatMessages.length > 0) {
+      // Scroll to bottom when modal opens or messages change
+      setTimeout(() => {
+        chatEndRef.current?.scrollIntoView({ behavior: 'instant' });
+      }, 100);
+    }
+  }, [isOpen, chatMessages, isSearching]);
 
-  // Function to render markdown-like content
-
-  // Search function with API integration
   const handleSearch = async (searchQuery: string) => {
     if (!searchQuery.trim()) {
       return;
     }
 
+    // Add user message immediately
+    setChatMessages((prev) => [
+      ...prev,
+      { role: 'user', content: searchQuery },
+    ]);
+    setQuery('');
     setIsSearching(true);
 
     try {
-      // API call to chatbot using the service
-      const data = await sendMessageToChatBot({
+      await sendMessageToChatBot({
         message: searchQuery,
         userId: userId || null,
       });
 
-      console.log('Chatbot response:', data);
-      console.log('User ID:', userId);
-
-      // Fetch updated chat history after sending message
       if (userId) {
         try {
           const chatHistoryData = await chatHistory(userId);
-          console.log('Updated Chat History:', chatHistoryData);
           if (Array.isArray(chatHistoryData)) {
             setChatMessages(chatHistoryData);
           }
@@ -86,9 +84,6 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({
           console.error('Failed to fetch updated chat history:', historyError);
         }
       }
-
-      // Clear the input query after sending
-      setQuery('');
     } catch (error) {
       console.error('Search error:', error);
     } finally {
@@ -114,7 +109,7 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({
         <DialogDescription className="sr-only">
           Chat with our AI assistant to help you find the perfect yacht
         </DialogDescription>
-        {/* Header */}
+
         <div className="flex items-center justify-between px-6 py-4 border-b bg-white flex-shrink-0">
           <div className="flex items-center gap-3">
             <IoSparklesSharp className="text-[#004DAC] text-xl" />
@@ -124,22 +119,19 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+            className="p-2 hover:bg-gray-100 rounded-full transition-colors cursor-pointer"
             aria-label="Close"
           >
-            <ChevronLeft className="w-5 h-5 text-gray-700" />
+            <X className="w-5 h-5 text-gray-700" />
           </button>
         </div>
 
-        {/* Content Area */}
         <div className="flex-1 overflow-y-auto bg-gray-50 min-h-0">
-          {/* Chat History Display */}
           {chatMessages.length > 0 && (
             <div className="px-4 py-4 space-y-4">
               {chatMessages.map((message, index) => (
                 <div key={index} className="space-y-2">
                   {message.role === 'user' ? (
-                    // User Message
                     <div className="flex justify-end">
                       <div className="bg-[#004DAC] text-white rounded-lg px-4 py-3 max-w-[80%]">
                         <p className="text-sm font-medium mb-1">You:</p>
@@ -147,7 +139,6 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({
                       </div>
                     </div>
                   ) : (
-                    // Assistant Message
                     <div className="flex justify-start">
                       <div className="bg-white rounded-lg p-4 border border-gray-200 max-w-[90%]">
                         <div className="flex items-center gap-2 mb-2">
@@ -167,14 +158,12 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({
             </div>
           )}
 
-          {/* Loading State */}
           {isSearching && <AnimatedLoadingMessages />}
 
-          {/* Empty State */}
           {!isSearching && chatMessages.length === 0 && (
             <div className="px-4 py-8 text-center">
               <IoSparklesSharp className="text-[#004DAC] text-4xl mx-auto mb-3" />
-              <p className="text-lg font-medium text-gray-900 mb-2">
+              <p className="text-sm lg:text-lg font-medium text-gray-900 mb-2">
                 Welcome to Florida Yacht Trader AI
               </p>
               <p className="text-sm text-gray-500">
@@ -183,11 +172,9 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({
             </div>
           )}
 
-          {/* Auto-scroll anchor */}
           <div ref={chatEndRef} />
         </div>
 
-        {/* Input Area */}
         <div className="px-4 py-3 border-t bg-white flex-shrink-0">
           <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-3">
             <input

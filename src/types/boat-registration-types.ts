@@ -1,10 +1,3 @@
-/**
- * Boat Registration Types
- *
- * Type definitions for boat registration API requests and responses
- */
-
-// Enums for boat properties - Aligned with backend
 export enum BoatClass {
   SAILBOAT = 'SAILBOAT',
   MOTORBOAT = 'MOTORBOAT',
@@ -50,7 +43,6 @@ export enum Condition {
   DAMAGED = 'DAMAGED',
 }
 
-// Boat dimensions structure
 export interface BoatDimensions {
   lengthFeet: number;
   lengthInches: number;
@@ -60,7 +52,6 @@ export interface BoatDimensions {
   draftInches: number;
 }
 
-// Engine information
 export interface EngineInfo {
   hours: number;
   horsepower: number;
@@ -70,51 +61,41 @@ export interface EngineInfo {
   propellerType: PropellerType;
 }
 
-// Extra details key-value pairs
 export interface ExtraDetail {
   key: string;
   value: string;
 }
 
-// Boat information structure (Step 2 data)
 export interface BoatInfo {
-  // Basic specifications
   buildYear: number;
   make: string;
   model: string;
   name: string;
 
-  // Dimensions
   boatDimensions: BoatDimensions;
 
-  // Classification
   boatClass: BoatClass;
   material: Material;
   propMaterial: string;
   condition: Condition;
 
-  // Capacity
   cabinsNumber: number;
   headsNumber: number;
   enginesNumber: number;
 
-  // Engines
   engines: EngineInfo[];
   fuelType: FuelType;
 
-  // Pricing and location
   price: number;
   city: string;
   state: string;
   zip: string;
 
-  // Description
   description: string;
   videoURL?: string;
   extraDetails?: ExtraDetail[];
 }
 
-// Seller information structure (Step 3 data)
 export interface SellerInfo {
   name: string;
   email: string;
@@ -122,33 +103,27 @@ export interface SellerInfo {
   username: string;
   password: string;
 
-  // Location
   country: string;
   city: string;
   state: string;
   zip: string;
 }
 
-// Complete boat registration request
 export interface BoatRegistrationRequest {
   planId: string;
   boatInfo: BoatInfo;
   sellerInfo: SellerInfo;
 }
 
-// Form data structure (what we'll send as FormData)
 export interface BoatRegistrationFormData extends BoatRegistrationRequest {
-  covers: File; // Cover photo
-  galleries: File[]; // Gallery images (multiple)
+  covers: File;
+  galleries: File[];
 }
 
-// Form field values (internal form state)
 export interface BoatRegistrationFormValues {
-  // Step 1
   selectedPackage: string;
   promoCode?: string;
 
-  // Step 2 - Boat Info
   buildYear: string;
   make: string;
   model: string;
@@ -173,7 +148,6 @@ export interface BoatRegistrationFormValues {
   zip: string;
   description: string;
 
-  // Engine details
   hours: string;
   make2: string;
   model2: string;
@@ -181,7 +155,6 @@ export interface BoatRegistrationFormValues {
   propellerType: string;
   engineFuelType: string;
 
-  // Dynamic engines array
   engines: Array<{
     hours: string;
     make: string;
@@ -191,15 +164,12 @@ export interface BoatRegistrationFormValues {
     engineFuelType: string;
   }>;
 
-  // Optional details
   moreDetails?: Array<{ title: string; description: string }>;
   embedUrl?: string;
 
-  // Media
   coverPhoto?: File;
   mediaGallery?: File[];
 
-  // Step 3 - Seller Info
   firstName: string;
   lastName: string;
   contactNumber: string;

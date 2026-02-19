@@ -6,14 +6,11 @@ import FAQContent from './_components/FAQContent';
 const FAQPage = () => {
   return (
     <div>
-      {/* Banner */}
       <FAQBanner />
 
-      {/* Main Content */}
       <CustomContainer>
         <FAQContent />
 
-        {/* Footer - Get In Touch */}
         <GetInTouch />
       </CustomContainer>
     </div>

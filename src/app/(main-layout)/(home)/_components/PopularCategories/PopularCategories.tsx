@@ -49,7 +49,7 @@ const PopularCategories = () => {
   return (
     <CustomContainer>
       <h2 className="text-3xl sm:text-4xl lg:text-5xl text-center font-bold">
-        Browse From Popular Categories
+        Available Popular Categories
       </h2>
 
       <div className="flex flex-wrap justify-center items-center gap-10 my-10">
@@ -59,7 +59,7 @@ const PopularCategories = () => {
             description="There are no popular categories available at the moment."
           />
         ) : (
-          <div className="flex flex-wrap justify-center items-center gap-10 my-10">
+          <div className="flex flex-wrap justify-center items-center gap-7 2xl:gap-10 my-10">
             {categories.map((category) => (
               <CategoryCard key={category.id} category={category} />
             ))}

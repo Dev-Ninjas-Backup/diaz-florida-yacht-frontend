@@ -1,8 +1,3 @@
-/**
- * Password Input Component
- * Input field with show/hide password toggle
- */
-
 import React from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import type { PasswordInputProps } from './types';

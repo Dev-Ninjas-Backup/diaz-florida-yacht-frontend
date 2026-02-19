@@ -10,7 +10,7 @@ interface SpecificationParams {
 }
 
 interface UseGetSpecificationsOptions {
-  enabled?: boolean; // Auto-fetch on mount
+  enabled?: boolean;
   initialParams?: SpecificationParams;
 }
 
@@ -52,13 +52,10 @@ export const useGetSpecifications = (
           limit: queryParams.limit || 20,
         });
 
-        console.log('Specification response:', response);
-        // Check if response is an Error instance
         if (response instanceof Error) {
           throw response;
         }
 
-        // Handle API response structure
         if (response?.items) {
           setData(response.items);
         } else if (Array.isArray(response)) {

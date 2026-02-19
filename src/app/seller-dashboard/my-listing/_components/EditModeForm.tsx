@@ -1,32 +1,31 @@
 'use client';
 
-import { useFormContext } from 'react-hook-form';
-import { useEffect } from 'react';
 import Step2Form from '@/app/register-boat/_components/RegisterBoat/_components/Step2Form/Step2Form';
-import { BoatDetail } from '@/types/boat-detail-types';
-import Image from 'next/image';
 import { Label } from '@/components/ui/label';
+import { BoatDetail } from '@/types/boat-detail-types';
+import { FieldLimitations } from '@/types/subscription-types';
 import { X } from 'lucide-react';
+import Image from 'next/image';
+import { useEffect } from 'react';
+import { useFormContext } from 'react-hook-form';
 
 interface EditModeFormProps {
   boatData: BoatDetail;
   imagesToDelete: string[];
   onDeleteImage: (imageId: string) => void;
+  fieldLimitations: FieldLimitations;
 }
 
 export default function EditModeForm({
   boatData,
   imagesToDelete,
   onDeleteImage,
+  fieldLimitations,
 }: EditModeFormProps) {
   const { setValue } = useFormContext();
 
-  console.log('Boat Data: ', boatData);
-
-  // Force set city value after component mounts to override CityField's reset
   useEffect(() => {
     if (boatData.city) {
-      // Small delay to ensure CityField has initialized
       setTimeout(() => {
         setValue('city', boatData.city, { shouldValidate: true });
       }, 100);
@@ -35,7 +34,6 @@ export default function EditModeForm({
 
   return (
     <div>
-      {/* Existing Cover Photo */}
       {boatData.coverImages.length > 0 && (
         <div className="mb-6">
           <Label>Current Cover Photo</Label>
@@ -56,7 +54,6 @@ export default function EditModeForm({
         </div>
       )}
 
-      {/* Existing Gallery */}
       {boatData.galleryImages.length > 0 && (
         <div className="mb-6">
           <Label>
@@ -103,8 +100,7 @@ export default function EditModeForm({
         </div>
       )}
 
-      {/* Regular Step2Form */}
-      <Step2Form />
+      <Step2Form fieldLimitations={fieldLimitations} />
     </div>
   );
 }

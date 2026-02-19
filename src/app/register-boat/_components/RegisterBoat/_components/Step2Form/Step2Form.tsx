@@ -1,5 +1,6 @@
 'use client';
 import { buildYearOptions } from '@/lib/utils/register-boats-select-options';
+import { FieldLimitations } from '@/types/subscription-types';
 import { useFormContext } from 'react-hook-form';
 import { DimensionInput } from '../FormFields/DimensionInput';
 import { DynamicFormSelect } from '../FormFields/DynamicFormSelect';
@@ -22,18 +23,20 @@ const engineCountOptions = [
   { value: '8', label: '8' },
 ];
 
-const Step2Form = () => {
+interface Step2FormProps {
+  fieldLimitations: FieldLimitations;
+}
+
+const Step2Form = ({ fieldLimitations }: Step2FormProps) => {
   const { watch } = useFormContext();
   const numEngines = watch('numEngines');
   const engineCount = parseInt(numEngines) || 1;
 
   return (
     <div className="mt-10">
-      {/* Specifications */}
       <div>
         <h3 className="text-lg font-semibold mb-4">Specifications</h3>
 
-        {/* Build Year -- Make -- Model */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <FormSelect
             name="buildYear"
@@ -58,14 +61,12 @@ const Step2Form = () => {
           />
         </div>
 
-        {/* Dimensions: Length -- Beam -- Draft */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5">
           <DimensionInput namePrefix="length" label="Length" required />
           <DimensionInput namePrefix="beam" label="Beam Size" required />
           <DimensionInput namePrefix="draft" label="Max Draft" required />
         </div>
 
-        {/* Class -- Material -- Fuel Type */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5">
           <DynamicFormSelect
             name="class"
@@ -97,7 +98,6 @@ const Step2Form = () => {
           />
         </div>
 
-        {/* Number of Engines -- Cabins -- Heads */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5">
           <FormSelect
             name="numEngines"
@@ -123,7 +123,6 @@ const Step2Form = () => {
         </div>
       </div>
 
-      {/* Dynamic Engine Sections */}
       {Array.from({ length: engineCount }, (_, index) => (
         <div key={index + 1} className="mt-10">
           <h3 className="text-lg font-semibold mb-4">Engine {index + 1}</h3>
@@ -178,7 +177,6 @@ const Step2Form = () => {
         </div>
       ))}
 
-      {/* Basic Information */}
       <div className="mt-10">
         <h3 className="text-lg font-semibold mb-4">Basic Information</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -199,10 +197,8 @@ const Step2Form = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-          {/* State - dynamic options with custom input fallback */}
           <StateField />
 
-          {/* City - dynamic options based on selected state, with custom input fallback */}
           <CityField />
 
           <FormInput name="zip" label="Zip" placeholder="Type here" required />
@@ -224,15 +220,14 @@ const Step2Form = () => {
             placeholder="Write description..."
             rows={4}
             required
+            maxWords={fieldLimitations.wordLimit}
           />
         </div>
       </div>
 
-      {/* More Details */}
       <MoreDetailsSection />
 
-      {/* Media & Gallery */}
-      <MediaGallerySection />
+      <MediaGallerySection fieldLimitations={fieldLimitations} />
     </div>
   );
 };

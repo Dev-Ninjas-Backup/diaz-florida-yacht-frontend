@@ -1,5 +1,10 @@
 'use client';
 import { useSearchResults } from '@/context/SearchResultsContext';
+import {
+  FilterOptions,
+  getFilteredBoats,
+  getFilterOptions,
+} from '@/services/boats/filter-boats';
 import { postAiQuery } from '@/services/query';
 import {
   ApiBoatData,
@@ -49,37 +54,51 @@ const SearchComponent = () => {
   const [aiPrompt, setAiPrompt] = useState('');
   const [filterOpen, setFilterOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [filterOptions, setFilterOptions] = useState<FilterOptions>({
+    makes: [],
+    models: [],
+    years: [],
+    cities: [],
+    states: [],
+    classes: [],
+  });
 
-  // Dropdown open states
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const currentYear = new Date().getFullYear();
-  const years = Array.from({ length: 50 }, (_, i) => currentYear - i);
-  const makes = [
-    'Viking (CCV)',
-    'Sea Ray',
-    'Boston Whaler',
-    'Bayliner',
-    'Grady-White',
-  ];
-  const models = ['80 Enclosed', '75 Sport', '60 Convertible', '55 Express'];
-  const boatTypes = [
-    'Flybridge',
-    'Cruiser',
-    'Sportfish',
-    'Express',
-    'Center Console',
-  ];
-  const locations = [
-    'Florida',
-    'California',
-    'Texas',
-    'New York',
-    'Massachusetts',
-  ];
+  const years =
+    filterOptions.years.length > 0
+      ? filterOptions.years
+      : Array.from({ length: 50 }, (_, i) => new Date().getFullYear() - i);
+  const makes =
+    filterOptions.makes.length > 0
+      ? filterOptions.makes
+      : ['Viking (CCV)', 'Sea Ray', 'Boston Whaler', 'Bayliner', 'Grady-White'];
+  const models =
+    filterOptions.models.length > 0
+      ? filterOptions.models
+      : ['80 Enclosed', '75 Sport', '60 Convertible', '55 Express'];
+  const boatTypes =
+    filterOptions.classes.length > 0
+      ? filterOptions.classes
+      : ['Flybridge', 'Cruiser', 'Sportfish', 'Express', 'Center Console'];
+  const locations =
+    filterOptions.states.length > 0
+      ? filterOptions.states
+      : ['Florida', 'California', 'Texas', 'New York', 'Massachusetts'];
 
-  // Close dropdown when clicking outside
+  useEffect(() => {
+    const fetchFilterOptions = async () => {
+      try {
+        const options = await getFilterOptions();
+        setFilterOptions(options);
+      } catch (error) {
+        console.error('Error fetching filter options:', error);
+      }
+    };
+    fetchFilterOptions();
+  }, []);
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -102,7 +121,6 @@ const SearchComponent = () => {
 
     setIsLoading(true);
     try {
-      // Build filters - only send changed values
       const changedFilters: Record<string, string | number> = {};
 
       if (boatType && boatType !== INITIAL_VALUES.boatType) {
@@ -140,10 +158,13 @@ const SearchComponent = () => {
         limit: 20,
       };
 
-      console.log('AI Query Data:', queryData);
-
       const aiResponse = await postAiQuery({ queryData });
-      if (aiResponse?.success && aiResponse?.data) {
+
+      if (
+        aiResponse?.data &&
+        !aiResponse?.error &&
+        Array.isArray(aiResponse.data)
+      ) {
         const convertedData: ApiBoatData[] = aiResponse.data;
         const yachtProducts = convertedData.map((boat) =>
           convertApiDataToYachtProduct(boat),
@@ -153,9 +174,79 @@ const SearchComponent = () => {
         setIsSearchActive(true);
         setQueryData(queryData);
         router.push('/search-listing');
+      } else if (aiResponse?.error) {
+        console.error('AI Query returned error:', aiResponse.error);
       }
     } catch (error) {
       console.error('AI Search Error:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const findMyBoat = async () => {
+    setIsLoading(true);
+    try {
+      const filterParams: Record<string, string | number> = {
+        page: 1,
+        limit: 100,
+      };
+
+      if (make && make !== INITIAL_VALUES.make) {
+        filterParams.make = make;
+      }
+      if (model && model !== INITIAL_VALUES.model) {
+        filterParams.model = model;
+      }
+      if (boatType && boatType !== INITIAL_VALUES.boatType) {
+        filterParams.class = boatType;
+      }
+
+      if (year && year !== INITIAL_VALUES.year) {
+        const yearNum = parseInt(year);
+        if (!isNaN(yearNum)) {
+          filterParams.buildYearStart = yearNum;
+          filterParams.buildYearEnd = yearNum;
+        }
+      }
+
+      filterParams.priceStart = 0;
+      if (maxPrice && maxPrice !== INITIAL_VALUES.maxPrice) {
+        const priceNum = parseFloat(maxPrice.replace(/[$,]/g, ''));
+        if (!isNaN(priceNum) && priceNum > 0) {
+          filterParams.priceEnd = priceNum;
+        }
+      }
+
+      if (length && length !== INITIAL_VALUES.length) {
+        const lengthNum = parseFloat(length);
+        if (!isNaN(lengthNum)) {
+          filterParams.lengthStart = lengthNum;
+          filterParams.lengthEnd = lengthNum;
+        }
+      }
+
+      const response = await getFilteredBoats(filterParams);
+
+      if (response.success && response.data) {
+        const yachtProducts = response.data.map((boat: ApiBoatData) =>
+          convertApiDataToYachtProduct(boat),
+        );
+
+        setSearchResults(yachtProducts);
+        setIsSearchActive(true);
+        router.push('/search-listing');
+      } else {
+        console.error('No boats found with current filters');
+        setSearchResults([]);
+        setIsSearchActive(true);
+        router.push('/search-listing');
+      }
+    } catch (error) {
+      console.error('Error finding boats:', error);
+      setSearchResults([]);
+      setIsSearchActive(true);
+      router.push('/search-listing');
     } finally {
       setIsLoading(false);
     }
@@ -217,7 +308,6 @@ const SearchComponent = () => {
 
   return (
     <div className="w-full mx-auto" ref={dropdownRef}>
-      {/* Main Search Container */}
       <div className="bg-white rounded-3xl shadow-lg overflow-visible p-2 xl:p-3 2xl:p-6 relative">
         <div className="absolute -top-5 right-4 text-gray-700  sm:hidden bg-white rounded-full p-1 cursor-pointer shadow-md">
           <IoIosArrowUp
@@ -225,11 +315,10 @@ const SearchComponent = () => {
             className={`${filterOpen ? 'rotate-180' : ''} transition-transform text-2xl`}
           />
         </div>
-        {/* Filters Row */}
+
         <div
           className={`${filterOpen ? 'grid' : 'hidden'} sm:grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-0 pb-2`}
         >
-          {/* Year */}
           <DropdownField
             label="Year"
             value={year}
@@ -238,7 +327,6 @@ const SearchComponent = () => {
             name="year"
           />
 
-          {/* Make */}
           <DropdownField
             label="Make"
             value={make}
@@ -247,7 +335,6 @@ const SearchComponent = () => {
             name="make"
           />
 
-          {/* Model */}
           <DropdownField
             label="Model"
             value={model}
@@ -256,7 +343,6 @@ const SearchComponent = () => {
             name="model"
           />
 
-          {/* Length */}
           <div className=" border-gray-200 p-2 xl:p-3 2xl:p-4 hover:bg-gray-50 transition-colors">
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Length (ft)
@@ -270,7 +356,6 @@ const SearchComponent = () => {
             />
           </div>
 
-          {/* Max Price */}
           <div className=" border-gray-200 p-2 xl:p-3 2xl:p-4 hover:bg-gray-50 transition-colors">
             <label className="block text-sm md:text-base font-medium text-gray-700 mb-2">
               Max Price ($)
@@ -284,7 +369,6 @@ const SearchComponent = () => {
             />
           </div>
 
-          {/* Boat Type */}
           <DropdownField
             label="Boat Type"
             value={boatType}
@@ -293,7 +377,6 @@ const SearchComponent = () => {
             name="boatType"
           />
 
-          {/* Location */}
           <DropdownField
             label="Location"
             value={location}
@@ -304,7 +387,6 @@ const SearchComponent = () => {
           />
         </div>
 
-        {/* AI Search Row */}
         <div className="flex flex-col sm:flex-row md:gap-3 items-stretch sm:items-center md:border-t border-gray-200 md:pt-4">
           <div className="flex-1 relative bg-gray-100 rounded-2xl px-2 py-2 md:py-3">
             <input
@@ -326,9 +408,15 @@ const SearchComponent = () => {
             </button>
           </div>
 
-          <button className="px-8 py-2 md:py-3 bg-secondary hover:bg-blue-700 text-white rounded-2xl font-medium transition-colors hidden items-center justify-center gap-2 whitespace-nowrap shadow-md md:flex">
-            <IoSearch className="md:text-lg" />
-            Find My Boat
+          <button
+            onClick={findMyBoat}
+            disabled={isLoading}
+            className="mt-4 md:mt-0 px-8 py-3 bg-secondary hover:bg-blue-700 text-white rounded-2xl font-medium transition-colors flex items-center justify-center gap-2 whitespace-nowrap shadow-md disabled:opacity-70 disabled:cursor-not-allowed active:scale-95"
+          >
+            <IoSearch
+              className={`md:text-lg ${isLoading ? 'animate-spin' : ''}`}
+            />
+            {isLoading ? 'Searching...' : 'Find My Boat'}
           </button>
         </div>
       </div>

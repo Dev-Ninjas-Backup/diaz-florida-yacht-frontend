@@ -1,13 +1,5 @@
-/**
- * Login Validation Utilities
- * Pure functions for form validation
- */
-
 import type { ValidationResult } from './types';
 
-/**
- * Validates email format
- */
 export const validateEmail = (email: string): ValidationResult => {
   if (!email.trim()) {
     return { isValid: false, error: 'Email is required' };
@@ -21,9 +13,6 @@ export const validateEmail = (email: string): ValidationResult => {
   return { isValid: true };
 };
 
-/**
- * Validates password
- */
 export const validatePassword = (password: string): ValidationResult => {
   if (!password.trim()) {
     return { isValid: false, error: 'Password is required' };
@@ -36,9 +25,6 @@ export const validatePassword = (password: string): ValidationResult => {
   return { isValid: true };
 };
 
-/**
- * Validates entire login form
- */
 export const validateLoginForm = (
   email: string,
   password: string,
@@ -56,9 +42,6 @@ export const validateLoginForm = (
   return { isValid: true };
 };
 
-/**
- * Sanitizes input to prevent XSS
- */
 export const sanitizeInput = (input: string): string => {
   return input.trim().replace(/[<>]/g, '');
 };

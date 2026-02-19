@@ -4,55 +4,25 @@ import React from 'react';
 import { Inbox } from 'lucide-react';
 
 export interface NoDataFoundProps {
-  /**
-   * Title text to display
-   */
   title?: string;
-  /**
-   * Description text to display below the title
-   */
+
   description?: string;
-  /**
-   * Custom icon component (defaults to Inbox icon)
-   */
+
   icon?: LucideIcon;
-  /**
-   * Size of the icon
-   */
+
   iconSize?: number;
-  /**
-   * Custom className for the container
-   */
+
   className?: string;
-  /**
-   * Custom className for the icon
-   */
+
   iconClassName?: string;
-  /**
-   * Custom className for the title
-   */
+
   titleClassName?: string;
-  /**
-   * Custom className for the description
-   */
+
   descriptionClassName?: string;
-  /**
-   * Optional action button or element to display
-   */
+
   action?: React.ReactNode;
 }
 
-/**
- * Reusable NoDataFound component for displaying empty states
- *
- * @example
- * ```tsx
- * <NoDataFound
- *   title="No listings found"
- *   description="Try adjusting your search filters"
- * />
- * ```
- */
 export function NoDataFound({
   title = 'No data found',
   description,

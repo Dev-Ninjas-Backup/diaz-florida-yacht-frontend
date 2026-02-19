@@ -3,49 +3,21 @@ import { Loader2 } from 'lucide-react';
 import React from 'react';
 
 export interface LoadingProps {
-  /**
-   * Loading message text to display
-   */
   message?: string;
-  /**
-   * Size of the spinner icon
-   */
+
   size?: number;
-  /**
-   * Custom className for the container
-   */
+
   className?: string;
-  /**
-   * Custom className for the spinner icon
-   */
+
   spinnerClassName?: string;
-  /**
-   * Custom className for the message text
-   */
+
   messageClassName?: string;
-  /**
-   * Whether to show full screen loading (centered with min-height)
-   */
+
   fullScreen?: boolean;
-  /**
-   * Spinner variant: 'spinner' or 'dots'
-   */
+
   variant?: 'spinner' | 'dots';
 }
 
-/**
- * Reusable Loading component for displaying loading states
- *
- * @example
- * ```tsx
- * <Loading message="Loading categories..." />
- * ```
- *
- * @example
- * ```tsx
- * <Loading fullScreen message="Loading dashboard..." />
- * ```
- */
 export function Loading({
   message = 'Loading...',
   size = 48,

@@ -1,18 +1,20 @@
 'use client';
 
+import { NotificationProvider } from '@/context/NotificationContext';
 import UserProvider from '@/context/UserContext';
-import { Toaster } from 'sonner';
+import { VisitorTrackingProvider } from '@/context/VisitorTrackingContext';
 
 interface ProvidersProps {
   children: React.ReactNode;
   token: string | null;
 }
 
-const Providers = ({ children }: ProvidersProps) => {
+const Providers = ({ children, token }: ProvidersProps) => {
   return (
     <UserProvider>
-      <Toaster position="top-center" />
-      {children}
+      <VisitorTrackingProvider>
+        <NotificationProvider token={token}>{children}</NotificationProvider>
+      </VisitorTrackingProvider>
     </UserProvider>
   );
 };

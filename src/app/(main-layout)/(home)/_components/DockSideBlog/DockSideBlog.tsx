@@ -1,15 +1,17 @@
 'use client';
 
-import CustomContainer from '@/components/CustomComponents/CustomContainer';
 import BlogCard from '@/components/Blog/BlogCard';
-import React, { useEffect, useState } from 'react';
+import CustomContainer from '@/components/CustomComponents/CustomContainer';
+import LoadingSpinner from '@/components/shared/LoadingSpinner/LoadingSpinner';
+import { NoDataFound } from '@/components/ui/no-data-found';
 import { getBlogs } from '@/services/blog/blog';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 type BlogUI = {
   id: string;
   title: string;
-  excerpt: string;
+  description: string;
   readTime: string;
   publishDate: string;
   featuredImage: {
@@ -32,7 +34,9 @@ const DockSideBlog = () => {
           title: item.blogTitle,
           readTime: `${item.readTime} min read`,
           publishDate: item.createdAt,
-          excerpt: item.blogDescription.replace(/<[^>]+>/g, '').slice(0, 140),
+          description: item.blogDescription
+            .replace(/<[^>]+>/g, '')
+            .slice(0, 140),
           featuredImage: {
             url: item.blogImage?.url ?? '',
             alt: item.blogTitle,
@@ -50,13 +54,12 @@ const DockSideBlog = () => {
     loadBlogs();
   }, []);
 
-  if (loading) return <div className="">Loading ...</div>;
-  if (blogs.length === 0) return <div className="">No data</div>;
+  if (loading) return <LoadingSpinner message="Loading blogs..." />;
+  if (blogs.length === 0) return <NoDataFound title="No blogs found" />;
 
   return (
     <CustomContainer>
       <div className="my-20 space-y-10">
-        {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
           <div className="text-left space-y-3 max-w-3xl">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold">
@@ -78,7 +81,6 @@ const DockSideBlog = () => {
           </div>
         </div>
 
-        {/* Blog Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
           {blogs.slice(0, 4).map((blog) => (
             <BlogCard key={blog.id} blog={blog} />

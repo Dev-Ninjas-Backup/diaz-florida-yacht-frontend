@@ -4,32 +4,15 @@ import type {
   ChatbotSearchResponse,
 } from '@/types/chatbot-types';
 
-/**
- * Chatbot Search API Route
- *
- * This endpoint handles AI-powered yacht search queries.
- * Replace the mock implementation with your actual AI/search logic.
- *
- * Endpoint: POST /api/chatbot/search
- */
 export async function POST(request: NextRequest) {
   try {
     const body: ChatbotSearchRequest = await request.json();
     const { query } = body;
-    // const { limit = 10, filters } = body; // Uncomment when implementing actual search
 
-    // Validate query
     if (!query || query.trim().length === 0) {
       return NextResponse.json({ error: 'Query is required' }, { status: 400 });
     }
 
-    // TODO: Replace with actual AI/Database search
-    // Examples:
-    // 1. Use OpenAI API for natural language processing
-    // 2. Query your database with parsed filters (use limit and filters)
-    // 3. Use vector search for semantic matching
-
-    // Mock implementation for demonstration
     const mockResults: ChatbotSearchResponse = {
       results: [
         {
@@ -81,7 +64,6 @@ export async function POST(request: NextRequest) {
       ],
     };
 
-    // Simulate API delay
     await new Promise((resolve) => setTimeout(resolve, 300));
 
     return NextResponse.json(mockResults);
@@ -94,9 +76,6 @@ export async function POST(request: NextRequest) {
   }
 }
 
-/**
- * Health check endpoint
- */
 export async function GET() {
   return NextResponse.json({
     status: 'ok',

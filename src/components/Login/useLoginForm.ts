@@ -1,8 +1,3 @@
-/**
- * Login Form Hook
- * Custom hook to manage login form state and logic
- */
-
 import { useAuth } from '@/hooks/useAuth';
 import { loginService } from '@/services/auth';
 import { useRouter } from 'next/navigation';
@@ -27,9 +22,6 @@ export const useLoginForm = ({ onClose }: UseLoginFormProps = {}) => {
   const router = useRouter();
   const { refreshUser } = useAuth();
 
-  /**
-   * Handle input changes
-   */
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
@@ -38,20 +30,13 @@ export const useLoginForm = ({ onClose }: UseLoginFormProps = {}) => {
     }));
   };
 
-  /**
-   * Toggle password visibility
-   */
   const togglePassword = () => {
     setShowPassword((prev) => !prev);
   };
 
-  /**
-   * Handle form submission
-   */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validate form
     const validation = validateLoginForm(formData.email, formData.password);
     if (!validation.isValid) {
       toast.error(validation.error || LOGIN_ERRORS.unexpectedError);
@@ -75,7 +60,6 @@ export const useLoginForm = ({ onClose }: UseLoginFormProps = {}) => {
           if (onClose) onClose();
         }, 1500);
       } else {
-        // Login failed
         setIsSubmitting(false);
         const errorMessage =
           'message' in result ? result.message : LOGIN_ERRORS.loginFailed;
@@ -94,16 +78,10 @@ export const useLoginForm = ({ onClose }: UseLoginFormProps = {}) => {
     }
   };
 
-  /**
-   * Handle Google login
-   */
   const handleGoogleLogin = () => {
     toast.info(LOGIN_SUCCESS_MESSAGES.googleComingSoon);
   };
 
-  /**
-   * Reset form
-   */
   const resetForm = () => {
     setFormData({
       email: '',

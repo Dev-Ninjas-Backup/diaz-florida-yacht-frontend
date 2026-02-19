@@ -24,7 +24,6 @@ export const StripePaymentForm = ({
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    // Validate Stripe is loaded
     if (!stripe || !elements) {
       setErrorMessage('Payment system is not ready. Please try again.');
       return;
@@ -34,7 +33,6 @@ export const StripePaymentForm = ({
     setErrorMessage(null);
 
     try {
-      // Confirm setup intent (for subscriptions)
       const { error, setupIntent } = await stripe.confirmSetup({
         elements,
         confirmParams: {
@@ -48,7 +46,6 @@ export const StripePaymentForm = ({
         setErrorMessage(errorMsg);
         onError(errorMsg);
       } else if (setupIntent?.status === 'succeeded') {
-        console.log('✅ Payment method setup successful', setupIntent.id);
         onSuccess();
       } else {
         setErrorMessage('Payment setup completed but status is unclear');
@@ -66,10 +63,8 @@ export const StripePaymentForm = ({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {/* Payment Summary */}
       <PaymentSummary packageInfo={packageInfo} />
 
-      {/* Stripe Payment Element */}
       <div className="border border-gray-200 rounded-lg p-4 bg-white">
         <PaymentElement
           options={{
@@ -79,10 +74,8 @@ export const StripePaymentForm = ({
         />
       </div>
 
-      {/* Error Message */}
       {errorMessage && <ErrorDisplay message={errorMessage} />}
 
-      {/* Submit Button */}
       <Button
         type="submit"
         disabled={!stripe || isProcessing}
@@ -117,7 +110,6 @@ export const StripePaymentForm = ({
         )}
       </Button>
 
-      {/* Security note */}
       <p className="text-xs text-gray-500 text-center">
         🔒 Your payment is secured by Stripe
       </p>

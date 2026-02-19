@@ -1,6 +1,3 @@
-// US states and major cities data
-// Comprehensive list of all 50 US states with major cities
-
 export const US_STATES = [
   { code: 'AL', name: 'Alabama' },
   { code: 'AK', name: 'Alaska' },
@@ -54,7 +51,6 @@ export const US_STATES = [
   { code: 'WY', name: 'Wyoming' },
 ];
 
-// Major cities by state - comprehensive list
 export const US_CITIES_BY_STATE: Record<string, { name: string }[]> = {
   AL: [
     { name: 'Birmingham' },

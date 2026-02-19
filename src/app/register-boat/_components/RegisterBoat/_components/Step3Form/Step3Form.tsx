@@ -15,11 +15,9 @@ import { FormSelect } from '../FormFields/FormSelect';
 const Step3Form = () => {
   return (
     <div className="space-y-6 mt-10">
-      {/* Your Contact Details */}
       <div>
         <h3 className="text-lg font-semibold mb-4">Your Contact Details</h3>
 
-        {/* First Name & Last Name */}
         <div className="grid grid-cols-2 gap-4">
           <FormInput
             name="firstName"
@@ -35,7 +33,6 @@ const Step3Form = () => {
           />
         </div>
 
-        {/* Contact Number & Email */}
         <div className="grid grid-cols-2 gap-4 mt-4">
           <FormInput
             name="contactNumber"
@@ -53,7 +50,6 @@ const Step3Form = () => {
           />
         </div>
 
-        {/* Country */}
         <div className="mt-5">
           <FormSelect
             name="country"
@@ -64,7 +60,6 @@ const Step3Form = () => {
           />
         </div>
 
-        {/* City, State, Zip */}
         <div className="grid grid-cols-3 gap-4 mt-4">
           <StateFieldStep3 />
           <CityFieldStep3 />
@@ -72,7 +67,6 @@ const Step3Form = () => {
         </div>
       </div>
 
-      {/* Seller Account Information */}
       <div>
         <h3 className="text-lg font-semibold mb-4">
           Seller Account Information
@@ -129,7 +123,6 @@ function StateFieldStep3() {
     setLoading(true);
 
     try {
-      // Import the US_STATES from our data file
       const opts = US_STATES?.map((s: { code: string; name: string }) => ({
         value: s.name,
         label: s.name,

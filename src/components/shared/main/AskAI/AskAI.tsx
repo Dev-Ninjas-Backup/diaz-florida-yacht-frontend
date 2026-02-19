@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import { IoSparklesSharp } from 'react-icons/io5';
 import ChatbotModal from './ChatbotModal';
 
-// Generate unique user ID in format "FY026478"
 const generateUserId = (): string => {
   const randomNum = Math.floor(Math.random() * 1000000000)
     .toString()
@@ -13,25 +12,19 @@ const generateUserId = (): string => {
   return `FY${randomNum}`;
 };
 
-// Get or create user ID from localStorage
 const getOrCreateUserId = (): string => {
   const STORAGE_KEY = 'GENERATED_UID';
 
-  // Check if running in browser
   if (typeof window === 'undefined') return '';
 
-  // Check if user ID exists in localStorage
   const existingId = localStorage.getItem(STORAGE_KEY);
 
   if (existingId) {
-    console.log('Welcome back!');
     return existingId;
   }
 
-  // Generate new ID and store it
   const newId = generateUserId();
   localStorage.setItem(STORAGE_KEY, newId);
-  console.log('New user ID generated:', newId);
   return newId;
 };
 
@@ -40,7 +33,6 @@ const AskAI = () => {
   const [userId, setUserId] = useState<string>('');
 
   useEffect(() => {
-    // Initialize user ID on component mount
     const id = getOrCreateUserId();
     setUserId(id);
   }, []);
@@ -61,6 +53,8 @@ const AskAI = () => {
           Ask AI
         </h2>
         <button
+          type="button"
+          aria-label="Open AI Chat"
           onClick={openChatBotModal}
           className="relative rounded-full bg-white border border-gray-200 shadow-lg hover:shadow-xl transition-shadow duration-200 overflow-hidden w-20 h-20 md:w-24 md:h-24 flex items-center justify-center cursor-pointer"
         >

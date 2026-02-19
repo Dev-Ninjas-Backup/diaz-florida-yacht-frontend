@@ -1,11 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use server';
 
-// import { getValidToken } from '@/lib/verifyToken';
-// import { revalidateTag } from 'next/cache';
-
 export const getAllSubscription = async () => {
-  //   const token = await getValidToken();
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/subscription/plans`,
@@ -51,6 +47,26 @@ export const confirmSubscriptionPayment = async (
     );
     const responseData = await res.json();
     return responseData;
+  } catch (error: any) {
+    return Error(error.message);
+  }
+};
+
+export const subscriptionPackageLimitations = async (
+  id: string,
+): Promise<any> => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/subscription/plans/${id}`,
+      {
+        method: 'GET',
+        next: {
+          tags: ['SUBSCRIPTION_LIMITATIONS'],
+        },
+      },
+    );
+    const data = await res.json();
+    return data;
   } catch (error: any) {
     return Error(error.message);
   }

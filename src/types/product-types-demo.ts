@@ -17,7 +17,7 @@ export interface YachtProduct {
   name: string;
   location: string;
   condition: string;
-  price?: number; // Make optional to handle "Price on request"
+  price?: number;
   images: (string | StaticImageData)[];
   image: string | StaticImageData;
   link?: string;
@@ -30,19 +30,35 @@ export interface CategoryImg {
   image: string | StaticImageData;
 }
 
-// API response type from AI search
 export interface ApiBoatData {
+  document_id: string;
+  make: string;
+  model: string;
+  model_year: number;
+  price: number;
+  location?: {
+    BoatCityName?: string;
+    BoatCountryID?: string;
+    BoatStateCode?: string;
+  };
+  images?: Array<{
+    Priority: number;
+    Uri: string;
+    LastModifiedDateTime?: string;
+  }>;
+  link?: string;
+
   Source?: string;
-  DocumentID: string;
+  DocumentID?: string;
   BeamMeasure?: string;
   TotalEnginePowerQuantity?: string;
-  Price: string | number; // Handle "114900.00 USD" format
+  Price?: string | number;
   BoatLocation?: {
     BoatCityName?: string;
     BoatCountryID?: string;
     BoatStateCode?: string;
   };
-  Model: string;
+  Model?: string;
   Engines?: Array<{
     Make?: string;
     Model?: string;
@@ -52,8 +68,8 @@ export interface ApiBoatData {
     Year?: number;
     Hours?: number;
   }>;
-  ModelYear: number;
-  MakeString: string;
+  ModelYear?: number;
+  MakeString?: string;
   LengthOverall?: string;
   NominalLength?: string;
   Images?: {
@@ -69,13 +85,20 @@ export interface ApiBoatData {
   MaxDraft?: string;
 }
 
-// Convert API boat data to YachtProduct
 export function convertApiDataToYachtProduct(
   apiData: ApiBoatData,
 ): YachtProduct {
-  // Parse price - handle "114900.00 USD" format
+  const documentId = apiData.document_id || apiData.DocumentID || '';
+  const make = apiData.make || apiData.MakeString || 'Unknown Make';
+  const model = apiData.model || apiData.Model || 'Unknown Model';
+  const modelYear = apiData.model_year || apiData.ModelYear || 0;
+  const location = apiData.location || apiData.BoatLocation;
+  const link = apiData.link || apiData.Link || `/search-listing/${documentId}`;
+
   let price: number | undefined;
-  if (typeof apiData.Price === 'string') {
+  if (typeof apiData.price === 'number') {
+    price = apiData.price;
+  } else if (typeof apiData.Price === 'string') {
     const priceMatch = apiData.Price.match(/([\d,.]+)/);
     if (priceMatch) {
       price = parseFloat(priceMatch[1].replace(/,/g, ''));
@@ -84,11 +107,25 @@ export function convertApiDataToYachtProduct(
     price = apiData.Price;
   }
 
+  let imageUrls: string[] = [];
+  let primaryImage = 'https://via.placeholder.com/400x300?text=No+Image';
+
+  if (Array.isArray(apiData.images) && apiData.images.length > 0) {
+    const sortedImages = [...apiData.images].sort(
+      (a, b) => a.Priority - b.Priority,
+    );
+    imageUrls = sortedImages.map((img) => img.Uri).filter(Boolean);
+    primaryImage = imageUrls[0] || primaryImage;
+  } else if (Array.isArray(apiData.Images)) {
+    imageUrls = apiData.Images.map((img) => img.Uri).filter(Boolean);
+    primaryImage = imageUrls[0] || primaryImage;
+  }
+
   return {
-    id: apiData.DocumentID,
-    brand_make: apiData.MakeString || 'Unknown Make',
-    model: apiData.Model || 'Unknown Model',
-    built_year: apiData.ModelYear || 0,
+    id: documentId,
+    brand_make: make,
+    model: model,
+    built_year: modelYear,
     length: apiData.LengthOverall || apiData.NominalLength || 'N/A',
     number_of_engine: apiData.Engines?.length || 0,
     class: apiData.BoatClassCode?.[0] || 'Power',
@@ -98,19 +135,14 @@ export function convertApiDataToYachtProduct(
     beam_size: apiData.BeamMeasure || 'N/A',
     fuel_type: apiData.Engines?.[0]?.Fuel?.toLowerCase() || 'Not specified',
     max_draft: apiData.MaxDraft || 'N/A',
-    name: `${apiData.MakeString} ${apiData.Model}`,
-    location: apiData.BoatLocation
-      ? `${apiData.BoatLocation.BoatCityName || ''}, ${apiData.BoatLocation.BoatStateCode || ''}`
+    name: `${make} ${model}`,
+    location: location
+      ? `${location.BoatCityName || ''}, ${location.BoatStateCode || ''}`
       : 'Location not specified',
     condition: 'Used',
     price: price,
-    images: Array.isArray(apiData.Images)
-      ? apiData.Images.map((img) => img.Uri).filter(Boolean)
-      : [],
-    image:
-      Array.isArray(apiData.Images) && apiData.Images[0]?.Uri
-        ? apiData.Images[0].Uri
-        : 'https://via.placeholder.com/400x300?text=No+Image',
-    link: apiData.Link || `/search-listing/${apiData.DocumentID}`,
+    images: imageUrls,
+    image: primaryImage,
+    link: link,
   };
 }

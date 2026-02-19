@@ -16,20 +16,17 @@ const BannerNav = () => {
   const router = useRouter();
   const [accountOpen, setAccountOpen] = useState(false);
 
-  // Auto-get location on component mount
   useEffect(() => {
     getLocation();
   }, [getLocation]);
 
-  // Format location display
   const getLocationDisplay = () => {
     if (loading) return 'Getting location...';
     if (error) return 'Location unavailable';
     if (location) return `${location.city}, ${location.state}`;
-    return 'Florida - USA'; // fallback
+    return 'Florida - USA';
   };
 
-  // Handle location click - refresh location
   const handleLocationClick = () => {
     if (!loading) {
       getLocation();

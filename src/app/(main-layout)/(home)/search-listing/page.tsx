@@ -51,7 +51,12 @@ const SearchListingPage = () => {
       };
 
       const aiResponse = await postAiQuery({ queryData: updatedQueryData });
-      if (aiResponse?.success && aiResponse?.data) {
+
+      if (
+        aiResponse?.data &&
+        Array.isArray(aiResponse.data) &&
+        !aiResponse.error
+      ) {
         const convertedData: ApiBoatData[] = aiResponse.data;
         const yachtProducts = convertedData.map((boat) =>
           convertApiDataToYachtProduct(boat),
@@ -60,6 +65,10 @@ const SearchListingPage = () => {
         setSearchResults(yachtProducts);
         setIsSearchActive(true);
         setQueryData(updatedQueryData);
+      } else if (aiResponse?.error) {
+        console.error('AI Query returned error:', aiResponse.error);
+        setSearchResults(null);
+        setIsSearchActive(false);
       }
     } catch (error) {
       console.error('AI Search Error:', error);
@@ -71,8 +80,8 @@ const SearchListingPage = () => {
   return (
     <div>
       <CustomBanner banner={banner}>
-        <div className="text-center ">
-          <h1 className="text-white text-xl md:text-4xl xl:text-5xl 2xl:text-6xl uppercase font-bold md:tracking-[5px]">
+        <div className="text-center pt-10">
+          <h1 className="text-white text-xl md:text-3xl xl:text-4xl 2xl:text-5xl uppercase font-bold md:tracking-[5px]">
             search FROM LISTING
           </h1>
           <div className="bg-white p-1 xl:p-2 2xl:p-3 rounded-2xl  w-full flex items-center gap-2 md:gap-5 mt-5">

@@ -18,7 +18,6 @@ export const usePaymentFlow = (
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Load client secret when modal opens
   useEffect(() => {
     if (!isOpen) {
       setIsLoading(true);
@@ -29,19 +28,15 @@ export const usePaymentFlow = (
 
     if (secret) {
       setClientSecret(secret);
-      console.log('✅ Setup Intent Client Secret loaded');
     } else {
-      console.error('❌ No setup intent client secret found in localStorage');
+      console.error('No setup intent client secret found in localStorage');
     }
 
     setIsLoading(false);
   }, [isOpen]);
 
-  // Handle successful payment
   const handlePaymentSuccess = async () => {
     try {
-      console.log('🎉 Payment completed successfully');
-
       const userId = getUserIdFromStorage();
 
       if (!userId) {
@@ -49,34 +44,25 @@ export const usePaymentFlow = (
         throw new Error('User ID not found');
       }
 
-      // Confirm subscription with backend
       const { data: confirmResponse } =
         await confirmSubscriptionPayment(userId);
-      console.log('✅ Subscription confirmed:', confirmResponse);
 
-      // Clear payment data from localStorage
       if (confirmResponse?.data?.user?.id) {
         clearPaymentStorage();
       }
 
-      // Call success callback
       onPaymentSuccess();
 
-      // Navigate to login page
       router.push('/login');
 
-      // Close modal
       onClose();
     } catch (error) {
       console.error('❌ Error confirming subscription:', error);
-      // You could show an error toast here
     }
   };
 
-  // Handle payment error
   const handlePaymentError = (error: string) => {
     console.error('❌ Payment error:', error);
-    // You could show an error toast here
   };
 
   return {

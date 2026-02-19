@@ -19,7 +19,6 @@ export const isTokenExpired = async (token: string): Promise<boolean> => {
       return true;
     }
 
-    // exp is in seconds, Date.now() is in milliseconds
     const isExpired = decoded.exp * 1000 < Date.now();
 
     if (isExpired) {
@@ -46,7 +45,6 @@ export const getValidToken = async (): Promise<string | null> => {
     const expired = await isTokenExpired(token);
 
     if (expired) {
-      // Token is expired, clean up cookie
       cookieStore.delete('accessToken');
       cookieStore.delete('user');
       return null;

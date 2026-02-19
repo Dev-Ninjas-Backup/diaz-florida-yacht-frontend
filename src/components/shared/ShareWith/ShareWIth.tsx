@@ -1,12 +1,10 @@
 'use client';
-import React from 'react';
-import { FaWhatsapp, FaFacebookF, FaTwitter } from 'react-icons/fa';
-import { MdEmail, MdContentCopy } from 'react-icons/md';
-import { toast } from 'sonner';
 import { useState } from 'react';
+import { FaFacebookF, FaTwitter, FaWhatsapp } from 'react-icons/fa';
+import { MdContentCopy, MdEmail } from 'react-icons/md';
+import { toast } from 'sonner';
 const ShareWIth = () => {
-  const [copied, setCopied] = useState(false);
-  console.log(copied);
+  const [, setCopied] = useState(false);
 
   const shareUrl =
     typeof window !== 'undefined'
@@ -26,7 +24,6 @@ const ShareWIth = () => {
     }
   };
 
-  // Share handlers
   const handleWhatsAppShare = () => {
     const url = `https://wa.me/?text=${encodeURIComponent(
       shareText + ' ' + shareUrl,
@@ -67,7 +64,7 @@ const ShareWIth = () => {
           </span>
           <button
             onClick={handleCopyLink}
-            className="flex items-center gap-2 px-2 py-2 text-gray-700 rounded-lg transition-colors text-sm font-medium"
+            className="flex items-center gap-2 px-2 py-2 text-gray-700 rounded-lg transition-colors text-sm font-medium cursor-pointer"
             title="Copy link"
           >
             <MdContentCopy size={18} />

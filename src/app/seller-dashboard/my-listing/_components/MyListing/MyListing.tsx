@@ -13,10 +13,12 @@ import {
 } from '@/components/ui/select';
 import { PaginationMetadata, usePagination } from '@/hooks/usePagination';
 import { getSellerBoats } from '@/services/seller';
-import Link from 'next/link';
+import { deleteBoatListing } from '@/services/seller/boat-listing';
 import { Eye, Plus, Search, SquarePen, Trash2 } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 import { IListing } from '../../data/myListing';
 
 const MyListing = () => {
@@ -56,7 +58,6 @@ const MyListing = () => {
         });
         setMyListings(listingsFromApi.data || []);
         setMetadata(listingsFromApi.metadata);
-        console.log('Listings from API:', listingsFromApi);
       } catch (error) {
         console.error('Failed to fetch listings:', error);
       } finally {
@@ -66,14 +67,23 @@ const MyListing = () => {
     getListings();
   }, [page, limit, debouncedSearch, status]);
 
-  console.log('My Listings:', myListings);
-  //Table Config
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteBoatListing(id);
+      setMyListings((prev) => prev.filter((item) => item.id !== id));
+      toast.success('Listing deleted successfully');
+    } catch (error) {
+      console.error('Failed to delete listing:', error);
+      toast.error('Failed to delete listing');
+    }
+  };
+
   const listingColumns: Column<IListing>[] = [
     {
       header: 'Listing ID',
       cell: (row) => <p>{row.listingId}</p>,
     },
-    // File Name Column
+
     {
       header: 'Name',
       cell: (row) => (
@@ -130,7 +140,10 @@ const MyListing = () => {
           >
             <SquarePen size={16} />
           </Link>
-          <button className="text-orange-600 hover:text-red-600 focus:outline-none focus:text-red-600 cursor-pointer bg-#FEE3D7] p-1 rounded-full border border-[#EDC2AF]">
+          <button
+            onClick={() => handleDelete(row.id)}
+            className="text-orange-600 hover:text-red-600 focus:outline-none focus:text-red-600 cursor-pointer bg-#FEE3D7] p-1 rounded-full border border-[#EDC2AF]"
+          >
             <Trash2 size={18} />
           </button>
         </div>

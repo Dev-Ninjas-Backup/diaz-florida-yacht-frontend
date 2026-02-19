@@ -19,14 +19,12 @@ const ARROW_ACTIVE_DURATION = 1200;
 type ArrowDirection = 'left' | 'right' | null;
 
 const PremiumDeals = () => {
-  // State
   const [boats, setBoats] = useState<PremiumBoatApi[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [startIndex, setStartIndex] = useState(0);
   const [activeArrow, setActiveArrow] = useState<ArrowDirection>(null);
 
-  // Fetch boats on component mount
   useEffect(() => {
     const fetchBoats = async () => {
       setLoading(true);
@@ -49,7 +47,6 @@ const PremiumDeals = () => {
     fetchBoats();
   }, []);
 
-  // Navigation handlers
   const handleNext = () => {
     const maxIndex = boats.length - VISIBLE_COUNT;
     if (startIndex < maxIndex) {
@@ -65,14 +62,12 @@ const PremiumDeals = () => {
     }
   };
 
-  // Auto-reset arrow active state after animation
   useEffect(() => {
     if (!activeArrow) return;
     const timer = setTimeout(() => setActiveArrow(null), ARROW_ACTIVE_DURATION);
     return () => clearTimeout(timer);
   }, [activeArrow]);
 
-  // Computed values
   const visibleBoats = boats.slice(startIndex, startIndex + VISIBLE_COUNT);
   const canGoNext = startIndex + VISIBLE_COUNT < boats.length;
   const canGoPrev = startIndex > 0;
@@ -80,7 +75,6 @@ const PremiumDeals = () => {
   return (
     <CustomContainer>
       <div className="my-20 space-y-10">
-        {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
           <div className="space-y-3 max-w-3xl">
             <h1 className="text-xl sm:text-4xl lg:text-5xl font-bold">
@@ -92,7 +86,6 @@ const PremiumDeals = () => {
             </p>
           </div>
 
-          {/* Slider Controls */}
           <div className="flex items-center gap-3">
             <button
               onClick={handlePrev}
@@ -122,7 +115,6 @@ const PremiumDeals = () => {
           </div>
         </div>
 
-        {/* Content */}
         {loading ? (
           <div className="text-center py-20">
             <Loading message="Loading premium yachts..." />

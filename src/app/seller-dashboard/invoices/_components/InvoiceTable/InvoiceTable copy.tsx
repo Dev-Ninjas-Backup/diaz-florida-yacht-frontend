@@ -19,9 +19,9 @@ import {
   Search,
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { generateInvoicePDF } from '../../_utils/generateInvoicePDF';
 import { InvoiceRecord } from '../../data/invoiceData';
 import InvoiceDetailModal from '../InvoiceDetailModal';
-import { generateInvoicePDF } from '../../_utils/generateInvoicePDF';
 
 const InvoiceTable = () => {
   const [invoices, setInvoices] = useState<InvoiceRecord[]>([]);
@@ -73,7 +73,6 @@ const InvoiceTable = () => {
         });
         setInvoices(invoicesFromApi.data || []);
         setMetadata(invoicesFromApi.metadata);
-        console.log('Invoices from API:', invoicesFromApi);
       } catch (error) {
         console.error('Failed to fetch invoices:', error);
       } finally {
@@ -82,7 +81,7 @@ const InvoiceTable = () => {
     };
     fetchInvoices();
   }, [page, limit, search, status]);
-  //Table Config
+
   const invoiceColumns: Column<InvoiceRecord>[] = [
     {
       header: 'Invoice ID',

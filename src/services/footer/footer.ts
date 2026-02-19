@@ -13,6 +13,7 @@ export interface FooterResponse {
   id: string;
   site: string;
   companyName: string;
+  logoUrl: string;
   companyDescription: string;
   quickLinks: FooterLink[];
   policyLinks: FooterLink[];
