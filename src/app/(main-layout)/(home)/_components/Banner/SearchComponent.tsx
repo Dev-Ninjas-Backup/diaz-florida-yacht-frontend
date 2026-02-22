@@ -393,6 +393,7 @@ const SearchComponent = () => {
               type="text"
               value={aiPrompt}
               onChange={(e) => setAiPrompt(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && askAiQuery()}
               placeholder="Example: find me a Viking for sale from 2005 to 2008"
               className="w-full md:px-3 focus:outline-none bg-transparent text-gray-700 placeholder:text-gray-400 placeholder:text-xs md:placeholder:text-base"
             />

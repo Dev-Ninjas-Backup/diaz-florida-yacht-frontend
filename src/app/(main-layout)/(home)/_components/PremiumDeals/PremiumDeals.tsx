@@ -4,13 +4,13 @@ import CustomContainer from '@/components/CustomComponents/CustomContainer';
 import ProductCard from '@/components/Product/ProductCard';
 import { useEffect, useState } from 'react';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
-import { Loading } from '@/components/ui/loading';
 import { NoDataFound } from '@/components/ui/no-data-found';
 import {
   getFloridaPremiumBoats,
   PremiumBoatApi,
 } from '@/services/boats/premiumBoats';
 import { mapPremiumBoatToProduct } from '@/utils/mapPremiumBoatToProduct';
+import PremiumDealsSkeleton from '../Skeletons/PremiumDealsSkeleton';
 const VISIBLE_COUNT = 4;
 const INITIAL_PAGE = 1;
 const INITIAL_LIMIT = 12;
@@ -116,9 +116,7 @@ const PremiumDeals = () => {
         </div>
 
         {loading ? (
-          <div className="text-center py-20">
-            <Loading message="Loading premium yachts..." />
-          </div>
+          <PremiumDealsSkeleton />
         ) : error ? (
           <NoDataFound
             title="No premium yachts found"

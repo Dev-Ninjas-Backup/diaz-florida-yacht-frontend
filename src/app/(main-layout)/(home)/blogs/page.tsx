@@ -51,7 +51,7 @@ const BlogPage = () => {
           slug: item.sharedLink,
           readTime: `${item.readTime} min read`,
           publishDate: item.createdAt,
-          excerpt: item.blogDescription.replace(/<[^>]+>/g, '').slice(0, 140),
+          excerpt: item.blogDescription.slice(0, 300),
           description: item.blogDescription,
           featuredImage: {
             url: item.blogImage?.url ?? '',

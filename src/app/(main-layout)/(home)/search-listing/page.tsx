@@ -89,6 +89,7 @@ const SearchListingPage = () => {
               type="text"
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleAskAI()}
               placeholder="Search..."
               className="px-4 py-2 md:py-3 placeholder:text-sm md:placeholder:text-base rounded-lg focus:outline-none w-full bg-gray-100"
             />

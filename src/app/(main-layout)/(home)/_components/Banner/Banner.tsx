@@ -47,9 +47,11 @@ const Banner = async () => {
               </h1>
               <div className="w-full md:w-1/2 text-sm xl:text-lg 2xl:text-xl max-w-[520px] mx-auto md:mx-0 md:px-10 space-y-2 text-center md:text-left">
                 <h2 className="flex items-center justify-center md:justify-start gap-2 font-semibold">
-                  <BsStars className="text-blue-400" /> <span>AI Powered</span>
+                  <BsStars className="text-white" /> <span>AI Powered</span>
                 </h2>
-                <p className="text-gray-100 md:text-white">{subtitle}</p>
+                <p className="text-gray-100 md:text-white font-light">
+                  {subtitle}
+                </p>
               </div>
             </div>
             <div className="w-full mt-auto md:mt-10">

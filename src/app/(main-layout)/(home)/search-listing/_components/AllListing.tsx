@@ -1,5 +1,6 @@
 'use client';
 import ProductCard from '@/components/Product/ProductCard';
+import ProductCardSkeleton from '@/components/Product/ProductCardSkeleton';
 import Pagination from '@/components/ui/Pagination';
 import { useSearchResults } from '@/context/SearchResultsContext';
 import { getAllBoats } from '@/services/boats';
@@ -111,8 +112,13 @@ const AllListing = () => {
 
   if (isLoadingBoats) {
     return (
-      <div className="flex items-center justify-center py-20">
-        <div className="text-gray-500">Loading boats...</div>
+      <div>
+        <div className="h-5 w-48 bg-gray-200 animate-pulse rounded mb-3" />
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-5 md:gap-10 mt-3">
+          {Array.from({ length: 9 }).map((_, i) => (
+            <ProductCardSkeleton key={i} />
+          ))}
+        </div>
       </div>
     );
   }
