@@ -54,11 +54,12 @@ const DockSideBlog = () => {
     loadBlogs();
   }, []);
 
-  if (loading) return (
-    <CustomContainer>
-      <DockSideBlogSkeleton />
-    </CustomContainer>
-  );
+  if (loading)
+    return (
+      <CustomContainer>
+        <DockSideBlogSkeleton />
+      </CustomContainer>
+    );
   if (blogs.length === 0) return <NoDataFound title="No blogs found" />;
 
   return (
