@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { getFAQ, FAQResponse } from '@/services/faq/faq';
 import { Loading } from '@/components/ui/loading';
 import { NoDataFound } from '@/components/ui/no-data-found';
+import { richTextClass } from '@/lib/utils';
 
 const FAQContent = () => {
   const [faqData, setFaqData] = useState<FAQResponse | null>(null);
@@ -56,29 +57,25 @@ const FAQContent = () => {
         )}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-16">
-        <div className="space-y-8 md:space-y-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-start">
+        <div className="space-y-8 md:space-y-10 min-w-0">
           {leftColumnFAQs.map((faq, index) => (
             <div key={index} className="space-y-3">
               <h3 className="text-lg md:text-xl font-bold text-gray-900">
                 {index + 1}. {faq.question}
               </h3>
-              <p className="text-gray-700 text-base md:text-lg leading-relaxed">
-                {faq.answer}
-              </p>
+              <div className={richTextClass} dangerouslySetInnerHTML={{ __html: faq.answer }} />
             </div>
           ))}
         </div>
 
-        <div className="space-y-8 md:space-y-10">
+        <div className="space-y-8 md:space-y-10 min-w-0">
           {rightColumnFAQs.map((faq, index) => (
             <div key={index + midPoint} className="space-y-3">
               <h3 className="text-lg md:text-xl font-bold text-gray-900">
                 {index + midPoint + 1}. {faq.question}
               </h3>
-              <p className="text-gray-700 text-base md:text-lg leading-relaxed">
-                {faq.answer}
-              </p>
+              <div className={richTextClass} dangerouslySetInnerHTML={{ __html: faq.answer }} />
             </div>
           ))}
         </div>

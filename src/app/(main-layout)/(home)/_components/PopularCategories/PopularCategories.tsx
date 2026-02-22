@@ -1,11 +1,11 @@
 'use client';
 
 import CustomContainer from '@/components/CustomComponents/CustomContainer';
-import { Loading } from '@/components/ui/loading';
 import { NoDataFound } from '@/components/ui/no-data-found';
 import { getCategories } from '@/services/category/category';
 import { useEffect, useState } from 'react';
 import CategoryCard from './CategoryCard';
+import PopularCategoriesSkeleton from '../Skeletons/PopularCategoriesSkeleton';
 
 type CategoryUI = {
   id: string;
@@ -41,7 +41,7 @@ const PopularCategories = () => {
   if (loading) {
     return (
       <CustomContainer>
-        <Loading message="Loading categories..." />
+        <PopularCategoriesSkeleton />
       </CustomContainer>
     );
   }

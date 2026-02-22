@@ -48,15 +48,15 @@ const AskAI = () => {
   return (
     <>
       <div className="fixed bottom-[2%] right-[2%] z-50 flex flex-col items-center gap-2">
-        <h2 className="font-semibold text-sm md:text-base text-white bg-secondary px-3 py-1.5 md:px-4 md:py-2 rounded-full shadow-lg animate-pulse flex items-center gap-1.5 md:gap-2">
-          <IoSparklesSharp className="text-white text-xs md:text-sm" />
+        <span className="font-medium text-xs text-white bg-secondary px-2.5 py-1 rounded-full shadow-md animate-pulse flex items-center gap-1">
+          <IoSparklesSharp className="text-white text-[10px]" />
           Ask AI
-        </h2>
+        </span>
         <button
           type="button"
           aria-label="Open AI Chat"
           onClick={openChatBotModal}
-          className="relative rounded-full bg-white border border-gray-200 shadow-lg hover:shadow-xl transition-shadow duration-200 overflow-hidden w-20 h-20 md:w-24 md:h-24 flex items-center justify-center cursor-pointer"
+          className="relative rounded-full bg-white border border-gray-200 shadow-lg hover:shadow-xl transition-shadow duration-200 overflow-hidden w-14 h-14 md:w-20 md:h-20 flex items-center justify-center cursor-pointer"
         >
           <div className="absolute inset-0 flex items-center justify-center z-0">
             <div className="w-[130%] h-[130%] md:w-[140%] md:h-[140%]">

@@ -8,8 +8,8 @@ import {
   FeaturedBrand,
   getFeaturedBrands,
 } from '@/services/featuredBrands/featuredBrands';
-import { Loading } from '@/components/ui/loading';
 import { NoDataFound } from '@/components/ui/no-data-found';
+import FeaturedBrandsSkeleton from '../Skeletons/FeaturedBrandsSkeleton';
 
 const FeaturedBrands = () => {
   const [brands, setBrands] = useState<FeaturedBrand[]>([]);
@@ -27,7 +27,7 @@ const FeaturedBrands = () => {
   if (isLoading) {
     return (
       <CustomContainer>
-        <Loading message="Loading brands..." />
+        <FeaturedBrandsSkeleton />
       </CustomContainer>
     );
   }
@@ -57,8 +57,8 @@ const FeaturedBrands = () => {
                 pauseOnHover
               >
                 {brands.map((brand) => (
-                  <div key={brand.id} className="mx-6 sm:mx-10 md:mx-14">
-                    <div className="relative w-28 sm:w-36 md:w-44 h-12 sm:h-16">
+                  <div key={brand.id} className="mx-3 sm:mx-5 md:mx-7">
+                    <div className="relative w-36 sm:w-48 md:w-56 h-16 sm:h-20">
                       <Image
                         src={brand.featuredbrandLogo.url}
                         alt="Featured Brand"
@@ -79,8 +79,8 @@ const FeaturedBrands = () => {
                 pauseOnHover
               >
                 {brands.map((brand) => (
-                  <div key={brand.id} className="mx-6 sm:mx-10 md:mx-14">
-                    <div className="relative w-28 sm:w-36 md:w-44 h-12 sm:h-16">
+                  <div key={brand.id} className="mx-3 sm:mx-5 md:mx-7">
+                    <div className="relative w-36 sm:w-48 md:w-56 h-16 sm:h-20">
                       <Image
                         src={brand.featuredbrandLogo.url}
                         alt="Featured Brand"
