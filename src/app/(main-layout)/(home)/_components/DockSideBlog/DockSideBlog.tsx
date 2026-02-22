@@ -2,11 +2,11 @@
 
 import BlogCard from '@/components/Blog/BlogCard';
 import CustomContainer from '@/components/CustomComponents/CustomContainer';
-import LoadingSpinner from '@/components/shared/LoadingSpinner/LoadingSpinner';
 import { NoDataFound } from '@/components/ui/no-data-found';
 import { getBlogs } from '@/services/blog/blog';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import DockSideBlogSkeleton from '../Skeletons/DockSideBlogSkeleton';
 
 type BlogUI = {
   id: string;
@@ -54,7 +54,12 @@ const DockSideBlog = () => {
     loadBlogs();
   }, []);
 
-  if (loading) return <LoadingSpinner message="Loading blogs..." />;
+  if (loading)
+    return (
+      <CustomContainer>
+        <DockSideBlogSkeleton />
+      </CustomContainer>
+    );
   if (blogs.length === 0) return <NoDataFound title="No blogs found" />;
 
   return (

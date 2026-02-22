@@ -1,12 +1,12 @@
 'use client';
 
 import CustomContainer from '@/components/CustomComponents/CustomContainer';
-import { Loading } from '@/components/ui/loading';
 import { NoDataFound } from '@/components/ui/no-data-found';
 import { getWhyUs, WhyUsResponse } from '@/services/why-us/whyUs';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import WhyUsSkeleton from '../Skeletons/WhyUsSkeleton';
 
 const WhyUs = () => {
   const [data, setData] = useState<WhyUsResponse | null>(null);
@@ -40,13 +40,7 @@ const WhyUs = () => {
   if (loading) {
     return (
       <CustomContainer>
-        <section className="py-16 md:py-20">
-          <div className="container mx-auto px-2 md:px-4">
-            <div className="flex items-center justify-center py-20">
-              <Loading message="Loading..." />
-            </div>
-          </div>
-        </section>
+        <WhyUsSkeleton />
       </CustomContainer>
     );
   }

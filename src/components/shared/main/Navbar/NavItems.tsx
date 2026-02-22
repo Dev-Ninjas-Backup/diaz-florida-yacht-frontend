@@ -37,7 +37,7 @@ const NavItems: React.FC<NavItemsProps> = ({
   setIsOpen,
 }) => {
   return (
-    <div className="container mx-auto flex justify-between items-center pt-2.5">
+    <div className="container mx-auto flex justify-between items-center pt-2.5 relative">
       <div className="flex-shrink-0">
         <Link href={'/'}>
           <Image
@@ -50,7 +50,7 @@ const NavItems: React.FC<NavItemsProps> = ({
         </Link>
       </div>
 
-      <div className="hidden lg:flex items-center gap-5">
+      <div className="hidden lg:flex items-center gap-5 absolute left-1/2 -translate-x-1/2">
         <Link href="/" className="px-3 hover:text-gray-300 transition-colors">
           Home
         </Link>

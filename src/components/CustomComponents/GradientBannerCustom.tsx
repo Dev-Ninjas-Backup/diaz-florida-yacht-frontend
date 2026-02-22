@@ -49,7 +49,11 @@ const GradientBannerCustom = ({
       >
         {showNav && <BannerNav />}
         <CustomContainer>
-          <div className="py-1 sm:py-2 md:py-4">{children}</div>
+          <div
+            className={`${showNav ? 'py-4 sm:py-6 md:py-8' : 'pt-20 md:pt-24 pb-4 sm:pb-6 md:pb-8'}`}
+          >
+            {children}
+          </div>
         </CustomContainer>
       </div>
     </>

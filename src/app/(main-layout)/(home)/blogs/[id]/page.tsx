@@ -52,9 +52,7 @@ const BlogDetailsPage = () => {
             title: item.blogTitle,
             readTime: `${item.readTime} min read`,
             publishDate: item.createdAt,
-            description: item.blogDescription
-              .replace(/<[^>]+>/g, '')
-              .slice(0, 120),
+            description: item.blogDescription.slice(0, 300),
             featuredImage: {
               url: item.blogImage?.url ?? '',
               alt: item.blogTitle,
