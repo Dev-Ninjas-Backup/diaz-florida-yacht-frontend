@@ -52,18 +52,19 @@ const Step2Form = ({ fieldLimitations }: Step2FormProps) => {
             placeholder="Select or type"
             required
           />
-          <FormInput
+          <DynamicFormSelect
             name="model"
             label="Model"
-            placeholder="Type here"
+            type="MODEL"
+            placeholder="Select or type"
             required
           />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5">
           <DimensionInput namePrefix="length" label="Length" required />
-          <DimensionInput namePrefix="beam" label="Beam Size" />
-          <DimensionInput namePrefix="draft" label="Max Draft" />
+          <DimensionInput namePrefix="beam" label="Beam Size" required />
+          <DimensionInput namePrefix="draft" label="Max Draft" required />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5">
@@ -79,6 +80,7 @@ const Step2Form = ({ fieldLimitations }: Step2FormProps) => {
             label="Material"
             type="MATERIAL"
             placeholder="Select or type"
+            required
           />
           <DynamicFormSelect
             name="fuelType"
@@ -109,12 +111,14 @@ const Step2Form = ({ fieldLimitations }: Step2FormProps) => {
             label="Number of Cabins"
             placeholder="Type here"
             type="number"
+            required
           />
           <FormInput
             name="numHeads"
             label="Number of Heads"
             placeholder="Type here"
             type="number"
+            required
           />
         </div>
       </div>
@@ -128,6 +132,7 @@ const Step2Form = ({ fieldLimitations }: Step2FormProps) => {
               label="Hours"
               placeholder="Type here"
               type="number"
+              required
             />
             <FormInput
               name={`engines.${index}.make`}
@@ -142,12 +147,14 @@ const Step2Form = ({ fieldLimitations }: Step2FormProps) => {
               name={`engines.${index}.model`}
               label="Model"
               placeholder="Type here"
+              required
             />
             <FormInput
               name={`engines.${index}.totalPower`}
               label="Total Power (HP)"
               placeholder="Type here"
               type="number"
+              required
             />
           </div>
 
@@ -157,12 +164,14 @@ const Step2Form = ({ fieldLimitations }: Step2FormProps) => {
               label="Engine Type"
               type="ENGINE_TYPE"
               placeholder="Select or type"
+              required
             />
             <DynamicFormSelect
               name={`engines.${index}.propellerType`}
               label="Propeller Type"
               type="PROP_TYPE"
               placeholder="Select or type"
+              required
             />
           </div>
         </div>

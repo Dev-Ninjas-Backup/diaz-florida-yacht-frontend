@@ -26,12 +26,7 @@ const reverseGeocode = async (
   longitude: number,
 ): Promise<LocationData> => {
   const response = await fetch(
-    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&addressdetails=1&zoom=10`,
-    {
-      headers: {
-        'User-Agent': 'Diaz-Florida-Yacht-App/1.0',
-      },
-    },
+    `/api/geocode?lat=${latitude}&lon=${longitude}`,
   );
 
   if (!response.ok) {
@@ -45,10 +40,8 @@ const reverseGeocode = async (
   }
 
   const address = data.address;
-
   return {
-    city:
-      address.city || address.town || address.village || address.hamlet || '',
+    city: address.city || address.town || address.village || address.hamlet || '',
     state: address.state || address.region || '',
     country: address.country || '',
     latitude,
