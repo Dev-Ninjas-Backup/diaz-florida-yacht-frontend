@@ -25,9 +25,7 @@ const reverseGeocode = async (
   latitude: number,
   longitude: number,
 ): Promise<LocationData> => {
-  const response = await fetch(
-    `/api/geocode?lat=${latitude}&lon=${longitude}`,
-  );
+  const response = await fetch(`/api/geocode?lat=${latitude}&lon=${longitude}`);
 
   if (!response.ok) {
     throw new Error('Failed to fetch location data');
@@ -41,7 +39,8 @@ const reverseGeocode = async (
 
   const address = data.address;
   return {
-    city: address.city || address.town || address.village || address.hamlet || '',
+    city:
+      address.city || address.town || address.village || address.hamlet || '',
     state: address.state || address.region || '',
     country: address.country || '',
     latitude,
