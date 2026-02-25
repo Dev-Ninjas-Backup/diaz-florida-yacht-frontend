@@ -24,50 +24,52 @@ export const step2Schema = z.object({
         message: 'Inches must be less than 12',
       },
     ),
-  beamFeet: z.string().optional(),
+  beamFeet: z.string().min(1, 'Beam (feet) is required'),
   beamInches: z
     .string()
-    .optional()
+    .min(1, 'Beam (inches) is required')
     .refine(
       (val) => {
-        if (!val) return true;
         const num = Number(val);
         return !isNaN(num) && num >= 0 && num < 12;
       },
-      { message: 'Inches must be less than 12' },
+      {
+        message: 'Inches must be less than 12',
+      },
     ),
-  draftFeet: z.string().optional(),
+  draftFeet: z.string().min(1, 'Draft (feet) is required'),
   draftInches: z
     .string()
-    .optional()
+    .min(1, 'Draft (inches) is required')
     .refine(
       (val) => {
-        if (!val) return true;
         const num = Number(val);
         return !isNaN(num) && num >= 0 && num < 12;
       },
-      { message: 'Inches must be less than 12' },
+      {
+        message: 'Inches must be less than 12',
+      },
     ),
 
   class: z.string().min(1, 'Boat class is required'),
-  material: z.string().optional(),
+  material: z.string().min(1, 'Material is required'),
   fuelType: z.string().min(1, 'Fuel type is required'),
   propMaterial: z.string().min(1, 'Propeller material is required'),
   condition: z.string().min(1, 'Condition is required'),
 
   numEngines: z.string().min(1, 'Number of engines is required'),
-  numCabins: z.string().optional(),
-  numHeads: z.string().optional(),
+  numCabins: z.string().min(1, 'Number of cabins is required'),
+  numHeads: z.string().min(1, 'Number of heads is required'),
 
   engines: z
     .array(
       z.object({
-        hours: z.string().optional(),
+        hours: z.string().min(1, 'Engine hours is required'),
         make: z.string().min(1, 'Engine make is required'),
-        model: z.string().optional(),
-        totalPower: z.string().optional(),
-        propellerType: z.string().optional(),
-        engineFuelType: z.string().optional(),
+        model: z.string().min(1, 'Engine model is required'),
+        totalPower: z.string().min(1, 'Total power (HP) is required'),
+        propellerType: z.string().min(1, 'Propeller type is required'),
+        engineFuelType: z.string().min(1, 'Engine fuel type is required'),
       }),
     )
     .min(1, 'At least one engine is required'),
