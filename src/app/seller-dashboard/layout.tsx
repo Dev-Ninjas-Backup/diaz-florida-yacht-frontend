@@ -17,7 +17,7 @@ const SellerDashboardLayout = ({ children }: { children: ReactNode }) => {
       redirectTo="/login"
       loadingComponent={<DefaultLoadingComponent />}
     >
-      <div className="my-2 md:my-3 mx-2 md:mx-5 rounded-2xl">
+      <div className="my-2 md:my-3 mx-2 md:mx-5 rounded-2xl transition-all duration-500">
         <GradientBannerCustom>
           <h1 className="text-2xl sm:text-4xl lg:text-6xl font-bold text-center text-white pt-6">
             Welcome To Dashboard

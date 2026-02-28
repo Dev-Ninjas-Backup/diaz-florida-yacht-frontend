@@ -102,6 +102,61 @@ export default async function BoatViewPage({
             </div>
           )}
 
+          {boat.videoURL && (
+            <div className="mb-6">
+              <h2 className="text-xl font-bold mb-4">Video</h2>
+              <div className="rounded-xl overflow-hidden bg-gray-100 aspect-video">
+                {(() => {
+                  const url = boat.videoURL.trim();
+                  const patterns = [
+                    /(?:youtube\.com\/watch\?v=)([a-zA-Z0-9_-]{11})/,
+                    /(?:youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/,
+                    /(?:youtu\.be\/)([a-zA-Z0-9_-]{11})/,
+                    /(?:youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/,
+                  ];
+                  let embedUrl = null;
+                  for (const pattern of patterns) {
+                    const match = url.match(pattern);
+                    if (match && match[1]) {
+                      embedUrl = `https://www.youtube.com/embed/${match[1]}`;
+                      break;
+                    }
+                  }
+                  return embedUrl ? (
+                    <iframe
+                      src={embedUrl}
+                      title="Boat Video"
+                      className="w-full h-full"
+                      allowFullScreen
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    />
+                  ) : (
+                    <a
+                      href={boat.videoURL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex flex-col items-center justify-center w-full h-full bg-gradient-to-br from-gray-50 to-gray-100 hover:from-gray-100 hover:to-gray-200 transition-all duration-300 p-8 group"
+                    >
+                      <svg
+                        className="w-16 h-16 text-gray-400 group-hover:text-blue-500 transition-colors duration-300 mb-4"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" />
+                      </svg>
+                      <p className="text-gray-600 font-medium mb-2">
+                        Video Available
+                      </p>
+                      <p className="text-sm text-blue-600 underline group-hover:text-blue-700">
+                        Click to Watch
+                      </p>
+                    </a>
+                  );
+                })()}
+              </div>
+            </div>
+          )}
+
           <div className="mb-6">
             <h2 className="text-xl font-bold mb-4">Specifications</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

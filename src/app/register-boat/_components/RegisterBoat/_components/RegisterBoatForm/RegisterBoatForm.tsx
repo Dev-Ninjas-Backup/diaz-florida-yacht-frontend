@@ -228,9 +228,22 @@ const RegisterBoatForm = () => {
       setBackendErrors({});
       const allFormData = getValues() as BoatRegistrationFormValues;
       const formDataToSend = createBoatRegistrationFormData(allFormData);
+
       const res = await createSubscription(formDataToSend);
 
-      if (res.data.paymentIntentClientSecret) {
+      if (res?.success === false) {
+        // Handle error response
+        if (res.error) {
+          toast.error(res.error);
+        } else if (res.message) {
+          toast.error(res.message);
+        } else {
+          toast.error('Failed to submit registration');
+        }
+        return;
+      }
+
+      if (res?.data?.paymentIntentClientSecret) {
         localStorage.setItem(
           'paymentIntentClientSecret',
           res.data.paymentIntentClientSecret,
@@ -238,29 +251,18 @@ const RegisterBoatForm = () => {
         localStorage.setItem('paymentIntentId', res.data.paymentIntentId);
         localStorage.setItem('userId', res.data.userId);
         setShowPaymentModal(true);
-        toast.success('Form submitted successfully! Proceed to payment.');
+        toast.success(
+          res.message || 'Form submitted successfully! Proceed to payment.',
+        );
+        setCompletedSteps([...completedSteps, 3]);
+      } else {
+        toast.error('Invalid response from server');
       }
-      setCompletedSteps([...completedSteps, 3]);
     } catch (error: any) {
       console.error('Form submission error:', error);
-
-      if (error?.response?.data?.errors) {
-        const errors = error.response.data.errors;
-        const errorMessages: Record<string, string> = {};
-
-        Object.keys(errors).forEach((key) => {
-          errorMessages[key] = Array.isArray(errors[key])
-            ? errors[key][0]
-            : errors[key];
-        });
-
-        setBackendErrors(errorMessages);
-        toast.error('Please fix the errors in the form');
-      } else if (error?.response?.data?.message) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error('An error occurred while submitting the form');
-      }
+      toast.error(
+        error?.message || 'An error occurred while submitting the form',
+      );
     }
   };
 
@@ -269,6 +271,14 @@ const RegisterBoatForm = () => {
     let isValid = false;
     if (currentStep === 1) {
       isValid = await trigger(['selectedPackage']);
+      if (!isValid) {
+        const errors = form.formState.errors;
+        if (errors.selectedPackage) {
+          toast.error(
+            errors.selectedPackage.message || 'Please select a package',
+          );
+        }
+      }
     } else if (currentStep === 2) {
       isValid = await trigger([
         'buildYear',
@@ -296,6 +306,14 @@ const RegisterBoatForm = () => {
         'zip',
         'description',
       ]);
+      if (!isValid) {
+        const errors = form.formState.errors;
+        const firstError = Object.keys(errors)[0] as keyof typeof errors;
+        const errorMessage = errors[firstError]?.message;
+        toast.error(
+          errorMessage || 'Please fill all required fields correctly',
+        );
+      }
     } else if (currentStep === 3) {
       isValid = await trigger([
         'firstName',
@@ -310,6 +328,14 @@ const RegisterBoatForm = () => {
         'password',
         'confirmPassword',
       ]);
+      if (!isValid) {
+        const errors = form.formState.errors;
+        const firstError = Object.keys(errors)[0] as keyof typeof errors;
+        const errorMessage = errors[firstError]?.message;
+        toast.error(
+          errorMessage || 'Please fill all required fields correctly',
+        );
+      }
       if (isValid) {
         handleFormSubmit();
         return;

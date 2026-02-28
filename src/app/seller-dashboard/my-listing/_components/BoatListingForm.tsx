@@ -51,44 +51,54 @@ export default function BoatListingForm({
     resolver: mode === 'edit' ? undefined : zodResolver(step2Schema),
     mode: 'onChange',
     defaultValues: boatData
-      ? {
-          buildYear: String(boatData.buildYear),
-          make: boatData.make,
-          model: boatData.model,
-          name: boatData.name,
-          lengthFeet: String(boatData.boatDimensions.lengthFeet),
-          lengthInches: String(boatData.boatDimensions.lengthInches),
-          beamFeet: String(boatData.boatDimensions.beamFeet),
-          beamInches: String(boatData.boatDimensions.beamInches),
-          draftFeet: String(boatData.boatDimensions.draftFeet),
-          draftInches: String(boatData.boatDimensions.draftInches),
-          class: boatData.class,
-          material: boatData.material,
-          fuelType: boatData.fuelType,
-          numEngines: String(boatData.enginesNumber),
-          numCabins: String(boatData.cabinsNumber),
-          numHeads: String(boatData.headsNumber),
-          hours: boatData.engines[0]?.hours
-            ? String(boatData.engines[0].hours)
-            : '',
-          make2: boatData.engines[0]?.make || '',
-          model2: boatData.engines[0]?.model || '',
-          totalPower: boatData.engines[0]?.horsepower
-            ? String(boatData.engines[0].horsepower)
-            : '',
-          propellerType: boatData.engines[0]?.propellerType || '',
-          engineFuelType: boatData.engines[0]?.fuelType || '',
-          condition: boatData.condition,
-          price: String(boatData.price),
-          city: boatData.city,
-          state: boatData.state,
-          zip: boatData.zip,
-          description: boatData.description || '',
-          moreDetails: [],
-          embedUrl: boatData.videoURL || '',
-          coverPhoto: undefined,
-          mediaGallery: [],
-        }
+      ? (() => {
+          return {
+            buildYear: String(boatData.buildYear),
+            make: boatData.make,
+            model: boatData.model,
+            name: boatData.name,
+            lengthFeet: String(boatData.boatDimensions.lengthFeet),
+            lengthInches: String(boatData.boatDimensions.lengthInches),
+            beamFeet: String(boatData.boatDimensions.beamFeet),
+            beamInches: String(boatData.boatDimensions.beamInches),
+            draftFeet: String(boatData.boatDimensions.draftFeet),
+            draftInches: String(boatData.boatDimensions.draftInches),
+            class: boatData.class,
+            material: boatData.material,
+            fuelType: boatData.fuelType,
+            propMaterial: boatData.propMaterial || '',
+            numEngines: String(boatData.enginesNumber),
+            numCabins: String(boatData.cabinsNumber),
+            numHeads: String(boatData.headsNumber),
+            engines: boatData.engines?.map((engine) => ({
+              hours: engine.hours ? String(engine.hours) : '',
+              make: engine.make || '',
+              model: engine.model || '',
+              totalPower: engine.horsepower ? String(engine.horsepower) : '',
+              engineFuelType: engine.fuelType || boatData.engineType || '',
+              propellerType: engine.propellerType || boatData.propType || '',
+            })) || [
+              {
+                hours: '',
+                make: '',
+                model: '',
+                totalPower: '',
+                engineFuelType: '',
+                propellerType: '',
+              },
+            ],
+            condition: boatData.condition,
+            price: String(boatData.price),
+            city: boatData.city,
+            state: boatData.state,
+            zip: boatData.zip,
+            description: boatData.description || '',
+            moreDetails: [],
+            embedUrl: boatData.videoURL || '',
+            coverPhoto: undefined,
+            mediaGallery: [],
+          };
+        })()
       : {
           buildYear: '',
           make: '',
@@ -103,15 +113,20 @@ export default function BoatListingForm({
           class: '',
           material: '',
           fuelType: '',
+          propMaterial: '',
           numEngines: '',
           numCabins: '',
           numHeads: '',
-          hours: '',
-          make2: '',
-          model2: '',
-          totalPower: '',
-          propellerType: '',
-          engineFuelType: '',
+          engines: [
+            {
+              hours: '',
+              make: '',
+              model: '',
+              totalPower: '',
+              engineFuelType: '',
+              propellerType: '',
+            },
+          ],
           condition: '',
           price: '',
           city: '',
@@ -177,7 +192,10 @@ export default function BoatListingForm({
       : await trigger();
 
     if (!isValid) {
-      toast.error('Please fill all required fields correctly');
+      const errors = form.formState.errors;
+      const firstError = Object.keys(errors)[0] as keyof typeof errors;
+      const errorMessage = errors[firstError]?.message;
+      toast.error(errorMessage || 'Please fill all required fields correctly');
       return;
     }
 
@@ -186,6 +204,27 @@ export default function BoatListingForm({
     if (mode === 'create' && !formValues.coverPhoto) {
       toast.error('Please upload a cover photo');
       return;
+    }
+
+    // Validate file sizes
+    const maxFileSize = 20 * 1024 * 1024; // 20MB
+    if (formValues.coverPhoto && formValues.coverPhoto.size > maxFileSize) {
+      toast.error(
+        `Cover photo is too large. Maximum size is 20MB. Your file: ${(formValues.coverPhoto.size / 1024 / 1024).toFixed(2)}MB`,
+      );
+      return;
+    }
+
+    if (formValues.mediaGallery && formValues.mediaGallery.length > 0) {
+      const oversizedFiles = formValues.mediaGallery.filter(
+        (file: File) => file.size > maxFileSize,
+      );
+      if (oversizedFiles.length > 0) {
+        toast.error(
+          `${oversizedFiles.length} gallery image(s) exceed 20MB limit. Please compress or choose smaller images.`,
+        );
+        return;
+      }
     }
 
     setIsSubmitting(true);
@@ -204,9 +243,9 @@ export default function BoatListingForm({
         boatClass: formValues.class,
         material: formValues.material,
         condition: formValues.condition,
-        engineType: formValues.engineFuelType,
-        propType: formValues.propellerType,
-        propMaterial: boatData?.propMaterial || '',
+        engineType: formValues.engines?.[0]?.engineFuelType || '',
+        propType: formValues.engines?.[0]?.propellerType || '',
+        propMaterial: formValues.propMaterial || '',
         boatDimensions: {
           lengthFeet: parseInt(formValues.lengthFeet),
           lengthInches: parseInt(formValues.lengthInches),
@@ -228,23 +267,35 @@ export default function BoatListingForm({
         coversEquipment: [],
         additionalEquipment: [],
         videoURL: formValues.embedUrl || '',
-        engines: formValues.make2
-          ? [
-              {
-                make: formValues.make2,
-                model: formValues.model2,
-                fuelType: formValues.engineFuelType,
-                horsepower: parseInt(formValues.totalPower || '') || 0,
-                hours: parseInt(formValues.hours || '') || 0,
-                propellerType: formValues.propellerType,
-              },
-            ]
-          : [],
+        engines:
+          formValues.engines
+            ?.filter((e) => e.make)
+            .map((engine) => ({
+              make: engine.make,
+              model: engine.model || '',
+              fuelType: engine.engineFuelType || '',
+              horsepower: parseInt(engine.totalPower || '') || 0,
+              hours: parseInt(engine.hours || '') || 0,
+              propellerType: engine.propellerType || '',
+            })) || [],
         extraDetails: formValues.moreDetails || [],
       };
 
-      if (mode === 'edit' && imagesToDelete.length > 0) {
-        boatInfo.imagesToDelete = imagesToDelete;
+      // Auto-delete old cover if new cover is uploaded in edit mode
+      const imagesToDeleteArray = [...imagesToDelete];
+      if (
+        mode === 'edit' &&
+        formValues.coverPhoto &&
+        boatData?.coverImages?.[0]?.id
+      ) {
+        const oldCoverId = boatData.coverImages[0].id;
+        if (!imagesToDeleteArray.includes(oldCoverId)) {
+          imagesToDeleteArray.push(oldCoverId);
+        }
+      }
+
+      if (mode === 'edit' && imagesToDeleteArray.length > 0) {
+        boatInfo.imagesToDelete = imagesToDeleteArray;
       }
 
       formData.append('boatInfo', JSON.stringify(boatInfo));
@@ -268,18 +319,50 @@ export default function BoatListingForm({
 
       if (response.success) {
         toast.success(
-          mode === 'create'
-            ? 'Boat listing created successfully!'
-            : 'Boat listing updated successfully!',
+          response.message ||
+            (mode === 'create'
+              ? 'Boat listing created successfully!'
+              : 'Boat listing updated successfully!'),
         );
         router.push('/seller-dashboard/my-listing');
         router.refresh();
       } else {
-        toast.error(response.message || 'Failed to save listing');
+        if (response.errors) {
+          const firstErrorField = Object.keys(response.errors)[0];
+          const firstErrorMessage = Array.isArray(
+            response.errors[firstErrorField],
+          )
+            ? response.errors[firstErrorField][0]
+            : response.errors[firstErrorField];
+          toast.error(`${firstErrorField}: ${firstErrorMessage}`);
+        } else {
+          toast.error(response.message || 'Failed to save listing');
+        }
       }
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('Error submitting form:', error);
-      toast.error('An error occurred while saving the listing');
+
+      const err = error as {
+        response?: {
+          data?: {
+            message?: string;
+            errors?: Record<string, string | string[]>;
+          };
+        };
+      };
+
+      if (err?.response?.data?.message) {
+        toast.error(err.response.data.message);
+      } else if (err?.response?.data?.errors) {
+        const errors = err.response.data.errors;
+        const firstErrorField = Object.keys(errors)[0];
+        const firstErrorMessage = Array.isArray(errors[firstErrorField])
+          ? errors[firstErrorField][0]
+          : errors[firstErrorField];
+        toast.error(`${firstErrorField}: ${firstErrorMessage}`);
+      } else {
+        toast.error('An error occurred while saving the listing');
+      }
     } finally {
       setIsSubmitting(false);
     }
