@@ -13,7 +13,7 @@ const FAQContent = () => {
   useEffect(() => {
     const loadFAQ = async () => {
       try {
-        const data = await getFAQ('JUPITER');
+        const data = await getFAQ('FLORIDA');
         setFaqData(data);
       } catch (error) {
         console.error('Error loading FAQ:', error);
