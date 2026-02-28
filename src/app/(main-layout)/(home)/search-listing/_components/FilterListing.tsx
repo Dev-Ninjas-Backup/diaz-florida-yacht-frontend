@@ -238,7 +238,7 @@ const FilterListing = () => {
           <div className="flex items-center gap-3">
             <input
               type="number"
-              placeholder="2005"
+              placeholder="2000"
               value={filters.buildYearFrom}
               onChange={(e) =>
                 handleInputChange('buildYearFrom', e.target.value)
@@ -248,7 +248,7 @@ const FilterListing = () => {
             <span className="text-gray-500 text-sm font-medium">to</span>
             <input
               type="number"
-              placeholder="2008"
+              placeholder="2026"
               value={filters.buildYearTo}
               onChange={(e) => handleInputChange('buildYearTo', e.target.value)}
               className="w-full px-3 py-2.5 bg-white border border-gray-300 rounded-lg text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent placeholder-gray-400"
@@ -292,7 +292,7 @@ const FilterListing = () => {
           <div className="flex items-center gap-3">
             <input
               type="number"
-              placeholder="20"
+              placeholder="0"
               value={filters.lengthFrom}
               onChange={(e) => handleInputChange('lengthFrom', e.target.value)}
               className="w-full px-3 py-2.5 bg-white border border-gray-300 rounded-lg text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent placeholder-gray-400"
@@ -300,7 +300,7 @@ const FilterListing = () => {
             <span className="text-gray-500 text-sm font-medium">to</span>
             <input
               type="number"
-              placeholder="40"
+              placeholder="500"
               value={filters.lengthTo}
               onChange={(e) => handleInputChange('lengthTo', e.target.value)}
               className="w-full px-3 py-2.5 bg-white border border-gray-300 rounded-lg text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent placeholder-gray-400"
@@ -315,7 +315,7 @@ const FilterListing = () => {
           <div className="flex items-center gap-3">
             <input
               type="number"
-              placeholder="20"
+              placeholder="0"
               value={filters.beamFrom}
               onChange={(e) => handleInputChange('beamFrom', e.target.value)}
               className="w-full px-3 py-2.5 bg-white border border-gray-300 rounded-lg text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent placeholder-gray-400"
@@ -323,7 +323,7 @@ const FilterListing = () => {
             <span className="text-gray-500 text-sm font-medium">to</span>
             <input
               type="number"
-              placeholder="40"
+              placeholder="150"
               value={filters.beamTo}
               onChange={(e) => handleInputChange('beamTo', e.target.value)}
               className="w-full px-3 py-2.5 bg-white border border-gray-300 rounded-lg text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent placeholder-gray-400"

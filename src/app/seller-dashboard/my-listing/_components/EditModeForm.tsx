@@ -6,8 +6,6 @@ import { BoatDetail } from '@/types/boat-detail-types';
 import { FieldLimitations } from '@/types/subscription-types';
 import { X } from 'lucide-react';
 import Image from 'next/image';
-import { useEffect } from 'react';
-import { useFormContext } from 'react-hook-form';
 
 interface EditModeFormProps {
   boatData: BoatDetail;
@@ -22,16 +20,6 @@ export default function EditModeForm({
   onDeleteImage,
   fieldLimitations,
 }: EditModeFormProps) {
-  const { setValue } = useFormContext();
-
-  useEffect(() => {
-    if (boatData.city) {
-      setTimeout(() => {
-        setValue('city', boatData.city, { shouldValidate: true });
-      }, 100);
-    }
-  }, [boatData.city, setValue]);
-
   return (
     <div>
       {boatData.coverImages.length > 0 && (

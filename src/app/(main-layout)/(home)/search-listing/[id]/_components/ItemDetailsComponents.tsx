@@ -7,6 +7,7 @@ import {
 import ItemDescriptions from './ItemDescriptions';
 import ItemDetailsGallery from './ItemsDetailsGallery';
 import ItemSpecifications from './ItemSpecifications';
+import ItemVideos from './ItemVideos';
 import ShowItemsLocation from './ShowItemsLocation';
 
 interface ItemDetailsComponentsProps {
@@ -22,6 +23,7 @@ const ItemDetailsComponents = ({ boatDetails }: ItemDetailsComponentsProps) => {
       <ItemDetailsGallery name={boatDetails.name} images={images} />
       <ItemSpecifications specifications={specifications} />
       <ItemDescriptions description={boatDetails.description} />
+      {boatDetails.videoURL && <ItemVideos videoURL={boatDetails.videoURL} />}
       <ShowItemsLocation
         city={boatDetails.city}
         state={boatDetails.state}
