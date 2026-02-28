@@ -22,7 +22,12 @@ export function CityField() {
     let mounted = true;
     setShowCustomCity(false);
     setCityOptions([]);
-    setValue('city', '');
+
+    // Don't reset city if it already has a value (edit mode)
+    const currentCity = watch('city');
+    if (!currentCity) {
+      setValue('city', '');
+    }
 
     if (!selectedState) return;
 
@@ -31,6 +36,14 @@ export function CityField() {
       if (!mounted) return;
       const opts = list?.map((c) => ({ value: c.name, label: c.name }));
       setCityOptions(opts);
+
+      // Check if current city is in the list
+      if (currentCity) {
+        const found = opts.some((o) => o.value === currentCity);
+        if (!found) {
+          setShowCustomCity(true);
+        }
+      }
     } catch (error) {
       console.error('Failed to load cities:', error);
     }
@@ -38,7 +51,7 @@ export function CityField() {
     return () => {
       mounted = false;
     };
-  }, [selectedState, setValue]);
+  }, [selectedState, setValue, watch]);
 
   useEffect(() => {
     if (!selectedCity) return;
@@ -56,6 +69,7 @@ export function CityField() {
         <Input
           id="city"
           placeholder="Enter city"
+          value={selectedCity || ''}
           onChange={(e) => {
             setValue('city', e.target.value);
             clearErrors('city');

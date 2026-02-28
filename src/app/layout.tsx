@@ -5,6 +5,8 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { Toaster } from 'sonner';
 
+export const dynamic = 'force-dynamic';
+
 const inter = Inter({
   variable: '--font-inter',
   weight: ['200', '300', '400', '500', '600', '700', '800'],

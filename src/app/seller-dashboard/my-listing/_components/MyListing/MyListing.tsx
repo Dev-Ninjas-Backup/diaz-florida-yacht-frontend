@@ -142,6 +142,8 @@ const MyListing = () => {
           </Link>
           <button
             onClick={() => handleDelete(row.id)}
+            title="Delete listing"
+            aria-label="Delete listing"
             className="text-orange-600 hover:text-red-600 focus:outline-none focus:text-red-600 cursor-pointer bg-#FEE3D7] p-1 rounded-full border border-[#EDC2AF]"
           >
             <Trash2 size={18} />
@@ -197,8 +199,26 @@ const MyListing = () => {
       </header>
 
       {loading ? (
-        <div className="bg-white p-8 text-center">
-          <p className="text-gray-500">Loading...</p>
+        <div className="bg-white rounded-b-lg">
+          <div className="divide-y">
+            {[...Array(5)].map((_, i) => (
+              <div key={i} className="p-4 flex items-center gap-4">
+                <div className="w-24 h-12 bg-gray-200 rounded animate-pulse" />
+                <div className="flex-1 space-y-2">
+                  <div className="h-4 bg-gray-200 rounded w-1/4 animate-pulse" />
+                  <div className="h-3 bg-gray-200 rounded w-1/3 animate-pulse" />
+                </div>
+                <div className="h-4 bg-gray-200 rounded w-20 animate-pulse" />
+                <div className="h-4 bg-gray-200 rounded w-24 animate-pulse" />
+                <div className="h-8 bg-gray-200 rounded-full w-20 animate-pulse" />
+                <div className="flex gap-2">
+                  <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse" />
+                  <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse" />
+                  <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse" />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       ) : myListings.length > 0 ? (
         <>
