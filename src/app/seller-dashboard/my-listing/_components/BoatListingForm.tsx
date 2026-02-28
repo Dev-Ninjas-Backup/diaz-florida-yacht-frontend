@@ -70,21 +70,23 @@ export default function BoatListingForm({
             numEngines: String(boatData.enginesNumber),
             numCabins: String(boatData.cabinsNumber),
             numHeads: String(boatData.headsNumber),
-            engines: boatData.engines?.map(engine => ({
+            engines: boatData.engines?.map((engine) => ({
               hours: engine.hours ? String(engine.hours) : '',
               make: engine.make || '',
               model: engine.model || '',
               totalPower: engine.horsepower ? String(engine.horsepower) : '',
               engineFuelType: engine.fuelType || boatData.engineType || '',
               propellerType: engine.propellerType || boatData.propType || '',
-            })) || [{
-              hours: '',
-              make: '',
-              model: '',
-              totalPower: '',
-              engineFuelType: '',
-              propellerType: '',
-            }],
+            })) || [
+              {
+                hours: '',
+                make: '',
+                model: '',
+                totalPower: '',
+                engineFuelType: '',
+                propellerType: '',
+              },
+            ],
             condition: boatData.condition,
             price: String(boatData.price),
             city: boatData.city,
@@ -115,14 +117,16 @@ export default function BoatListingForm({
           numEngines: '',
           numCabins: '',
           numHeads: '',
-          engines: [{
-            hours: '',
-            make: '',
-            model: '',
-            totalPower: '',
-            engineFuelType: '',
-            propellerType: '',
-          }],
+          engines: [
+            {
+              hours: '',
+              make: '',
+              model: '',
+              totalPower: '',
+              engineFuelType: '',
+              propellerType: '',
+            },
+          ],
           condition: '',
           price: '',
           city: '',
@@ -263,20 +267,27 @@ export default function BoatListingForm({
         coversEquipment: [],
         additionalEquipment: [],
         videoURL: formValues.embedUrl || '',
-        engines: formValues.engines?.filter(e => e.make).map(engine => ({
-          make: engine.make,
-          model: engine.model || '',
-          fuelType: engine.engineFuelType || '',
-          horsepower: parseInt(engine.totalPower || '') || 0,
-          hours: parseInt(engine.hours || '') || 0,
-          propellerType: engine.propellerType || '',
-        })) || [],
+        engines:
+          formValues.engines
+            ?.filter((e) => e.make)
+            .map((engine) => ({
+              make: engine.make,
+              model: engine.model || '',
+              fuelType: engine.engineFuelType || '',
+              horsepower: parseInt(engine.totalPower || '') || 0,
+              hours: parseInt(engine.hours || '') || 0,
+              propellerType: engine.propellerType || '',
+            })) || [],
         extraDetails: formValues.moreDetails || [],
       };
 
       // Auto-delete old cover if new cover is uploaded in edit mode
       const imagesToDeleteArray = [...imagesToDelete];
-      if (mode === 'edit' && formValues.coverPhoto && boatData?.coverImages?.[0]?.id) {
+      if (
+        mode === 'edit' &&
+        formValues.coverPhoto &&
+        boatData?.coverImages?.[0]?.id
+      ) {
         const oldCoverId = boatData.coverImages[0].id;
         if (!imagesToDeleteArray.includes(oldCoverId)) {
           imagesToDeleteArray.push(oldCoverId);

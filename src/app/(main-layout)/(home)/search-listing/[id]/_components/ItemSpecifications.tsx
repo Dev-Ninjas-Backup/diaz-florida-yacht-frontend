@@ -26,13 +26,13 @@ const ItemSpecifications = ({
       if (v === null || v === undefined || v === '') return '-';
       if (Array.isArray(v)) return v.join(', ');
       if (typeof v === 'boolean') return v ? 'Yes' : 'No';
-      
+
       // Check if it's a year field - don't add comma
       const fieldName = (spec.name || spec.key || '').toLowerCase();
       if (fieldName.includes('year') || fieldName.includes('built')) {
         return String(v);
       }
-      
+
       if (typeof v === 'number') return v.toLocaleString();
       return String(v);
     }

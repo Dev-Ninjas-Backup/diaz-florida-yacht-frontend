@@ -22,7 +22,7 @@ export const createSubscription = async (data: any): Promise<any> => {
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 5 * 60 * 1000);
-    
+
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/boats/seller/onboarding`,
       {
@@ -31,11 +31,11 @@ export const createSubscription = async (data: any): Promise<any> => {
         signal: controller.signal,
       },
     );
-    
+
     clearTimeout(timeoutId);
-    
+
     const responseData = await res.json();
-    
+
     if (!res.ok) {
       return {
         success: false,
@@ -43,14 +43,15 @@ export const createSubscription = async (data: any): Promise<any> => {
         error: responseData.error || null,
       };
     }
-    
+
     return responseData;
   } catch (error: any) {
     console.error('Subscription creation error:', error);
     if (error instanceof Error && error.name === 'AbortError') {
-      return { 
-        success: false, 
-        error: 'Upload timeout. Please try with smaller images or check your internet connection.' 
+      return {
+        success: false,
+        error:
+          'Upload timeout. Please try with smaller images or check your internet connection.',
       };
     }
     return { success: false, error: error.message };

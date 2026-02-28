@@ -2,10 +2,10 @@ import { FaPlayCircle } from 'react-icons/fa';
 
 const getYouTubeEmbedUrl = (url: string): string | null => {
   if (!url) return null;
-  
+
   // Remove whitespace
   url = url.trim();
-  
+
   // Try different YouTube URL patterns
   const patterns = [
     /(?:youtube\.com\/watch\?v=)([a-zA-Z0-9_-]{11})/, // youtube.com/watch?v=VIDEO_ID
@@ -13,14 +13,14 @@ const getYouTubeEmbedUrl = (url: string): string | null => {
     /(?:youtu\.be\/)([a-zA-Z0-9_-]{11})/, // youtu.be/VIDEO_ID
     /(?:youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/, // youtube.com/embed/VIDEO_ID
   ];
-  
+
   for (const pattern of patterns) {
     const match = url.match(pattern);
     if (match && match[1]) {
       return `https://www.youtube.com/embed/${match[1]}`;
     }
   }
-  
+
   return null;
 };
 

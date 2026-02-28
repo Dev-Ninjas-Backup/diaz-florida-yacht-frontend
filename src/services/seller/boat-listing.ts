@@ -5,10 +5,10 @@ import { getValidToken } from '@/lib/verifyAuth';
 export const createBoatListing = async (formData: FormData) => {
   try {
     const token = await getValidToken();
-    
+
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 5 * 60 * 1000);
-    
+
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/boats/seller/create-listing`,
       {
@@ -22,9 +22,9 @@ export const createBoatListing = async (formData: FormData) => {
     );
 
     clearTimeout(timeoutId);
-    
+
     const data = await res.json();
-    
+
     if (!res.ok) {
       return {
         success: false,
@@ -32,12 +32,16 @@ export const createBoatListing = async (formData: FormData) => {
         errors: data.errors || null,
       };
     }
-    
+
     return data;
   } catch (error: unknown) {
     console.error('Service error:', error);
     if (error instanceof Error && error.name === 'AbortError') {
-      return { success: false, message: 'Upload timeout. Please try with smaller images or check your internet connection.' };
+      return {
+        success: false,
+        message:
+          'Upload timeout. Please try with smaller images or check your internet connection.',
+      };
     }
     const msg = error instanceof Error ? error.message : String(error);
     return { success: false, message: msg };
@@ -47,7 +51,7 @@ export const createBoatListing = async (formData: FormData) => {
 export const updateBoatListing = async (boatId: string, formData: FormData) => {
   try {
     const token = await getValidToken();
-    
+
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 5 * 60 * 1000);
 
@@ -64,9 +68,9 @@ export const updateBoatListing = async (boatId: string, formData: FormData) => {
     );
 
     clearTimeout(timeoutId);
-    
+
     const data = await res.json();
-    
+
     if (!res.ok) {
       return {
         success: false,
@@ -74,12 +78,16 @@ export const updateBoatListing = async (boatId: string, formData: FormData) => {
         errors: data.errors || null,
       };
     }
-    
+
     return data;
   } catch (error: unknown) {
     console.error('Service error:', error);
     if (error instanceof Error && error.name === 'AbortError') {
-      return { success: false, message: 'Upload timeout. Please try with smaller images or check your internet connection.' };
+      return {
+        success: false,
+        message:
+          'Upload timeout. Please try with smaller images or check your internet connection.',
+      };
     }
     const msg = error instanceof Error ? error.message : String(error);
     return { success: false, message: msg };

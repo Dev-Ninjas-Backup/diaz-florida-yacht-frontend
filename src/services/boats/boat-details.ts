@@ -5,7 +5,7 @@ export const getBoatDetails = async (boatId: string): Promise<BoatDetail> => {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_API;
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 seconds
-    
+
     const res = await fetch(`${baseUrl}/boats/${boatId}/details`, {
       method: 'GET',
       signal: controller.signal,
@@ -14,7 +14,7 @@ export const getBoatDetails = async (boatId: string): Promise<BoatDetail> => {
         revalidate: 0,
       },
     });
-    
+
     clearTimeout(timeoutId);
 
     if (!res.ok) {

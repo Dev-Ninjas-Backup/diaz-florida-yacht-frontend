@@ -22,7 +22,7 @@ export function CityField() {
     let mounted = true;
     setShowCustomCity(false);
     setCityOptions([]);
-    
+
     // Don't reset city if it already has a value (edit mode)
     const currentCity = watch('city');
     if (!currentCity) {
@@ -36,7 +36,7 @@ export function CityField() {
       if (!mounted) return;
       const opts = list?.map((c) => ({ value: c.name, label: c.name }));
       setCityOptions(opts);
-      
+
       // Check if current city is in the list
       if (currentCity) {
         const found = opts.some((o) => o.value === currentCity);
