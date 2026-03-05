@@ -18,8 +18,12 @@ export const PaymentSummary = ({
 
       {appliedPromo && (
         <div className="flex justify-between items-center text-green-600">
-          <span className="font-medium">Promo Applied ({appliedPromo.code}):</span>
-          <span className="font-semibold">+{appliedPromo.freeDays} Free Days</span>
+          <span className="font-medium">
+            Promo Applied ({appliedPromo.code}):
+          </span>
+          <span className="font-semibold">
+            +{appliedPromo.freeDays} Free Days
+          </span>
         </div>
       )}
 

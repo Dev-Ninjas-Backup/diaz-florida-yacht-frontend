@@ -157,8 +157,8 @@ const RegisterBoatForm = () => {
   const { watch, getValues, trigger, setValue } = form;
   const selectedPackage = watch('selectedPackage');
   const numEngines = watch('numEngines');
-  const promoCode = watch('promoCode');
-  const promoFreeDays = watch('promoFreeDays');
+  const promoCode = watch('promoCode') as string | undefined;
+  const promoFreeDays = watch('promoFreeDays') as number | undefined;
 
   useEffect(() => {
     const fetchFieldLimitations = async () => {
