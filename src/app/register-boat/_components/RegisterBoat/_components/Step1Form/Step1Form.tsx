@@ -3,7 +3,7 @@ import { SubscriptionPlan } from '@/types/subscription-types';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { IoCheckmarkCircle } from 'react-icons/io5';
-import { FormInput } from '../FormFields/FormInput';
+import { PromoCodeInput } from '../PaymentModal/PromoCodeInput';
 
 interface Step1FormProps {
   subscriptionPlans: SubscriptionPlan[];
@@ -36,12 +36,11 @@ const Step1Form: React.FC<Step1FormProps> = ({
     <div className="space-y-6 mt-10">
       <div className="flex justify-center mb-8">
         <div className="w-full max-w-md">
-          <FormInput
-            name="promoCode"
-            label="Promo Code"
-            placeholder="Enter promo code (optional)"
-            type="text"
-            required={false}
+          <PromoCodeInput
+            onValidCode={(freeDays, code) => {
+              setValue('promoCode', code);
+              setValue('promoFreeDays', freeDays);
+            }}
           />
         </div>
       </div>

@@ -5,6 +5,7 @@ export interface PaymentModalProps {
   selectedPlanDetails?: PlanDetails | null;
   onPaymentSuccess: () => void;
   onSubmitPayment: (data: unknown) => void;
+  appliedPromo?: { code: string; freeDays: number } | null;
 }
 
 export interface PlanDetails {
@@ -23,4 +24,5 @@ export interface StripePaymentFormProps {
   onSuccess: () => void;
   onError: (error: string) => void;
   packageInfo: PackageInfo;
+  appliedPromo?: { code: string; freeDays: number } | null;
 }

@@ -97,6 +97,7 @@ const RegisterBoatForm = () => {
     defaultValues: {
       selectedPackage: '',
       promoCode: '',
+      promoFreeDays: 0,
 
       buildYear: '',
       make: '',
@@ -156,6 +157,8 @@ const RegisterBoatForm = () => {
   const { watch, getValues, trigger, setValue } = form;
   const selectedPackage = watch('selectedPackage');
   const numEngines = watch('numEngines');
+  const promoCode = watch('promoCode');
+  const promoFreeDays = watch('promoFreeDays');
 
   useEffect(() => {
     const fetchFieldLimitations = async () => {
@@ -494,6 +497,11 @@ const RegisterBoatForm = () => {
         }
         onPaymentSuccess={handlePaymentSuccess}
         onSubmitPayment={handlePaymentSubmit}
+        appliedPromo={
+          promoCode && promoFreeDays
+            ? { code: promoCode, freeDays: promoFreeDays }
+            : null
+        }
       />
     </div>
   );
