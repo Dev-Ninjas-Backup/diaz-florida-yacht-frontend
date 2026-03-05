@@ -3,6 +3,7 @@ import { z } from 'zod';
 export const step1Schema = z.object({
   selectedPackage: z.string().min(1, 'Please select a package'),
   promoCode: z.string().optional(),
+  promoFreeDays: z.number().optional(),
 });
 
 export const step2Schema = z.object({

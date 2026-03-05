@@ -24,6 +24,7 @@ export function PaymentModal({
   onClose,
   selectedPlanDetails,
   onPaymentSuccess,
+  appliedPromo,
 }: PaymentModalProps) {
   const packageInfo = getPackageInfo(selectedPlanDetails);
 
@@ -92,6 +93,7 @@ export function PaymentModal({
                 onSuccess={handlePaymentSuccess}
                 onError={handlePaymentError}
                 packageInfo={packageInfo}
+                appliedPromo={appliedPromo}
               />
             </Elements>
           ) : (
