@@ -1,5 +1,3 @@
-'use client';
-
 import { Button } from '@/components/ui/button';
 import {
   PaymentElement,
@@ -15,6 +13,7 @@ export const StripePaymentForm = ({
   onSuccess,
   onError,
   packageInfo,
+  appliedPromo,
 }: StripePaymentFormProps) => {
   const stripe = useStripe();
   const elements = useElements();
@@ -63,7 +62,7 @@ export const StripePaymentForm = ({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <PaymentSummary packageInfo={packageInfo} />
+      <PaymentSummary packageInfo={packageInfo} appliedPromo={appliedPromo} />
 
       <div className="border border-gray-200 rounded-lg p-4 bg-white">
         <PaymentElement

@@ -1,6 +1,7 @@
 export { ErrorDisplay } from './ErrorDisplay';
 export { LoadingState } from './LoadingState';
 export { PaymentModal } from './PaymentModal';
+export { PromoCodeInput } from './PromoCodeInput';
 export { PaymentSummary } from './PaymentSummary';
 export { StripePaymentForm } from './StripePaymentForm';
 export { usePaymentFlow } from './usePaymentFlow';
