@@ -36,7 +36,6 @@ import {
 import { ArrowRight } from 'lucide-react';
 import { toast } from 'sonner';
 import PreviewSection from '../../../Preview/PreviewSection';
-import SellerPreviewSection from '../../../Preview/SellerPreviewSection';
 import { PaymentModal } from '../PaymentModal/PaymentModal';
 
 const RegisterBoatForm = () => {
@@ -273,6 +272,28 @@ const RegisterBoatForm = () => {
     setBackendErrors({});
     let isValid = false;
     if (currentStep === 1) {
+      isValid = await trigger([
+        'firstName',
+        'lastName',
+        'contactNumber',
+        'country',
+        'email',
+        'city',
+        'state',
+        'zip',
+        'username',
+        'password',
+        'confirmPassword',
+      ]);
+      if (!isValid) {
+        const errors = form.formState.errors;
+        const firstError = Object.keys(errors)[0] as keyof typeof errors;
+        const errorMessage = errors[firstError]?.message;
+        toast.error(
+          errorMessage || 'Please fill all required fields correctly',
+        );
+      }
+    } else if (currentStep === 2) {
       isValid = await trigger(['selectedPackage']);
       if (!isValid) {
         const errors = form.formState.errors;
@@ -282,7 +303,7 @@ const RegisterBoatForm = () => {
           );
         }
       }
-    } else if (currentStep === 2) {
+    } else if (currentStep === 3) {
       isValid = await trigger([
         'buildYear',
         'make',
@@ -308,28 +329,6 @@ const RegisterBoatForm = () => {
         'state',
         'zip',
         'description',
-      ]);
-      if (!isValid) {
-        const errors = form.formState.errors;
-        const firstError = Object.keys(errors)[0] as keyof typeof errors;
-        const errorMessage = errors[firstError]?.message;
-        toast.error(
-          errorMessage || 'Please fill all required fields correctly',
-        );
-      }
-    } else if (currentStep === 3) {
-      isValid = await trigger([
-        'firstName',
-        'lastName',
-        'contactNumber',
-        'country',
-        'email',
-        'city',
-        'state',
-        'zip',
-        'username',
-        'password',
-        'confirmPassword',
       ]);
       if (!isValid) {
         const errors = form.formState.errors;
@@ -391,20 +390,20 @@ const RegisterBoatForm = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-6">
             <div
-              className={`${currentStep === 1 ? 'col-span-3' : 'col-span-2'}`}
+              className={`${currentStep === 1 || currentStep === 2 ? 'col-span-3' : 'col-span-2'}`}
             >
               <div>
                 <FormProvider {...form}>
-                  {currentStep === 1 && (
+                  {currentStep === 1 && <Step3Form />}
+                  {currentStep === 2 && (
                     <Step1Form
                       subscriptionPlans={subscriptionPlans}
                       isLoading={isLoadingPlans}
                     />
                   )}
-                  {currentStep === 2 && (
+                  {currentStep === 3 && (
                     <Step2Form fieldLimitations={fieldLimitations} />
                   )}
-                  {currentStep === 3 && <Step3Form />}
                 </FormProvider>
 
                 {Object.keys(backendErrors).length > 0 && (
@@ -445,13 +444,13 @@ const RegisterBoatForm = () => {
 
             <div
               className={`${
-                currentStep === 1 ? 'hidden' : 'block'
+                currentStep === 1 || currentStep === 2 ? 'hidden' : 'block'
               } w-full mx-auto`}
             >
               <div className="p-4 sticky top-60 bg-white rounded-xl mt-8">
                 <h3 className="font-semibold mb-4">Preview</h3>
 
-                {currentStep === 2 && (
+                {currentStep === 3 && (
                   <PreviewSection
                     buildYear={watchedFields[0]}
                     make={watchedFields[1]}
@@ -465,21 +464,6 @@ const RegisterBoatForm = () => {
                     state={watchedFields[9]}
                     coverPhoto={watchedFields[10]}
                     boatPreviewFallback={boatPreview}
-                  />
-                )}
-
-                {currentStep === 3 && (
-                  <SellerPreviewSection
-                    firstName={watchedFields[11]}
-                    lastName={watchedFields[12]}
-                    email={watchedFields[13]}
-                    contactNumber={watchedFields[14]}
-                    buildYear={watchedFields[0]}
-                    make={watchedFields[1]}
-                    model={watchedFields[2]}
-                    price={watchedFields[4]}
-                    city={watchedFields[8]}
-                    state={watchedFields[9]}
                   />
                 )}
               </div>
