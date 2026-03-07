@@ -1,7 +1,7 @@
 export const steps = [
-  { id: 1, label: 'Select Package', key: 'selectPackage' },
-  { id: 2, label: 'Boat Information', key: 'boatInfo' },
-  { id: 3, label: 'Seller Information', key: 'sellerInfo' },
+  { id: 1, label: 'Seller Information', key: 'sellerInfo' },
+  { id: 2, label: 'Select Package', key: 'selectPackage' },
+  { id: 3, label: 'Boat Information', key: 'boatInfo' },
   { id: 4, label: 'Pay & Post', key: 'payPost' },
 ];
 
@@ -46,8 +46,6 @@ export const propellerTypeOptions = [
 export const conditionOptions = [
   { value: 'NEW', label: 'New' },
   { value: 'USED', label: 'Used' },
-  { value: 'REFURBISHED', label: 'Refurbished' },
-  { value: 'DAMAGED', label: 'Damaged' },
 ];
 
 export const buildYearOptions = [
