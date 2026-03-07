@@ -17,12 +17,15 @@ import { deleteBoatListing } from '@/services/seller/boat-listing';
 import { Eye, Plus, Search, SquarePen, Trash2 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { IListing } from '../../data/myListing';
 
 const MyListing = () => {
+  const router = useRouter();
   const [myListings, setMyListings] = useState<IListing[]>([]);
+  const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
   const [metadata, setMetadata] = useState<PaginationMetadata>({
     page: 1,
     limit: 10,
@@ -38,6 +41,26 @@ const MyListing = () => {
     initialPage: 1,
     initialLimit: 10,
   });
+
+  useEffect(() => {
+    const checkSubscription = async () => {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_API}/auth/profile`,
+          {
+            credentials: 'include',
+          },
+        );
+        const data = await res.json();
+        const hasActivePlan = data?.data?.currentPlanStatus === 'ACTIVE';
+        setHasActiveSubscription(hasActivePlan);
+      } catch (error) {
+        console.error('Failed to check subscription:', error);
+        setHasActiveSubscription(false);
+      }
+    };
+    checkSubscription();
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -75,6 +98,14 @@ const MyListing = () => {
     } catch (error) {
       console.error('Failed to delete listing:', error);
       toast.error('Failed to delete listing');
+    }
+  };
+
+  const handlePostNew = () => {
+    if (hasActiveSubscription) {
+      router.push('/seller-dashboard/my-listing/create');
+    } else {
+      router.push('/register-boat');
     }
   };
 
@@ -189,13 +220,13 @@ const MyListing = () => {
             />
           </div>
         </div>
-        <Link
-          href="/seller-dashboard/my-listing/create"
+        <button
+          onClick={handlePostNew}
           className="flex items-center px-6 py-2 sm:px-8 sm:py-3.5 rounded-lg text-white bg-[#006EF0]"
         >
           Post New
           <Plus size={18} />
-        </Link>
+        </button>
       </header>
 
       {loading ? (
