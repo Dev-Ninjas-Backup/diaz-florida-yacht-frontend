@@ -466,8 +466,6 @@ const RegisterBoatForm = () => {
                     boatPreviewFallback={boatPreview}
                   />
                 )}
-
-
               </div>
             </div>
           </div>
