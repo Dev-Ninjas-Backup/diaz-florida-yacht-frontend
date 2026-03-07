@@ -72,7 +72,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       <p className="text-center text-sm text-gray-700 mt-6">
         {LOGIN_LABELS.dontHaveAccount}{' '}
         <a
-          href="#"
+          href="/register-boat"
           className="text-blue-500 hover:text-blue-600 font-semibold transition-colors"
         >
           {LOGIN_LABELS.register}

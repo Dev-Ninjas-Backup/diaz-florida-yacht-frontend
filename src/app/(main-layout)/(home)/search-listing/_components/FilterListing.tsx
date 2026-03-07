@@ -8,7 +8,8 @@ import {
 } from '@/services/boats/filter-boats';
 import { FilterState } from '@/types/filter-types';
 import { convertApiDataToYachtProduct } from '@/types/product-types-demo';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { IoIosArrowDown } from 'react-icons/io';
 import { TbSparkles } from 'react-icons/tb';
 
 const FilterListing = () => {
@@ -41,6 +42,14 @@ const FilterListing = () => {
     additionalUnit: '',
   });
 
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [searchTerms, setSearchTerms] = useState({
+    boatType: '',
+    make: '',
+    model: '',
+  });
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const fetchFilterOptions = async () => {
       try {
@@ -51,6 +60,19 @@ const FilterListing = () => {
       }
     };
     fetchFilterOptions();
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setOpenDropdown(null);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   const engineOptions = ['1', '2', '3', '4', '5', '6'];
@@ -142,7 +164,7 @@ const FilterListing = () => {
   };
 
   return (
-    <div className="bg-gray-50 rounded-lg shadow-sm border border-gray-200 p-4 sm:p-5 lg:p-6 h-full top-4">
+    <div ref={dropdownRef} className="bg-gray-50 rounded-lg shadow-sm border border-gray-200 p-4 sm:p-5 lg:p-6 h-full top-4">
       <div className="flex items-center justify-between mb-6 pb-4 border-b border-gray-200">
         <h2 className="text-lg sm:text-xl font-bold text-gray-900">
           Filter Listing
@@ -156,82 +178,199 @@ const FilterListing = () => {
       </div>
 
       <div className="space-y-5 pb-10">
-        <div>
+        <div className="relative">
           <label className="block text-sm font-semibold text-gray-700 mb-2">
             Boat Class
           </label>
-          <select
-            value={filters.boatType}
-            onChange={(e) => handleInputChange('boatType', e.target.value)}
-            aria-label="Select boat class"
-            className="w-full px-3 py-2.5 bg-white border border-gray-300 rounded-lg text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent appearance-none cursor-pointer"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
-              backgroundRepeat: 'no-repeat',
-              backgroundPosition: 'right 0.5rem center',
-              backgroundSize: '1.5em 1.5em',
-              paddingRight: '2.5rem',
-            }}
-          >
-            <option value="">Select Class</option>
-            {filterOptions.classes?.map((type) => (
-              <option key={type} value={type}>
-                {type}
-              </option>
-            ))}
-          </select>
+          <div className="relative">
+            <input
+              type="text"
+              value={openDropdown === 'boatType' ? searchTerms.boatType : filters.boatType}
+              onChange={(e) => {
+                setSearchTerms({ ...searchTerms, boatType: e.target.value });
+                if (openDropdown !== 'boatType') setOpenDropdown('boatType');
+              }}
+              onFocus={() => {
+                setOpenDropdown('boatType');
+                setSearchTerms({ ...searchTerms, boatType: '' });
+              }}
+              placeholder="Search Class"
+              className="w-full px-3 py-2.5 bg-white border border-gray-300 rounded-lg text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent pr-8"
+            />
+            <button
+              onClick={() => {
+                if (openDropdown === 'boatType') {
+                  setOpenDropdown(null);
+                  setSearchTerms({ ...searchTerms, boatType: '' });
+                } else {
+                  setOpenDropdown('boatType');
+                  setSearchTerms({ ...searchTerms, boatType: '' });
+                }
+              }}
+              className="absolute right-2 top-1/2 -translate-y-1/2"
+            >
+              <IoIosArrowDown className={`text-gray-500 transition-transform ${openDropdown === 'boatType' ? 'rotate-180' : ''}`} />
+            </button>
+          </div>
+          {openDropdown === 'boatType' && (
+            <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+              {filterOptions.classes?.filter((type) =>
+                type.toLowerCase().includes(searchTerms.boatType.toLowerCase())
+              ).length > 0 ? (
+                filterOptions.classes
+                  ?.filter((type) =>
+                    type.toLowerCase().includes(searchTerms.boatType.toLowerCase())
+                  )
+                  .map((type, index) => (
+                    <button
+                      key={`${type}-${index}`}
+                      onClick={() => {
+                        handleInputChange('boatType', type);
+                        setOpenDropdown(null);
+                        setSearchTerms({ ...searchTerms, boatType: '' });
+                      }}
+                      className={`w-full text-left px-3 py-2 text-sm hover:bg-cyan-50 transition-colors ${
+                        filters.boatType === type ? 'bg-cyan-100 text-cyan-700 font-medium' : 'text-gray-700'
+                      }`}
+                    >
+                      {type}
+                    </button>
+                  ))
+              ) : (
+                <div className="px-3 py-2 text-gray-500 text-sm">No results found</div>
+              )}
+            </div>
+          )}
         </div>
 
-        <div>
+        <div className="relative">
           <label className="block text-sm font-semibold text-gray-700 mb-2">
             Make
           </label>
-          <select
-            value={filters.make}
-            onChange={(e) => handleInputChange('make', e.target.value)}
-            aria-label="Select boat make"
-            className="w-full px-3 py-2.5 bg-white border border-gray-300 rounded-lg text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent appearance-none cursor-pointer"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
-              backgroundRepeat: 'no-repeat',
-              backgroundPosition: 'right 0.5rem center',
-              backgroundSize: '1.5em 1.5em',
-              paddingRight: '2.5rem',
-            }}
-          >
-            <option value="">Select Make</option>
-            {filterOptions.makes?.map((make) => (
-              <option key={make} value={make}>
-                {make}
-              </option>
-            ))}
-          </select>
+          <div className="relative">
+            <input
+              type="text"
+              value={openDropdown === 'make' ? searchTerms.make : filters.make}
+              onChange={(e) => {
+                setSearchTerms({ ...searchTerms, make: e.target.value });
+                if (openDropdown !== 'make') setOpenDropdown('make');
+              }}
+              onFocus={() => {
+                setOpenDropdown('make');
+                setSearchTerms({ ...searchTerms, make: '' });
+              }}
+              placeholder="Search Make"
+              className="w-full px-3 py-2.5 bg-white border border-gray-300 rounded-lg text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent pr-8"
+            />
+            <button
+              onClick={() => {
+                if (openDropdown === 'make') {
+                  setOpenDropdown(null);
+                  setSearchTerms({ ...searchTerms, make: '' });
+                } else {
+                  setOpenDropdown('make');
+                  setSearchTerms({ ...searchTerms, make: '' });
+                }
+              }}
+              className="absolute right-2 top-1/2 -translate-y-1/2"
+            >
+              <IoIosArrowDown className={`text-gray-500 transition-transform ${openDropdown === 'make' ? 'rotate-180' : ''}`} />
+            </button>
+          </div>
+          {openDropdown === 'make' && (
+            <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+              {filterOptions.makes?.filter((make) =>
+                make.toLowerCase().includes(searchTerms.make.toLowerCase())
+              ).length > 0 ? (
+                filterOptions.makes
+                  ?.filter((make) =>
+                    make.toLowerCase().includes(searchTerms.make.toLowerCase())
+                  )
+                  .map((make, index) => (
+                    <button
+                      key={`${make}-${index}`}
+                      onClick={() => {
+                        handleInputChange('make', make);
+                        setOpenDropdown(null);
+                        setSearchTerms({ ...searchTerms, make: '' });
+                      }}
+                      className={`w-full text-left px-3 py-2 text-sm hover:bg-cyan-50 transition-colors ${
+                        filters.make === make ? 'bg-cyan-100 text-cyan-700 font-medium' : 'text-gray-700'
+                      }`}
+                    >
+                      {make}
+                    </button>
+                  ))
+              ) : (
+                <div className="px-3 py-2 text-gray-500 text-sm">No results found</div>
+              )}
+            </div>
+          )}
         </div>
 
-        <div>
+        <div className="relative">
           <label className="block text-sm font-semibold text-gray-700 mb-2">
             Model
           </label>
-          <select
-            value={filters.model}
-            onChange={(e) => handleInputChange('model', e.target.value)}
-            aria-label="Select boat model"
-            className="w-full px-3 py-2.5 bg-white border border-gray-300 rounded-lg text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent appearance-none cursor-pointer"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
-              backgroundRepeat: 'no-repeat',
-              backgroundPosition: 'right 0.5rem center',
-              backgroundSize: '1.5em 1.5em',
-              paddingRight: '2.5rem',
-            }}
-          >
-            <option value="">Select Model</option>
-            {filterOptions.models?.map((model) => (
-              <option key={model} value={model}>
-                {model}
-              </option>
-            ))}
-          </select>
+          <div className="relative">
+            <input
+              type="text"
+              value={openDropdown === 'model' ? searchTerms.model : filters.model}
+              onChange={(e) => {
+                setSearchTerms({ ...searchTerms, model: e.target.value });
+                if (openDropdown !== 'model') setOpenDropdown('model');
+              }}
+              onFocus={() => {
+                setOpenDropdown('model');
+                setSearchTerms({ ...searchTerms, model: '' });
+              }}
+              placeholder="Search Model"
+              className="w-full px-3 py-2.5 bg-white border border-gray-300 rounded-lg text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent pr-8"
+            />
+            <button
+              onClick={() => {
+                if (openDropdown === 'model') {
+                  setOpenDropdown(null);
+                  setSearchTerms({ ...searchTerms, model: '' });
+                } else {
+                  setOpenDropdown('model');
+                  setSearchTerms({ ...searchTerms, model: '' });
+                }
+              }}
+              className="absolute right-2 top-1/2 -translate-y-1/2"
+            >
+              <IoIosArrowDown className={`text-gray-500 transition-transform ${openDropdown === 'model' ? 'rotate-180' : ''}`} />
+            </button>
+          </div>
+          {openDropdown === 'model' && (
+            <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+              {filterOptions.models?.filter((model) =>
+                model.toLowerCase().includes(searchTerms.model.toLowerCase())
+              ).length > 0 ? (
+                filterOptions.models
+                  ?.filter((model) =>
+                    model.toLowerCase().includes(searchTerms.model.toLowerCase())
+                  )
+                  .map((model, index) => (
+                    <button
+                      key={`${model}-${index}`}
+                      onClick={() => {
+                        handleInputChange('model', model);
+                        setOpenDropdown(null);
+                        setSearchTerms({ ...searchTerms, model: '' });
+                      }}
+                      className={`w-full text-left px-3 py-2 text-sm hover:bg-cyan-50 transition-colors ${
+                        filters.model === model ? 'bg-cyan-100 text-cyan-700 font-medium' : 'text-gray-700'
+                      }`}
+                    >
+                      {model}
+                    </button>
+                  ))
+              ) : (
+                <div className="px-3 py-2 text-gray-500 text-sm">No results found</div>
+              )}
+            </div>
+          )}
         </div>
 
         <div>
