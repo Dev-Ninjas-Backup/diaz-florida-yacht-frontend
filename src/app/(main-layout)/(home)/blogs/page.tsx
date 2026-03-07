@@ -45,19 +45,21 @@ const BlogPage = () => {
           setBannerData(banner);
         }
 
-        const parsed: BlogCardData[] = blogsData.map((item) => ({
-          id: item.id,
-          title: item.blogTitle,
-          slug: item.sharedLink,
-          readTime: `${item.readTime} min read`,
-          publishDate: item.createdAt,
-          excerpt: item.blogDescription.slice(0, 300),
-          description: item.blogDescription,
-          featuredImage: {
-            url: item.blogImage?.url ?? '',
-            alt: item.blogTitle,
-          },
-        }));
+        const parsed: BlogCardData[] = blogsData
+          .filter((item) => item.postStatus === 'PUBLISHED')
+          .map((item) => ({
+            id: item.id,
+            title: item.blogTitle,
+            slug: item.sharedLink,
+            readTime: `${item.readTime} min read`,
+            publishDate: item.createdAt,
+            excerpt: item.blogDescription.slice(0, 300),
+            description: item.blogDescription,
+            featuredImage: {
+              url: item.blogImage?.url ?? '',
+              alt: item.blogTitle,
+            },
+          }));
 
         setBlogs(parsed);
       } catch (error) {

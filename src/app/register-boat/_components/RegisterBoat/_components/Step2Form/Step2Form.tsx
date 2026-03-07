@@ -198,7 +198,7 @@ const Step2Form = ({ fieldLimitations }: Step2FormProps) => {
         <div className="mt-4">
           <FormInput
             name="name"
-            label="Name"
+            label="Boat Name"
             placeholder="Type here"
             required
           />
