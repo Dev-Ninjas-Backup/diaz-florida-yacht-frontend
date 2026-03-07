@@ -16,6 +16,8 @@ import Step1Form from '../Step1Form/Step1Form';
 import Step2Form from '../Step2Form/Step2Form';
 import Step3Form from '../Step3Form/Step3Form';
 
+import { createSellerInfo, createOnboardingBoat, createSetupIntent } from '@/services/onboarding';
+import { loginService } from '@/services/auth';
 import boatPreview from '@/assets/register-boat/boatPreview.svg';
 import {
   createBoatRegistrationFormData,
@@ -23,7 +25,6 @@ import {
 } from '@/lib/utils/boat-registration-transformer';
 import { steps } from '@/lib/utils/register-boats-select-options';
 import {
-  createSubscription,
   getAllSubscription,
   subscriptionPackageLimitations,
 } from '@/services/main/subscription';
@@ -42,6 +43,7 @@ const RegisterBoatForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
+  const [authToken, setAuthToken] = useState<string | null>(null);
   const [subscriptionPlans, setSubscriptionPlans] = useState<
     SubscriptionPlan[]
   >([]);
@@ -229,34 +231,101 @@ const RegisterBoatForm = () => {
     try {
       setBackendErrors({});
       const allFormData = getValues() as BoatRegistrationFormValues;
-      const formDataToSend = createBoatRegistrationFormData(allFormData);
+      
+      if (!authToken) {
+        toast.error('Authentication required');
+        return;
+      }
+      
+      const formDataToSend = new FormData();
+      formDataToSend.append('planId', allFormData.selectedPackage);
+      
+      const boatInfo = {
+        buildYear: parseInt(allFormData.buildYear),
+        make: allFormData.make,
+        model: allFormData.model,
+        name: allFormData.name,
+        boatDimensions: {
+          lengthFeet: parseInt(allFormData.lengthFeet) || 0,
+          lengthInches: parseInt(allFormData.lengthInches) || 0,
+          beamFeet: parseInt(allFormData.beamFeet) || 0,
+          beamInches: parseInt(allFormData.beamInches) || 0,
+          draftFeet: parseInt(allFormData.draftFeet) || 0,
+          draftInches: parseInt(allFormData.draftInches) || 0,
+        },
+        boatClass: allFormData.class,
+        material: allFormData.material,
+        propMaterial: allFormData.propMaterial,
+        condition: allFormData.condition,
+        cabinsNumber: parseInt(allFormData.numCabins),
+        headsNumber: parseInt(allFormData.numHeads),
+        enginesNumber: parseInt(allFormData.numEngines),
+        engines: allFormData.engines?.map((engine) => ({
+          hours: parseInt(engine.hours) || 0,
+          horsepower: parseInt(engine.totalPower) || 0,
+          make: engine.make,
+          model: engine.model,
+          fuelType: engine.engineFuelType,
+          propellerType: engine.propellerType,
+        })),
+        fuelType: allFormData.fuelType,
+        price: parseFloat(allFormData.price),
+        city: allFormData.city,
+        state: allFormData.state,
+        zip: allFormData.zip,
+        description: allFormData.description,
+        videoURL: allFormData.embedUrl || '',
+        extraDetails: allFormData.moreDetails?.filter(d => d.title && d.description)?.map(d => ({
+          key: d.title,
+          value: d.description,
+        })) || [],
+      };
+      
+      formDataToSend.append('boatInfo', JSON.stringify(boatInfo));
+      
+      if (allFormData.coverPhoto) {
+        formDataToSend.append('covers', allFormData.coverPhoto);
+      }
+      
+      if (allFormData.mediaGallery && allFormData.mediaGallery.length > 0) {
+        allFormData.mediaGallery.forEach((file) => {
+          formDataToSend.append('galleries', file);
+        });
+      }
 
-      const res = await createSubscription(formDataToSend);
+      const res = await createOnboardingBoat(authToken, formDataToSend);
 
       if (res?.success === false) {
-        // Handle error response
         if (res.error) {
           toast.error(res.error);
         } else if (res.message) {
           toast.error(res.message);
         } else {
-          toast.error('Failed to submit registration');
+          toast.error('Failed to submit boat listing');
         }
         return;
       }
 
-      if (res?.data?.paymentIntentClientSecret) {
-        localStorage.setItem(
-          'paymentIntentClientSecret',
-          res.data.paymentIntentClientSecret,
-        );
-        localStorage.setItem('paymentIntentId', res.data.paymentIntentId);
-        localStorage.setItem('userId', res.data.userId);
-        setShowPaymentModal(true);
-        toast.success(
-          res.message || 'Form submitted successfully! Proceed to payment.',
-        );
-        setCompletedSteps([...completedSteps, 3]);
+      if (res?.success) {
+        const boatId = res.data?.listingPreview?.id;
+        
+        const setupRes = await createSetupIntent(authToken, allFormData.selectedPackage);
+        
+        if (setupRes?.success === false) {
+          toast.error(setupRes.message || setupRes.error || 'Failed to create payment intent');
+          return;
+        }
+        
+        if (setupRes?.data?.setupIntentSecret) {
+          localStorage.setItem('paymentIntentClientSecret', setupRes.data.setupIntentSecret);
+          localStorage.setItem('userId', res.data?.userId || '');
+          localStorage.setItem('boatId', boatId || '');
+          setShowPaymentModal(true);
+          toast.success(res.message || 'Boat listing created! Proceed to payment.');
+          setCompletedSteps([...completedSteps, 3]);
+        } else {
+          toast.error('Invalid payment response');
+        }
       } else {
         toast.error('Invalid response from server');
       }
@@ -292,7 +361,48 @@ const RegisterBoatForm = () => {
         toast.error(
           errorMessage || 'Please fill all required fields correctly',
         );
+        return;
       }
+      
+      const formData = getValues();
+      const sellerData = {
+        name: `${formData.firstName} ${formData.lastName}`,
+        phone: formData.contactNumber,
+        country: formData.country,
+        city: formData.city,
+        state: formData.state,
+        zip: formData.zip,
+        email: formData.email,
+        username: formData.username,
+        password: formData.password,
+      };
+      
+      const createRes = await createSellerInfo(sellerData);
+      
+      if (createRes?.success === false) {
+        toast.error(createRes.message || createRes.error || 'Failed to create seller account');
+        return;
+      }
+      
+      if (createRes?.success) {
+        const loginRes = await loginService({
+          email: formData.email,
+          password: formData.password,
+        });
+        
+        if (loginRes?.success === false) {
+          toast.error(loginRes.message || 'Auto-login failed. Please login manually.');
+          return;
+        }
+        
+        if (loginRes?.success && loginRes.data?.token) {
+          setAuthToken(loginRes.data.token);
+          toast.success('Account created and logged in successfully!');
+          setCompletedSteps([...completedSteps, 1]);
+          setCurrentStep(2);
+        }
+      }
+      return;
     } else if (currentStep === 2) {
       isValid = await trigger(['selectedPackage']);
       if (!isValid) {
@@ -302,6 +412,7 @@ const RegisterBoatForm = () => {
             errors.selectedPackage.message || 'Please select a package',
           );
         }
+        return;
       }
     } else if (currentStep === 3) {
       isValid = await trigger([
@@ -337,6 +448,7 @@ const RegisterBoatForm = () => {
         toast.error(
           errorMessage || 'Please fill all required fields correctly',
         );
+        return;
       }
       if (isValid) {
         handleFormSubmit();
