@@ -16,7 +16,11 @@ import Step1Form from '../Step1Form/Step1Form';
 import Step2Form from '../Step2Form/Step2Form';
 import Step3Form from '../Step3Form/Step3Form';
 
-import { createSellerInfo, createOnboardingBoat, createSetupIntent } from '@/services/onboarding';
+import {
+  createSellerInfo,
+  createOnboardingBoat,
+  createSetupIntent,
+} from '@/services/onboarding';
 import { loginService } from '@/services/auth';
 import boatPreview from '@/assets/register-boat/boatPreview.svg';
 import {
@@ -231,15 +235,15 @@ const RegisterBoatForm = () => {
     try {
       setBackendErrors({});
       const allFormData = getValues() as BoatRegistrationFormValues;
-      
+
       if (!authToken) {
         toast.error('Authentication required');
         return;
       }
-      
+
       const formDataToSend = new FormData();
       formDataToSend.append('planId', allFormData.selectedPackage);
-      
+
       const boatInfo = {
         buildYear: parseInt(allFormData.buildYear),
         make: allFormData.make,
@@ -275,18 +279,21 @@ const RegisterBoatForm = () => {
         zip: allFormData.zip,
         description: allFormData.description,
         videoURL: allFormData.embedUrl || '',
-        extraDetails: allFormData.moreDetails?.filter(d => d.title && d.description)?.map(d => ({
-          key: d.title,
-          value: d.description,
-        })) || [],
+        extraDetails:
+          allFormData.moreDetails
+            ?.filter((d) => d.title && d.description)
+            ?.map((d) => ({
+              key: d.title,
+              value: d.description,
+            })) || [],
       };
-      
+
       formDataToSend.append('boatInfo', JSON.stringify(boatInfo));
-      
+
       if (allFormData.coverPhoto) {
         formDataToSend.append('covers', allFormData.coverPhoto);
       }
-      
+
       if (allFormData.mediaGallery && allFormData.mediaGallery.length > 0) {
         allFormData.mediaGallery.forEach((file) => {
           formDataToSend.append('galleries', file);
@@ -308,20 +315,32 @@ const RegisterBoatForm = () => {
 
       if (res?.success) {
         const boatId = res.data?.listingPreview?.id;
-        
-        const setupRes = await createSetupIntent(authToken, allFormData.selectedPackage);
-        
+
+        const setupRes = await createSetupIntent(
+          authToken,
+          allFormData.selectedPackage,
+        );
+
         if (setupRes?.success === false) {
-          toast.error(setupRes.message || setupRes.error || 'Failed to create payment intent');
+          toast.error(
+            setupRes.message ||
+              setupRes.error ||
+              'Failed to create payment intent',
+          );
           return;
         }
-        
+
         if (setupRes?.data?.setupIntentSecret) {
-          localStorage.setItem('paymentIntentClientSecret', setupRes.data.setupIntentSecret);
+          localStorage.setItem(
+            'paymentIntentClientSecret',
+            setupRes.data.setupIntentSecret,
+          );
           localStorage.setItem('userId', res.data?.userId || '');
           localStorage.setItem('boatId', boatId || '');
           setShowPaymentModal(true);
-          toast.success(res.message || 'Boat listing created! Proceed to payment.');
+          toast.success(
+            res.message || 'Boat listing created! Proceed to payment.',
+          );
           setCompletedSteps([...completedSteps, 3]);
         } else {
           toast.error('Invalid payment response');
@@ -363,7 +382,7 @@ const RegisterBoatForm = () => {
         );
         return;
       }
-      
+
       const formData = getValues();
       const sellerData = {
         name: `${formData.firstName} ${formData.lastName}`,
@@ -376,25 +395,31 @@ const RegisterBoatForm = () => {
         username: formData.username,
         password: formData.password,
       };
-      
+
       const createRes = await createSellerInfo(sellerData);
-      
+
       if (createRes?.success === false) {
-        toast.error(createRes.message || createRes.error || 'Failed to create seller account');
+        toast.error(
+          createRes.message ||
+            createRes.error ||
+            'Failed to create seller account',
+        );
         return;
       }
-      
+
       if (createRes?.success) {
         const loginRes = await loginService({
           email: formData.email,
           password: formData.password,
         });
-        
+
         if (loginRes?.success === false) {
-          toast.error(loginRes.message || 'Auto-login failed. Please login manually.');
+          toast.error(
+            loginRes.message || 'Auto-login failed. Please login manually.',
+          );
           return;
         }
-        
+
         if (loginRes?.success && loginRes.data?.token) {
           setAuthToken(loginRes.data.token);
           toast.success('Account created and logged in successfully!');
