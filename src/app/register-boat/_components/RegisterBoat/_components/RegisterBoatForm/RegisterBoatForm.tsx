@@ -48,6 +48,8 @@ const RegisterBoatForm = () => {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
   const [authToken, setAuthToken] = useState<string | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [subscriptionPlans, setSubscriptionPlans] = useState<
     SubscriptionPlan[]
   >([]);
@@ -59,6 +61,40 @@ const RegisterBoatForm = () => {
     picLimit: 0,
     wordLimit: 0,
   });
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const cookies = document.cookie;
+
+      // Check for isAuthenticated cookie (not httpOnly)
+      const isAuth = cookies
+        .split('; ')
+        .find((row) => row.startsWith('isAuthenticated='))
+        ?.split('=')[1];
+
+      // Also try to get accessToken from httpOnly cookie via a different method
+      const token = cookies
+        .split('; ')
+        .find((row) => row.startsWith('accessToken='))
+        ?.split('=')[1];
+
+      console.log('isAuthenticated cookie:', isAuth);
+      console.log('Found token:', token ? 'Yes' : 'No');
+
+      if (isAuth === 'true' || token) {
+        if (token) setAuthToken(token);
+        setIsLoggedIn(true);
+        setCurrentStep(2);
+        setCompletedSteps([1]);
+        console.log('User is logged in, starting at step 2');
+      } else {
+        console.log('User is not logged in, starting at step 1');
+      }
+      setIsCheckingAuth(false);
+    };
+
+    checkAuth();
+  }, []);
 
   useEffect(() => {
     const fetchPlans = async () => {
@@ -506,6 +542,20 @@ const RegisterBoatForm = () => {
     setCompletedSteps([...completedSteps, 3]);
   };
 
+  if (isCheckingAuth) {
+    return (
+      <div>
+        <CustomContainer>
+          <div className="rounded-lg bg-[#F4F4F4] p-3 sm:p-5 md:p-8">
+            <div className="flex justify-center items-center py-20">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            </div>
+          </div>
+        </CustomContainer>
+      </div>
+    );
+  }
+
   return (
     <div>
       <CustomContainer>
@@ -514,13 +564,19 @@ const RegisterBoatForm = () => {
             <h1 className="text-lg sm:text-3xl font-semibold">
               Listing Progress
             </h1>
-            <span className="font-medium">Step {currentStep}</span>
+            <span className="font-medium">
+              Step {isLoggedIn ? currentStep - 1 : currentStep}
+            </span>
           </div>
 
           <div className="mt-6">
             <ProgressSteps
-              currentStep={currentStep}
-              steps={steps?.map((s) => s.label)}
+              currentStep={isLoggedIn ? currentStep - 1 : currentStep}
+              steps={
+                isLoggedIn
+                  ? steps?.slice(1)?.map((s) => s.label)
+                  : steps?.map((s) => s.label)
+              }
               className="mb-6"
             />
           </div>
@@ -531,7 +587,7 @@ const RegisterBoatForm = () => {
             >
               <div>
                 <FormProvider {...form}>
-                  {currentStep === 1 && <Step3Form />}
+                  {currentStep === 1 && !isLoggedIn && <Step3Form />}
                   {currentStep === 2 && (
                     <Step1Form
                       subscriptionPlans={subscriptionPlans}
@@ -614,7 +670,7 @@ const RegisterBoatForm = () => {
         onClose={() => setShowPaymentModal(false)}
         selectedPackage={selectedPackage}
         selectedPlanDetails={
-          subscriptionPlans.find((plan) => plan.id === selectedPackage) || null
+          subscriptionPlans?.find((plan) => plan.id === selectedPackage) || null
         }
         onPaymentSuccess={handlePaymentSuccess}
         onSubmitPayment={handlePaymentSubmit}

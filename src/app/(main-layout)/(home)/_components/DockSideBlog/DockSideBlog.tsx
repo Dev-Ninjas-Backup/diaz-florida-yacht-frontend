@@ -29,19 +29,21 @@ const DockSideBlog = () => {
       try {
         const data = await getBlogs();
 
-        const parsed: BlogUI[] = data.map((item) => ({
-          id: item.id,
-          title: item.blogTitle,
-          readTime: `${item.readTime} min read`,
-          publishDate: item.createdAt,
-          description: item.blogDescription
-            .replace(/<[^>]+>/g, '')
-            .slice(0, 140),
-          featuredImage: {
-            url: item.blogImage?.url ?? '',
-            alt: item.blogTitle,
-          },
-        }));
+        const parsed: BlogUI[] = data
+          .filter((item) => item.postStatus === 'PUBLISHED')
+          .map((item) => ({
+            id: item.id,
+            title: item.blogTitle,
+            readTime: `${item.readTime} min read`,
+            publishDate: item.createdAt,
+            description: item.blogDescription
+              .replace(/<[^>]+>/g, '')
+              .slice(0, 140),
+            featuredImage: {
+              url: item.blogImage?.url ?? '',
+              alt: item.blogTitle,
+            },
+          }));
 
         setBlogs(parsed);
       } catch (error) {
