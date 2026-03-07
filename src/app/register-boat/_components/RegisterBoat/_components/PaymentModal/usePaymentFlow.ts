@@ -38,6 +38,7 @@ export const usePaymentFlow = (
   const handlePaymentSuccess = async () => {
     try {
       const userId = getUserIdFromStorage();
+      const boatId = localStorage.getItem('boatId');
 
       if (!userId) {
         console.error('❌ User ID not found in localStorage');
@@ -53,7 +54,11 @@ export const usePaymentFlow = (
 
       onPaymentSuccess();
 
-      router.push('/login');
+      if (boatId) {
+        router.push(`/search-listing/${boatId}`);
+      } else {
+        router.push('/seller-dashboard');
+      }
 
       onClose();
     } catch (error) {
