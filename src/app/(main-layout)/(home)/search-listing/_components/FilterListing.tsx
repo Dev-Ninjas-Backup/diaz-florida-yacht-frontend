@@ -164,7 +164,10 @@ const FilterListing = () => {
   };
 
   return (
-    <div ref={dropdownRef} className="bg-gray-50 rounded-lg shadow-sm border border-gray-200 p-4 sm:p-5 lg:p-6 h-full top-4">
+    <div
+      ref={dropdownRef}
+      className="bg-gray-50 rounded-lg shadow-sm border border-gray-200 p-4 sm:p-5 lg:p-6 h-full top-4"
+    >
       <div className="flex items-center justify-between mb-6 pb-4 border-b border-gray-200">
         <h2 className="text-lg sm:text-xl font-bold text-gray-900">
           Filter Listing
@@ -185,7 +188,11 @@ const FilterListing = () => {
           <div className="relative">
             <input
               type="text"
-              value={openDropdown === 'boatType' ? searchTerms.boatType : filters.boatType}
+              value={
+                openDropdown === 'boatType'
+                  ? searchTerms.boatType
+                  : filters.boatType
+              }
               onChange={(e) => {
                 setSearchTerms({ ...searchTerms, boatType: e.target.value });
                 if (openDropdown !== 'boatType') setOpenDropdown('boatType');
@@ -209,17 +216,21 @@ const FilterListing = () => {
               }}
               className="absolute right-2 top-1/2 -translate-y-1/2"
             >
-              <IoIosArrowDown className={`text-gray-500 transition-transform ${openDropdown === 'boatType' ? 'rotate-180' : ''}`} />
+              <IoIosArrowDown
+                className={`text-gray-500 transition-transform ${openDropdown === 'boatType' ? 'rotate-180' : ''}`}
+              />
             </button>
           </div>
           {openDropdown === 'boatType' && (
             <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto">
               {filterOptions.classes?.filter((type) =>
-                type.toLowerCase().includes(searchTerms.boatType.toLowerCase())
+                type.toLowerCase().includes(searchTerms.boatType.toLowerCase()),
               ).length > 0 ? (
                 filterOptions.classes
                   ?.filter((type) =>
-                    type.toLowerCase().includes(searchTerms.boatType.toLowerCase())
+                    type
+                      .toLowerCase()
+                      .includes(searchTerms.boatType.toLowerCase()),
                   )
                   .map((type, index) => (
                     <button
@@ -230,14 +241,18 @@ const FilterListing = () => {
                         setSearchTerms({ ...searchTerms, boatType: '' });
                       }}
                       className={`w-full text-left px-3 py-2 text-sm hover:bg-cyan-50 transition-colors ${
-                        filters.boatType === type ? 'bg-cyan-100 text-cyan-700 font-medium' : 'text-gray-700'
+                        filters.boatType === type
+                          ? 'bg-cyan-100 text-cyan-700 font-medium'
+                          : 'text-gray-700'
                       }`}
                     >
                       {type}
                     </button>
                   ))
               ) : (
-                <div className="px-3 py-2 text-gray-500 text-sm">No results found</div>
+                <div className="px-3 py-2 text-gray-500 text-sm">
+                  No results found
+                </div>
               )}
             </div>
           )}
@@ -274,17 +289,19 @@ const FilterListing = () => {
               }}
               className="absolute right-2 top-1/2 -translate-y-1/2"
             >
-              <IoIosArrowDown className={`text-gray-500 transition-transform ${openDropdown === 'make' ? 'rotate-180' : ''}`} />
+              <IoIosArrowDown
+                className={`text-gray-500 transition-transform ${openDropdown === 'make' ? 'rotate-180' : ''}`}
+              />
             </button>
           </div>
           {openDropdown === 'make' && (
             <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto">
               {filterOptions.makes?.filter((make) =>
-                make.toLowerCase().includes(searchTerms.make.toLowerCase())
+                make.toLowerCase().includes(searchTerms.make.toLowerCase()),
               ).length > 0 ? (
                 filterOptions.makes
                   ?.filter((make) =>
-                    make.toLowerCase().includes(searchTerms.make.toLowerCase())
+                    make.toLowerCase().includes(searchTerms.make.toLowerCase()),
                   )
                   .map((make, index) => (
                     <button
@@ -295,14 +312,18 @@ const FilterListing = () => {
                         setSearchTerms({ ...searchTerms, make: '' });
                       }}
                       className={`w-full text-left px-3 py-2 text-sm hover:bg-cyan-50 transition-colors ${
-                        filters.make === make ? 'bg-cyan-100 text-cyan-700 font-medium' : 'text-gray-700'
+                        filters.make === make
+                          ? 'bg-cyan-100 text-cyan-700 font-medium'
+                          : 'text-gray-700'
                       }`}
                     >
                       {make}
                     </button>
                   ))
               ) : (
-                <div className="px-3 py-2 text-gray-500 text-sm">No results found</div>
+                <div className="px-3 py-2 text-gray-500 text-sm">
+                  No results found
+                </div>
               )}
             </div>
           )}
@@ -315,7 +336,9 @@ const FilterListing = () => {
           <div className="relative">
             <input
               type="text"
-              value={openDropdown === 'model' ? searchTerms.model : filters.model}
+              value={
+                openDropdown === 'model' ? searchTerms.model : filters.model
+              }
               onChange={(e) => {
                 setSearchTerms({ ...searchTerms, model: e.target.value });
                 if (openDropdown !== 'model') setOpenDropdown('model');
@@ -339,17 +362,21 @@ const FilterListing = () => {
               }}
               className="absolute right-2 top-1/2 -translate-y-1/2"
             >
-              <IoIosArrowDown className={`text-gray-500 transition-transform ${openDropdown === 'model' ? 'rotate-180' : ''}`} />
+              <IoIosArrowDown
+                className={`text-gray-500 transition-transform ${openDropdown === 'model' ? 'rotate-180' : ''}`}
+              />
             </button>
           </div>
           {openDropdown === 'model' && (
             <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto">
               {filterOptions.models?.filter((model) =>
-                model.toLowerCase().includes(searchTerms.model.toLowerCase())
+                model.toLowerCase().includes(searchTerms.model.toLowerCase()),
               ).length > 0 ? (
                 filterOptions.models
                   ?.filter((model) =>
-                    model.toLowerCase().includes(searchTerms.model.toLowerCase())
+                    model
+                      .toLowerCase()
+                      .includes(searchTerms.model.toLowerCase()),
                   )
                   .map((model, index) => (
                     <button
@@ -360,14 +387,18 @@ const FilterListing = () => {
                         setSearchTerms({ ...searchTerms, model: '' });
                       }}
                       className={`w-full text-left px-3 py-2 text-sm hover:bg-cyan-50 transition-colors ${
-                        filters.model === model ? 'bg-cyan-100 text-cyan-700 font-medium' : 'text-gray-700'
+                        filters.model === model
+                          ? 'bg-cyan-100 text-cyan-700 font-medium'
+                          : 'text-gray-700'
                       }`}
                     >
                       {model}
                     </button>
                   ))
               ) : (
-                <div className="px-3 py-2 text-gray-500 text-sm">No results found</div>
+                <div className="px-3 py-2 text-gray-500 text-sm">
+                  No results found
+                </div>
               )}
             </div>
           )}

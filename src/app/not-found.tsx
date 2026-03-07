@@ -14,25 +14,25 @@ export default function NotFound() {
             className="object-contain opacity-50"
           />
         </div>
-        
+
         <div className="bg-white rounded-2xl shadow-xl p-8">
           <div className="text-8xl font-bold text-blue-600 mb-4">404</div>
-          
+
           <h1 className="text-2xl font-bold text-gray-900 mb-2">
             Page Not Found
           </h1>
-          
+
           <p className="text-gray-600 mb-6">
             The page you're looking for doesn't exist or has been moved.
           </p>
-          
+
           <Link
             href="/"
             className="inline-block w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors shadow-md"
           >
             Back to Homepage
           </Link>
-          
+
           <Link
             href="/boats"
             className="inline-block w-full mt-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-3 px-6 rounded-lg transition-colors"

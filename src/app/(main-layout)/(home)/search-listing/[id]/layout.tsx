@@ -18,13 +18,17 @@ export async function generateMetadata({
       const boat = json.data;
 
       if (boat) {
-        const title = `${boat.buildYear || ''} ${boat.make || ''} ${boat.model || ''}`.trim() || boat.name || 'Boat Details';
-        
+        const title =
+          `${boat.buildYear || ''} ${boat.make || ''} ${boat.model || ''}`.trim() ||
+          boat.name ||
+          'Boat Details';
+
         const description = boat.description
           ? boat.description.slice(0, 160)
           : `${title} - View details, specifications, and pricing`;
 
-        const image = boat.coverImages?.[0]?.url || boat.galleryImages?.[0]?.url || '';
+        const image =
+          boat.coverImages?.[0]?.url || boat.galleryImages?.[0]?.url || '';
 
         return {
           title: `${title} | Florida Yacht Trader`,
