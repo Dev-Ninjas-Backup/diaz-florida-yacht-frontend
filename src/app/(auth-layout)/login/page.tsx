@@ -23,12 +23,12 @@ const LoginPage: React.FC = () => {
     const checkAuth = () => {
       try {
         const cookies = document.cookie.split('; ');
-        const userCookie = cookies.find(row => row.startsWith('user='));
-        
+        const userCookie = cookies.find((row) => row.startsWith('user='));
+
         if (userCookie) {
           const userDataString = decodeURIComponent(userCookie.split('=')[1]);
           const userData = JSON.parse(userDataString);
-          
+
           // If user is logged in, redirect based on role
           if (userData?.role === 'SELLER') {
             router.replace('/seller-dashboard/my-listing');

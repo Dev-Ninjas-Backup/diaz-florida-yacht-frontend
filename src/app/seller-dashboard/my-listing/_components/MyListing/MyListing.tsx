@@ -47,14 +47,14 @@ const MyListing = () => {
       try {
         // Get user data from cookies
         const cookies = document.cookie.split('; ');
-        const userCookie = cookies.find(row => row.startsWith('user='));
-        
+        const userCookie = cookies.find((row) => row.startsWith('user='));
+
         if (userCookie) {
           const userDataString = decodeURIComponent(userCookie.split('=')[1]);
           const userData = JSON.parse(userDataString);
           console.log('User data from cookie:', userData);
           console.log('Current Plan Status:', userData?.currentPlanStatus);
-          
+
           const hasActivePlan = userData?.currentPlanStatus === 'ACTIVE';
           console.log('Has Active Plan:', hasActivePlan);
           setHasActiveSubscription(hasActivePlan);
@@ -110,7 +110,10 @@ const MyListing = () => {
   };
 
   const handlePostNew = () => {
-    console.log('Post New clicked. hasActiveSubscription:', hasActiveSubscription);
+    console.log(
+      'Post New clicked. hasActiveSubscription:',
+      hasActiveSubscription,
+    );
     if (hasActiveSubscription) {
       console.log('Redirecting to: /seller-dashboard/my-listing/create');
       router.push('/seller-dashboard/my-listing/create');
