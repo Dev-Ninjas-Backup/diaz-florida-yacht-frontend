@@ -11,20 +11,13 @@ import {
 } from '@/components/ui/select';
 import { PaginationMetadata, usePagination } from '@/hooks/usePagination';
 import { getSellerInvoices } from '@/services/seller';
-import {
-  ArrowDownToLine,
-  ChevronDown,
-  Eye,
-  Printer,
-  Search,
-} from 'lucide-react';
+import { ChevronDown, Eye, Search } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import { useReactToPrint } from 'react-to-print';
 import {
   exportInvoicesToCSV,
   exportInvoicesToExcel,
 } from '../../_utils/exportInvoices';
-import { generateInvoicePDF } from '../../_utils/generateInvoicePDF';
+// import { generateInvoicePDF } from '../../_utils/generateInvoicePDF';
 import { InvoiceRecord } from '../../data/invoiceData';
 import InvoiceDetailModal from '../InvoiceDetailModal';
 import InvoiceTemplate from '../InvoiceTemplate';
@@ -56,27 +49,27 @@ const InvoiceTable = () => {
     setShowExportMenu(false);
   };
 
-  const handlePrint = useReactToPrint({
-    contentRef: invoiceRef,
-  });
+  // const handlePrint = useReactToPrint({
+  //   contentRef: invoiceRef,
+  // });
 
-  const handleDownloadPDF = async (invoice: InvoiceRecord) => {
-    try {
-      generateInvoicePDF(invoice);
-    } catch (error) {
-      console.error('PDF generation error:', error);
-      alert(`Failed to generate PDF: ${error}`);
-    }
-  };
+  // const handleDownloadPDF = async (invoice: InvoiceRecord) => {
+  //   try {
+  //     generateInvoicePDF(invoice);
+  //   } catch (error) {
+  //     console.error('PDF generation error:', error);
+  //     alert(`Failed to generate PDF: ${error}`);
+  //   }
+  // };
 
-  const handlePrintInvoice = (invoice: InvoiceRecord) => {
-    setSelectedInvoice(invoice);
-    setTimeout(() => {
-      if (invoiceRef.current) {
-        handlePrint();
-      }
-    }, 500);
-  };
+  // const handlePrintInvoice = (invoice: InvoiceRecord) => {
+  //   setSelectedInvoice(invoice);
+  //   setTimeout(() => {
+  //     if (invoiceRef.current) {
+  //       handlePrint();
+  //     }
+  //   }, 500);
+  // };
 
   const { page, limit, setPage } = usePagination({
     initialPage: 1,
@@ -170,7 +163,7 @@ const InvoiceTable = () => {
           >
             <Eye size={16} />
           </button>
-          <button
+          {/* <button
             onClick={() => handleDownloadPDF(row)}
             className="text-[#0064AE] hover:text-primary focus:outline-none focus:text-primary cursor-pointer bg-[#E6F0F7] p-1 rounded-full border border-[#B0CFE6]"
             aria-label="Download invoice"
@@ -183,7 +176,7 @@ const InvoiceTable = () => {
             aria-label="Print invoice"
           >
             <Printer size={16} />
-          </button>
+          </button> */}
         </div>
       ),
     },
