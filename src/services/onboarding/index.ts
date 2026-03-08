@@ -41,20 +41,24 @@ export const createSellerInfo = async (data: {
 };
 
 export const createOnboardingBoat = async (
-  token: string,
   data: FormData,
+  token?: string,
 ): Promise<any> => {
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 5 * 60 * 1000);
 
+    const headers: HeadersInit = {};
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/boats/seller/onboarding/boat`,
       {
         method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        credentials: 'include',
+        headers,
         body: data,
         signal: controller.signal,
       },
@@ -87,18 +91,23 @@ export const createOnboardingBoat = async (
 };
 
 export const createSetupIntent = async (
-  token: string,
   planId: string,
+  token?: string,
 ): Promise<any> => {
   try {
+    const headers: HeadersInit = {
+      'Content-Type': 'application/json',
+    };
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/payment/seller/setup-intent/${planId}`,
       {
         method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
+        credentials: 'include',
+        headers,
       },
     );
 
