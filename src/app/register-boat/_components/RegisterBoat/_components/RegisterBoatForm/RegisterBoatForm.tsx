@@ -336,7 +336,10 @@ const RegisterBoatForm = () => {
         });
       }
 
-      const res = await createOnboardingBoat(formDataToSend, authToken || undefined);
+      const res = await createOnboardingBoat(
+        formDataToSend,
+        authToken || undefined,
+      );
 
       if (res?.success === false) {
         if (res.error) {
