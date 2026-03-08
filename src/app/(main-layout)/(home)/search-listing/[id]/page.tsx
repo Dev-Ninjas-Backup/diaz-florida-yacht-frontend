@@ -75,12 +75,14 @@ const SearchListingDetailsPage = () => {
         </div>
       </GradientBannerCustom>
       <CustomContainer>
-        <div className="flex flex-col md:flex-row items-start gap-10 py-5">
-          <div className="md:w-2/3">
+        <div className="flex flex-col md:flex-row gap-10 py-5">
+          <div className="md:w-2/3 flex-shrink-0">
             <ItemDetailsComponents boatDetails={boatDetails} />
           </div>
-          <div className="md:w-1/3">
-            <SendMessage listingId={id} />
+          <div className="md:w-1/3 flex-shrink-0">
+            <div className="sticky top-20">
+              <SendMessage listingId={id} />
+            </div>
           </div>
         </div>
       </CustomContainer>

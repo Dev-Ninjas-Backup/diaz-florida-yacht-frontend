@@ -78,11 +78,16 @@ const RegisterBoatForm = () => {
         .find((row) => row.startsWith('accessToken='))
         ?.split('=')[1];
 
+      // Check localStorage for token as fallback
+      const storedToken = localStorage.getItem('authToken');
+
       console.log('isAuthenticated cookie:', isAuth);
       console.log('Found token:', token ? 'Yes' : 'No');
+      console.log('Stored token:', storedToken ? 'Yes' : 'No');
 
-      if (isAuth === 'true' || token) {
+      if (isAuth === 'true' || token || storedToken) {
         if (token) setAuthToken(token);
+        else if (storedToken) setAuthToken(storedToken);
         setIsLoggedIn(true);
         setCurrentStep(2);
         setCompletedSteps([1]);
@@ -272,11 +277,6 @@ const RegisterBoatForm = () => {
       setBackendErrors({});
       const allFormData = getValues() as BoatRegistrationFormValues;
 
-      if (!authToken) {
-        toast.error('Authentication required');
-        return;
-      }
-
       const formDataToSend = new FormData();
       formDataToSend.append('planId', allFormData.selectedPackage);
 
@@ -336,7 +336,7 @@ const RegisterBoatForm = () => {
         });
       }
 
-      const res = await createOnboardingBoat(authToken, formDataToSend);
+      const res = await createOnboardingBoat(formDataToSend, authToken || undefined);
 
       if (res?.success === false) {
         if (res.error) {
@@ -353,8 +353,8 @@ const RegisterBoatForm = () => {
         const boatId = res.data?.listingPreview?.id;
 
         const setupRes = await createSetupIntent(
-          authToken,
           allFormData.selectedPackage,
+          authToken || undefined,
         );
 
         if (setupRes?.success === false) {
@@ -458,6 +458,8 @@ const RegisterBoatForm = () => {
 
         if (loginRes?.success && loginRes.data?.token) {
           setAuthToken(loginRes.data.token);
+          // Store token in localStorage as fallback
+          localStorage.setItem('authToken', loginRes.data.token);
           toast.success('Account created and logged in successfully!');
           setCompletedSteps([...completedSteps, 1]);
           setCurrentStep(2);
