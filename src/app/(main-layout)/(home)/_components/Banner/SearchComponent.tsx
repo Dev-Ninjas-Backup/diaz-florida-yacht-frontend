@@ -18,17 +18,17 @@ import { IoSearch } from 'react-icons/io5';
 import { TbSparkles } from 'react-icons/tb';
 
 const INITIAL_VALUES = {
-  year: '2008',
-  make: 'Viking (CCV)',
-  model: '80 Enclosed',
-  length: '60',
-  maxPrice: '$22,000',
-  boatType: 'Flybridge',
-  location: 'Florida',
+  year: '',
+  make: '',
+  model: '',
+  length: '',
+  maxPrice: '',
+  boatType: '',
+  location: '',
   buildYearFrom: '',
   buildYearTo: '',
-  priceMin: 12000,
-  priceMax: 2250000,
+  priceMin: 0,
+  priceMax: 100000000,
   lengthFrom: '',
   lengthTo: '',
   beamFrom: '',
@@ -112,9 +112,9 @@ const SearchComponent = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const toggleDropdown = (name: string) => {
-    setOpenDropdown(openDropdown === name ? null : name);
-  };
+  // const toggleDropdown = (name: string) => {
+  //   setOpenDropdown(openDropdown === name ? null : name);
+  // };
 
   const askAiQuery = async () => {
     if (!aiPrompt.trim()) return;
@@ -266,56 +266,86 @@ const SearchComponent = () => {
     onChange: (val: string) => void;
     name: string;
     isLast?: boolean;
-  }) => (
-    <div
-      className={`${!isLast ? ' border-gray-200' : ''} p-2 xl:p-3 2xl:p-4 hover:bg-gray-50 transition-colors relative`}
-    >
-      <label className="block text-sm font-semibold text-gray-700 mb-2">
-        {label}
-      </label>
-      <div className="relative">
-        <input
-          type="text"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          onFocus={() => setOpenDropdown(name)}
-          className="w-full text-sm md:text-base text-gray-900 font-normal focus:outline-none bg-transparent pr-6"
-          placeholder={`Enter ${label}`}
-        />
-        <button
-          onClick={() => toggleDropdown(name)}
-          className="absolute right-0 top-1/2 -translate-y-1/2"
-          title={`Toggle ${label} dropdown`}
-          aria-label={`Toggle ${label} dropdown`}
-        >
-          <IoIosArrowDown
-            className={`text-gray-500 transition-transform ${openDropdown === name ? 'rotate-180' : ''}`}
-          />
-        </button>
-      </div>
+  }) => {
+    const [searchTerm, setSearchTerm] = useState('');
+    const filteredOptions = options.filter((option) =>
+      option.toString().toLowerCase().includes(searchTerm.toLowerCase()),
+    );
 
-      {openDropdown === name && (
-        <div className="absolute text-sm md:text-base bottom-full left-0 mt-1 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-100 max-h-60 overflow-y-auto">
-          {options?.map((option) => (
-            <button
-              key={option}
-              onClick={() => {
-                onChange(option.toString());
+    return (
+      <div
+        className={`${!isLast ? ' border-gray-200' : ''} p-2 xl:p-3 2xl:p-4 hover:bg-gray-50 transition-colors relative`}
+      >
+        <label className="block text-sm font-semibold text-gray-700 mb-2">
+          {label}
+        </label>
+        <div className="relative">
+          <input
+            type="text"
+            value={openDropdown === name ? searchTerm : value}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+              if (openDropdown !== name) {
+                setOpenDropdown(name);
+              }
+            }}
+            onFocus={() => {
+              setOpenDropdown(name);
+              setSearchTerm('');
+            }}
+            className="w-full text-sm md:text-base text-gray-900 font-normal focus:outline-none bg-transparent pr-6"
+            placeholder={`Search ${label}`}
+          />
+          <button
+            onClick={() => {
+              if (openDropdown === name) {
                 setOpenDropdown(null);
-              }}
-              className={`w-full text-left text-sm md:text-base px-2 py-1 md:px-4 md:py-2 hover:bg-blue-50 transition-colors ${
-                value === option.toString()
-                  ? 'bg-blue-100 text-blue-700 font-medium '
-                  : 'text-gray-700'
-              }`}
-            >
-              {option}
-            </button>
-          ))}
+                setSearchTerm('');
+              } else {
+                setOpenDropdown(name);
+                setSearchTerm('');
+              }
+            }}
+            className="absolute right-0 top-1/2 -translate-y-1/2"
+            title={`Toggle ${label} dropdown`}
+            aria-label={`Toggle ${label} dropdown`}
+          >
+            <IoIosArrowDown
+              className={`text-gray-500 transition-transform ${openDropdown === name ? 'rotate-180' : ''}`}
+            />
+          </button>
         </div>
-      )}
-    </div>
-  );
+
+        {openDropdown === name && (
+          <div className="absolute text-sm md:text-base bottom-full left-0 mt-1 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-100 max-h-60 overflow-y-auto">
+            {filteredOptions.length > 0 ? (
+              filteredOptions.map((option, index) => (
+                <button
+                  key={`${option}-${index}`}
+                  onClick={() => {
+                    onChange(option.toString());
+                    setOpenDropdown(null);
+                    setSearchTerm('');
+                  }}
+                  className={`w-full text-left text-sm md:text-base px-2 py-1 md:px-4 md:py-2 hover:bg-blue-50 transition-colors ${
+                    value === option.toString()
+                      ? 'bg-blue-100 text-blue-700 font-medium '
+                      : 'text-gray-700'
+                  }`}
+                >
+                  {option}
+                </button>
+              ))
+            ) : (
+              <div className="px-4 py-2 text-gray-500 text-sm">
+                No results found
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    );
+  };
 
   return (
     <div className="w-full mx-auto" ref={dropdownRef}>
@@ -363,7 +393,7 @@ const SearchComponent = () => {
               value={length}
               onChange={(e) => setLength(e.target.value)}
               className="w-full text-sm md:text-base text-gray-900 font-normal focus:outline-none bg-transparent"
-              placeholder="60"
+              placeholder="Enter length"
             />
           </div>
 
@@ -376,7 +406,7 @@ const SearchComponent = () => {
               value={maxPrice}
               onChange={(e) => setMaxPrice(e.target.value)}
               className="w-full text-sm md:text-base text-gray-900 font-normal focus:outline-none bg-transparent placeholder:text-sm md:placeholder:text-base"
-              placeholder="$22,000"
+              placeholder="Enter max price"
             />
           </div>
 
