@@ -58,7 +58,7 @@ export const PromoCodeInput = ({ onValidCode }: PromoCodeInputProps) => {
   };
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 bg-white p-6 rounded-2xl">
       <Label htmlFor="promoCode">Promo Code (Optional)</Label>
       <div className="relative">
         <Input

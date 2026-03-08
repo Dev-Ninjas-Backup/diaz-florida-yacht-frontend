@@ -3,9 +3,11 @@
 import { LoginForm } from '@/components/Login/LoginForm';
 import { LOGIN_LABELS, LOGO_CONFIG } from '@/components/Login/constants';
 import { useLoginForm } from '@/components/Login/useLoginForm';
-import React from 'react';
+import { useRouter } from 'next/navigation';
+import React, { useEffect } from 'react';
 
 const LoginPage: React.FC = () => {
+  const router = useRouter();
   const {
     formData,
     showPassword,
@@ -15,6 +17,31 @@ const LoginPage: React.FC = () => {
     handleSubmit,
     handleGoogleLogin,
   } = useLoginForm({ onClose: undefined });
+
+  useEffect(() => {
+    // Check if user is already logged in
+    const checkAuth = () => {
+      try {
+        const cookies = document.cookie.split('; ');
+        const userCookie = cookies.find(row => row.startsWith('user='));
+        
+        if (userCookie) {
+          const userDataString = decodeURIComponent(userCookie.split('=')[1]);
+          const userData = JSON.parse(userDataString);
+          
+          // If user is logged in, redirect based on role
+          if (userData?.role === 'SELLER') {
+            router.replace('/seller-dashboard/my-listing');
+          } else {
+            router.replace('/');
+          }
+        }
+      } catch (error) {
+        console.error('Auth check error:', error);
+      }
+    };
+    checkAuth();
+  }, [router]);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">

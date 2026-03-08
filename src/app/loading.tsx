@@ -1,11 +1,11 @@
+import logo from '@/assets/login-logo.svg';
 import Image from 'next/image';
-import logo from '@/assets/florida-yacht-logo.png';
 
 export default function Loading() {
   return (
     <div className="fixed inset-0 bg-gradient-to-br from-blue-50 to-cyan-50 flex items-center justify-center z-50">
       <div className="text-center">
-        <div className="relative w-48 h-48 mx-auto mb-8 animate-pulse">
+        <div className="relative w-24 h-24 mx-auto mb-8 animate-pulse">
           <Image
             src={logo}
             alt="Florida Yacht"

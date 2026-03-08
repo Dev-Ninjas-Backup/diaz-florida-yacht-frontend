@@ -1,8 +1,8 @@
 'use client';
 
+import logo from '@/assets/login-logo.svg';
 import Image from 'next/image';
 import { useEffect } from 'react';
-import logo from '@/assets/florida-yacht-logo.png';
 
 export default function Error({
   error,

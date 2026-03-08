@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import logo from '@/assets/florida-yacht-logo.png';
+import logo from '@/assets/login-logo.svg';
 
 export default function NotFound() {
   return (

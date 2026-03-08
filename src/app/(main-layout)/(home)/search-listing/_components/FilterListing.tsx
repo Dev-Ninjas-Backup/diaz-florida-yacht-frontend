@@ -215,6 +215,8 @@ const FilterListing = () => {
                 }
               }}
               className="absolute right-2 top-1/2 -translate-y-1/2"
+              aria-label="Toggle boat class dropdown"
+              title="Toggle boat class dropdown"
             >
               <IoIosArrowDown
                 className={`text-gray-500 transition-transform ${openDropdown === 'boatType' ? 'rotate-180' : ''}`}
@@ -288,6 +290,8 @@ const FilterListing = () => {
                 }
               }}
               className="absolute right-2 top-1/2 -translate-y-1/2"
+              aria-label="Toggle make dropdown"
+              title="Toggle make dropdown"
             >
               <IoIosArrowDown
                 className={`text-gray-500 transition-transform ${openDropdown === 'make' ? 'rotate-180' : ''}`}
@@ -361,6 +365,8 @@ const FilterListing = () => {
                 }
               }}
               className="absolute right-2 top-1/2 -translate-y-1/2"
+              aria-label="Toggle model dropdown"
+              title="Toggle model dropdown"
             >
               <IoIosArrowDown
                 className={`text-gray-500 transition-transform ${openDropdown === 'model' ? 'rotate-180' : ''}`}

@@ -33,8 +33,8 @@ const Step1Form: React.FC<Step1FormProps> = ({
   }
 
   return (
-    <div className="space-y-6 mt-10">
-      <div className="flex justify-center mb-8">
+    <div className="space-y-6 mt-5">
+      <div className="flex justify-center mb-2">
         <div className="w-full max-w-md">
           <PromoCodeInput
             onValidCode={(freeDays, code) => {
