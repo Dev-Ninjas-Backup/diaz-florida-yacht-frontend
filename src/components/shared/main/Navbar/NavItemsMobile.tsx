@@ -41,11 +41,18 @@ const NavItemsMobile: React.FC<NavItemsMobileProps> = ({
           Home
         </Link>
         <Link
-          href="/about"
+          href="/search-listing"
           className="px-3 py-2 hover:bg-white/10 rounded-md transition-colors"
           onClick={() => setIsOpen(false)}
         >
           Boats
+        </Link>
+        <Link
+          href="/about"
+          className="px-3 py-2 hover:bg-white/10 rounded-md transition-colors"
+          onClick={() => setIsOpen(false)}
+        >
+          About
         </Link>
         <Link
           href="/blogs"

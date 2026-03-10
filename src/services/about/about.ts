@@ -1,3 +1,41 @@
+export interface AboutUsDescriptionResponse {
+  success: boolean;
+  message: string;
+  data: {
+    id: string;
+    site: string;
+    aboutTitle: string;
+    aboutDescription: string;
+    mission: string;
+    vision: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+}
+
+export const getAboutUsDescription = async (
+  site: string = 'FLORIDA',
+): Promise<AboutUsDescriptionResponse | null> => {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_API;
+    const res = await fetch(`${baseUrl}/about-us?site=${site}`, {
+      method: 'GET',
+      next: { tags: [`ABOUT_US_${site}`] },
+    });
+
+    if (!res.ok) {
+      console.error(`About Us fetch failed with status: ${res.status}`);
+      return null;
+    }
+
+    const data: AboutUsDescriptionResponse = await res.json();
+    return data;
+  } catch (error: unknown) {
+    console.error('About Us fetch error:', error);
+    return null;
+  }
+};
+
 export interface OurStoryImage {
   id: string;
   filename: string;
@@ -34,7 +72,7 @@ export const getOurStory = async (
   site: string = 'FLORIDA',
 ): Promise<OurStoryResponse | null> => {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_API_URL;
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_API;
     const res = await fetch(`${baseUrl}/aboutus/our-story?site=${site}`, {
       method: 'GET',
       next: { tags: [`OUR_STORY_${site}`] },
@@ -86,7 +124,7 @@ export const getWhatSetsUsApart = async (
   site: string = 'FLORIDA',
 ): Promise<WhatSetsUsApartResponse | null> => {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_API_URL;
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_API;
     const res = await fetch(
       `${baseUrl}/aboutus/what-sets-us-apart?site=${site}`,
       {
@@ -145,7 +183,7 @@ export const getMissionVision = async (
   site: string = 'FLORIDA',
 ): Promise<MissionVisionResponse | null> => {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_API_URL;
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_API;
     const res = await fetch(`${baseUrl}/aboutus/mission-vision?site=${site}`, {
       method: 'GET',
       next: { tags: [`MISSION_VISION_${site}`] },
@@ -198,7 +236,7 @@ export interface TeamMembersApiResponse {
 
 export const getTeamMembers = async (): Promise<TeamMember[]> => {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_API_URL;
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_API;
     const res = await fetch(`${baseUrl}/our-team`, {
       method: 'GET',
       next: { tags: ['TEAM_MEMBERS'] },
