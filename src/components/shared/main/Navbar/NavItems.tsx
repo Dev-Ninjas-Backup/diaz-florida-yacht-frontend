@@ -61,6 +61,12 @@ const NavItems: React.FC<NavItemsProps> = ({
           Boats
         </Link>
         <Link
+          href="/about"
+          className="px-3 hover:text-gray-300 transition-colors"
+        >
+          About
+        </Link>
+        <Link
           href="/blogs"
           className="px-3 hover:text-gray-300 transition-colors"
         >
