@@ -3,9 +3,9 @@
 import LoadingSpinner from '@/components/shared/LoadingSpinner/LoadingSpinner';
 import NoDataFound from '@/components/shared/NoDataFound/NoDataFound';
 import { getTeamMembers, TeamMember } from '@/services/about/about';
-import { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 const MeetOurTeam = () => {
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
@@ -151,7 +151,7 @@ const MeetOurTeam = () => {
       {/* Member Details Modal */}
       {selectedMember && (
         <div
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-200"
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200 z-9999"
           onClick={() => setSelectedMember(null)}
         >
           <div
@@ -167,7 +167,7 @@ const MeetOurTeam = () => {
                       src={selectedMember.image?.url || ''}
                       alt={selectedMember.name}
                       fill
-                      className="object-cover"
+                      className="object-cover rounded-full border-4 border-white shadow-lg"
                     />
                   </div>
                 </div>
@@ -183,7 +183,7 @@ const MeetOurTeam = () => {
             </div>
 
             {/* Modal Body */}
-            <div className="pt-20 px-6 pb-6 overflow-y-auto flex-1">
+            <div className="pt-20 px-6 pb-6 overflow-y-auto flex-1 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
               <div className="text-center mb-6">
                 <h3 className="text-2xl font-bold text-gray-900 mb-2">
                   {selectedMember.name}
