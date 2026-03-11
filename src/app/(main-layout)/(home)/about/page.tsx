@@ -3,7 +3,7 @@ import CustomContainer from '@/components/CustomComponents/CustomContainer';
 import GetInTouch from '../contact/_components/GetInTouch';
 import AboutBanner from './_components/AboutBanner';
 import AboutDescription from './_components/AboutDescription';
-import MeetOurTeam from './_components/MeetOurTeam';
+// import MeetOurTeam from './_components/MeetOurTeam';
 import MissionVision from './_components/MissionVision';
 import OurStory from './_components/OurStory';
 import WhatSetsUsApart from './_components/WhatSetsUsApart';
@@ -38,7 +38,7 @@ const AboutPage = () => {
         {/* <StatsBanner /> */}
 
         {/* Meet Our Team Section */}
-        <MeetOurTeam />
+        {/* <MeetOurTeam /> */}
 
         {/* Get In Touch Section */}
         <GetInTouch />
