@@ -45,12 +45,16 @@ const MissionVision = () => {
 
   useEffect(() => {
     if (missionRef.current) {
-      const lineHeight = parseInt(getComputedStyle(missionRef.current).lineHeight);
+      const lineHeight = parseInt(
+        getComputedStyle(missionRef.current).lineHeight,
+      );
       const maxHeight = lineHeight * 5;
       setMissionNeedsTruncate(missionRef.current.scrollHeight > maxHeight);
     }
     if (visionRef.current) {
-      const lineHeight = parseInt(getComputedStyle(visionRef.current).lineHeight);
+      const lineHeight = parseInt(
+        getComputedStyle(visionRef.current).lineHeight,
+      );
       const maxHeight = lineHeight * 5;
       setVisionNeedsTruncate(visionRef.current.scrollHeight > maxHeight);
     }
