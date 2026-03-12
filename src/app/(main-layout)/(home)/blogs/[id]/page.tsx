@@ -104,8 +104,12 @@ const BlogDetailsPage = () => {
             <BlogInformations description={blog.blogDescription} />
             <div className="mt-6">
               <ShareWIth
-                title={blog.blogTitle}
-                description={blog.blogDescription.slice(0, 200)}
+                title={`${blog.blogTitle} | Florida Yacht Trader`}
+                description={
+                  blog.blogDescription
+                    ? blog.blogDescription.replace(/<[^>]*>/g, '').slice(0, 200)
+                    : undefined
+                }
               />
             </div>
           </div>
