@@ -25,7 +25,7 @@ const ShowItemsLocation = ({
       ? window.location.href
       : 'https://floridayachttrader.com/boat-details/2011-viking-44';
   const shareTitle = `${name} - Florida Yacht Trader`;
-  const shareText = 'Check out this boat listing!';
+  const shareText = `Check out this boat: ${name}`;
 
   const osmEmbedUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${longitude - 0.01},${latitude - 0.01},${longitude + 0.01},${latitude + 0.01}&layer=mapnik&marker=${latitude},${longitude}`;
 
