@@ -66,12 +66,16 @@ const ItemDetailsGallery = ({ images, name }: ItemDetailsGalleryProps) => {
               <button
                 onClick={prevImage}
                 className="absolute left-[4%] top-1/2 transform -translate-y-1/2 bg-gray-100 bg-opacity-50 text-black p-2 md:p-3 rounded-xl hover:bg-opacity-70 cursor-pointer"
+                aria-label="Previous image"
+                title="Previous image"
               >
                 <FaArrowLeft className="w-5 h-5" />
               </button>
               <button
                 onClick={nextImage}
                 className="absolute right-[4%] top-1/2 transform -translate-y-1/2 bg-[#0064AE] bg-opacity-50 text-white p-2 md:p-3 rounded-xl hover:bg-opacity-70 cursor-pointer"
+                aria-label="Next image"
+                title="Next image"
               >
                 <FaArrowRight className="w-5 h-5" />
               </button>
@@ -109,6 +113,8 @@ const ItemDetailsGallery = ({ images, name }: ItemDetailsGalleryProps) => {
                       ? 'border-[#0064AE]'
                       : 'border-gray-300'
                   }`}
+                  aria-label={`View image ${actualIndex + 1}`}
+                  title={`View image ${actualIndex + 1}`}
                 >
                   <Image
                     src={image}

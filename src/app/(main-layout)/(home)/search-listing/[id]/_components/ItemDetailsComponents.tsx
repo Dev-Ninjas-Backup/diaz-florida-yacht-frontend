@@ -6,6 +6,7 @@ import {
 } from '@/types/boat-details-types';
 import ItemDescriptions from './ItemDescriptions';
 import ItemDetailsGallery from './ItemsDetailsGallery';
+import ItemExtraDetails from './ItemExtraDetails';
 import ItemSpecifications from './ItemSpecifications';
 import ItemVideos from './ItemVideos';
 import ShowItemsLocation from './ShowItemsLocation';
@@ -23,6 +24,7 @@ const ItemDetailsComponents = ({ boatDetails }: ItemDetailsComponentsProps) => {
       <ItemDetailsGallery name={boatDetails.name} images={images} />
       <ItemSpecifications specifications={specifications} />
       <ItemDescriptions description={boatDetails.description} />
+      <ItemExtraDetails extraDetails={boatDetails.extraDetails} />
       {boatDetails.videoURL && <ItemVideos videoURL={boatDetails.videoURL} />}
       <ShowItemsLocation
         city={boatDetails.city}
