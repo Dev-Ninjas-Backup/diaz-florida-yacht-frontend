@@ -117,7 +117,7 @@ const SearchListingPage = () => {
         <div className="md:hidden my-4 flex justify-end">
           <button
             onClick={() => setIsDrawerOpen(true)}
-            className="bg-cyan-500 text-white px-4 py-2 rounded-lg hover:bg-cyan-600 transition-colors"
+            className="bg-cyan-500 text-white px-4 py-2 rounded-lg hover:bg-cyan-600 transition-colors w-full"
           >
             Filter
           </button>
