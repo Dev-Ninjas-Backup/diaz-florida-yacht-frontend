@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaFacebookF, FaTwitter, FaWhatsapp } from 'react-icons/fa';
 import { IoLocationOutline } from 'react-icons/io5';
 import { MdContentCopy, MdEmail } from 'react-icons/md';
@@ -16,24 +16,49 @@ const ShowItemsLocation = ({
   state = 'Florida',
   name = 'Boat',
 }: ShowItemsLocationProps) => {
-  const latitude = 40.594834;
-  const longitude = -73.510372;
-  const [, setCopied] = useState(false);
+  const [coordinates, setCoordinates] = useState<{
+    lat: number;
+    lng: number;
+  } | null>(null);
 
-  const shareUrl =
-    typeof window !== 'undefined'
-      ? window.location.href
-      : 'https://floridayachttrader.com/boat-details/2011-viking-44';
+  const locationString = [city, state, 'USA'].filter(Boolean).join(', ');
+
+  const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
   const shareTitle = `${name} - Florida Yacht Trader`;
   const shareText = `Check out this boat: ${name}`;
+
+  // Geocode location using Nominatim (OpenStreetMap)
+  useEffect(() => {
+    const geocodeLocation = async () => {
+      if (!locationString) return;
+
+      try {
+        const response = await fetch(
+          `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(locationString)}`,
+        );
+        const data = await response.json();
+        if (data && data[0]) {
+          setCoordinates({
+            lat: parseFloat(data[0].lat),
+            lng: parseFloat(data[0].lon),
+          });
+        }
+      } catch (error) {
+        console.error('Geocoding error:', error);
+      }
+    };
+
+    geocodeLocation();
+  }, [locationString]);
+
+  const latitude = coordinates?.lat || 25.7617;
+  const longitude = coordinates?.lng || -80.1918;
 
   const osmEmbedUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${longitude - 0.01},${latitude - 0.01},${longitude + 0.01},${latitude + 0.01}&layer=mapnik&marker=${latitude},${longitude}`;
 
   const handleCopyLink = async () => {
     try {
       await navigator.clipboard.writeText(shareUrl);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
       toast.success('Link copied to clipboard!');
     } catch (err) {
       console.error('Failed to copy:', err);
