@@ -79,7 +79,7 @@ const BlogDetailsPage = () => {
   return (
     <div>
       <GradientBannerCustom>
-        <h1 className="text-left text-white pt-10 md:pt-14 font-semibold text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl leading-tight">
+        <h1 className="text-left text-white md:pt-14 font-semibold text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl leading-tight">
           {blog.blogTitle}
         </h1>
       </GradientBannerCustom>

@@ -97,7 +97,7 @@ const ItemExtraDetails = ({ extraDetails }: ItemExtraDetailsProps) => {
 
             {/* Grid layout for key-value pairs */}
             {section.items.length > 0 && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-3 mb-4">
+              <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-3 mb-4">
                 {section.items.map((item, itemIndex) => (
                   <div key={itemIndex} className="flex flex-col">
                     <span className="text-xs md:text-sm font-semibold text-gray-600 uppercase tracking-wide">
