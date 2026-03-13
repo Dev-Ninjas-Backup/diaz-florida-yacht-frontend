@@ -192,17 +192,6 @@ export function transformBoatDetailsToSpecifications(
           },
         ]
       : []),
-    ...(Array.isArray(boat.extraDetails)
-      ? boat.extraDetails.map((detail) => ({
-          name: detail.key,
-          value: detail.value,
-        }))
-      : boat.extraDetails && typeof boat.extraDetails === 'object'
-        ? Object.entries(boat.extraDetails).map(([key, value]) => ({
-            name: key,
-            value: String(value),
-          }))
-        : []),
   ];
 }
 

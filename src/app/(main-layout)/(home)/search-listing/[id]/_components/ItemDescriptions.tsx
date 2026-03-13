@@ -47,14 +47,26 @@ const ItemDescriptions = ({ description }: ItemDescriptionsProps) => {
     setOpenIndex((prev) => (prev === idx ? null : idx));
   };
 
+  // Format description with line breaks preserved
+  const formatDescription = (text: string) => {
+    if (!text) return '';
+    
+    // Replace newlines with <br> tags
+    return text
+      .split('\n')
+      .map((line) => line.trim())
+      .filter((line) => line.length > 0)
+      .join('<br /><br />');
+  };
+
   return (
     <div className="px-1 md:px-4 py-5">
       <h2 className="text-lg md:text-xl font-semibold text-black text-left">
         Description
       </h2>
       <div
-        className="mt-3 text-sm md:text-base text-gray-500 prose prose-sm md:prose-base max-w-none"
-        dangerouslySetInnerHTML={{ __html: mainDescription }}
+        className="mt-3 text-sm md:text-base text-gray-700 leading-relaxed whitespace-pre-line"
+        dangerouslySetInnerHTML={{ __html: formatDescription(mainDescription) }}
       />
 
       {sections.length > 0 && (
@@ -74,8 +86,8 @@ const ItemDescriptions = ({ description }: ItemDescriptionsProps) => {
               </button>
 
               <div
-                className={`${openIndex === idx ? 'block' : 'hidden'} px-2 pb-4 text-gray-600 prose prose-sm max-w-none`}
-                dangerouslySetInnerHTML={{ __html: item.answer }}
+                className={`${openIndex === idx ? 'block' : 'hidden'} px-2 pb-4 text-gray-600 whitespace-pre-line`}
+                dangerouslySetInnerHTML={{ __html: formatDescription(item.answer) }}
               />
             </div>
           ))}

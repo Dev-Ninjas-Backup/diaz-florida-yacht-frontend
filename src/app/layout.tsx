@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { Toaster } from 'sonner';
+import ScrollToTop from '@/components/shared/ScrollToTop/ScrollToTop';
 
 export const dynamic = 'force-dynamic';
 
@@ -32,6 +33,7 @@ export default async function RootLayout({
         suppressHydrationWarning
       >
         <Providers token={token}>{children}</Providers>
+        <ScrollToTop />
         <Toaster position="top-right" />
       </body>
     </html>
