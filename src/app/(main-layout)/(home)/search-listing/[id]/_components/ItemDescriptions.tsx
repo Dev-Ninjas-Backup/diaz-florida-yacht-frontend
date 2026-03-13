@@ -50,7 +50,7 @@ const ItemDescriptions = ({ description }: ItemDescriptionsProps) => {
   // Format description with line breaks preserved
   const formatDescription = (text: string) => {
     if (!text) return '';
-    
+
     // Replace newlines with <br> tags
     return text
       .split('\n')
@@ -87,7 +87,9 @@ const ItemDescriptions = ({ description }: ItemDescriptionsProps) => {
 
               <div
                 className={`${openIndex === idx ? 'block' : 'hidden'} px-2 pb-4 text-gray-600 whitespace-pre-line`}
-                dangerouslySetInnerHTML={{ __html: formatDescription(item.answer) }}
+                dangerouslySetInnerHTML={{
+                  __html: formatDescription(item.answer),
+                }}
               />
             </div>
           ))}

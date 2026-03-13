@@ -23,8 +23,7 @@ const ShowItemsLocation = ({
 
   const locationString = [city, state, 'USA'].filter(Boolean).join(', ');
 
-  const shareUrl =
-    typeof window !== 'undefined' ? window.location.href : '';
+  const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
   const shareTitle = `${name} - Florida Yacht Trader`;
   const shareText = `Check out this boat: ${name}`;
 
