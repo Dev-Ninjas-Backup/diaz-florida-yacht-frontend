@@ -76,7 +76,7 @@ const ShareWIth = ({ title, description }: ShareWIthProps) => {
 
       <div className="flex flex-col md:flex-row items-center gap-4 w-full">
         <div className="flex-1 min-w-0 flex items-center gap-2 bg-gray-100 rounded-lg px-4 py-3">
-          <span className="flex-1 min-w-0 text-sm text-gray-500 truncate">
+          <span className="md:flex-1 text-sm text-gray-500 md:truncate">
             {shareUrl}
           </span>
           <button
