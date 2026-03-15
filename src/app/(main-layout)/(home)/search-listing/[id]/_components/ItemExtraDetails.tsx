@@ -8,7 +8,12 @@ interface ItemExtraDetailsProps {
 
 const ItemExtraDetails = ({ extraDetails }: ItemExtraDetailsProps) => {
   const parsedSections = useMemo(() => {
-    if (!extraDetails || !Array.isArray(extraDetails) || extraDetails.length === 0) return [];
+    if (
+      !extraDetails ||
+      !Array.isArray(extraDetails) ||
+      extraDetails.length === 0
+    )
+      return [];
 
     const sections: {
       title: string;
