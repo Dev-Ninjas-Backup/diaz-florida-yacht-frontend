@@ -2,6 +2,7 @@
 import { buildYearOptions } from '@/lib/utils/register-boats-select-options';
 import { FieldLimitations } from '@/types/subscription-types';
 import { useFormContext } from 'react-hook-form';
+import { Trash2 } from 'lucide-react';
 import { DimensionInput } from '../FormFields/DimensionInput';
 import { DynamicFormSelect } from '../FormFields/DynamicFormSelect';
 import { FormInput } from '../FormFields/FormInput';
@@ -28,9 +29,19 @@ interface Step2FormProps {
 }
 
 const Step2Form = ({ fieldLimitations }: Step2FormProps) => {
-  const { watch } = useFormContext();
+  const { watch, setValue, getValues } = useFormContext();
   const numEngines = watch('numEngines');
   const engineCount = parseInt(numEngines) || 1;
+
+  const handleDeleteEngine = (indexToDelete: number) => {
+    const currentEngines = getValues('engines') || [];
+    const newEngines = currentEngines.filter(
+      (_: unknown, index: number) => index !== indexToDelete,
+    );
+
+    setValue('engines', newEngines);
+    setValue('numEngines', String(newEngines.length));
+  };
 
   return (
     <div className="mt-10">
@@ -121,7 +132,19 @@ const Step2Form = ({ fieldLimitations }: Step2FormProps) => {
 
       {Array.from({ length: engineCount }, (_, index) => (
         <div key={index + 1} className="mt-10">
-          <h3 className="text-lg font-semibold mb-4">Engine {index + 1}</h3>
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-lg font-semibold">Engine {index + 1}</h3>
+            {engineCount > 1 && (
+              <button
+                type="button"
+                onClick={() => handleDeleteEngine(index)}
+                className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                title="Delete Engine"
+              >
+                <Trash2 className="w-5 h-5" />
+              </button>
+            )}
+          </div>
           <div className="grid grid-cols-2 gap-4">
             <FormInput
               name={`engines.${index}.hours`}
