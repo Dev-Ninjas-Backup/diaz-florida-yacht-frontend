@@ -327,6 +327,10 @@ export default function BoatListingForm({
         router.push('/seller-dashboard/my-listing');
         router.refresh();
       } else {
+        // Handle error response
+        const errorMessage =
+          response.message || response.error || 'Failed to save listing';
+
         if (response.errors) {
           const firstErrorField = Object.keys(response.errors)[0];
           const firstErrorMessage = Array.isArray(
@@ -336,7 +340,7 @@ export default function BoatListingForm({
             : response.errors[firstErrorField];
           toast.error(`${firstErrorField}: ${firstErrorMessage}`);
         } else {
-          toast.error(response.message || 'Failed to save listing');
+          toast.error(errorMessage);
         }
       }
     } catch (error: unknown) {
@@ -346,14 +350,19 @@ export default function BoatListingForm({
         response?: {
           data?: {
             message?: string;
+            error?: string;
             errors?: Record<string, string | string[]>;
           };
         };
       };
 
-      if (err?.response?.data?.message) {
-        toast.error(err.response.data.message);
-      } else if (err?.response?.data?.errors) {
+      // Extract error message from various possible locations
+      const errorMessage =
+        err?.response?.data?.message ||
+        err?.response?.data?.error ||
+        'An error occurred while saving the listing';
+
+      if (err?.response?.data?.errors) {
         const errors = err.response.data.errors;
         const firstErrorField = Object.keys(errors)[0];
         const firstErrorMessage = Array.isArray(errors[firstErrorField])
@@ -361,7 +370,7 @@ export default function BoatListingForm({
           : errors[firstErrorField];
         toast.error(`${firstErrorField}: ${firstErrorMessage}`);
       } else {
-        toast.error('An error occurred while saving the listing');
+        toast.error(errorMessage);
       }
     } finally {
       setIsSubmitting(false);
