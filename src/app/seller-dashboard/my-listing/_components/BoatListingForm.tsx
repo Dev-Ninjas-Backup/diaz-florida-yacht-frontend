@@ -328,11 +328,9 @@ export default function BoatListingForm({
         router.refresh();
       } else {
         // Handle error response
-        const errorMessage = 
-          response.message || 
-          response.error || 
-          'Failed to save listing';
-        
+        const errorMessage =
+          response.message || response.error || 'Failed to save listing';
+
         if (response.errors) {
           const firstErrorField = Object.keys(response.errors)[0];
           const firstErrorMessage = Array.isArray(
@@ -359,9 +357,9 @@ export default function BoatListingForm({
       };
 
       // Extract error message from various possible locations
-      const errorMessage = 
-        err?.response?.data?.message || 
-        err?.response?.data?.error || 
+      const errorMessage =
+        err?.response?.data?.message ||
+        err?.response?.data?.error ||
         'An error occurred while saving the listing';
 
       if (err?.response?.data?.errors) {

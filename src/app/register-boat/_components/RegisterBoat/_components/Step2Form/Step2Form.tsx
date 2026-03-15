@@ -35,8 +35,10 @@ const Step2Form = ({ fieldLimitations }: Step2FormProps) => {
 
   const handleDeleteEngine = (indexToDelete: number) => {
     const currentEngines = getValues('engines') || [];
-    const newEngines = currentEngines.filter((_: unknown, index: number) => index !== indexToDelete);
-    
+    const newEngines = currentEngines.filter(
+      (_: unknown, index: number) => index !== indexToDelete,
+    );
+
     setValue('engines', newEngines);
     setValue('numEngines', String(newEngines.length));
   };
