@@ -4,6 +4,7 @@ import {
   transformBoatDetailsToSpecifications,
   transformBoatImagesToUrls,
 } from '@/types/boat-details-types';
+import ShareWIth from '@/components/shared/ShareWith/ShareWIth';
 import ItemDescriptions from './ItemDescriptions';
 import ItemDetailsGallery from './ItemsDetailsGallery';
 import ItemExtraDetails from './ItemExtraDetails';
@@ -29,8 +30,20 @@ const ItemDetailsComponents = ({ boatDetails }: ItemDetailsComponentsProps) => {
       <ShowItemsLocation
         city={boatDetails.city}
         state={boatDetails.state}
-        name={boatDetails.name}
       />
+      <div className="px-1 md:px-4">
+        <ShareWIth
+          title={boatDetails.name}
+          boatInfo={{
+            title: boatDetails.name,
+            price: boatDetails.price ? `$${boatDetails.price.toLocaleString()}` : 'Price on request',
+            make: boatDetails.make,
+            model: boatDetails.model,
+            year: boatDetails.buildYear,
+            location: [boatDetails.city, boatDetails.state].filter(Boolean).join(', ') || undefined,
+          }}
+        />
+      </div>
     </div>
   );
 };
