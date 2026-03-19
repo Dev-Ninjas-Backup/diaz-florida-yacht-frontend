@@ -92,7 +92,6 @@ const ShowItemsLocation = ({
           View on OpenStreetMap
         </a>
       </div>
-
     </div>
   );
 };

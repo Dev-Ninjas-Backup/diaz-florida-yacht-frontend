@@ -27,20 +27,22 @@ const ItemDetailsComponents = ({ boatDetails }: ItemDetailsComponentsProps) => {
       <ItemDescriptions description={boatDetails.description} />
       <ItemExtraDetails extraDetails={boatDetails.extraDetails} />
       {boatDetails.videoURL && <ItemVideos videoURL={boatDetails.videoURL} />}
-      <ShowItemsLocation
-        city={boatDetails.city}
-        state={boatDetails.state}
-      />
+      <ShowItemsLocation city={boatDetails.city} state={boatDetails.state} />
       <div className="px-1 md:px-4">
         <ShareWIth
           title={boatDetails.name}
           boatInfo={{
             title: boatDetails.name,
-            price: boatDetails.price ? `$${boatDetails.price.toLocaleString()}` : 'Price on request',
+            price: boatDetails.price
+              ? `$${boatDetails.price.toLocaleString()}`
+              : 'Price on request',
             make: boatDetails.make,
             model: boatDetails.model,
             year: boatDetails.buildYear,
-            location: [boatDetails.city, boatDetails.state].filter(Boolean).join(', ') || undefined,
+            location:
+              [boatDetails.city, boatDetails.state]
+                .filter(Boolean)
+                .join(', ') || undefined,
           }}
         />
       </div>
