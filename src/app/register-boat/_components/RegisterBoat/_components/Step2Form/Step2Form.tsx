@@ -1,8 +1,8 @@
 'use client';
 import { buildYearOptions } from '@/lib/utils/register-boats-select-options';
 import { FieldLimitations } from '@/types/subscription-types';
-import { useFormContext } from 'react-hook-form';
 import { Trash2 } from 'lucide-react';
+import { useFormContext } from 'react-hook-form';
 import { DimensionInput } from '../FormFields/DimensionInput';
 import { DynamicFormSelect } from '../FormFields/DynamicFormSelect';
 import { FormInput } from '../FormFields/FormInput';
@@ -177,14 +177,14 @@ const Step2Form = ({ fieldLimitations }: Step2FormProps) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
             <DynamicFormSelect
               name={`engines.${index}.engineFuelType`}
-              label="Engine Type"
-              type="ENGINE_TYPE"
+              label="Engine Fuel Type"
+              type="FUEL_TYPE"
               placeholder="Select or type"
             />
             <DynamicFormSelect
               name={`engines.${index}.propellerType`}
-              label="Propeller Type"
-              type="PROP_TYPE"
+              label="Propeller Material"
+              type="PROP_MATERIAL"
               placeholder="Select or type"
             />
           </div>
