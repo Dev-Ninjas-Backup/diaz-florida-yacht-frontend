@@ -96,14 +96,12 @@ const Step2Form = ({ fieldLimitations }: Step2FormProps) => {
             label="Fuel Type"
             type="FUEL_TYPE"
             placeholder="Select or type"
-            required
           />
           <DynamicFormSelect
             name="propMaterial"
             label="Propeller Material"
             type="PROP_MATERIAL"
             placeholder="Select or type"
-            required
           />
         </div>
 
@@ -194,11 +192,14 @@ const Step2Form = ({ fieldLimitations }: Step2FormProps) => {
       <div className="mt-10">
         <h3 className="text-lg font-semibold mb-4">Basic Information</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <DynamicFormSelect
+          <FormSelect
             name="condition"
             label="Condition"
-            type="CONDITION"
-            placeholder="Select or type"
+            options={[
+              { value: 'New', label: 'New' },
+              { value: 'Used', label: 'Used' },
+            ]}
+            placeholder="Select"
             required
           />
           <FormInput

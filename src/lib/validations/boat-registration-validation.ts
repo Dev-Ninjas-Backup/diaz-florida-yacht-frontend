@@ -52,8 +52,8 @@ export const step2Schema = z.object({
 
   class: z.string().min(1, 'Boat class is required'),
   material: z.string().optional(),
-  fuelType: z.string().min(1, 'Fuel type is required'),
-  propMaterial: z.string().min(1, 'Propeller material is required'),
+  fuelType: z.string().optional(),
+  propMaterial: z.string().optional(),
   condition: z.string().min(1, 'Condition is required'),
 
   numEngines: z.string().min(1, 'Number of engines is required'),

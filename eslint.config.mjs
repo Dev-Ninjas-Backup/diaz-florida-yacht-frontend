@@ -1,12 +1,9 @@
 import js from '@eslint/js';
+import nextPlugin from '@next/eslint-plugin-next';
 import pluginReact from 'eslint-plugin-react';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
-import nextPlugin from '@next/eslint-plugin-next';
-import { createRequire } from 'module';
-
-const require = createRequire(import.meta.url);
 
 export default defineConfig([
   globalIgnores([
