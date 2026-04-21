@@ -165,6 +165,46 @@ export const getUserProfile = async (): Promise<
   }
 };
 
+export const forgotPasswordService = async (
+  email: string,
+): Promise<{ success: boolean; message?: string }> => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/auth/forgot-password`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      },
+    );
+    const data = await res.json();
+    return { success: res.ok, message: data.message };
+  } catch {
+    return { success: false, message: 'Network error' };
+  }
+};
+
+export const resetPasswordService = async (
+  email: string,
+  otp: string,
+  newPassword: string,
+): Promise<{ success: boolean; message?: string }> => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/auth/reset-password`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, otp, newPassword }),
+      },
+    );
+    const data = await res.json();
+    return { success: res.ok, message: data.message };
+  } catch {
+    return { success: false, message: 'Network error' };
+  }
+};
+
 export const logoutService = async (): Promise<{ success: boolean }> => {
   try {
     const cookieStore = await cookies();
