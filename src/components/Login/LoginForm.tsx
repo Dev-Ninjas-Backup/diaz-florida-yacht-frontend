@@ -28,7 +28,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       confirmButtonColor: '#3b82f6',
       inputValidator: (value) => {
         if (!value) return 'Please enter your email!';
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return 'Please enter a valid email!';
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))
+          return 'Please enter a valid email!';
         return null;
       },
     });
@@ -70,17 +71,30 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       confirmButtonColor: '#3b82f6',
       focusConfirm: false,
       preConfirm: () => {
-        const otp = (document.getElementById('swal-otp') as HTMLInputElement)?.value;
-        const newPassword = (document.getElementById('swal-password') as HTMLInputElement)?.value;
-        if (!otp) { Swal.showValidationMessage('Please enter the OTP!'); return false; }
-        if (!newPassword || newPassword.length < 6) { Swal.showValidationMessage('Password must be at least 6 characters!'); return false; }
+        const otp = (document.getElementById('swal-otp') as HTMLInputElement)
+          ?.value;
+        const newPassword = (
+          document.getElementById('swal-password') as HTMLInputElement
+        )?.value;
+        if (!otp) {
+          Swal.showValidationMessage('Please enter the OTP!');
+          return false;
+        }
+        if (!newPassword || newPassword.length < 6) {
+          Swal.showValidationMessage('Password must be at least 6 characters!');
+          return false;
+        }
         return { otp, newPassword };
       },
     });
 
     if (!formValues) return;
 
-    const resetResult = await resetPasswordService(email, formValues.otp, formValues.newPassword);
+    const resetResult = await resetPasswordService(
+      email,
+      formValues.otp,
+      formValues.newPassword,
+    );
 
     if (resetResult.success) {
       await Swal.fire({
@@ -129,7 +143,9 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             onChange={onInputChange}
             className="w-4 h-4 text-blue-500 border-gray-300 rounded focus:ring-blue-500 cursor-pointer"
           />
-          <span className="ml-2 text-sm text-gray-700">{LOGIN_LABELS.rememberMe}</span>
+          <span className="ml-2 text-sm text-gray-700">
+            {LOGIN_LABELS.rememberMe}
+          </span>
         </label>
         <button
           type="button"
@@ -150,7 +166,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 
       <p className="text-center text-sm text-gray-700 mt-6">
         {LOGIN_LABELS.dontHaveAccount}{' '}
-        <a href="/register-boat" className="text-blue-500 hover:text-blue-600 font-semibold transition-colors">
+        <a
+          href="/register-boat"
+          className="text-blue-500 hover:text-blue-600 font-semibold transition-colors"
+        >
           {LOGIN_LABELS.register}
         </a>
       </p>
