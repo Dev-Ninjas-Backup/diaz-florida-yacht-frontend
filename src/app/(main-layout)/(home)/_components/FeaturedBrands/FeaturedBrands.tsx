@@ -1,14 +1,14 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
-import Marquee from 'react-fast-marquee';
 import CustomContainer from '@/components/CustomComponents/CustomContainer';
+import { NoDataFound } from '@/components/ui/no-data-found';
 import {
   FeaturedBrand,
   getFeaturedBrands,
 } from '@/services/featuredBrands/featuredBrands';
-import { NoDataFound } from '@/components/ui/no-data-found';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import Marquee from 'react-fast-marquee';
 import FeaturedBrandsSkeleton from '../Skeletons/FeaturedBrandsSkeleton';
 
 const FeaturedBrands = () => {
